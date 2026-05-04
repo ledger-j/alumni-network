@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alumni Network MVP</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=general-sans@500,600,700&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] { --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem); --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem); --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem); --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem); --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem); --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem; --color-bg: #f7f6f2; --color-surface: #f9f8f5; --color-surface-2: #fbfbf9; --color-surface-offset: #f3f0ec; --color-border: #d4d1ca; --color-text: #28251d; --color-text-muted: #6d6b64; --color-text-faint: #9c9a93; --color-text-inverse: #f9f8f4; --color-primary: #01696f; --color-primary-hover: #0c4e54; --color-primary-highlight: #cedcd8; --color-success: #437a22; --color-warning: #b07a00; --radius-sm: 0.375rem; --radius-md: 0.5rem; --radius-lg: 0.75rem; --radius-xl: 1rem; --radius-full: 9999px; --shadow-sm: 0 1px 2px rgba(0,0,0,0.06); --shadow-md: 0 6px 20px rgba(0,0,0,0.08); --font-display: 'General Sans', Inter, sans-serif; --font-body: 'Satoshi', Inter, sans-serif; }
+    [data-theme="dark"] { --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d; --color-surface-offset: #22211f; --color-border: #393836; --color-text: #e1dfdb; --color-text-muted: #a8a59e; --color-text-faint: #7b7872; --color-text-inverse: #171614; --color-primary: #4f98a3; --color-primary-hover: #227f8b; --color-primary-highlight: #313b3b; --color-success: #6daa45; --color-warning: #edb336; --shadow-sm: 0 1px 2px rgba(0,0,0,0.2); --shadow-md: 0 12px 32px rgba(0,0,0,0.35); }
+    * { box-sizing: border-box; margin: 0; padding: 0; } html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; } body { min-height: 100vh; background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); font-size: var(--text-base); } a, button, input, select, textarea { font: inherit; color: inherit; } button { cursor: pointer; border: 0; background: none; } img, svg { display: block; max-width: 100%; }
+    .app { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; } .sidebar { background: var(--color-surface); border-right: 1px solid var(--color-border); padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-6); } .brand { display: flex; align-items: center; gap: var(--space-3); } .logo { width: 42px; height: 42px; border-radius: 12px; background: var(--color-primary); color: var(--color-text-inverse); display: grid; place-items: center; box-shadow: var(--shadow-sm); } .brand-copy h1 { font-family: var(--font-display); font-size: var(--text-lg); line-height: 1.1; } .brand-copy p { color: var(--color-text-muted); font-size: var(--text-sm); }
+    .nav-group { display: grid; gap: var(--space-2); } .nav-title { color: var(--color-text-faint); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-2); } .nav-link { display: flex; align-items: center; gap: var(--space-3); padding: 0.9rem 1rem; border-radius: var(--radius-lg); color: var(--color-text-muted); text-decoration: none; } .nav-link.active, .nav-link:hover { background: var(--color-primary-highlight); color: var(--color-primary); }
+    .main { display: grid; grid-template-rows: auto 1fr; } .topbar { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); padding: var(--space-5) var(--space-6); border-bottom: 1px solid var(--color-border); background: color-mix(in srgb, var(--color-surface) 92%, transparent); position: sticky; top: 0; backdrop-filter: blur(14px); z-index: 10; } .search { flex: 1; max-width: 520px; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-full); padding: 0.9rem 1rem; color: var(--color-text-muted); } .top-actions { display: flex; align-items: center; gap: var(--space-3); }
+    .theme-btn, .primary-btn, .ghost-btn, .pill { min-height: 44px; padding: 0.8rem 1rem; border-radius: var(--radius-full); } .theme-btn, .ghost-btn { background: var(--color-surface); border: 1px solid var(--color-border); } .primary-btn { background: var(--color-primary); color: var(--color-text-inverse); } .primary-btn:hover { background: var(--color-primary-hover); }
+    .content { padding: var(--space-6); display: grid; gap: var(--space-6); } .hero { display: grid; grid-template-columns: 1.3fr 0.9fr; gap: var(--space-6); } .panel { background: var(--color-surface); border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); } .hero-card { padding: var(--space-6); display: grid; gap: var(--space-5); } .eyebrow { font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-primary); } .hero-card h2 { font-family: var(--font-display); font-size: var(--text-xl); max-width: 20ch; } .hero-card p { color: var(--color-text-muted); max-width: 62ch; } .hero-actions, .segmented { display: flex; flex-wrap: wrap; gap: var(--space-3); } .segmented .pill { border: 1px solid var(--color-border); background: var(--color-surface-2); color: var(--color-text-muted); }
+    .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); padding: var(--space-5); } .metric { background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-4); display: grid; gap: var(--space-2); } .metric-label { color: var(--color-text-muted); font-size: var(--text-sm); } .metric-value { font-family: var(--font-display); font-size: var(--text-lg); }
+    .grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: var(--space-6); } .section-card { padding: var(--space-5); display: grid; gap: var(--space-4); } .section-head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); } .section-head h3 { font-size: var(--text-lg); font-family: var(--font-display); } .section-head p { color: var(--color-text-muted); font-size: var(--text-sm); }
+    .mini-table, .feature-list, .backend-list { display: grid; gap: var(--space-3); } .event-row, .user-row, .backend-row { display: grid; grid-template-columns: 1fr auto; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface-2); } .event-row strong, .user-main strong, .backend-row strong { display: block; } .meta, .subtle { color: var(--color-text-muted); font-size: var(--text-sm); } .tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.7rem; border-radius: var(--radius-full); background: var(--color-primary-highlight); color: var(--color-primary); font-size: var(--text-xs); }
+    .directory { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); } .person-card { padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface-2); display: grid; gap: var(--space-3); } .avatar { width: 56px; height: 56px; border-radius: 18px; background: linear-gradient(135deg, var(--color-primary-highlight), var(--color-surface-offset)); display: grid; place-items: center; color: var(--color-primary); font-weight: 700; }
+    .status-stack { display: grid; gap: var(--space-3); } .status-row { padding: var(--space-4); border-radius: var(--radius-lg); background: var(--color-surface-2); border: 1px solid var(--color-border); } .status-row header { display: flex; justify-content: space-between; margin-bottom: var(--space-2); font-size: var(--text-sm); } .bar { height: 8px; background: var(--color-surface-offset); border-radius: var(--radius-full); overflow: hidden; } .bar > span { display: block; height: 100%; border-radius: var(--radius-full); background: var(--color-primary); }
+    .split { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-6); } .code-block { background: #111827; color: #e5e7eb; border-radius: var(--radius-lg); padding: var(--space-4); overflow: auto; font-size: 0.92rem; line-height: 1.55; } .bullets { display: grid; gap: var(--space-3); color: var(--color-text-muted); } .bullets li { margin-left: 1rem; } .footer-note { padding: var(--space-4); border-top: 1px solid var(--color-border); color: var(--color-text-muted); font-size: var(--text-sm); } .mobile-nav { display: none; }
+    @media (max-width: 1080px) { .hero, .grid, .split { grid-template-columns: 1fr; } }
+    @media (max-width: 820px) { .app { grid-template-columns: 1fr; } .sidebar { display: none; } .mobile-nav { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-2); position: sticky; bottom: 0; background: var(--color-surface); border-top: 1px solid var(--color-border); padding: var(--space-3); } .mobile-nav a { text-decoration: none; color: var(--color-text-muted); font-size: var(--text-xs); text-align: center; padding: 0.6rem 0.2rem; } .directory, .metrics { grid-template-columns: 1fr; } .topbar { padding: var(--space-4); } .content { padding: var(--space-4); } }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo" aria-label="Alumni Network logo"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M4 18V6l8 4 8-4v12l-8 4-8-4Z"></path><path d="M12 10v12"></path></svg></div>
+        <div class="brand-copy"><h1>SBE Alumni</h1><p>Network MVP dashboard</p></div>
+      </div>
+      <nav>
+        <div class="nav-group">
+          <div class="nav-title">Frontend menu</div>
+          <a class="nav-link active" href="#overview">Overview</a><a class="nav-link" href="#directory">Alumni Directory</a><a class="nav-link" href="#events">Events</a><a class="nav-link" href="#memberships">Memberships</a><a class="nav-link" href="#jobs">Jobs & Career</a><a class="nav-link" href="#admin">Admin Console</a>
+        </div>
+        <div class="nav-group">
+          <div class="nav-title">Backend menu</div>
+          <a class="nav-link" href="#models">Data Models</a><a class="nav-link" href="#api">API Endpoints</a><a class="nav-link" href="#python">Python Service</a><a class="nav-link" href="#deploy">Hetzner Deploy</a>
+        </div>
+      </nav>
+    </aside>
+    <div class="main">
+      <header class="topbar">
+        <input class="search" type="text" value="Search by alumni, sector, year, employer or tutorial group" aria-label="Search alumni" />
+        <div class="top-actions"><button class="ghost-btn">Invite alumni</button><button class="primary-btn">Create event</button><button class="theme-btn" data-theme-toggle aria-label="Switch theme">◐</button></div>
+      </header>
+      <main id="overview" class="content">
+        <section class="hero">
+          <article class="panel hero-card">
+            <div class="eyebrow">Simple MVP overview</div>
+            <h2>One portal for alumni profiles, premium access, events and stronger SBE connection.</h2>
+            <p>This first MVP focuses on a searchable alumni directory, self-managed profiles, event visibility, premium membership gating and a practical admin view for the Alumni Office. It is intentionally simple, so it can be built fast with Python, PostgreSQL and one Hetzner server.</p>
+            <div class="hero-actions"><button class="primary-btn">Open alumni directory</button><button class="ghost-btn">View admin workflow</button></div>
+            <div class="segmented"><span class="pill">Basic membership</span><span class="pill">Premium membership</span><span class="pill">Employer and job network</span></div>
+          </article>
+          <aside class="panel metrics">
+            <div class="metric"><span class="metric-label">Total alumni base</span><strong class="metric-value">50,000+</strong><span class="subtle">Estimated network scope</span></div>
+            <div class="metric"><span class="metric-label">Active profiles</span><strong class="metric-value">8,925</strong><span class="subtle">Illustrative MVP target</span></div>
+            <div class="metric"><span class="metric-label">Premium members</span><strong class="metric-value">620</strong><span class="subtle">Revenue-ready segment</span></div>
+            <div class="metric"><span class="metric-label">Data quality goal</span><strong class="metric-value">98%</strong><span class="subtle">Deduped, verified, searchable</span></div>
+          </aside>
+        </section>
+        <section class="grid">
+          <article id="events" class="panel section-card">
+            <div class="section-head"><div><h3>Frontend MVP menu</h3><p>The first screens and actions users should see.</p></div><span class="tag">Basic plus Premium</span></div>
+            <div class="feature-list">
+              <div class="event-row"><div><strong>1. Home / Overview</strong><div class="meta">Key stats, upcoming events, quick search, premium prompts</div></div><span class="tag">Public after login</span></div>
+              <div class="event-row"><div><strong>2. Alumni Directory</strong><div class="meta">Search by name, company, city, industry, cohort, tutorial, course</div></div><span class="tag">Premium search</span></div>
+              <div class="event-row"><div><strong>3. My Profile</strong><div class="meta">Photo, work history, location, mentorship interest, event preferences</div></div><span class="tag">Editable</span></div>
+              <div class="event-row"><div><strong>4. Events</strong><div class="meta">Register, see attending classmates, filter by city and sector</div></div><span class="tag">Engagement</span></div>
+              <div class="event-row"><div><strong>5. Jobs and Opportunities</strong><div class="meta">Jobs, mentoring requests, employer introductions, alumni offers</div></div><span class="tag">Value creation</span></div>
+              <div class="event-row"><div><strong>6. Memberships</strong><div class="meta">Basic newsletter access versus premium full database access</div></div><span class="tag">Revenue</span></div>
+              <div class="event-row"><div><strong>7. Admin Console</strong><div class="meta">User approval, imports, duplicates, event metrics, premium upgrades</div></div><span class="tag">Office workflow</span></div>
+            </div>
+          </article>
+          <aside id="directory" class="panel section-card">
+            <div class="section-head"><div><h3>Alumni directory cards</h3><p>Simple searchable layout for the first release.</p></div></div>
+            <div class="directory">
+              <article class="person-card"><div class="avatar">DK</div><div class="user-main"><strong>David Kim</strong><div class="meta">Data Analyst, SBE 2022, Seattle</div></div><span class="tag">Mentor</span></article>
+              <article class="person-card"><div class="avatar">RL</div><div class="user-main"><strong>Rachel Lee</strong><div class="meta">UX Designer, SBE 2021, Austin</div></div><span class="tag">Premium</span></article>
+              <article class="person-card"><div class="avatar">JW</div><div class="user-main"><strong>James Wilson</strong><div class="meta">Product Manager, SBE 2022, Boston</div></div><span class="tag">Hiring</span></article>
+              <article class="person-card"><div class="avatar">LC</div><div class="user-main"><strong>Lisa Chen</strong><div class="meta">Software Engineer, SBE 2023, Berlin</div></div><span class="tag">Event host</span></article>
+            </div>
+          </aside>
+        </section>
+        <section id="memberships" class="grid">
+          <article class="panel section-card">
+            <div class="section-head"><div><h3>Membership logic</h3><p>Built around newsletter users versus engaged premium alumni.</p></div></div>
+            <div class="mini-table">
+              <div class="event-row"><div><strong>Basic membership</strong><div class="meta">Newsletter, public event list, simple profile, limited search</div></div><span class="tag">Free</span></div>
+              <div class="event-row"><div><strong>Premium membership</strong><div class="meta">Full alumni search, advanced filters, direct connection requests, mentoring circle access, premium events</div></div><span class="tag">Paid</span></div>
+              <div class="event-row"><div><strong>Institution value</strong><div class="meta">Income stream, stronger engagement, targeted programme integration, higher event conversion</div></div><span class="tag">Strategic</span></div>
+            </div>
+          </article>
+          <aside id="admin" class="panel section-card">
+            <div class="section-head"><div><h3>Admin automation status</h3><p>Practical controls for a small Alumni Office team.</p></div></div>
+            <div class="status-stack">
+              <div class="status-row"><header><span>Profile updates</span><span>Active</span></header><div class="bar"><span style="width: 76%"></span></div></div>
+              <div class="status-row"><header><span>Duplicate merging</span><span>In review</span></header><div class="bar"><span style="width: 54%; background: var(--color-warning)"></span></div></div>
+              <div class="status-row"><header><span>Premium renewals</span><span>Ready</span></header><div class="bar"><span style="width: 83%; background: var(--color-success)"></span></div></div>
+            </div>
+          </aside>
+        </section>
+        <section id="models" class="split">
+          <article class="panel section-card">
+            <div class="section-head"><div><h3>Backend menu and data model</h3><p>Tables needed for a first Python MVP.</p></div></div>
+            <div class="backend-list">
+              <div class="backend-row"><div><strong>users</strong><div class="meta">id, email, password_hash, role, membership_type, is_active</div></div><span class="tag">Auth</span></div>
+              <div class="backend-row"><div><strong>alumni_profiles</strong><div class="meta">user_id, full_name, graduation_year, programme, tutorial_group, city, employer, sector, bio</div></div><span class="tag">Core</span></div>
+              <div class="backend-row"><div><strong>events</strong><div class="meta">title, city, venue, start_date, host_id, visibility, premium_only</div></div><span class="tag">Events</span></div>
+              <div class="backend-row"><div><strong>event_registrations</strong><div class="meta">event_id, user_id, status, checked_in</div></div><span class="tag">Attendance</span></div>
+              <div class="backend-row"><div><strong>jobs</strong><div class="meta">title, company, location, sector, posted_by, expires_at</div></div><span class="tag">Career</span></div>
+              <div class="backend-row"><div><strong>connection_requests</strong><div class="meta">from_user, to_user, message, status</div></div><span class="tag">Networking</span></div>
+              <div class="backend-row"><div><strong>payments</strong><div class="meta">user_id, plan, amount, currency, status, paid_at</div></div><span class="tag">Premium</span></div>
+            </div>
+          </article>
+          <article id="api" class="panel section-card">
+            <div class="section-head"><div><h3>First API endpoints</h3><p>Minimal routes for Flask or FastAPI.</p></div></div>
+            <ul class="bullets">
+              <li><strong>POST /auth/register</strong> for alumni sign-up with email verification.</li>
+              <li><strong>POST /auth/login</strong> for session or token-based access.</li>
+              <li><strong>GET /profiles</strong> with filters for year, city, sector, employer and tutorial.</li>
+              <li><strong>GET /profiles/{id}</strong> for full alumni profile view.</li>
+              <li><strong>PUT /me/profile</strong> for self-service profile updates.</li>
+              <li><strong>GET /events</strong> and <strong>POST /events/{id}/register</strong> for event participation.</li>
+              <li><strong>GET /jobs</strong> and <strong>POST /jobs</strong> for alumni career postings.</li>
+              <li><strong>POST /memberships/upgrade</strong> for premium purchase and plan upgrade.</li>
+              <li><strong>GET /admin/imports</strong> and <strong>POST /admin/deduplicate</strong> for office operations.</li>
+            </ul>
+          </article>
+        </section>
+        <section id="python" class="split">
+          <article class="panel section-card">
+            <div class="section-head"><div><h3>Python backend first steps</h3><p>Lean stack for one senior developer and LLM-assisted coding.</p></div></div>
+            <ul class="bullets">
+              <li>Use <strong>FastAPI</strong> for clear APIs, automatic docs and quick iteration.</li>
+              <li>Use <strong>PostgreSQL</strong> as the main database from day one.</li>
+              <li>Use <strong>SQLAlchemy</strong> and <strong>Alembic</strong> for models and migrations.</li>
+              <li>Use <strong>Jinja templates</strong> if you want server-rendered HTML first, or keep this HTML as a static front-end mock while the API is built.</li>
+              <li>Use <strong>Celery</strong> or a simple cron job later for email reminders, event notifications and duplicate checks.</li>
+              <li>Use <strong>Postmark</strong> for transactional emails and verification links.</li>
+              <li>Use <strong>Stripe</strong> only when premium billing is ready. Until then, mark premium members manually in admin.</li>
+            </ul>
+          </article>
+          <article class="panel section-card">
+            <div class="section-head"><div><h3>Starter project structure</h3><p>Keep it boring and easy to deploy.</p></div></div>
+            <div class="code-block"><pre>app/
+├─ main.py
+├─ db.py
+├─ models/
+│  ├─ user.py
+│  ├─ profile.py
+│  ├─ event.py
+│  └─ payment.py
+├─ routers/
+│  ├─ auth.py
+│  ├─ profiles.py
+│  ├─ events.py
+│  ├─ jobs.py
+│  └─ admin.py
+├─ services/
+│  ├─ email.py
+│  ├─ membership.py
+│  └─ dedupe.py
+├─ templates/
+│  └─ dashboard.html
+└─ static/
+   └─ styles.css</pre></div>
+          </article>
+        </section>
+        <section id="deploy" class="split">
+          <article class="panel section-card">
+            <div class="section-head"><div><h3>Deploy on Hetzner</h3><p>First practical deployment path for the MVP.</p></div></div>
+            <ol class="bullets">
+              <li>Create a Hetzner Cloud server, for example Ubuntu 24.04 on a CX23 or CPX21 instance.</li>
+              <li>Point your domain or subdomain to the server IP in Cloudflare DNS.</li>
+              <li>SSH into the server and update packages: <strong>apt update && apt upgrade -y</strong>.</li>
+              <li>Install Docker and Docker Compose plugin.</li>
+              <li>Run PostgreSQL and the FastAPI app in Docker containers.</li>
+              <li>Use Nginx as reverse proxy on ports 80 and 443.</li>
+              <li>Issue a free TLS certificate with Let&apos;s Encrypt and Certbot.</li>
+              <li>Add UFW firewall rules for SSH, HTTP and HTTPS only.</li>
+              <li>Set daily PostgreSQL backups to a second volume or object storage.</li>
+            </ol>
+          </article>
+          <article class="panel section-card">
+            <div class="section-head"><div><h3>Example Docker flow</h3><p>Enough for the first MVP deployment.</p></div></div>
+            <div class="code-block"><pre>docker compose up -d
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: alumni
+      POSTGRES_USER: alumni_user
+      POSTGRES_PASSWORD: strong_password
+  web:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    depends_on:
+      - db
+  nginx:
+    image: nginx:stable
+    ports:
+      - "80:80"
+      - "443:443"</pre></div>
+          </article>
+        </section>
+        <section class="panel footer-note">First MVP principle: do not build a full institutional platform first. Build search, profiles, events, premium gating and admin import workflows first, then validate alumni engagement and premium conversion before expanding into advanced AI matching and larger integrations.</section>
+      </main>
+      <nav class="mobile-nav" aria-label="Mobile navigation"><a href="#overview">Home</a><a href="#directory">Directory</a><a href="#events">Events</a><a href="#memberships">Plans</a><a href="#admin">Admin</a></nav>
+    </div>
+  </div>
+  <script>(function(){const btn=document.querySelector('[data-theme-toggle]');const root=document.documentElement;let theme=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';root.setAttribute('data-theme',theme);btn.addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';root.setAttribute('data-theme',theme);btn.textContent=theme==='dark'?'☼':'◐';});btn.textContent=theme==='dark'?'☼':'◐';})();</script>
+</body>
+</html>
