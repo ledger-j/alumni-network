@@ -1,0 +1,254 @@
+<!-- ==========================================
+     Maastricht University SBE Alumni Network
+     AI Connections & Network Finder (network.html)
+     ========================================== -->
+
+<div style="max-width: 1200px; margin: var(--space-6) auto; padding-inline: var(--space-4);">
+  
+  <!-- AI Search Container Header -->
+  <div class="ai-search-container">
+    <div class="ai-header">
+      <span class="iconify sparkle-icon" data-icon="ph:sparkles-duotone"></span>
+      <div>
+        <h3>AI-Powered Connections Finder</h3>
+        <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: 2px;">
+          Ask our database anything naturally or refine your exact tutorial peer groups using the structured controllers below.
+        </p>
+      </div>
+    </div>
+
+    <!-- Conversational query box -->
+    <div class="search-bar-wrapper">
+      <input type="search" class="search-input" placeholder="e.g. 'Show me alumni in Consulting from International Financial Management Period 5 Tutorial 01'..." aria-label="Conversational AI Alumni Search">
+      <button class="search-submit" aria-label="Run Search">Search</button>
+    </div>
+
+    <!-- Clickable conversation starters -->
+    <div class="filter-suggestions">
+      <span style="font-size: 10px; color: var(--color-text-muted); align-self: center; font-weight: 600;">Try searching:</span>
+      <span class="tag">"Finance peers from Period 5"</span>
+      <span class="tag">"McKinsey consultants in Consulting"</span>
+      <span class="tag">"International Financial Management Tutorial 01"</span>
+      <span class="tag">"Tech experts at Binance"</span>
+    </div>
+  </div>
+
+  <!-- Structured Academic & Sector Filters -->
+  <div class="sbe-card" style="padding: var(--space-5); margin-bottom: var(--space-6);">
+    <h4 style="margin-bottom: var(--space-4); border-bottom: 2px solid var(--um-light-blue); padding-bottom: var(--space-2);">Granular Database Filters</h4>
+    
+    <div class="grid-filter-controls">
+      
+      <!-- Sector/Industry Dropdown -->
+      <div class="filter-group">
+        <label for="filter-sector">Industry Sector</label>
+        <select id="filter-sector" aria-label="Filter by Sector">
+          <option value="">All Sectors</option>
+          <option value="Finance">Finance / Investment Banking</option>
+          <option value="Consulting">Management Consulting</option>
+          <option value="Tech">Technology / Startups</option>
+        </select>
+      </div>
+
+      <!-- Course Selection Dropdown -->
+      <div class="filter-group">
+        <label for="filter-course">Course Taken</label>
+        <select id="filter-course" aria-label="Filter by Course">
+          <option value="">All SBE Courses</option>
+          <option value="International Financial Management">International Financial Management</option>
+          <option value="Problem Based Learning in Finance">Problem Based Learning in Finance</option>
+          <option value="Quantitative Modeling">Quantitative Modeling</option>
+          <option value="Marketing Strategy">Marketing Strategy</option>
+        </select>
+      </div>
+
+      <!-- SBE Academic Period Dropdown -->
+      <div class="filter-group">
+        <label for="filter-period">Academic Period</label>
+        <select id="filter-period" aria-label="Filter by Period">
+          <option value="">All Periods (1-6)</option>
+          <option value="1">Period 1</option>
+          <option value="2">Period 2</option>
+          <option value="4">Period 4</option>
+          <option value="5">Period 5</option>
+        </select>
+      </div>
+
+      <!-- Tutorial Group Dropdown -->
+      <div class="filter-group">
+        <label for="filter-tutorial">Tutorial Number</label>
+        <select id="filter-tutorial" aria-label="Filter by Tutorial Group">
+          <option value="">All Tutorial Groups</option>
+          <option value="01">Tutorial 01</option>
+          <option value="02">Tutorial 02</option>
+          <option value="03">Tutorial 03</option>
+          <option value="04">Tutorial 04</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Alumni Search Results Title -->
+  <div style="margin-bottom: var(--space-4);">
+    <h3 style="font-family: var(--font-heading); font-size: var(--text-md); font-weight: 800;">Alumni Search Results <span style="font-weight: 500; font-size: var(--text-xs); color: var(--color-text-muted);">(Showing database matches)</span></h3>
+  </div>
+
+  <!-- Dynamic Alumni Profile Grid -->
+  <div class="alumni-grid">
+    
+    <!-- CARD 1: OVERLAP MATCH (Binance) -->
+    <article class="sbe-card alumni-card premium-border" data-sector="Tech" data-course="International Financial Management" data-period="5" data-tutorial="01">
+      <span class="premium-ribbon">Premium</span>
+      <div class="card-header">
+        <img src="Image_ressources/Mood_images/conik_photograph_slightly_high-angle_top-down_view_early_mornin_e5cdc1d7-d669-4f45-8b59-5533de6fd313.png" alt="Linas Beliūnas avatar" class="avatar">
+        <div class="basics">
+          <h4 class="name">Linas Beliūnas <span class="iconify" data-icon="ph:seal-check-fill" style="color: var(--um-orange-red);" title="Verified Alumnus"></span></h4>
+          <span class="degree">M.Sc. Econometrics ('24)</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="headline">Risk Strategy Architect at Binance | Fintech Innovator</p>
+        <p class="meta-details">
+          <span><span class="iconify" data-icon="ph:briefcase-bold"></span> Tech Sector</span>
+          <span><span class="iconify" data-icon="ph:buildings-bold"></span> Binance HQ, Amsterdam</span>
+        </p>
+        <!-- Overlay Academic Match Highlight -->
+        <div class="academic-overlap">
+          <span class="iconify" data-icon="ph:sparkles-bold"></span> Classmate Overlap: IFM Tutorial 01
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="connect-btn">Connect</button>
+        <button class="pbl-btn">Invite to Solve</button>
+      </div>
+    </article>
+
+    <!-- CARD 2: OVERLAP MATCH (KPMG) -->
+    <article class="sbe-card alumni-card" data-sector="Consulting" data-course="International Financial Management" data-period="5" data-tutorial="01">
+      <div class="card-header">
+        <img src="Image_ressources/Mood_images/images-maastricht.jpg" alt="Sophie van der Meer avatar" class="avatar">
+        <div class="basics">
+          <h4 class="name">Sophie van der Meer</h4>
+          <span class="degree">M.Sc. Financial Economics ('24)</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="headline">Corporate Finance Associate at KPMG Netherlands</p>
+        <p class="meta-details">
+          <span><span class="iconify" data-icon="ph:briefcase-bold"></span> Consulting Sector</span>
+          <span><span class="iconify" data-icon="ph:buildings-bold"></span> KPMG offices, Eindhoven</span>
+        </p>
+        <div class="academic-overlap">
+          <span class="iconify" data-icon="ph:sparkles-bold"></span> Classmate Overlap: IFM Tutorial 01
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="connect-btn">Connect</button>
+        <button class="pbl-btn">Invite to Solve</button>
+      </div>
+    </article>
+
+    <!-- CARD 3: FINANCE MATCH (Goldman Sachs) -->
+    <article class="sbe-card alumni-card" data-sector="Finance" data-course="Quantitative Modeling" data-period="1" data-tutorial="04">
+      <div class="card-header">
+        <img src="Image_ressources/Mood_images/u1168774368_Postwar_memorial_at_the_Bendlerblock_courtyard_empt_9e42e39d-28da-4694-8b76-f1a601363b88.png" alt="Lucas Hesselink avatar" class="avatar">
+        <div class="basics">
+          <h4 class="name">Lucas Hesselink</h4>
+          <span class="degree">M.Sc. Financial Economics ('23)</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="headline">Investment Banking Analyst at Goldman Sachs</p>
+        <p class="meta-details">
+          <span><span class="iconify" data-icon="ph:briefcase-bold"></span> Finance Sector</span>
+          <span><span class="iconify" data-icon="ph:buildings-bold"></span> Goldman Sachs, London Branch</span>
+        </p>
+      </div>
+      <div class="card-footer">
+        <button class="connect-btn">Connect</button>
+        <button class="pbl-btn">Invite to Solve</button>
+      </div>
+    </article>
+
+    <!-- CARD 4: TECH MATCH (Booking.com) -->
+    <article class="sbe-card alumni-card" data-sector="Tech" data-course="Problem Based Learning in Finance" data-period="2" data-tutorial="02">
+      <div class="card-header">
+        <img src="Image_ressources/Mood_images/1688546451_Maastricht-Ueberblick.jpg" alt="Elena Rostova avatar" class="avatar">
+        <div class="basics">
+          <h4 class="name">Elena Rostova</h4>
+          <span class="degree">B.Sc. International Business ('25)</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="headline">Junior Product Specialist at Booking.com | Agile Practitioner</p>
+        <p class="meta-details">
+          <span><span class="iconify" data-icon="ph:briefcase-bold"></span> Tech Sector</span>
+          <span><span class="iconify" data-icon="ph:buildings-bold"></span> Booking.com HQ, Amsterdam</span>
+        </p>
+      </div>
+      <div class="card-footer">
+        <button class="connect-btn">Connect</button>
+        <button class="pbl-btn">Invite to Solve</button>
+      </div>
+    </article>
+
+    <!-- CARD 5: CONSULTING MATCH (McKinsey) -->
+    <article class="sbe-card alumni-card" data-sector="Consulting" data-course="Marketing Strategy" data-period="4" data-tutorial="03">
+      <div class="card-header">
+        <img src="Image_ressources/Mood_images/maastricht_012_innenstadt.jpg" alt="Thomas Klein avatar" class="avatar">
+        <div class="basics">
+          <h4 class="name">Thomas Klein <span class="iconify" data-icon="ph:seal-check-fill" style="color: var(--um-light-blue);" title="Verified Alumnus"></span></h4>
+          <span class="degree">M.Sc. Corporate Governance ('23)</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="headline">Strategic Management Consultant at McKinsey & Company</p>
+        <p class="meta-details">
+          <span><span class="iconify" data-icon="ph:briefcase-bold"></span> Consulting Sector</span>
+          <span><span class="iconify" data-icon="ph:buildings-bold"></span> McKinsey offices, Munich</span>
+        </p>
+      </div>
+      <div class="card-footer">
+        <button class="connect-btn">Connect</button>
+        <button class="pbl-btn">Invite to Solve</button>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<!-- ==========================================
+     NATIVE HTML5 INVITE ALUMNI TO CASE MODAL
+     ========================================== -->
+<dialog id="invite-modal" class="sbe-modal" aria-labelledby="invite-modal-title">
+  <div class="modal-wrapper">
+    <div class="modal-header">
+      <h3 id="invite-modal-title">Invite Alumnus to Solve PBL Case</h3>
+      <button class="close-btn" aria-label="Close modal">✕</button>
+    </div>
+    <form method="dialog">
+      <div class="modal-body">
+        <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-3);">
+          You are inviting <strong class="invitee-name" style="color: var(--um-dark-blue);">Alumni</strong> to cooperate and review your active Problem-Based Learning case.
+        </p>
+        <div class="form-group">
+          <label for="select-pbl-case">Choose Your Active Case Study</label>
+          <select id="select-pbl-case" required>
+            <option value="1">Option Portfolios under Inflation (International Financial Management)</option>
+            <option value="2">Evaluation of Startup valuations in local Dutch Markets (Corporate Strategy)</option>
+            <option value="3">Quantitative risk parameters under extreme asset shifts (Econometrics)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="invite-memo">Add a Personal Note</label>
+          <textarea id="invite-memo" placeholder="Hi! I loved our discussions back in Tutorial 01. I would value your real-world expertise on this case..." required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn">Back</button>
+        <button type="submit" class="submit-btn">Send Invitation</button>
+      </div>
+    </form>
+  </div>
+</dialog>

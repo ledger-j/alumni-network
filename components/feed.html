@@ -1,0 +1,236 @@
+<!-- ==========================================
+     Maastricht University SBE Alumni Network
+     Home Feed Component (feed.html)
+     ========================================== -->
+
+<div class="app-layout">
+  
+  <!-- ==========================================
+       LEFT COLUMN: USER PROFILE CARD
+       ========================================== -->
+  <aside class="profile-sidebar" role="complementary" aria-label="Profile Summary">
+    <div class="sbe-card profile-card">
+      <div class="cover-banner"></div>
+      
+      <div class="avatar-container">
+        <img src="Image_ressources/Mood_images/nikhil1256_A_man_walking_dressed_in_professional_business_attir_8fa44d19-f313-4ba2-aba1-72254228f5eb.png" alt="Jean Maurice profile picture" class="avatar">
+        <span class="premium-badge" title="Premium Alumni Member"><span class="iconify" data-icon="ph:crown-fill"></span></span>
+      </div>
+
+      <div class="profile-info">
+        <h2 class="name">Jean Maurice H. <span class="iconify" data-icon="ph:seal-check-fill" style="color: var(--um-light-blue); font-size: 16px;" title="Verified Alumnus"></span></h2>
+        <p class="title">M.Sc. Financial Economics | B.Sc. International Business<br><strong>Maastricht University SBE</strong></p>
+        <p class="meta"><span class="iconify" data-icon="ph:map-pin-bold"></span> Maastricht, Limburg</p>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat-row">
+          <span class="label">Profile viewers</span>
+          <span class="value">87</span>
+        </div>
+        <div class="stat-row" style="border-top: 1.5px solid var(--color-border);">
+          <span class="label">Post impressions</span>
+          <span class="value">15</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decorative Campus Visual Widget -->
+    <div class="sbe-card navigation-widget" style="padding: 0; overflow: hidden; height: 180px; position: relative;">
+      <img src="Image_ressources/Mood_images/um-tapijn-202010-005_2.jpg" alt="Maastricht Tapijn Campus" style="width: 100%; height: 100%; object-fit: cover;">
+      <div style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, var(--um-dark-blue) 0%, transparent 100%); padding: var(--space-3); color: white;">
+        <h4 style="color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">UM Tapijn Campus</h4>
+        <p style="font-size: 9px; color: oklch(1 0 0 / 0.8); margin-top: 2px;">School of Business and Economics</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       CENTER COLUMN: ACTIVE DASHBOARD FEED
+       ========================================== -->
+  <main class="feed-content" role="main" aria-label="Dashboard Feed">
+    
+    <!-- Post Creation Box -->
+    <div class="sbe-card create-post-box">
+      <div class="input-row">
+        <img src="Image_ressources/Mood_images/nikhil1256_A_man_walking_dressed_in_professional_business_attir_8fa44d19-f313-4ba2-aba1-72254228f5eb.png" alt="Your avatar" class="avatar">
+        <button class="trigger-btn">Start a post about SBE cases, classes...</button>
+      </div>
+      <div class="media-row">
+        <button class="media-btn photo"><span class="iconify" data-icon="ph:image-bold"></span> Photo</button>
+        <button class="media-btn video"><span class="iconify" data-icon="ph:video-camera-bold"></span> Video</button>
+        <button class="media-btn article"><span class="iconify" data-icon="ph:article-bold"></span> Write article</button>
+      </div>
+    </div>
+
+    <!-- Feed View Selector -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-3); padding-inline: var(--space-2);">
+      <hr style="flex: 1; border: none; height: 1px; background-color: var(--color-border); margin-right: var(--space-3);">
+      <span style="font-size: 11px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 4px;">
+        Sort by: <strong style="color: var(--color-text-primary); cursor: pointer; display: flex; align-items: center;">Most relevant <span class="iconify" data-icon="ph:caret-down-bold"></span></strong>
+      </span>
+    </div>
+
+    <!-- Posts Feed Container -->
+    <div class="feed-posts-list">
+      
+      <!-- POST 1: PBL CASE COLLABORATION (SBE Specific) -->
+      <article class="sbe-card feed-post">
+        <div class="post-header">
+          <div class="author-info">
+            <img src="Image_ressources/Mood_images/maxme2014_27556_A_warm_summer_day_in_a_typical_Dutch_town.Narro_f110bf84-696b-43be-817a-95c4168d14d2.png" alt="Ruben Hassid" class="avatar">
+            <div class="details">
+              <span class="name">Ruben Hassid <span class="degree-badge msc">M.Sc. Econometrics</span></span>
+              <span class="headline">Senior Portfolio Risk Architect | SBE Finance Alumni Lead</span>
+              <span class="time">2 hours ago • <span class="iconify" data-icon="ph:globe-hemisphere-east-bold"></span></span>
+            </div>
+          </div>
+          <button class="options-btn" aria-label="Post Options">⋮</button>
+        </div>
+
+        <div class="post-content">
+          <p>Maastricht's Problem-Based Learning (PBL) doesn't stop when you graduate. Real financial markets are the ultimate tutorial group! 📊</p>
+          <p>I just posted a complex hedging challenge to our SBE PBL Hub. We are evaluating option spreads under extreme inflationary shifts. If you studied with me in the <strong>2024 Period 5 Finance Tutorial 01</strong>, or are an SBE risk enthusiast, jump in and let's solve this case together!</p>
+          <p class="hashtag">#MaastrichtUniversity #SBEFinance #ProblemBasedLearning #HedgingCase</p>
+          
+          <!-- Embedded mini PBL hub card -->
+          <div class="post-pbl-box">
+            <div class="pbl-title"><span class="iconify" data-icon="ph:lightbulb-bold"></span> Active PBL Case: Option Portfolios under Inflation</div>
+            <div class="pbl-summary">Evaluating the resilience of bear-put spreads against index shocks. 3 solutions submitted. Click to view on PBL Hub.</div>
+          </div>
+        </div>
+
+        <div class="post-stats">
+          <span class="likes-count"><span class="iconify" data-icon="ph:thumbs-up-fill"></span> Constantijn Van Oranje and 42 others</span>
+          <span>8 comments • 3 shares</span>
+        </div>
+
+        <div class="post-actions">
+          <button class="action-btn"><span class="iconify" data-icon="ph:thumbs-up-bold"></span> Like</button>
+          <button class="action-btn" onclick="window.location.hash = '#pbl-hub'"><span class="iconify" data-icon="ph:chat-text-bold"></span> Collaborate</button>
+          <button class="action-btn"><span class="iconify" data-icon="ph:share-network-bold"></span> Share</button>
+        </div>
+      </article>
+
+      <!-- POST 2: STAY CONNECTED BANNER (Official) -->
+      <article class="sbe-card feed-post">
+        <div class="post-header">
+          <div class="author-info">
+            <img src="Image_ressources/Mood_images/eukste_bezienswaardigheden_maastricht_townhouse.jpg" alt="Leann Poeth" class="avatar">
+            <div class="details">
+              <span class="name">Leann Poeth <span class="iconify" data-icon="ph:seal-check-fill" style="color: var(--um-orange-red);" title="Staff Alumnus"></span></span>
+              <span class="headline">Alumni Relations Director at School of Business and Economics</span>
+              <span class="time">5 hours ago • <span class="iconify" data-icon="ph:globe-hemisphere-east-bold"></span></span>
+            </div>
+          </div>
+          <button class="options-btn" aria-label="Post Options">⋮</button>
+        </div>
+
+        <div class="post-content">
+          <p>We are excited to launch the brand-new digital portal for the SBE Alumni Network! 🚀</p>
+          <p>With more than 50,000 alumni worldwide, our goal is to build an active, engaged professional community. Whether you want to recruit SBE talent, collaborate on academic Problem-Based Learning cases, or track tutorial classmate reunions at our upcoming events, stay connected! Check out the Premium subscription to search our complete, granular tutorial database.</p>
+        </div>
+
+        <div class="post-image">
+          <img src="Image_ressources/banner_stay_connected_to_your_lifelong_global_network.png" alt="Stay connected to your lifelong global network banner">
+        </div>
+
+        <div class="post-stats">
+          <span class="likes-count"><span class="iconify" data-icon="ph:thumbs-up-fill"></span> David Döbele and 108 others</span>
+          <span>12 comments • 15 shares</span>
+        </div>
+
+        <div class="post-actions">
+          <button class="action-btn"><span class="iconify" data-icon="ph:thumbs-up-bold"></span> Like</button>
+          <button class="action-btn" onclick="window.location.hash = '#jobs'"><span class="iconify" data-icon="ph:crown-bold"></span> View Premium</button>
+          <button class="action-btn"><span class="iconify" data-icon="ph:share-network-bold"></span> Share</button>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- ==========================================
+       RIGHT COLUMN: RECOMMENDATIONS & SCENIC
+       ========================================== -->
+  <aside class="right-sidebar" role="complementary" aria-label="Recommendations and Spotlights">
+    
+    <!-- "Add to your feed" SBE Alumni Recommendations -->
+    <div class="sbe-card widget-card">
+      <h3 class="widget-title">Add to your feed</h3>
+      <ul class="recommendation-list">
+        <li class="rec-item">
+          <img src="Image_ressources/University_images/csm_InformateurHOP_BalkansCat_1ac159a82c.jpg" alt="Jon Gray" class="avatar">
+          <div class="info">
+            <span class="name">Jon Gray</span>
+            <span class="title">President & Chief Operating Officer at Carl-Square</span>
+          </div>
+          <button class="follow-btn" aria-label="Follow Jon Gray">+ Follow</button>
+        </li>
+        <li class="rec-item" style="border-top: 1px solid var(--color-border); padding-top: var(--space-2); margin-top: var(--space-2);">
+          <img src="Image_ressources/University_images/unnamed.jpg" alt="Constantijn Van Oranje" class="avatar">
+          <div class="info">
+            <span class="name">Constantijn Van Oranje</span>
+            <span class="title">Envoy at Techleap.nl | Startup SBE Lead Partner</span>
+          </div>
+          <button class="follow-btn" aria-label="Follow Constantijn Van Oranje">+ Follow</button>
+        </li>
+        <li class="rec-item" style="border-top: 1px solid var(--color-border); padding-top: var(--space-2); margin-top: var(--space-2);">
+          <img src="Image_ressources/University_images/SBE.28MEI0040 2_www.lauraknipsael.com_.jpg" alt="David Döbele" class="avatar">
+          <div class="info">
+            <span class="name">David Döbele</span>
+            <span class="title">Co-Founder @ pumpkin careers | Munich Alumni Chair</span>
+          </div>
+          <button class="follow-btn" aria-label="Follow David Döbele">+ Follow</button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Scenic Maastricht Sehenswürdigkeiten Branded Widget -->
+    <div class="sbe-card scenic-card">
+      <img src="Image_ressources/Mood_images/maastricht-sehenswuerdigkeiten-00.jpg" alt="Scenic Maastricht bridge and river landscape" class="scenic-image">
+      <div class="overlay"></div>
+      <div class="scenic-content">
+        <span class="tag">Maastricht City</span>
+        <h3 class="title">Maastricht Sehenswürdigkeiten</h3>
+        <p style="font-size: 10px; color: oklch(1 0 0 / 0.8); margin-top: 2px;">Reconnect with the historic city where your business journey began.</p>
+        <a href="#events" class="cta">
+          Explore Alumni events <span class="iconify" data-icon="ph:arrow-right-bold"></span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- ==========================================
+     NATIVE HTML5 CREATE POST MODAL DIALOG
+     ========================================== -->
+<dialog id="post-modal" class="sbe-modal" aria-labelledby="post-modal-title">
+  <div class="modal-wrapper">
+    <div class="modal-header">
+      <h3 id="post-modal-title">Create SBE Feed Post</h3>
+      <button class="close-btn" aria-label="Close modal">✕</button>
+    </div>
+    <form method="dialog">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="post-degree">Select Academic Degree Badge</label>
+          <select id="post-degree" required>
+            <option value="M.Sc.">M.Sc. (Master's - Red)</option>
+            <option value="B.Sc.">B.Sc. (Bachelor's - Orange)</option>
+            <option value="Ph.D.">Ph.D. (Doctorate - Blue)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="post-text-input">What's on your mind?</label>
+          <textarea id="post-text-input" placeholder="Share a case study, problem, tutorial memory, or vacancy..." required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn">Cancel</button>
+        <button type="submit" class="submit-btn">Post</button>
+      </div>
+    </form>
+  </div>
+</dialog>

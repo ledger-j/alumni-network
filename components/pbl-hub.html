@@ -1,0 +1,185 @@
+<!-- ==========================================
+     Maastricht University SBE Alumni Network
+     PBL Problem Solving Hub (pbl-hub.html)
+     ========================================== -->
+
+<div style="max-width: 1200px; margin: var(--space-6) auto; padding-inline: var(--space-4);">
+  
+  <!-- PBL Hub Header Intro -->
+  <div class="pbl-hub-header">
+    <div class="pbl-hub-intro">
+      <h2>Problem-Based Learning Hub</h2>
+      <p>
+        In SBE, we learn by solving problems together. The PBL Hub extends Maastricht's core methodology to the professional world. Students submit complex academic or industrial case studies, and alumni collaborate to deliver real-world answers.
+      </p>
+    </div>
+    <div class="pbl-action">
+      <button class="pbl-create-btn" aria-label="Submit a Case Study">
+        <span class="iconify" data-icon="ph:plus-bold"></span> Post SBE Case
+      </button>
+    </div>
+  </div>
+
+  <!-- PBL Active Cases List -->
+  <div class="pbl-cases-list">
+    
+    <!-- CASE 1: INTERNATIONAL FINANCIAL MANAGEMENT (Option Portfolios) -->
+    <article class="sbe-card pbl-case-card">
+      <div class="case-header">
+        <span class="course-tag">International Financial Management</span>
+        <span class="difficulty-rating">
+          <span class="iconify" data-icon="ph:star-fill"></span>
+          <span class="iconify" data-icon="ph:star-fill"></span>
+          <span class="iconify" data-icon="ph:star-fill"></span>
+          <span style="margin-left: 4px;">Advanced Risk</span>
+        </span>
+      </div>
+
+      <h3 class="case-title">Evaluating Option Portfolio Hedging Resilience Against Index Shocks</h3>
+      
+      <div class="case-author">
+        <img src="Image_ressources/Mood_images/nikhil1256_A_man_walking_dressed_in_professional_business_attir_8fa44d19-f313-4ba2-aba1-72254228f5eb.png" alt="Jean Maurice avatar">
+        <span>Submitted by <span class="author-name">Jean Maurice H.</span> (Current M.Sc. Student) • Period 5 Tutorial 01</span>
+      </div>
+
+      <p class="case-description">
+        In our recent IFM tutorial, we debated the efficiency of bear-put options spreads to hedge portfolio equity drawdowns during sudden European Central Bank interest rate adjustments. Under high-volatility shifts, standard delta hedging breaks down. How do practicing financial risk analysts adjust their gamma and vega sensitivities to maintain structural portfolio defense without eroding excessive margin yield? We would value SBE risk mentors' insights!
+      </p>
+
+      <div class="case-stats">
+        <span class="active-solutions"><span class="iconify" data-icon="ph:chat-text-bold"></span> 2 solutions proposed by Alumni</span>
+        <span><span class="iconify" data-icon="ph:eye-bold"></span> 84 alumni viewed</span>
+      </div>
+
+      <!-- Solutions Sub-Panel (PBL Mentorship in action) -->
+      <div class="case-solutions-preview">
+        <h4 style="font-size: var(--text-xs); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-1);">Mentors Discussion</h4>
+        
+        <!-- Solution 1: Ruben Hassid (Binance/Finance lead) -->
+        <div class="solution-item">
+          <!-- Upvote Count Widget -->
+          <div class="upvote-widget" role="button" aria-label="Upvote this solution" tabindex="0">
+            <span class="iconify" data-icon="ph:caret-up-bold"></span>
+            <span class="count">28</span>
+          </div>
+          <div class="solution-body">
+            <div class="solution-meta">
+              <strong>Ruben Hassid</strong> (Senior Portfolio Risk Architect)
+              <span class="mentor-badge">SBE Gold Mentor</span>
+              • 1 hour ago
+            </div>
+            <p class="solution-text">
+              Great question, Jean! In active trading desks, relying strictly on delta-gamma neutral modeling fails during ECB index shocks due to extreme "volatility smiles" (vega drift). We solve this by over-hedging the out-of-the-money vega components (purchasing further OTM puts) and scaling into dynamic ratio spreads. This creates a net vega-positive posture that appreciates when systemic volatility spikes, protecting the overall asset block while keeping premium costs low.
+            </p>
+          </div>
+        </div>
+
+        <!-- Solution 2: Linas Beliūnas (Binance) -->
+        <div class="solution-item" style="margin-top: var(--space-2);">
+          <div class="upvote-widget" role="button" aria-label="Upvote this solution" tabindex="0">
+            <span class="iconify" data-icon="ph:caret-up-bold"></span>
+            <span class="count">14</span>
+          </div>
+          <div class="solution-body">
+            <div class="solution-meta">
+              <strong>Linas Beliūnas</strong> (Risk Strategy Architect at Binance)
+              <span class="mentor-badge">SBE Alumnus</span>
+              • 30 mins ago
+            </div>
+            <p class="solution-text">
+              I agree with Ruben's strategy. At Binance, we look at volatility spikes with severe tail-risk metrics. Delta-neutral rebalancing on a fixed timetable is suicide during index shock runs. You should incorporate threshold-based triggers (e.g. rebalance only if the underlying moves by more than 1.5 standard deviations) rather than fixed-time schedules. This prevents over-trading fees and retains defensive coverage when liquidity dries up.
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 2: PROBLEM BASED LEARNING IN FINANCE (Startup Valuation) -->
+    <article class="sbe-card pbl-case-card">
+      <div class="case-header">
+        <span class="course-tag">Problem Based Learning in Finance</span>
+        <span class="difficulty-rating">
+          <span class="iconify" data-icon="ph:star-fill"></span>
+          <span class="iconify" data-icon="ph:star-fill"></span>
+          <span style="margin-left: 4px;">Intermediate</span>
+        </span>
+      </div>
+
+      <h3 class="case-title">Valuation Metrics for Tech Startups Under Hyper-Inflationary Squeezes</h3>
+      
+      <div class="case-author">
+        <img src="Image_ressources/Mood_images/conik_photograph_slightly_high-angle_top-down_view_early_mornin_e5cdc1d7-d669-4f45-8b59-5533de6fd313.png" alt="Elena Rostova avatar">
+        <span>Submitted by <span class="author-name">Elena Rostova</span> (Current B.Sc. Student) • Period 2 Tutorial 02</span>
+      </div>
+
+      <p class="case-description">
+        Standard Discounted Cash Flow (DCF) models assume relatively stable cost profiles. However, startup valuations in the local Dutch market are currently facing soaring wage and capital costs. SBE risk groups are debating if Multiples valuation (EV/ARR) remains a reliable anchor, or if we should pivot to Option Pricing Models (OPM) to capture the flexibilities of early-stage software companies. We invite SBE venture capital specialists to guide us!
+      </p>
+
+      <div class="case-stats">
+        <span class="active-solutions"><span class="iconify" data-icon="ph:chat-text-bold"></span> 1 solution proposed by Alumni</span>
+        <span><span class="iconify" data-icon="ph:eye-bold"></span> 52 alumni viewed</span>
+      </div>
+
+      <div class="case-solutions-preview">
+        <h4 style="font-size: var(--text-xs); color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--space-1);">Mentors Discussion</h4>
+        
+        <!-- Solution 1: Sophie van der Meer -->
+        <div class="solution-item">
+          <div class="upvote-widget" role="button" aria-label="Upvote this solution" tabindex="0">
+            <span class="iconify" data-icon="ph:caret-up-bold"></span>
+            <span class="count">19</span>
+          </div>
+          <div class="solution-body">
+            <div class="solution-meta">
+              <strong>Sophie van der Meer</strong> (Corporate Finance Associate at KPMG)
+              <span class="mentor-badge">SBE Alumnus</span>
+              • 3 hours ago
+            </div>
+            <p class="solution-text">
+              Great debate topic, Elena! Standard EV/ARR multiples can be highly deceptive during inflationary peaks because capital costs squeeze terminal valuations. At KPMG, we currently blend the OPM (Option Pricing Model) to value operational flexibilities, but heavily discount the final multiples by an inflationary risk index (around 15-20% haircuts). DCF is only useful if you stress-test the WACC above 12% to reflect high debt cost.
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</div>
+
+<!-- ==========================================
+     NATIVE HTML5 SUBMIT PBL CASE MODAL
+     ========================================== -->
+<dialog id="pbl-create-modal" class="sbe-modal" aria-labelledby="pbl-modal-title">
+  <div class="modal-wrapper">
+    <div class="modal-header">
+      <h3 id="pbl-modal-title">Post SBE PBL Case Challenge</h3>
+      <button class="close-btn" aria-label="Close modal">✕</button>
+    </div>
+    <form method="dialog">
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="case-title-input">Problem Case Title</label>
+          <input type="text" id="case-title-input" placeholder="e.g. Stress-Testing Hedging Strategies under ECB Interest Shifts" required>
+        </div>
+        <div class="form-group">
+          <label for="case-course-input">Target SBE Course</label>
+          <select id="case-course-input" required>
+            <option value="International Financial Management">International Financial Management</option>
+            <option value="Problem Based Learning in Finance">Problem Based Learning in Finance</option>
+            <option value="Quantitative Modeling">Quantitative Modeling</option>
+            <option value="Marketing Strategy">Marketing Strategy</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="case-desc-input">Detailed Case Description</label>
+          <textarea id="case-desc-input" placeholder="Outline the quantitative parameters, the tutorial debate questions, and where you seek SBE Alumni guidance..." required></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="cancel-btn">Cancel</button>
+        <button type="submit" class="submit-btn">Submit Case</button>
+      </div>
+    </form>
+  </div>
+</dialog>

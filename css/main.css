@@ -1,0 +1,211 @@
+/* ==========================================
+   Maastricht University SBE Alumni Network
+   Core Design System & Stylesheet (May 2026)
+   ========================================== */
+
+@layer reset, base, tokens, components, utilities;
+
+@layer reset {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  input, button, textarea, select {
+    font: inherit;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ul, ol {
+    list-style: none;
+  }
+}
+
+@layer tokens {
+  :root {
+    /* === MAASTRICHT UNIVERSITY HOUSE STYLE TOKENS === */
+    --um-dark-blue: oklch(0.14 0.07 264);    /* #001C3D - Primary Dark Blue */
+    --um-orange-red: oklch(0.60 0.20 38);   /* #E84E10 - Accent Orange-Red */
+    --um-light-blue: oklch(0.65 0.14 224);  /* #00A2DB - Accent Light Blue */
+    --um-white: oklch(1.00 0.00 0);         /* #FFFFFF */
+    
+    /* Academic specific colors */
+    --um-bachelor: oklch(0.74 0.15 70);     /* #F39425 - Bachelor Orange */
+    --um-master: oklch(0.38 0.19 27);       /* #AE0B12 - Master Red */
+
+    /* Semantic UI Theme Palette - Bright Mode (LinkedIn Signature Warm Grey & White Contrasts) */
+    --color-bg: oklch(0.96 0.005 80);        /* #F3F2EF - LinkedIn warm light grey background */
+    --color-surface: oklch(1.00 0.00 0);      /* #FFFFFF - Pure white card surface */
+    --color-surface-hover: oklch(0.98 0.003 80); /* Soft hover grey */
+    --color-border: oklch(0.91 0.005 80);     /* Soft border grey (#e0deda-like) */
+    --color-text-primary: oklch(0.15 0.01 80); /* Dark neutral charcoal text */
+    --color-text-secondary: oklch(0.42 0.01 80); /* Medium grey text */
+    --color-text-muted: oklch(0.60 0.01 80);   /* Muted grey text */
+    --color-accent-bg: oklch(0.95 0.02 38 / 0.1);
+    --color-premium: oklch(0.55 0.16 264);   /* Brand premium science-blue */
+
+    /* === TYPOGRAPHY TOKENS === */
+    --font-heading: 'Outfit', 'Thesis Sans', 'TheSans', 'Verdana', sans-serif;
+    --font-body: 'Inter', 'Verdana', 'Geneva', sans-serif;
+
+    --text-xs: clamp(0.7rem, 0.65rem + 0.2vw, 0.75rem);
+    --text-sm: clamp(0.8rem, 0.75rem + 0.2vw, 0.875rem);
+    --text-base: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
+    --text-lg: clamp(1.1rem, 1.05rem + 0.25vw, 1.25rem);
+    --text-xl: clamp(1.3rem, 1.2rem + 0.3vw, 1.5rem);
+    --text-2xl: clamp(1.6rem, 1.5rem + 0.4vw, 1.875rem);
+    --text-3xl: clamp(2.0rem, 1.8rem + 0.5vw, 2.5rem);
+
+    /* === SPACING TOKENS === */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+
+    /* === SHAPES & CORNERS === */
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+
+    /* === ELEVATION SHADOWS === */
+    --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.05);
+    --shadow-md: 0 4px 12px oklch(0.14 0.07 264 / 0.04), 0 1px 3px oklch(0 0 0 / 0.02);
+    --shadow-lg: 0 12px 32px oklch(0.14 0.07 264 / 0.08), 0 2px 8px oklch(0 0 0 / 0.04);
+    --shadow-glow: 0 0 20px oklch(0.60 0.20 38 / 0.15);
+
+    /* === TRANSITIONS === */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    transition: background-color var(--transition-normal), color var(--transition-normal);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    line-height: 1.2;
+  }
+
+  h1 { font-size: var(--text-3xl); }
+  h2 { font-size: var(--text-2xl); }
+  h3 { font-size: var(--text-xl); }
+  h4 { font-size: var(--text-lg); }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: var(--radius-full);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+  }
+
+  /* Accessibility skip-link */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+
+    &:focus {
+      position: fixed;
+      top: var(--space-4);
+      left: var(--space-4);
+      width: auto;
+      height: auto;
+      padding: var(--space-3) var(--space-6);
+      background: var(--um-orange-red);
+      color: var(--um-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      z-index: 99999;
+      font-family: var(--font-heading);
+      font-weight: 600;
+    }
+  }
+
+  /* Focus rings */
+  :focus-visible {
+    outline: 2px solid var(--um-orange-red);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  .text-center { text-align: center; }
+  .text-muted { color: var(--color-text-muted); }
+  .font-heading { font-family: var(--font-heading); }
+  .font-body { font-family: var(--font-body); }
+  
+  .flex { display: flex; }
+  .flex-col { flex-direction: column; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .gap-2 { gap: var(--space-2); }
+  .gap-4 { gap: var(--space-4); }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}

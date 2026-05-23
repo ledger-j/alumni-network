@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Maastricht University SBE Alumni Network - A highly modern, Problem-Based Learning centric professional portal.">
+  <title>UM SBE Alumni Network</title>
+
+  <!-- Google Fonts - Outfit (Geometric Headings) & Inter (Clean Body Text) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Iconify CDN (Universal Access to 200,000+ icons) -->
+  <script src="https://code.iconify.design/3/3.1.1/iconify.min.js" defer></script>
+
+  <!-- View Transitions Opt-in for Same-Origin Multi-Document Transitions -->
+  <style>
+    @view-transition { navigation: auto; }
+  </style>
+
+  <!-- Custom Design Tokens and Base Styles -->
+  <link rel="stylesheet" href="css/main.css?v=1.0.3">
+  <!-- Component Specific Styles -->
+  <link rel="stylesheet" href="css/components.css?v=1.0.3">
+</head>
+<body>
+
+  <!-- Accessible Skip Navigation Link -->
+  <a href="#app-viewport" class="skip-link">Skip to main content</a>
+
+  <!-- Maastricht University Branded Navigation Header -->
+  <header class="global-header" role="banner">
+    <div class="logo-area">
+      <!-- Branded SBE Crest Logo -->
+      <img src="SBE_logo.png" alt="Maastricht University SBE Logo" class="um-logo">
+
+      <div class="divider"></div>
+      <div class="app-title">SBE <span>Alumni</span></div>
+    </div>
+
+    <!-- Navigation Menu representing a mini LinkedIn -->
+    <nav class="nav-menu" aria-label="Primary Navigation">
+      <div class="nav-item active" data-page="feed" role="button" tabindex="0" aria-label="Home Feed">
+        <span class="iconify" data-icon="ph:house-duotone"></span>
+        Home
+      </div>
+      <div class="nav-item" data-page="network" role="button" tabindex="0" aria-label="AI Connections Network">
+        <span class="iconify" data-icon="ph:users-three-duotone"></span>
+        My Network
+        <span class="badge">AI</span>
+      </div>
+      <div class="nav-item" data-page="pbl-hub" role="button" tabindex="0" aria-label="PBL Solving Hub">
+        <span class="iconify" data-icon="ph:lightbulb-filament-duotone"></span>
+        PBL Hub
+      </div>
+      <div class="nav-item" data-page="events" role="button" tabindex="0" aria-label="Events and Classmates Overlap">
+        <span class="iconify" data-icon="ph:calendar-blank-duotone"></span>
+        Events
+        <span class="badge" id="events-overlap-badge">3</span>
+      </div>
+      <div class="nav-item" data-page="jobs" role="button" tabindex="0" aria-label="Career Portal">
+        <span class="iconify" data-icon="ph:briefcase-duotone"></span>
+        Jobs & Premium
+      </div>
+      
+      <div class="divider" style="height: 20px;"></div>
+
+      <!-- User Profile Dropdown Pill -->
+      <div class="nav-item" id="profile-pill" role="button" tabindex="0" aria-label="User Profile menu">
+        <img src="Image_ressources/Mood_images/nikhil1256_A_man_walking_dressed_in_professional_business_attir_8fa44d19-f313-4ba2-aba1-72254228f5eb.png" alt="Jean Maurice profile picture" style="width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--um-light-blue);">
+        Me
+      </div>
+    </nav>
+  </header>
+
+  <!-- Dynamic Content Viewport (SPA Mount Point) -->
+  <div id="app-viewport" role="main" aria-live="polite">
+    <!-- Default dynamic loading state (replaced immediately by js/app.js) -->
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 60vh; gap: var(--space-4);">
+      <span class="iconify" data-icon="svg-spinners:ring-resize" style="font-size: 40px; color: var(--um-orange-red);"></span>
+      <p style="font-family: var(--font-heading); font-weight: 600; color: var(--color-text-secondary);">Recalling network database...</p>
+    </div>
+  </div>
+
+  <!-- SPA Router & Page Loader Script -->
+  <script src="js/app.js?v=1.0.3" defer></script>
+</body>
+</html>
