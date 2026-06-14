@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <div class="profile-info">
         <h2 class="name">Jean Maurice H. <span class="iconify" data-icon="ph:seal-check-fill" style="color: var(--um-light-blue); font-size: 16px;" title="Verified Alumnus"></span></h2>
-        <p class="title">M.Sc. Financial Economics | B.Sc. International Business<br><strong>Maastricht University SBE</strong></p>
+        <p class="title">M.Sc. Financial Economics | B.Sc. International Business<br><strong>Maastricht University</strong></p>
         <p class="meta"><span class="iconify" data-icon="ph:map-pin-bold"></span> Maastricht, Limburg</p>
       </div>
 
@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
 
         <div class="post-content">
-          <p>We are excited to launch the brand-new digital portal for the SBE Alumni Network! 🚀</p>
-          <p>With more than 50,000 alumni worldwide, our goal is to build an active, engaged professional community. Whether you want to recruit SBE talent, collaborate on academic Problem-Based Learning cases, or track tutorial classmate reunions at our upcoming events, stay connected! Check out the Premium subscription to search our complete, granular tutorial database.</p>
+          <p>We are excited to launch the brand-new digital portal for the UniCircle Network! 🚀</p>
+          <p>With more than 50,000 alumni worldwide, our goal is to build an active, engaged professional community. Whether you want to recruit UM talent, collaborate on academic Problem-Based Learning cases, or track tutorial classmate reunions at our upcoming events, stay connected! Support the platform with our Give What You Can contribution to search our complete, granular tutorial database.</p>
         </div>
 
         <div class="post-image">
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <dialog id="post-modal" class="sbe-modal" aria-labelledby="post-modal-title">
   <div class="modal-wrapper">
     <div class="modal-header">
-      <h3 id="post-modal-title">Create SBE Feed Post</h3>
+      <h3 id="post-modal-title">Create UniCircle Feed Post</h3>
       <button class="close-btn" aria-label="Close modal">✕</button>
     </div>
     <form method="dialog">
@@ -244,9 +244,18 @@ document.addEventListener('DOMContentLoaded', () => {
 `,
     network: `
 <div style="max-width: 1200px; margin: var(--space-6) auto; padding-inline: var(--space-4);">
-  
-  <!-- AI Search Container Header -->
-  <div class="ai-search-container">
+
+  <!-- My Network Sub-Navigation Tabs -->
+  <div style="display: flex; gap: var(--space-3); margin-bottom: var(--space-5); overflow-x: auto; padding-bottom: var(--space-2); border-bottom: 1px solid var(--color-border);">
+    <button class="action-btn active" style="background-color: var(--um-dark-blue); color: white;" onclick="document.getElementById('network-directory').scrollIntoView({behavior: 'smooth'})">Alumni Directory</button>
+    <button class="action-btn" onclick="document.getElementById('city-hubs').scrollIntoView({behavior: 'smooth'})">City Hubs</button>
+    <button class="action-btn" onclick="document.getElementById('mentorship').scrollIntoView({behavior: 'smooth'})">Mentorship</button>
+    <button class="action-btn" onclick="document.getElementById('guest-lectures').scrollIntoView({behavior: 'smooth'})">Guest Lectures</button>
+  </div>
+
+  <div id="network-directory">
+    <!-- AI Search Container Header -->
+    <div class="ai-search-container">
     <div class="ai-header">
       <span class="iconify sparkle-icon" data-icon="ph:sparkles-duotone"></span>
       <div>
@@ -294,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="filter-group">
         <label for="filter-course">Course Taken</label>
         <select id="filter-course" aria-label="Filter by Course">
-          <option value="">All SBE Courses</option>
+          <option value="">All UM Courses</option>
           <option value="International Financial Management">International Financial Management</option>
           <option value="Problem Based Learning in Finance">Problem Based Learning in Finance</option>
           <option value="Quantitative Modeling">Quantitative Modeling</option>
@@ -456,6 +465,103 @@ document.addEventListener('DOMContentLoaded', () => {
     </article>
 
   </div>
+  </div>
+
+  <hr style="margin: var(--space-6) 0; border: none; height: 1px; background-color: var(--color-border);">
+
+  <!-- City Alumni Hubs -->
+  <div id="city-hubs" style="margin-bottom: var(--space-6); scroll-margin-top: 100px;">
+    <h3 style="font-family: var(--font-heading); font-size: var(--text-md); font-weight: 800; margin-bottom: var(--space-4);">City Alumni Hubs <span style="font-weight: 500; font-size: var(--text-xs); color: var(--color-text-muted);">(Connect locally)</span></h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--space-4);">
+      <div class="sbe-card" style="padding: var(--space-4);">
+        <h4 style="font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-2);"><span class="iconify" data-icon="ph:map-pin-fill" style="color: var(--um-orange-red);"></span> Munich, Germany</h4>
+        <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-3);">3,420 UniCircle members • Led by David Döbele</p>
+        <div style="display: flex; gap: -10px; margin-bottom: var(--space-3);">
+          <img src="Image_ressources/University_images/SBE.28MEI0040 2_www.lauraknipsael.com_.jpg" style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; z-index: 3;" alt="Member">
+          <img src="Image_ressources/Mood_images/conik_photograph_slightly_high-angle_top-down_view_early_mornin_e5cdc1d7-d669-4f45-8b59-5533de6fd313.png" style="width: 30px; height: 30px; border-radius: 50%; border: 2px solid white; z-index: 2; margin-left: -10px;" alt="Member">
+          <div style="width: 30px; height: 30px; border-radius: 50%; background: var(--color-surface-hover); border: 2px solid white; z-index: 1; margin-left: -10px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold;">+3k</div>
+        </div>
+        <button class="connect-btn" style="width: 100%;">Join Munich Hub</button>
+      </div>
+      <div class="sbe-card" style="padding: var(--space-4);">
+        <h4 style="font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-2);"><span class="iconify" data-icon="ph:map-pin-fill" style="color: var(--um-orange-red);"></span> London, UK</h4>
+        <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-3);">2,850 UniCircle members • Financial District</p>
+        <button class="connect-btn" style="width: 100%;">Join London Hub</button>
+      </div>
+      <div class="sbe-card" style="padding: var(--space-4);">
+        <h4 style="font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-2);"><span class="iconify" data-icon="ph:map-pin-fill" style="color: var(--um-orange-red);"></span> Amsterdam, NL</h4>
+        <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-3);">5,100 UniCircle members • Zuidas Hub</p>
+        <button class="connect-btn" style="width: 100%;">Join Amsterdam Hub</button>
+      </div>
+    </div>
+  </div>
+
+  <hr style="margin: var(--space-6) 0; border: none; height: 1px; background-color: var(--color-border);">
+
+  <!-- Mentorship -->
+  <div id="mentorship" style="margin-bottom: var(--space-6); scroll-margin-top: 100px;">
+    <h3 style="font-family: var(--font-heading); font-size: var(--text-md); font-weight: 800; margin-bottom: var(--space-4);">UM Mentorship Exchange</h3>
+    <div style="display: flex; flex-wrap: wrap; gap: var(--space-4);">
+      <div class="sbe-card" style="flex: 1; min-width: 300px; background: linear-gradient(135deg, var(--um-dark-blue) 0%, var(--um-light-blue) 100%); color: white; border: none;">
+        <h4 style="color: white; margin-bottom: var(--space-2);">Are you a current student?</h4>
+        <p style="font-size: var(--text-xs); opacity: 0.9; margin-bottom: var(--space-4);">Connect with experienced UniCircle members for career guidance, internship advice, and resume reviews.</p>
+        <button style="background: white; color: var(--um-dark-blue); border: none; padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer;">Find a Mentor</button>
+      </div>
+      <div class="sbe-card" style="flex: 1; min-width: 300px; border-left: 4px solid var(--um-orange-red);">
+        <h4 style="margin-bottom: var(--space-2);">Give back to UM</h4>
+        <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-4);">Help the next generation of UM graduates. Offer 1-on-1 mentorship or quick resume reviews.</p>
+        <button class="connect-btn">Become a Mentor</button>
+      </div>
+    </div>
+    <!-- Sample Mentors -->
+    <div style="margin-top: var(--space-4);">
+      <h4 style="font-size: var(--text-sm); font-weight: 700; margin-bottom: var(--space-3);">Available Mentors</h4>
+      <div class="alumni-grid">
+        <article class="sbe-card alumni-card" style="display: flex; flex-direction: column;">
+          <div class="card-header">
+            <img src="Image_ressources/Mood_images/images-maastricht.jpg" alt="Sophie van der Meer avatar" class="avatar">
+            <div class="basics">
+              <h4 class="name">Sophie van der Meer</h4>
+              <span class="degree">Consulting Mentor</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="headline">Corporate Finance at KPMG</p>
+            <p class="meta-details" style="font-size: 10px; margin-top: 8px;">Offering: CV Review, Interview Prep</p>
+          </div>
+          <div class="card-footer" style="margin-top: auto;">
+            <button class="connect-btn" style="width: 100%;">Request Mentorship</button>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <hr style="margin: var(--space-6) 0; border: none; height: 1px; background-color: var(--color-border);">
+
+  <!-- Guest Lectures -->
+  <div id="guest-lectures" style="margin-bottom: var(--space-6); scroll-margin-top: 100px;">
+    <h3 style="font-family: var(--font-heading); font-size: var(--text-md); font-weight: 800; margin-bottom: var(--space-4);">Guest Lecture Board</h3>
+    <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-bottom: var(--space-4);">UM lecturers regularly seek industry experts to enrich the curriculum. Alumni can volunteer their expertise for upcoming courses.</p>
+    
+    <div style="display: grid; gap: var(--space-4);">
+      <article class="sbe-card" style="padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div>
+            <span style="font-size: 10px; font-weight: 700; color: var(--um-orange-red); text-transform: uppercase; letter-spacing: 0.5px;">Seeking Speaker</span>
+            <h4 style="font-size: var(--text-sm); font-weight: 700; margin-top: 4px;">Real-world impacts of AI in FinTech</h4>
+            <p style="font-size: 12px; color: var(--color-text-secondary);">Course: Technology & Innovation Management • Nov 2026</p>
+          </div>
+          <img src="Image_ressources/Mood_images/eukste_bezienswaardigheden_maastricht_townhouse.jpg" alt="Prof" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+        </div>
+        <p style="font-size: var(--text-xs); line-height: 1.5;">We are looking for an alumnus working in FinTech or Banking to discuss how AI is altering risk assessment models. Estimated commitment: 1 hour online lecture + Q&A.</p>
+        <div style="display: flex; gap: var(--space-2); margin-top: auto;">
+          <button class="connect-btn">Volunteer to Speak</button>
+        </div>
+      </article>
+    </div>
+  </div>
+
 </div>
 
 <!-- NATIVE HTML5 INVITE ALUMNI TO CASE MODAL -->
@@ -676,9 +782,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   <!-- Events Intro Banner -->
   <div class="sbe-card" style="padding: var(--space-5); margin-bottom: var(--space-6); background: linear-gradient(135deg, var(--um-dark-blue) 0%, var(--um-light-blue) 100%); color: white; border: none;">
-    <h2 style="font-family: var(--font-heading); color: white; font-size: var(--text-2xl); font-weight: 800;">SBE Networking Events</h2>
+    <h2 style="font-family: var(--font-heading); color: white; font-size: var(--text-2xl); font-weight: 800;">UM Networking Events</h2>
     <p style="font-size: var(--text-sm); color: oklch(1 0 0 / 0.85); margin-top: var(--space-2); line-height: 1.4; max-width: 800px;">
-      Never attend an event alone. Our <strong>Tutorial Classmate Overlap</strong> tracker highlights which former classmates from your specific academic courses, periods, and tutorial sections are going, ensuring you always reunite with familiar faces.
+      Never attend an event alone. Our <strong>See Who Is Coming</strong> feature highlights which former classmates from your specific academic courses, periods, and tutorial sections are going, along with a full list of attending UniCircle members. Find old friends and expand your network.
     </p>
   </div>
 
@@ -700,9 +806,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <div class="event-details-side">
         <span class="event-location"><span class="iconify" data-icon="ph:map-pin-fill"></span> Munich, Germany</span>
-        <h3 class="event-title">Munich SBE Alumni Regional Meetup</h3>
+        <h3 class="event-title">Munich UniCircle Regional Meetup</h3>
         <p class="event-description">
-          Hosted by David Döbele at the Hofbräuhaus München. With over 3,000 Maastricht alumni based around Munich, join us to catch up on old times, expand your professional SBE network, and discuss regional career opportunities.
+          Hosted by David Döbele at the Hofbräuhaus München. With over 3,000 Maastricht alumni based around Munich, join us to catch up on old times, expand your professional UM network, and discuss regional career opportunities.
         </p>
 
         <!-- Classmate Overlap tracker pill -->
@@ -713,7 +819,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <img src="Image_ressources/Mood_images/eukste_bezienswaardigheden_maastricht_townhouse.jpg" alt="Classmate 3 avatar">
           </div>
           <div class="overlap-text">
-            <span>3 classmates</span> from your Period 5 Tutorial 01 are attending!
+            <span>3 classmates</span> from your Period 5 Tutorial 01 are attending, plus 142 other alumni!
           </div>
         </div>
       </div>
@@ -734,7 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <div class="event-details-side">
         <span class="event-location"><span class="iconify" data-icon="ph:map-pin-fill"></span> London, United Kingdom</span>
-        <h3 class="event-title">SBE London Finance Network Night</h3>
+        <h3 class="event-title">UM London Finance Network Night</h3>
         <p class="event-description">
           An exclusive financial gathering for SBE Alumni based in London, taking place at The Ned. Excellent chance to discuss asset management, investment banking strategies, and econometric modeling. Special panel lead by Carl-Square partners.
         </p>
@@ -766,7 +872,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <div class="event-details-side">
         <span class="event-location"><span class="iconify" data-icon="ph:map-pin-fill"></span> Maastricht, Netherlands</span>
-        <h3 class="event-title">SBE Maastricht Homecoming Reunion Gala 2026</h3>
+        <h3 class="event-title">UM Maastricht Homecoming Reunion Gala 2026</h3>
         <p class="event-description">
           Reunite where it all started! Join us on the Tapijn SBE campus for the annual Homecoming Dinner and Gala. Meet faculty members, explore the newly expanded classrooms, and network with over 500 alumni across all generations.
         </p>
@@ -801,7 +907,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
     <div class="modal-body" style="display: flex; flex-direction: column; gap: var(--space-4);">
       <p style="font-size: var(--text-xs); color: var(--color-text-secondary);">
-        The following SBE Alumni from your exact <strong>Period 5 Tutorial 01 (International Financial Management)</strong> are registered to attend this event:
+        The following UniCircle members from your exact <strong>Period 5 Tutorial 01 (International Financial Management)</strong> are registered to attend this event:
       </p>
       
       <!-- Classmate list -->
@@ -850,16 +956,16 @@ document.addEventListener('DOMContentLoaded', () => {
     </svg>
     
     <div class="partner-text">
-      <h4>Official Career Partner: Carl Square</h4>
+      <h4>Official UM Career Partner: Carl Square</h4>
       <p>
-        Carl Square is a leading global technology investment bank. Through our exclusive academic partnership, SBE Alumni get priority career access, exclusive internships, and senior placement vacancies.
+        Carl Square is a leading global technology investment bank. Through our exclusive academic partnership, UniCircle members get priority career access, exclusive internships, and senior placement vacancies.
       </p>
     </div>
   </div>
 
   <!-- Job Openings Header -->
   <div style="margin-bottom: var(--space-4);">
-    <h3 style="font-family: var(--font-heading); font-size: var(--text-md); font-weight: 800;">Featured SBE Opportunities</h3>
+    <h3 style="font-family: var(--font-heading); font-size: var(--text-md); font-weight: 800;">Featured UM Opportunities & Internships</h3>
   </div>
 
   <!-- Vacancy List -->
@@ -876,7 +982,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="meta-row">
           <span><span class="iconify" data-icon="ph:map-pin-bold"></span> Munich, Germany</span>
           <span><span class="iconify" data-icon="ph:clock-bold"></span> Full-Time Internship (6 months)</span>
-          <span><span class="iconify" data-icon="ph:graduation-cap-bold"></span> B.Sc. or M.Sc. SBE Students</span>
+          <span><span class="iconify" data-icon="ph:graduation-cap-bold"></span> Current UM Students & Alumni</span>
         </div>
       </div>
       <button class="apply-btn" aria-label="Apply to Risk Strategy Analyst Intern position">Quick Apply</button>
@@ -921,55 +1027,56 @@ document.addEventListener('DOMContentLoaded', () => {
   <!-- Subscription Tiers Section -->
   <div class="premium-tiers-container">
     <div class="tiers-headline">
-      <h3>Access the SBE Portal Database</h3>
+      <h3>Support the UniCircle Platform</h3>
       <p>
-        Support our network database infrastructure and unlock premium professional connections.
+        Help us maintain and grow this independent UniCircle digital infrastructure. 
+        We rely on a "Give what you can" model to keep our community fully connected, ensuring higher University funding isn't our only crutch.
       </p>
     </div>
 
     <div class="tiers-grid">
       
-      <!-- Tier 1 -->
+      <!-- Tier 1: Free -->
       <section class="sbe-card tier-card" aria-labelledby="basic-tier-title">
-        <h4 id="basic-tier-title" class="tier-name">Basic Network</h4>
+        <h4 id="basic-tier-title" class="tier-name">Standard Access</h4>
         <div class="tier-price">
           <span class="price">€0</span>
           <span class="period">/ forever</span>
         </div>
         
         <ul class="features-list">
-          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Receive SBE monthly newsletter</li>
-          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Update your personal profile</li>
-          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Register for basic alumni events</li>
-          <li style="opacity: 0.5;"><span class="iconify cross" data-icon="ph:x-circle-fill"></span> Complete alumni database search</li>
-          <li style="opacity: 0.5;"><span class="iconify cross" data-icon="ph:x-circle-fill"></span> Granular Course/Tutorial matching</li>
-          <li style="opacity: 0.5;"><span class="iconify cross" data-icon="ph:x-circle-fill"></span> Direct classmate messaging</li>
+          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Receive UM monthly newsletter</li>
+          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Participate in Mentorship & Guest Lectures</li>
+          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Register for UniCircle events</li>
+          <li style="opacity: 0.5;"><span class="iconify cross" data-icon="ph:x-circle-fill"></span> Priority profile visibility</li>
         </ul>
 
         <button class="select-tier-btn basic-btn" aria-label="Register for Basic Network tier">Active Membership</button>
       </section>
 
-      <!-- Tier 2 -->
+      <!-- Tier 2: Contribution -->
       <section class="sbe-card tier-card premium" aria-labelledby="premium-tier-title">
-        <span class="popular-tag">Engaged High-Profile</span>
-        <h4 id="premium-tier-title" class="tier-name" style="color: var(--um-orange-red);">Alumni Premium</h4>
-        <div class="tier-price">
-          <span class="price" style="color: var(--um-orange-red);">€9.99</span>
-          <span class="period">/ month</span>
+        <span class="popular-tag">Give What You Can</span>
+        <h4 id="premium-tier-title" class="tier-name" style="color: var(--um-orange-red);">Supporter Contribution</h4>
+        
+        <div style="margin: var(--space-3) 0; display: flex; flex-direction: column; gap: var(--space-2);">
+          <label for="contribution-amount" style="font-size: var(--text-xs); font-weight: 600;">Choose your monthly support:</label>
+          <div style="display: flex; align-items: center; gap: var(--space-2);">
+            <button style="border: 1px solid var(--um-orange-red); background: white; color: var(--um-orange-red); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: bold;">€5</button>
+            <button style="border: 1px solid var(--um-orange-red); background: var(--um-orange-red); color: white; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: bold;">€10</button>
+            <button style="border: 1px solid var(--um-orange-red); background: white; color: var(--um-orange-red); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: bold;">€25</button>
+            <input type="number" id="contribution-amount" placeholder="Other" style="width: 70px; padding: 4px; border: 1px solid var(--color-border); border-radius: 4px;">
+          </div>
         </div>
 
         <ul class="features-list">
-          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Receive SBE monthly newsletter</li>
-          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Update your personal profile</li>
-          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> Register for basic alumni events</li>
-          <li><span class="iconify check" data-icon="ph:check-circle-fill" style="color: var(--um-orange-red);"></span> <strong>Complete alumni database search</strong></li>
-          <li><span class="iconify check" data-icon="ph:check-circle-fill" style="color: var(--um-orange-red);"></span> <strong>Filter by SBE Course & Tutorial Group</strong></li>
-          <li><span class="iconify check" data-icon="ph:check-circle-fill" style="color: var(--um-orange-red);"></span> <strong>Direct classmates messaging & chat</strong></li>
+          <li><span class="iconify check" data-icon="ph:check-circle-fill"></span> All Standard features included</li>
+          <li><span class="iconify check" data-icon="ph:check-circle-fill" style="color: var(--um-orange-red);"></span> <strong>Directly fund platform independent hosting</strong></li>
+          <li><span class="iconify check" data-icon="ph:check-circle-fill" style="color: var(--um-orange-red);"></span> <strong>"Supporter" Profile Badge</strong></li>
           <li><span class="iconify check" data-icon="ph:check-circle-fill" style="color: var(--um-orange-red);"></span> Priority application for Carl Square vacancies</li>
-          <li><span class="iconify check" data-icon="ph:check-circle-fill" style="color: var(--um-orange-red);"></span> Invitations to closed regional gatherings</li>
         </ul>
 
-        <button class="select-tier-btn premium-btn" aria-label="Upgrade to Alumni Premium tier">Upgrade to Premium</button>
+        <button class="select-tier-btn premium-btn" aria-label="Upgrade to Alumni Supporter tier">Become a Supporter</button>
       </section>
 
     </div>
