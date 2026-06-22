@@ -123,12 +123,14 @@
     const close = () => host.remove();
     host.querySelector('.uc-x').onclick = close;
     host.querySelector('.uc-modal-backdrop').onclick = close;
+    const onKey = (e) => { if (e.key === 'Escape') { close(); document.removeEventListener('keydown', onKey); } };
+    document.addEventListener('keydown', onKey);
     return { host, close };
   }
 
   function requireBackend() {
     if (state.online) return true;
-    toast('The live backend isn\'t public yet — add the <b>api.unicircle.eu</b> DNS record to finish go-live.', 'warn');
+    toast('Could not reach <b>api.unicircle.eu</b> — check your internet connection.', 'warn');
     return false;
   }
 
@@ -149,6 +151,9 @@
         </label>
         <label>Email <input name="email" type="email" required placeholder="you@email.com" autocomplete="email"></label>
         <label>Password <input name="password" type="password" required minlength="8" placeholder="At least 8 characters" autocomplete="current-password"></label>
+        <label class="uc-su-only" style="${tab === 'signin' ? 'display:none' : ''}">Confirm password
+          <input name="passwordConfirm" type="password" required minlength="8" placeholder="Repeat password" autocomplete="new-password">
+        </label>
         <button class="uc-primary" type="submit">${tab === 'signin' ? 'Sign in' : 'Create my account'}</button>
         <p class="uc-err" hidden></p>
       </form>`;
@@ -168,6 +173,10 @@
       const f = e.target; const errEl = f.querySelector('.uc-err');
       errEl.hidden = true;
       const email = f.email.value.trim(), password = f.password.value, name = f.name?.value.trim();
+      const confirmVal = f.passwordConfirm?.value;
+      if (mode === 'signup' && confirmVal !== undefined && confirmVal !== password) {
+        errEl.textContent = 'Passwords do not match.'; errEl.hidden = false; return;
+      }
       try {
         if (mode === 'signup') {
           await api('POST', '/api/collections/users/records',
@@ -345,7 +354,16 @@
     if (!list) return;
     const posts = await fetchLivePosts();
     list.querySelectorAll('.uc-live-post').forEach((n) => n.remove());
-    if (posts.length) list.insertAdjacentHTML('afterbegin', posts.map(postCardHtml).join(''));
+    list.querySelectorAll('.uc-feed-empty').forEach((n) => n.remove());
+    if (posts.length) {
+      list.insertAdjacentHTML('afterbegin', posts.map(postCardHtml).join(''));
+    } else if (state.online) {
+      const empty = document.createElement('div');
+      empty.className = 'uc-feed-empty sbe-card';
+      empty.style.cssText = 'text-align:center;padding:var(--space-8);color:var(--color-text-secondary);';
+      empty.innerHTML = `<span class="iconify" data-icon="ph:pencil-line-duotone" style="font-size:48px;opacity:.4;"></span><p style="margin-top:var(--space-3);font-family:var(--font-heading);font-weight:600;">The live feed is quiet — be the first to post!</p><p style="font-size:var(--text-xs);margin-top:var(--space-2);">Sign in and click "What's on your mind?" to share with the UM network.</p>`;
+      list.insertAdjacentElement('afterbegin', empty);
+    }
     if (window.Iconify) window.Iconify.scan(list);
   }
 
