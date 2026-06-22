@@ -1,6 +1,6 @@
 /* ==========================================
-   Maastricht University SBE Alumni Network
-   SPA Router & Dynamic Fallback Controller (May 2026)
+   UniCircle — UM Alumni Network
+   SPA Router & Dynamic Fallback Controller (Jun 2026)
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       <div class="profile-info">
         <h2 class="name">Jean Maurice H. <span class="iconify" data-icon="ph:seal-check-fill" style="color: var(--um-light-blue); font-size: 16px;" title="Verified Alumnus"></span></h2>
-        <p class="title">M.Sc. Financial Economics | B.Sc. International Business<br><strong>Maastricht University</strong></p>
+        <p class="title">M.Sc. Financial Economics | B.Sc. International Business<br><strong>Maastricht University — UniCircle</strong></p>
         <p class="meta"><span class="iconify" data-icon="ph:map-pin-bold"></span> Maastricht, Limburg</p>
       </div>
 
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <img src="Image_ressources/Mood_images/um-tapijn-202010-005_2.jpg" alt="Maastricht Tapijn Campus" style="width: 100%; height: 100%; object-fit: cover;">
       <div style="position: absolute; bottom: 0; inset-inline: 0; background: linear-gradient(to top, var(--um-dark-blue) 0%, transparent 100%); padding: var(--space-3); color: white;">
         <h4 style="color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">UM Tapijn Campus</h4>
-        <p style="font-size: 9px; color: oklch(1 0 0 / 0.8); margin-top: 2px;">School of Business and Economics</p>
+        <p style="font-size: 9px; color: oklch(1 0 0 / 0.8); margin-top: 2px;">Maastricht University</p>
       </div>
     </div>
   </aside>
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <div class="sbe-card create-post-box">
       <div class="input-row">
         <img src="Image_ressources/Mood_images/nikhil1256_A_man_walking_dressed_in_professional_business_attir_8fa44d19-f313-4ba2-aba1-72254228f5eb.png" alt="Your avatar" class="avatar">
-        <button class="trigger-btn">Start a post about SBE cases, classes...</button>
+        <button class="trigger-btn">What's on your mind? Share with the UM network...</button>
       </div>
       <div class="media-row">
         <button class="media-btn photo"><span class="iconify" data-icon="ph:image-bold"></span> Photo</button>
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <img src="Image_ressources/Mood_images/eukste_bezienswaardigheden_maastricht_townhouse.jpg" alt="Leann Poeth" class="avatar">
             <div class="details">
               <span class="name">Leann Poeth <span class="iconify" data-icon="ph:seal-check-fill" style="color: var(--um-orange-red);" title="Staff Alumnus"></span></span>
-              <span class="headline">Alumni Relations Director at School of Business and Economics</span>
+              <span class="headline">Alumni Relations Director at Maastricht University</span>
               <span class="time">5 hours ago • <span class="iconify" data-icon="ph:globe-hemisphere-east-bold"></span></span>
             </div>
           </div>
@@ -155,6 +155,38 @@ document.addEventListener('DOMContentLoaded', () => {
           <button class="action-btn"><span class="iconify" data-icon="ph:thumbs-up-bold"></span> Like</button>
           <button class="action-btn" onclick="window.location.hash = '#jobs'"><span class="iconify" data-icon="ph:crown-bold"></span> View Premium</button>
           <button class="action-btn"><span class="iconify" data-icon="ph:share-network-bold"></span> Share</button>
+        </div>
+      </article>
+
+      <!-- DIFFERENTIATION CARD: UniCircle vs official UM Alumni portal -->
+      <article class="sbe-card feed-post" style="border-left: 4px solid var(--uc-azure);">
+        <div class="post-header">
+          <div class="author-info">
+            <img src="unicircle-logo.png" alt="UniCircle" class="avatar" style="border-radius: var(--radius-md);">
+            <div class="details">
+              <span class="name">UniCircle <span class="iconify" data-icon="ph:seal-check-fill" style="color: var(--uc-azure);" title="Official Platform"></span></span>
+              <span class="headline">The community-built alumni layer for Maastricht University</span>
+              <span class="time">Pinned • <span class="iconify" data-icon="ph:globe-hemisphere-east-bold"></span></span>
+            </div>
+          </div>
+        </div>
+        <div class="post-content">
+          <p><strong>UniCircle vs. the official UM Alumni portal — what's different?</strong></p>
+          <p style="font-size: var(--text-sm); line-height: 1.6; margin-top: var(--space-2);">The official UM portal is great for newsletters and university news. UniCircle was built by alumni <em>for alumni</em> — it gives you the things the official portal can't:</p>
+          <ul style="margin: var(--space-3) 0 0 var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-sm); line-height: 1.5;">
+            <li><span class="iconify" data-icon="ph:map-pin-fill" style="color: var(--uc-azure);"></span> <strong>City Hubs</strong> — find UM alumni in your city and meet up</li>
+            <li><span class="iconify" data-icon="ph:users-three-fill" style="color: var(--uc-azure);"></span> <strong>Cohort matching</strong> — see exactly who was in your Period & Tutorial group</li>
+            <li><span class="iconify" data-icon="ph:chalkboard-teacher-fill" style="color: var(--uc-azure);"></span> <strong>Student mentoring</strong> — current UM students can reach you directly</li>
+            <li><span class="iconify" data-icon="ph:calendar-check-fill" style="color: var(--uc-azure);"></span> <strong>Event attendance</strong> — see which classmates RSVP'd before you commit</li>
+            <li><span class="iconify" data-icon="ph:chat-circle-dots-fill" style="color: var(--uc-azure);"></span> <strong>Direct messaging</strong> — instant 1-on-1 with any member</li>
+            <li><span class="iconify" data-icon="ph:briefcase-fill" style="color: var(--uc-azure);"></span> <strong>UM-only jobs &amp; internships</strong> — post or discover UM-preferred vacancies</li>
+          </ul>
+          <p style="font-size: var(--text-xs); color: var(--color-text-secondary); margin-top: var(--space-3);">UniCircle is independently hosted and funded by the community ("Give What You Can"). Prof. Dr. Jan M. Smits and other faculty are in conversations to co-fund at UM level.</p>
+        </div>
+        <div class="post-actions">
+          <button class="action-btn" onclick="window.location.hash='#network'"><span class="iconify" data-icon="ph:users-three-bold"></span> Explore Network</button>
+          <button class="action-btn" onclick="window.location.hash='#jobs'"><span class="iconify" data-icon="ph:heart-bold"></span> Support Platform</button>
+          <button class="action-btn" onclick="window.UC && window.UC.openAuth('signup')"><span class="iconify" data-icon="ph:user-plus-bold"></span> Join UniCircle</button>
         </div>
       </article>
 
@@ -335,6 +367,19 @@ document.addEventListener('DOMContentLoaded', () => {
         </select>
       </div>
 
+      <!-- Graduation Year Dropdown -->
+      <div class="filter-group">
+        <label for="filter-year">Graduation Year</label>
+        <select id="filter-year" aria-label="Filter by Graduation Year">
+          <option value="">All Years</option>
+          <option value="2025">Class of 2025</option>
+          <option value="2024">Class of 2024</option>
+          <option value="2023">Class of 2023</option>
+          <option value="2022">Class of 2022</option>
+          <option value="2021">Class of 2021</option>
+        </select>
+      </div>
+
     </div>
   </div>
 
@@ -347,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
   <div class="alumni-grid">
     
     <!-- CARD 1: OVERLAP MATCH (Binance) -->
-    <article class="sbe-card alumni-card premium-border" data-sector="Tech" data-course="International Financial Management" data-period="5" data-tutorial="01">
+    <article class="sbe-card alumni-card premium-border" data-sector="Tech" data-course="International Financial Management" data-period="5" data-tutorial="01" data-year="2024">
       <span class="premium-ribbon">Premium</span>
       <div class="card-header">
         <img src="Image_ressources/Mood_images/conik_photograph_slightly_high-angle_top-down_view_early_mornin_e5cdc1d7-d669-4f45-8b59-5533de6fd313.png" alt="Linas Beliūnas avatar" class="avatar">
@@ -374,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </article>
 
     <!-- CARD 2: OVERLAP MATCH (KPMG) -->
-    <article class="sbe-card alumni-card" data-sector="Consulting" data-course="International Financial Management" data-period="5" data-tutorial="01">
+    <article class="sbe-card alumni-card" data-sector="Consulting" data-course="International Financial Management" data-period="5" data-tutorial="01" data-year="2024">
       <div class="card-header">
         <img src="Image_ressources/Mood_images/images-maastricht.jpg" alt="Sophie van der Meer avatar" class="avatar">
         <div class="basics">
@@ -399,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </article>
 
     <!-- CARD 3: FINANCE MATCH (Goldman Sachs) -->
-    <article class="sbe-card alumni-card" data-sector="Finance" data-course="Quantitative Modeling" data-period="1" data-tutorial="04">
+    <article class="sbe-card alumni-card" data-sector="Finance" data-course="Quantitative Modeling" data-period="1" data-tutorial="04" data-year="2023">
       <div class="card-header">
         <img src="Image_ressources/Mood_images/u1168774368_Postwar_memorial_at_the_Bendlerblock_courtyard_empt_9e42e39d-28da-4694-8b76-f1a601363b88.png" alt="Lucas Hesselink avatar" class="avatar">
         <div class="basics">
@@ -421,7 +466,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </article>
 
     <!-- CARD 4: TECH MATCH (Booking.com) -->
-    <article class="sbe-card alumni-card" data-sector="Tech" data-course="Problem Based Learning in Finance" data-period="2" data-tutorial="02">
+    <article class="sbe-card alumni-card" data-sector="Tech" data-course="Problem Based Learning in Finance" data-period="2" data-tutorial="02" data-year="2025">
       <div class="card-header">
         <img src="Image_ressources/Mood_images/1688546451_Maastricht-Ueberblick.jpg" alt="Elena Rostova avatar" class="avatar">
         <div class="basics">
@@ -443,7 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </article>
 
     <!-- CARD 5: CONSULTING MATCH (McKinsey) -->
-    <article class="sbe-card alumni-card" data-sector="Consulting" data-course="Marketing Strategy" data-period="4" data-tutorial="03">
+    <article class="sbe-card alumni-card" data-sector="Consulting" data-course="Marketing Strategy" data-period="4" data-tutorial="03" data-year="2023">
       <div class="card-header">
         <img src="Image_ressources/Mood_images/maastricht_012_innenstadt.jpg" alt="Thomas Klein avatar" class="avatar">
         <div class="basics">
@@ -660,7 +705,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="solution-body">
             <div class="solution-meta">
               <strong>Ruben Hassid</strong> (Senior Portfolio Risk Architect)
-              <span class="mentor-badge">SBE Gold Mentor</span>
+              <span class="mentor-badge">UniCircle Gold Mentor</span>
               • 1 hour ago
             </div>
             <p class="solution-text">
@@ -678,7 +723,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="solution-body">
             <div class="solution-meta">
               <strong>Linas Beliūnas</strong> (Risk Strategy Architect at Binance)
-              <span class="mentor-badge">SBE Alumnus</span>
+              <span class="mentor-badge">UM Alumnus</span>
               • 30 mins ago
             </div>
             <p class="solution-text">
@@ -728,7 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="solution-body">
             <div class="solution-meta">
               <strong>Sophie van der Meer</strong> (Corporate Finance Associate at KPMG)
-              <span class="mentor-badge">SBE Alumnus</span>
+              <span class="mentor-badge">UM Alumnus</span>
               • 3 hours ago
             </div>
             <p class="solution-text">
@@ -1124,8 +1169,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Load page content dynamically via Fetch (with local string fallback)
-  async function loadPage(pageName) {
+  // Load page content from inline fallback templates (single source of truth)
+  function loadPage(pageName) {
     // Update active nav class
     navItems.forEach(item => {
       if (item.getAttribute('data-page') === pageName) {
@@ -1137,57 +1182,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Show dynamic loading spinner
-    appViewport.innerHTML = `
-      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 50vh; gap: var(--space-4);">
-        <span class="iconify" data-icon="svg-spinners:ring-resize" style="font-size: 40px; color: var(--um-orange-red);"></span>
-        <p style="font-family: var(--font-heading); font-weight: 600; color: var(--color-text-secondary);">Recalling SBE portal database...</p>
-      </div>
-    `;
-
-    // 1. Direct local fallback for file:// protocol to avoid CORS errors when opening index.html directly from file explorer
-    if (window.location.protocol === 'file:') {
-      console.info(`Running on file:// protocol. Bypassing fetch network requests to load built-in fallback template for: ${pageName}`);
-      appViewport.innerHTML = fallbacks[pageName];
+    const render = () => {
+      appViewport.innerHTML = fallbacks[pageName] || '';
       initializePageInteractivity(pageName);
-      return;
-    }
+    };
 
-    // 2. Standard server-based dynamic fetch loading
-    try {
-      const response = await fetch(routes[pageName]);
-      if (!response.ok) throw new Error(`Fetch response error ${response.status}`);
-      const htmlContent = await response.text();
-
-      // Check if response text looks like a database connection error or server error page
-      const trimmedText = htmlContent.trim();
-      const looksLikeError = trimmedText.includes("Database Connection Interrupted") || 
-                             trimmedText.includes("encountered a problem fetching") ||
-                             trimmedText.includes("database snippet") ||
-                             !trimmedText.startsWith("<") || 
-                             trimmedText.includes("Internal Server Error") ||
-                             trimmedText.includes("Error 500");
-
-      if (looksLikeError) {
-        throw new Error("Retrieved database snippet contains database connection errors or invalid markup.");
-      }
-
-      // Implement native View Transitions if supported
-      if (document.startViewTransition) {
-        document.startViewTransition(() => {
-          appViewport.innerHTML = htmlContent;
-          initializePageInteractivity(pageName);
-        });
-      } else {
-        appViewport.innerHTML = htmlContent;
-        initializePageInteractivity(pageName);
-      }
-    } catch (error) {
-      console.warn(`Dynamic fetch failed: ${error.message}. Resolving through local fallback template bundle for: ${pageName}`);
-      
-      // Secondary fallback trigger
-      appViewport.innerHTML = fallbacks[pageName];
-      initializePageInteractivity(pageName);
+    if (document.startViewTransition) {
+      document.startViewTransition(render);
+    } else {
+      render();
     }
   }
 
@@ -1216,13 +1219,45 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         btn.classList.toggle('active');
         const countSpan = btn.closest('.feed-post').querySelector('.likes-count span');
-        let currentLikes = parseInt(countSpan.textContent.match(/\d+/)[0]);
+        let currentLikes = parseInt(countSpan.textContent.match(/\d+/)[0] || 0);
         if (btn.classList.contains('active')) {
           btn.innerHTML = `<span class="iconify" data-icon="ph:thumbs-up-fill"></span> Liked`;
           countSpan.innerHTML = `<span class="iconify" data-icon="ph:thumbs-up-fill"></span> You and ${currentLikes} others`;
         } else {
           btn.innerHTML = `<span class="iconify" data-icon="ph:thumbs-up-bold"></span> Like`;
-          countSpan.innerHTML = `<span class="iconify" data-icon="ph:thumbs-up-fill"></span> ${currentLikes} SBE alumni`;
+          countSpan.innerHTML = `<span class="iconify" data-icon="ph:thumbs-up-fill"></span> ${currentLikes} UM alumni`;
+        }
+      });
+    });
+
+    // Media buttons open post modal pre-tagged
+    document.querySelectorAll('.media-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const modal = document.getElementById('post-modal');
+        if (modal) {
+          const ta = modal.querySelector('textarea');
+          if (btn.classList.contains('photo')) ta.placeholder = 'Share a photo from a UM event or your career journey...';
+          else if (btn.classList.contains('video')) ta.placeholder = 'Share a video — a lecture, tutorial memory, or career highlight...';
+          else if (btn.classList.contains('article')) ta.placeholder = 'Write an article for the UM network — a case study, career insight, or reflection...';
+          modal.showModal();
+        }
+      });
+    });
+
+    // Follow buttons toggle
+    document.querySelectorAll('.follow-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (btn.classList.contains('following')) {
+          btn.classList.remove('following');
+          btn.textContent = '+ Follow';
+          btn.style.cssText = '';
+        } else {
+          btn.classList.add('following');
+          btn.textContent = '✓ Following';
+          btn.style.background = 'var(--uc-azure)';
+          btn.style.color = '#fff';
+          btn.style.border = 'none';
+          btn.style.borderRadius = 'var(--radius-full)';
         }
       });
     });
@@ -1332,6 +1367,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const courseFilter = document.getElementById('filter-course');
     const periodFilter = document.getElementById('filter-period');
     const tutorialFilter = document.getElementById('filter-tutorial');
+    const yearFilter = document.getElementById('filter-year');
     const alumniCards = document.querySelectorAll('.alumni-grid .alumni-card');
 
     // Conversational search engine simulator
@@ -1359,6 +1395,9 @@ document.addEventListener('DOMContentLoaded', () => {
         periodFilter.value = '1';
       }
 
+      const yearMatch = normalizedQuery.match(/\b(202[0-9]|class of (\d{4}))\b/);
+      if (yearMatch) yearFilter.value = yearMatch[2] || yearMatch[1];
+
       if (normalizedQuery.includes('tutorial 01') || normalizedQuery.includes('t01')) {
         tutorialFilter.value = '01';
       } else if (normalizedQuery.includes('tutorial 04') || normalizedQuery.includes('t04')) {
@@ -1374,24 +1413,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const selectedCourse = courseFilter.value;
       const selectedPeriod = periodFilter.value;
       const selectedTutorial = tutorialFilter.value;
+      const selectedYear = yearFilter ? yearFilter.value : '';
+      let visibleCount = 0;
 
       alumniCards.forEach(card => {
         let match = true;
-
-        if (selectedSector && card.getAttribute('data-sector') !== selectedSector) {
-          match = false;
-        }
-        if (selectedCourse && card.getAttribute('data-course') !== selectedCourse) {
-          match = false;
-        }
-        if (selectedPeriod && card.getAttribute('data-period') !== selectedPeriod) {
-          match = false;
-        }
-        if (selectedTutorial && card.getAttribute('data-tutorial') !== selectedTutorial) {
-          match = false;
-        }
+        if (selectedSector && card.getAttribute('data-sector') !== selectedSector) match = false;
+        if (selectedCourse && card.getAttribute('data-course') !== selectedCourse) match = false;
+        if (selectedPeriod && card.getAttribute('data-period') !== selectedPeriod) match = false;
+        if (selectedTutorial && card.getAttribute('data-tutorial') !== selectedTutorial) match = false;
+        if (selectedYear && card.getAttribute('data-year') !== selectedYear) match = false;
 
         if (match) {
+          visibleCount++;
           card.style.display = 'flex';
           card.style.opacity = '0';
           card.style.transform = 'translateY(10px)';
@@ -1404,10 +1438,25 @@ document.addEventListener('DOMContentLoaded', () => {
           card.style.display = 'none';
         }
       });
+
+      // Empty state
+      let emptyEl = document.getElementById('alumni-empty-state');
+      if (visibleCount === 0) {
+        if (!emptyEl) {
+          emptyEl = document.createElement('div');
+          emptyEl.id = 'alumni-empty-state';
+          emptyEl.style.cssText = 'grid-column:1/-1;text-align:center;padding:var(--space-8);color:var(--color-text-secondary);';
+          emptyEl.innerHTML = `<span class="iconify" data-icon="ph:users-three-duotone" style="font-size:48px;opacity:.4;"></span><p style="margin-top:var(--space-3);font-family:var(--font-heading);font-weight:600;">No alumni match your filters.</p><p style="font-size:var(--text-xs);margin-top:var(--space-2);">Try broadening your search or <a href="#" onclick="document.querySelectorAll('.grid-filter-controls select').forEach(s=>s.value='');applyFilters&&applyFilters();return false;" style="color:var(--uc-azure);">clear all filters</a>.</p>`;
+          document.querySelector('.alumni-grid').appendChild(emptyEl);
+        }
+        emptyEl.style.display = 'block';
+      } else if (emptyEl) {
+        emptyEl.style.display = 'none';
+      }
     }
 
     // Event listeners for selects
-    [sectorFilter, courseFilter, periodFilter, tutorialFilter].forEach(elem => {
+    [sectorFilter, courseFilter, periodFilter, tutorialFilter, yearFilter].filter(Boolean).forEach(elem => {
       elem.addEventListener('change', applyFilters);
     });
 
@@ -1473,17 +1522,102 @@ document.addEventListener('DOMContentLoaded', () => {
     const connectBtns = document.querySelectorAll('.alumni-card .connect-btn');
     connectBtns.forEach(btn => {
       btn.addEventListener('click', () => {
+        const name = btn.closest('.alumni-card')?.querySelector('.name')?.firstChild?.textContent?.trim() || 'this alumnus';
         if (btn.classList.contains('connected')) {
           btn.classList.remove('connected');
           btn.textContent = 'Connect';
-          btn.style.backgroundColor = 'var(--um-light-blue)';
+          btn.style.backgroundColor = '';
         } else {
           btn.classList.add('connected');
           btn.textContent = 'Pending';
           btn.style.backgroundColor = 'var(--color-text-muted)';
+          if (window.UC) window.UC.openChat && showToast(`Connection request sent to ${name}! You can message them directly.`);
         }
       });
     });
+
+    // City hub join buttons
+    document.querySelectorAll('#city-hubs .connect-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const city = btn.closest('.sbe-card')?.querySelector('h4')?.textContent?.replace(/^[^\w]+/, '') || 'this hub';
+        if (btn.classList.contains('joined')) {
+          btn.classList.remove('joined');
+          btn.textContent = btn.textContent.replace('✓ Joined', 'Join ' + city.split(',')[0] + ' Hub');
+          btn.style.backgroundColor = '';
+        } else {
+          btn.classList.add('joined');
+          btn.textContent = '✓ Joined';
+          btn.style.backgroundColor = 'var(--uc-azure)';
+          btn.style.color = '#fff';
+          btn.style.border = 'none';
+          if (window.UC) showToast(`You joined the ${city.split(',')[0]} Hub! Members can now see you here.`);
+        }
+      });
+    });
+
+    // Mentorship "Find a Mentor" button
+    const findMentorBtn = document.querySelector('#mentorship button[style*="background: white"]') ||
+      document.querySelector('#mentorship .sbe-card:first-child button');
+    if (findMentorBtn) {
+      findMentorBtn.addEventListener('click', () => {
+        document.querySelector('#mentorship .alumni-grid')?.scrollIntoView({ behavior: 'smooth' });
+        showToast('Browse available mentors below — click "Request Mentorship" to connect.');
+      });
+    }
+
+    // Mentorship "Become a Mentor" button
+    document.querySelectorAll('#mentorship .connect-btn').forEach(btn => {
+      if (btn.textContent.includes('Become a Mentor')) {
+        btn.addEventListener('click', () => {
+          if (window.UC && window.UC.state.user) {
+            window.UC.openProfile();
+            showToast('Toggle "Offer mentorship" in your profile to appear in the mentor list.');
+          } else if (window.UC) {
+            window.UC.openAuth('signup');
+          }
+        });
+      }
+    });
+
+    // "Request Mentorship" button on mentor cards
+    document.querySelectorAll('#mentorship .card-footer .connect-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.closest('.alumni-card')?.querySelector('.name')?.textContent?.trim() || 'this mentor';
+        if (window.UC && window.UC.state.user) {
+          window.UC.openChat();
+          showToast(`Opening chat — message ${name} directly to request mentorship.`);
+        } else if (window.UC) {
+          window.UC.openAuth('signup');
+        }
+      });
+    });
+
+    // Guest lecture "Volunteer to Speak" button
+    document.querySelectorAll('#guest-lectures .connect-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const course = btn.closest('article')?.querySelector('p')?.textContent?.match(/Course: (.+?) •/)?.[1] || 'this course';
+        if (window.UC && window.UC.state.user) {
+          showToast(`Interest registered for "${course}"! The course coordinator will contact you via your profile email.`);
+          btn.textContent = '✓ Interest Registered';
+          btn.style.backgroundColor = 'var(--uc-cobalt)';
+          btn.style.color = '#fff';
+          btn.style.border = 'none';
+        } else if (window.UC) {
+          window.UC.openAuth('signup');
+        }
+      });
+    });
+  }
+
+  function showToast(msg) {
+    if (window.UC && window.UC.state !== undefined) {
+      // Use UniCircle toast
+      const t = document.createElement('div');
+      t.className = 'uc-toast uc-toast--ok in';
+      t.innerHTML = msg;
+      document.body.appendChild(t);
+      setTimeout(() => { t.classList.remove('in'); setTimeout(() => t.remove(), 300); }, 3500);
+    }
   }
 
   /* ==========================================
@@ -1569,6 +1703,48 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // Event Details buttons
+    document.querySelectorAll('.event-card .details-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.event-card');
+        const title = card.querySelector('.event-title')?.textContent || 'Event';
+        const location = card.querySelector('.event-location')?.textContent?.trim() || '';
+        const desc = card.querySelector('.event-description')?.textContent?.trim() || '';
+        const day = card.querySelector('.event-date-side .day')?.textContent || '';
+        const month = card.querySelector('.event-date-side .month')?.textContent || '';
+        const year = card.querySelector('.event-date-side .year')?.textContent || '';
+        const dlg = document.createElement('dialog');
+        dlg.className = 'sbe-modal';
+        dlg.innerHTML = `
+          <div class="modal-wrapper">
+            <div class="modal-header">
+              <h3>${title}</h3>
+              <button class="close-btn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <p style="font-size:var(--text-sm);font-weight:700;color:var(--uc-azure);">${location}</p>
+              <p style="font-size:var(--text-sm);font-weight:600;">${day} ${month} ${year}</p>
+              <p style="font-size:var(--text-sm);line-height:1.6;">${desc}</p>
+              <p style="font-size:var(--text-xs);color:var(--color-text-secondary);">RSVP via UniCircle to appear on the attendee list and let classmates know you're coming.</p>
+            </div>
+            <div class="modal-footer">
+              <button class="cancel-btn">Close</button>
+              <button class="submit-btn" style="background:var(--uc-azure);border:none;color:#fff;">RSVP Now</button>
+            </div>
+          </div>`;
+        document.body.appendChild(dlg);
+        dlg.showModal();
+        dlg.querySelector('.close-btn').onclick = () => dlg.close();
+        dlg.querySelector('.cancel-btn').onclick = () => dlg.close();
+        dlg.querySelector('.submit-btn').onclick = () => {
+          dlg.close();
+          const rsvpBtn = card.querySelector('.attend-btn');
+          if (rsvpBtn && !rsvpBtn.classList.contains('attending')) rsvpBtn.click();
+        };
+        dlg.addEventListener('close', () => dlg.remove());
+      });
+    });
+
     // Overlap pill classmates modal lookup
     const overlapPills = document.querySelectorAll('.event-card .tutorial-overlap-pill');
     const overlapModal = document.getElementById('overlap-modal');
@@ -1590,6 +1766,62 @@ document.addEventListener('DOMContentLoaded', () => {
      5. JOBS & PREMIUM INTERACTIVITY
      ========================================== */
   function initJobsInteractivity() {
+    // Job application buttons
+    document.querySelectorAll('.jobs-list .apply-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.job-card');
+        const title = card?.querySelector('.title')?.textContent || 'this position';
+        const company = card?.querySelector('.company')?.textContent || '';
+        const dlg = document.createElement('dialog');
+        dlg.className = 'sbe-modal';
+        dlg.innerHTML = `
+          <div class="modal-wrapper">
+            <div class="modal-header">
+              <h3>Apply: ${title}</h3>
+              <button class="close-btn" aria-label="Close">✕</button>
+            </div>
+            <div class="modal-body" style="display:flex;flex-direction:column;gap:var(--space-3);">
+              <p style="font-size:var(--text-sm);color:var(--color-text-secondary);">${company}</p>
+              ${window.UC && window.UC.state.user
+                ? `<p style="font-size:var(--text-sm);">Your UniCircle profile will be sent to the recruiter. Add a note below (optional).</p>
+                   <textarea placeholder="Cover note — why are you a great fit for this role?" style="border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:10px;font-size:var(--text-sm);min-height:80px;font-family:var(--font-body);"></textarea>`
+                : `<p style="font-size:var(--text-sm);">Please <a href="#" onclick="document.querySelector('dialog.sbe-modal').close();window.UC&&window.UC.openAuth('signup');return false;" style="color:var(--uc-azure);">create a UniCircle account</a> to apply — your profile is your CV.</p>`}
+            </div>
+            <div class="modal-footer">
+              <button class="cancel-btn">Cancel</button>
+              ${window.UC && window.UC.state.user
+                ? `<button class="submit-btn" style="background:var(--uc-azure);border:none;color:#fff;">Submit Application</button>`
+                : ''}
+            </div>
+          </div>`;
+        document.body.appendChild(dlg);
+        dlg.showModal();
+        dlg.querySelector('.close-btn').onclick = () => dlg.close();
+        dlg.querySelector('.cancel-btn').onclick = () => dlg.close();
+        dlg.querySelector('.submit-btn')?.addEventListener('click', () => {
+          dlg.close();
+          showToast(`Application sent for "${title}"! The recruiter will reach you via your profile email.`);
+          btn.textContent = '✓ Applied';
+          btn.style.backgroundColor = 'var(--uc-cobalt)';
+          btn.style.color = '#fff';
+          btn.disabled = true;
+        });
+        dlg.addEventListener('close', () => dlg.remove());
+      });
+    });
+
+    // Contribution amount button selection
+    document.querySelectorAll('.premium-tiers-container .tier-card.premium button[style*="border"]').forEach(amountBtn => {
+      amountBtn.addEventListener('click', () => {
+        document.querySelectorAll('.premium-tiers-container .tier-card.premium button[style*="border"]').forEach(b => {
+          b.style.background = 'white';
+          b.style.color = 'var(--um-orange-red)';
+        });
+        amountBtn.style.background = 'var(--um-orange-red)';
+        amountBtn.style.color = 'white';
+      });
+    });
+
     // Select Tier confirm simulator
     const selectTierBtns = document.querySelectorAll('.premium-tiers-container .select-tier-btn');
     selectTierBtns.forEach(btn => {
