@@ -1,0 +1,12 @@
+# UniCircle API — append this block to /opt/caddy/Caddyfile, then reload Caddy.
+# Requires: (1) a DNS A record  api.unicircle.eu -> 195.201.26.62
+#           (2) the unicircle-pb container attached to the `caddy` network
+#           (3) the Caddy edge stack running (cd /opt/caddy && docker compose up -d)
+#
+# PocketBase serves its own permissive CORS for /api (token auth, no cookies),
+# so the GitHub Pages frontend at https://unicircle.eu can call it directly.
+
+api.unicircle.eu {
+	encode zstd gzip
+	reverse_proxy unicircle-pb:8090
+}

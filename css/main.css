@@ -45,26 +45,42 @@
 
 @layer tokens {
   :root {
-    /* === MAASTRICHT UNIVERSITY HOUSE STYLE TOKENS === */
-    --um-dark-blue: oklch(0.14 0.07 264);    /* #001C3D - Primary Dark Blue */
-    --um-orange-red: oklch(0.60 0.20 38);   /* #E84E10 - Accent Orange-Red */
-    --um-light-blue: oklch(0.65 0.14 224);  /* #00A2DB - Accent Light Blue */
-    --um-white: oklch(1.00 0.00 0);         /* #FFFFFF */
-    
-    /* Academic specific colors */
-    --um-bachelor: oklch(0.74 0.15 70);     /* #F39425 - Bachelor Orange */
-    --um-master: oklch(0.38 0.19 27);       /* #AE0B12 - Master Red */
+    /* ===========================================================
+       UNICIRCLE PERSONAL COLOUR THEME (June 2026)
+       Palette extracted from the blue mosaic "Queen" artwork —
+       a continuous range of blues from a near-white frost grout,
+       through luminous sky and signature azure, down to a deep
+       navy/indigo base. Token NAMES are kept for compatibility;
+       only the VALUES changed, so the whole platform re-skins.
+       Reference hexes in comments for easy tuning.
+       =========================================================== */
+    --um-dark-blue: oklch(0.25 0.075 256);   /* #0E2A4F - Deep navy/indigo base (structure) */
+    --um-orange-red: oklch(0.56 0.145 252);  /* #1E6FC4 - Signature azure (primary accent/CTA) */
+    --um-light-blue: oklch(0.68 0.125 238);  /* #2E97D6 - Luminous sky blue (links/secondary) */
+    --um-white: oklch(1.00 0.00 0);          /* #FFFFFF */
 
-    /* Semantic UI Theme Palette - Bright Mode (LinkedIn Signature Warm Grey & White Contrasts) */
-    --color-bg: oklch(0.96 0.005 80);        /* #F3F2EF - LinkedIn warm light grey background */
+    /* Extended mosaic scale (new) — light → dark blues from the artwork */
+    --uc-frost: oklch(0.95 0.022 240);       /* #E7F1FA - frost / grout near-white */
+    --uc-ice: oklch(0.87 0.05 244);          /* #BFD9EE - icy crown highlight */
+    --uc-sky: oklch(0.68 0.125 238);         /* #2E97D6 - sky (= light-blue) */
+    --uc-azure: oklch(0.56 0.145 252);       /* #1E6FC4 - signature azure (= accent) */
+    --uc-cobalt: oklch(0.42 0.115 256);      /* #1C4C8A - royal cobalt (wave body) */
+    --uc-navy: oklch(0.25 0.075 256);        /* #0E2A4F - navy base (= dark-blue) */
+
+    /* Academic degree badges — recoloured into the blue range */
+    --um-bachelor: oklch(0.70 0.105 240);    /* #5BA3DC - Bachelor: light sky */
+    --um-master: oklch(0.42 0.115 256);      /* #1C4C8A - Master: deep cobalt */
+
+    /* Semantic UI Theme Palette - Bright Mode (cool mosaic-white surfaces) */
+    --color-bg: oklch(0.975 0.008 240);       /* #F4F8FC - cool mosaic-white background */
     --color-surface: oklch(1.00 0.00 0);      /* #FFFFFF - Pure white card surface */
-    --color-surface-hover: oklch(0.98 0.003 80); /* Soft hover grey */
-    --color-border: oklch(0.91 0.005 80);     /* Soft border grey (#e0deda-like) */
-    --color-text-primary: oklch(0.15 0.01 80); /* Dark neutral charcoal text */
-    --color-text-secondary: oklch(0.42 0.01 80); /* Medium grey text */
-    --color-text-muted: oklch(0.60 0.01 80);   /* Muted grey text */
-    --color-accent-bg: oklch(0.95 0.02 38 / 0.1);
-    --color-premium: oklch(0.55 0.16 264);   /* Brand premium science-blue */
+    --color-surface-hover: oklch(0.965 0.012 240); /* Soft cool hover */
+    --color-border: oklch(0.905 0.016 240);   /* Soft cool border */
+    --color-text-primary: oklch(0.20 0.025 256); /* Cool charcoal-navy text */
+    --color-text-secondary: oklch(0.44 0.022 250); /* Medium cool-grey text */
+    --color-text-muted: oklch(0.60 0.018 245);  /* Muted cool-grey text */
+    --color-accent-bg: oklch(0.56 0.145 252 / 0.10); /* Azure tint wash */
+    --color-premium: oklch(0.42 0.115 256);   /* Premium cobalt-blue */
 
     /* === TYPOGRAPHY TOKENS === */
     --font-heading: 'Outfit', 'Thesis Sans', 'TheSans', 'Verdana', sans-serif;
@@ -99,9 +115,9 @@
 
     /* === ELEVATION SHADOWS === */
     --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.05);
-    --shadow-md: 0 4px 12px oklch(0.14 0.07 264 / 0.04), 0 1px 3px oklch(0 0 0 / 0.02);
-    --shadow-lg: 0 12px 32px oklch(0.14 0.07 264 / 0.08), 0 2px 8px oklch(0 0 0 / 0.04);
-    --shadow-glow: 0 0 20px oklch(0.60 0.20 38 / 0.15);
+    --shadow-md: 0 4px 12px oklch(0.25 0.075 256 / 0.06), 0 1px 3px oklch(0 0 0 / 0.02);
+    --shadow-lg: 0 12px 32px oklch(0.25 0.075 256 / 0.12), 0 2px 8px oklch(0 0 0 / 0.04);
+    --shadow-glow: 0 0 20px oklch(0.56 0.145 252 / 0.20);
 
     /* === TRANSITIONS === */
     --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);

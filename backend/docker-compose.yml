@@ -1,0 +1,32 @@
+# UniCircle backend stack — PocketBase behind the shared Caddy edge.
+# Bring up:  docker network create caddy 2>/dev/null; docker compose up -d --build
+services:
+  pocketbase:
+    build:
+      context: .
+      args:
+        PB_VERSION: "0.39.4"
+    image: unicircle-pb
+    container_name: unicircle-pb
+    restart: unless-stopped
+    # Bound to loopback only until the public hostname + Caddy route are live.
+    ports:
+      - "127.0.0.1:8090:8090"
+    volumes:
+      - pb-data:/pb/pb_data
+    networks: [caddy, default]
+    mem_limit: 256m
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8090/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  pb-data:
+
+# Shared external edge network owned by /opt/caddy. Create once with:
+#   docker network create caddy
+networks:
+  caddy:
+    external: true
