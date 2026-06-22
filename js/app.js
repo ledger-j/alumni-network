@@ -1127,33 +1127,223 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 </div>
+`,
+
+    // ========================================
+    // LANDING PAGE — shown to non-logged users
+    // ========================================
+    landing: `
+<div class="uc-landing">
+
+  <!-- ===== HERO ===== -->
+  <section class="uc-lp-hero">
+    <div class="uc-lp-hero-inner">
+      <div>
+        <div class="uc-lp-eyebrow">
+          <img src="unicircle-logo.png" alt="UniCircle" style="height:18px;display:inline;vertical-align:middle;filter:brightness(10);">
+          The independent Maastricht University alumni network
+        </div>
+        <h1 class="uc-lp-h1">Welcome to your lifelong <span style="color:var(--uc-sky)">UM professional network</span></h1>
+        <p class="uc-lp-sub">Connect, mentor and grow with 50,000+ Maastricht University graduates across 80+ countries — City Hubs, mentorship, events, jobs and the PBL Hub, all in one place.</p>
+        <div class="uc-lp-join-form">
+          <input type="email" id="lp-email" class="uc-lp-email" placeholder="Enter your email address" autocomplete="email">
+          <button class="uc-lp-join-btn" id="lp-join-btn">Join now</button>
+        </div>
+        <p class="uc-lp-signin-hint">Already a member? <a id="lp-signin-link">Sign in</a></p>
+        <div class="uc-lp-badges">
+          <span class="uc-lp-badge"><span class="iconify" data-icon="ph:shield-check-fill"></span> Alumni-run &amp; independent</span>
+          <span class="uc-lp-badge"><span class="iconify" data-icon="ph:heart-fill"></span> Give What You Can</span>
+          <span class="uc-lp-badge"><span class="iconify" data-icon="ph:flag-fill"></span> EU-hosted</span>
+        </div>
+      </div>
+      <div class="uc-lp-visual">
+        <img src="Image_ressources/banner_stay_connected_to_your_lifelong_global_network.png" alt="UniCircle alumni network" loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STATS BAR ===== -->
+  <section class="uc-lp-stats">
+    <div class="uc-lp-stats-row">
+      <div class="uc-lp-stat">
+        <span class="uc-lp-stat-n">50,000+</span>
+        <span class="uc-lp-stat-l">UM alumni worldwide</span>
+      </div>
+      <div class="uc-lp-sep"></div>
+      <div class="uc-lp-stat">
+        <span class="uc-lp-stat-n">80+</span>
+        <span class="uc-lp-stat-l">countries represented</span>
+      </div>
+      <div class="uc-lp-sep"></div>
+      <div class="uc-lp-stat">
+        <span class="uc-lp-stat-n">30+</span>
+        <span class="uc-lp-stat-l">active city hubs</span>
+      </div>
+      <div class="uc-lp-sep"></div>
+      <div class="uc-lp-stat">
+        <span class="uc-lp-stat-n">2,500+</span>
+        <span class="uc-lp-stat-l">alumni mentors</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES GRID ===== -->
+  <section class="uc-lp-feats">
+    <h2 class="uc-lp-title">Everything your UM career needs</h2>
+    <p class="uc-lp-sub2">Built by alumni, for alumni — shaped by 40+ graduate interviews</p>
+    <div class="uc-lp-grid">
+
+      <div class="uc-lp-feat">
+        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-cobalt),var(--uc-navy))">
+          <span class="iconify" data-icon="ph:map-pin-area-fill"></span>
+        </div>
+        <h3>City Hubs</h3>
+        <p>See which UM alumni are in your city. Join subgroups in Amsterdam, Munich, London, Dubai, New York and 25+ more.</p>
+      </div>
+
+      <div class="uc-lp-feat">
+        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-azure),var(--uc-cobalt))">
+          <span class="iconify" data-icon="ph:handshake-fill"></span>
+        </div>
+        <h3>Alumni Mentorship</h3>
+        <p>Toggle your mentor status to support current UM students — or find a senior alumni mentor in your exact field.</p>
+      </div>
+
+      <div class="uc-lp-feat">
+        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-sky),var(--uc-azure))">
+          <span class="iconify" data-icon="ph:calendar-check-fill"></span>
+        </div>
+        <h3>Events — See Who's Coming</h3>
+        <p>LinkedIn-style RSVP. Know which classmates from your exact tutorial group are attending <em>before</em> you commit.</p>
+      </div>
+
+      <div class="uc-lp-feat">
+        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-navy),var(--uc-cobalt))">
+          <span class="iconify" data-icon="ph:briefcase-metal-fill"></span>
+        </div>
+        <h3>UM-Only Jobs &amp; Internships</h3>
+        <p>Post or discover vacancies explicitly seeking Maastricht graduates. PBL-culture employers, instantly searchable.</p>
+      </div>
+
+      <div class="uc-lp-feat">
+        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-cobalt),var(--uc-azure))">
+          <span class="iconify" data-icon="ph:lightbulb-filament-fill"></span>
+        </div>
+        <h3>PBL Hub</h3>
+        <p>Post real academic case challenges and get answers from alumni practitioners — the PBL spirit lives on after graduation.</p>
+      </div>
+
+      <div class="uc-lp-feat">
+        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-sky),var(--uc-cobalt))">
+          <span class="iconify" data-icon="ph:chat-circle-dots-fill"></span>
+        </div>
+        <h3>Direct Messaging</h3>
+        <p>Instant 1-on-1 conversation with any UniCircle member. No InMail credits, no premium paywalls. Just alumni talking.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== WHY UNICIRCLE ===== -->
+  <section class="uc-lp-why">
+    <div class="uc-lp-why-inner">
+      <div class="uc-lp-why-text">
+        <span class="uc-lp-tag">Why UniCircle?</span>
+        <h2>Not the official UM Alumni platform. Faster, more personal, alumni-run.</h2>
+        <ul class="uc-lp-checks">
+          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>UM-wide, not faculty-specific</strong> — all 16 faculties, one network, one shared identity</span></li>
+          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>Alumni-built</strong> — no committees, no 6-month approval cycles; features ship weekly</span></li>
+          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>Give What You Can</strong> — €5–€10/month or €0; your choice, no pressure</span></li>
+          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>Student–alumni bridge</strong> — mentoring and PBL collaboration built in from day one</span></li>
+          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>EU data sovereignty</strong> — hosted on Hetzner, Germany; no US data dependency</span></li>
+        </ul>
+        <p class="uc-lp-prof">Prof. Dr. Jan M. Smits (UM Law Faculty) is in conversations to co-fund a UM-endorsed version of UniCircle. Faculty backing is building.</p>
+      </div>
+      <div class="uc-lp-visual">
+        <img src="Image_ressources/Mood_images/um-tapijn-202010-005_2.jpg" alt="UM Tapijn campus" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS ===== -->
+  <section class="uc-lp-quotes">
+    <h2 class="uc-lp-title">What alumni say</h2>
+    <p class="uc-lp-sub2">From our community interviews — 40+ UM graduates surveyed</p>
+    <div class="uc-lp-grid">
+      <blockquote class="uc-lp-quote">
+        <p>"The City Hub feature is exactly what I needed. I found 40 UM alumni in Amsterdam in minutes — we now have a monthly meetup."</p>
+        <footer class="uc-lp-quote-foot">
+          <img src="Image_ressources/Mood_images/conik_photograph_slightly_high-angle_top-down_view_early_mornin_e5cdc1d7-d669-4f45-8b59-5533de6fd313.png" alt="">
+          <div><strong>Elena V.</strong><span>MSc Finance · Amsterdam Hub</span></div>
+        </footer>
+      </blockquote>
+      <blockquote class="uc-lp-quote">
+        <p>"I posted a PBL case on ECB hedging and had three senior risk architects reply within hours. UniCircle bridges the gap LinkedIn can't."</p>
+        <footer class="uc-lp-quote-foot">
+          <img src="Image_ressources/Mood_images/nikhil1256_A_man_walking_dressed_in_professional_business_attir_8fa44d19-f313-4ba2-aba1-72254228f5eb.png" alt="">
+          <div><strong>Jean Maurice H.</strong><span>MSc Financial Economics · Maastricht</span></div>
+        </footer>
+      </blockquote>
+      <blockquote class="uc-lp-quote">
+        <p>"I hire interns who understand PBL culture. UniCircle gives me direct access to UM graduates — no recruitment fees, no middleman."</p>
+        <footer class="uc-lp-quote-foot">
+          <img src="Image_ressources/Mood_images/eukste_bezienswaardigheden_maastricht_townhouse.jpg" alt="">
+          <div><strong>David D.</strong><span>Co-Founder · Munich Alumni Chair</span></div>
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ===== BOTTOM CTA ===== -->
+  <section class="uc-lp-cta">
+    <h2>Ready to reconnect with your UM network?</h2>
+    <p>Join thousands of Maastricht University alumni already on UniCircle.</p>
+    <button class="uc-lp-cta-big" id="lp-bottom-join">Join UniCircle — it's free</button>
+    <p class="uc-lp-fine">No credit card required · Give What You Can · EU-hosted · Independent</p>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="uc-lp-foot">
+    <div class="uc-lp-foot-row">
+      <div class="uc-lp-foot-brand">
+        <img src="unicircle-logo.png" alt="UniCircle" style="height:20px;">
+        UniCircle — unicircle.eu
+      </div>
+      <div class="uc-lp-foot-links">
+        <a id="lp-foot-signin">Sign in</a>
+        <a id="lp-foot-join">Join now</a>
+        <span>© 2026 UniCircle · Independent UM Alumni Community</span>
+      </div>
+    </div>
+  </footer>
+
+</div>
 `
   };
 
   const appViewport = document.getElementById('app-viewport');
   const navItems = document.querySelectorAll('.nav-menu .nav-item[data-page]');
 
+  // True once auth-ready and user is logged in — gates nav clicks
+  let _navReady = false;
+
   // Initialize router
   function initRouter() {
-    // Check initial hash
-    let page = window.location.hash.replace('#', '');
-    if (!routes[page]) {
-      page = 'feed'; // Default page
-      window.location.hash = '#feed';
-    }
-    loadPage(page);
-
-    // Watch hash change
+    // Hash-change: only route when a user is authenticated
     window.addEventListener('hashchange', () => {
+      if (!_navReady) return;
       const newPage = window.location.hash.replace('#', '');
-      if (routes[newPage]) {
-        loadPage(newPage);
-      }
+      if (fallbacks[newPage]) loadPage(newPage);
     });
 
     // Navigation click handlers
     navItems.forEach(item => {
       item.addEventListener('click', () => {
+        if (!_navReady) {
+          // Guest clicks nav → open sign-up modal
+          window.UC?.openAuth('signup');
+          return;
+        }
         const targetPage = item.getAttribute('data-page');
         window.location.hash = `#${targetPage}`;
       });
@@ -1162,10 +1352,30 @@ document.addEventListener('DOMContentLoaded', () => {
       item.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          const targetPage = item.getAttribute('data-page');
-          window.location.hash = `#${targetPage}`;
+          item.click();
         }
       });
+    });
+
+    // unicircle.js dispatches 'uc:auth-ready' once bootSession() resolves
+    document.addEventListener('uc:auth-ready', (e) => {
+      if (e.detail && e.detail.user) {
+        _navReady = true;
+        let page = window.location.hash.replace('#', '');
+        if (!fallbacks[page] || page === 'landing') page = 'feed';
+        window.location.hash = '#' + page;
+        loadPage(page);
+      } else {
+        _navReady = false;
+        loadPage('landing');
+      }
+    }, { once: true });
+
+    // unicircle.js dispatches 'uc:login' after a successful sign-in
+    document.addEventListener('uc:login', () => {
+      _navReady = true;
+      window.location.hash = '#feed';
+      loadPage('feed');
     });
   }
 
@@ -1196,7 +1406,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize specific interactive scripts per component page
   function initializePageInteractivity(pageName) {
-    if (pageName === 'feed') {
+    if (pageName === 'landing') {
+      initLandingInteractivity();
+    } else if (pageName === 'feed') {
       initFeedInteractivity();
     } else if (pageName === 'network') {
       initNetworkInteractivity();
@@ -1207,6 +1419,36 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (pageName === 'jobs') {
       initJobsInteractivity();
     }
+  }
+
+  /* ==========================================
+     0. LANDING PAGE INTERACTIVITY
+     ========================================== */
+  function initLandingInteractivity() {
+    const openSignup = () => window.UC?.openAuth('signup');
+    const openSignin = () => window.UC?.openAuth('signin');
+
+    const joinBtn = document.getElementById('lp-join-btn');
+    if (joinBtn) {
+      joinBtn.addEventListener('click', () => {
+        const email = document.getElementById('lp-email')?.value?.trim();
+        if (email && window.UC) {
+          window.UC.openAuth('signup', email);
+        } else {
+          openSignup();
+        }
+      });
+    }
+
+    document.getElementById('lp-bottom-join')?.addEventListener('click', openSignup);
+    document.getElementById('lp-signin-link')?.addEventListener('click', (e) => { e.preventDefault(); openSignin(); });
+    document.getElementById('lp-foot-signin')?.addEventListener('click', (e) => { e.preventDefault(); openSignin(); });
+    document.getElementById('lp-foot-join')?.addEventListener('click', (e) => { e.preventDefault(); openSignup(); });
+
+    // Allow pressing Enter in the email field
+    document.getElementById('lp-email')?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') joinBtn?.click();
+    });
   }
 
   /* ==========================================

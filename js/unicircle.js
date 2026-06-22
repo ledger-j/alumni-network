@@ -67,6 +67,7 @@
       state.online = false; // pre-DNS / offline — keep demo UI usable
     }
     renderHeaderAuth();
+    document.dispatchEvent(new CustomEvent('uc:auth-ready', { detail: { user: state.user } }));
   }
 
   // -------------------------------------------------------------- header auth
@@ -135,7 +136,7 @@
   }
 
   // --------------------------------------------------------------------- auth
-  function openAuth(tab) {
+  function openAuth(tab, prefillEmail) {
     const body = `
       <div class="uc-tabs">
         <button class="uc-tab ${tab === 'signin' ? 'active' : ''}" data-tab="signin">Sign in</button>
@@ -149,7 +150,7 @@
         <label class="uc-su-only" style="${tab === 'signin' ? 'display:none' : ''}">Full name
           <input name="name" placeholder="Jean Maurice H." autocomplete="name">
         </label>
-        <label>Email <input name="email" type="email" required placeholder="you@email.com" autocomplete="email"></label>
+        <label>Email <input name="email" type="email" required placeholder="you@email.com" autocomplete="email" value="${prefillEmail ? String(prefillEmail).replace(/"/g, '&quot;') : ''}"></label>
         <label>Password <input name="password" type="password" required minlength="8" placeholder="At least 8 characters" autocomplete="current-password"></label>
         <label class="uc-su-only" style="${tab === 'signin' ? 'display:none' : ''}">Confirm password
           <input name="passwordConfirm" type="password" required minlength="8" placeholder="Repeat password" autocomplete="new-password">
@@ -186,6 +187,7 @@
         state.token = r.token; state.user = r.record; saveAuth();
         close(); renderHeaderAuth();
         toast(`Welcome${state.user.name ? ', ' + esc(state.user.name.split(' ')[0]) : ''}! 🎉`);
+        document.dispatchEvent(new CustomEvent('uc:login', { detail: { user: state.user } }));
         refreshLiveFeed();
       } catch (err) {
         errEl.textContent = err.status === 400 ? 'Check your details — email may already be registered or password too short.' : (err.message || 'Something went wrong.');
