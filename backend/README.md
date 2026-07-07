@@ -56,6 +56,36 @@ The backend is live but loopback-only. To expose it over HTTPS:
 
 Verify: `curl -s https://api.unicircle.eu/api/health`
 
+## Enable passwordless magic-link / OTP + password reset + verification
+
+The frontend's **primary** login is now passwordless (PocketBase OTP), with
+email+password and LinkedIn as fallbacks. All three of these — the magic-link
+code, the "Forgot password?" reset, and post-signup verification — send email,
+so they need SMTP and OTP switched on:
+
+1. **SMTP** — PocketBase admin → **Settings → Mail settings** → set a real SMTP
+   host/credentials (e.g. a transactional provider). Without this, no code/reset/
+   verification email is delivered and magic-link login cannot complete.
+2. **OTP** — admin → **Collections → users → Options (auth)** → enable **One-time
+   password (OTP)**. The client calls `POST /api/collections/users/request-otp`
+   `{email}` → `{otpId}`, then `POST /api/collections/users/auth-with-otp`
+   `{otpId, password:<code>}`. OTP authenticates existing members; first-time users
+   use "Create account" or LinkedIn.
+3. **Verification (optional gate)** — enable "require verified email" on the users
+   collection if you want to gate premium actions on `record.verified`. The client
+   fires `request-verification` after email/password signup.
+4. **Rate limiting** — admin → **Settings → Application** → enable the built-in
+   rate limiter (protects `request-otp`, `auth-with-password`, `request-password-reset`
+   from brute force / email bombing).
+
+## Directory is authenticated-only
+
+`init_schema.py` sets the `users` `listRule`/`viewRule` to `@request.auth.id != ""`.
+Anonymous visitors can still **sign up** (open `createRule`) but cannot list or scrape
+member profiles — this also lays the groundwork for premium-gating deeper directory
+search. Re-run `init_schema.py` after pulling to apply. The frontend sends its auth
+token on the feed author-expand and chat peer-list reads accordingly.
+
 ## Enable "Sign in with LinkedIn"
 
 1. Create a LinkedIn developer app (you must do this — it needs your identity).

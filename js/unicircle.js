@@ -136,63 +136,143 @@
   }
 
   // --------------------------------------------------------------------- auth
+  // Finish an authenticated session from any flow (OTP / password / oauth).
+  function completeAuth(r, close) {
+    state.token = r.token; state.user = r.record; saveAuth();
+    if (close) close();
+    renderHeaderAuth();
+    toast(`Welcome${state.user.name ? ', ' + esc(state.user.name.split(' ')[0]) : ''}! 🎉`);
+    document.dispatchEvent(new CustomEvent('uc:login', { detail: { user: state.user } }));
+    refreshLiveFeed();
+  }
+
+  // Primary schema: passwordless magic link / one-time code (PocketBase OTP).
+  // Fallbacks: email+password, LinkedIn (OIDC or CSV import). Reset + verification wired.
   function openAuth(tab, prefillEmail) {
+    const initial = tab === 'signin' || tab === 'signup' ? tab : 'magic';
+    const emailVal = prefillEmail ? String(prefillEmail).replace(/"/g, '&quot;') : '';
     const body = `
       <div class="uc-tabs">
-        <button class="uc-tab ${tab === 'signin' ? 'active' : ''}" data-tab="signin">Sign in</button>
-        <button class="uc-tab ${tab === 'signup' ? 'active' : ''}" data-tab="signup">Create account</button>
+        <button class="uc-tab ${initial === 'magic' ? 'active' : ''}" data-tab="magic">Email me a link</button>
+        <button class="uc-tab ${initial === 'signin' ? 'active' : ''}" data-tab="signin">Password</button>
+        <button class="uc-tab ${initial === 'signup' ? 'active' : ''}" data-tab="signup">Create account</button>
       </div>
       <button class="uc-linkedin" data-act="linkedin">
-        <span class="iconify" data-icon="ph:linkedin-logo-fill"></span> Import from LinkedIn — one click
+        <span class="iconify" data-icon="ph:linkedin-logo-fill"></span> Continue with LinkedIn
       </button>
-      <div class="uc-or"><span>or with email</span></div>
-      <form id="uc-auth-form" class="uc-form">
-        <label class="uc-su-only" style="${tab === 'signin' ? 'display:none' : ''}">Full name
-          <input name="name" placeholder="Jean Maurice H." autocomplete="name">
+
+      <!-- MAGIC LINK / OTP (primary) -->
+      <form id="uc-magic-form" class="uc-form" ${initial === 'magic' ? '' : 'hidden'}>
+        <div class="uc-or"><span>passwordless — no password to remember</span></div>
+        <label>Email <input name="email" type="email" required placeholder="you@email.com" autocomplete="email" value="${emailVal}"></label>
+        <div id="uc-otp-step" hidden>
+          <label>Enter the code we emailed you
+            <input name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code">
+          </label>
+        </div>
+        <button class="uc-primary" type="submit">Email me a sign-in code</button>
+        <p class="uc-hint" id="uc-magic-hint"></p>
+        <p class="uc-err" hidden></p>
+      </form>
+
+      <!-- EMAIL + PASSWORD (fallback) -->
+      <form id="uc-auth-form" class="uc-form" ${initial === 'magic' ? 'hidden' : ''}>
+        <div class="uc-or"><span>with email &amp; password</span></div>
+        <label class="uc-su-only" style="${initial === 'signup' ? '' : 'display:none'}">Full name
+          <input name="name" placeholder="Your name" autocomplete="name">
         </label>
-        <label>Email <input name="email" type="email" required placeholder="you@email.com" autocomplete="email" value="${prefillEmail ? String(prefillEmail).replace(/"/g, '&quot;') : ''}"></label>
+        <label>Email <input name="email" type="email" required placeholder="you@email.com" autocomplete="email" value="${emailVal}"></label>
         <label>Password <input name="password" type="password" required minlength="8" placeholder="At least 8 characters" autocomplete="current-password"></label>
-        <label class="uc-su-only" style="${tab === 'signin' ? 'display:none' : ''}">Confirm password
-          <input name="passwordConfirm" type="password" required minlength="8" placeholder="Repeat password" autocomplete="new-password">
+        <label class="uc-su-only" style="${initial === 'signup' ? '' : 'display:none'}">Confirm password
+          <input name="passwordConfirm" type="password" minlength="8" placeholder="Repeat password" autocomplete="new-password">
         </label>
-        <button class="uc-primary" type="submit">${tab === 'signin' ? 'Sign in' : 'Create my account'}</button>
+        <button class="uc-primary" type="submit">${initial === 'signup' ? 'Create my account' : 'Sign in'}</button>
+        <p class="uc-row-between"><a href="#" data-act="forgot" class="uc-link-muted">Forgot password?</a></p>
         <p class="uc-err" hidden></p>
       </form>`;
     const { host, close } = modal('Welcome to UniCircle', body);
-    let mode = tab;
+    const magicForm = host.querySelector('#uc-magic-form');
+    const pwForm = host.querySelector('#uc-auth-form');
+    let mode = initial;      // 'magic' | 'signin' | 'signup'
+    let otpId = null;        // set after request-otp
+
     const setMode = (m) => {
       mode = m;
       host.querySelectorAll('.uc-tab').forEach((b) => b.classList.toggle('active', b.dataset.tab === m));
-      host.querySelectorAll('.uc-su-only').forEach((el) => el.style.display = m === 'signup' ? '' : 'none');
-      host.querySelector('.uc-primary').textContent = m === 'signin' ? 'Sign in' : 'Create my account';
+      magicForm.hidden = m !== 'magic';
+      pwForm.hidden = m === 'magic';
+      pwForm.querySelectorAll('.uc-su-only').forEach((el) => el.style.display = m === 'signup' ? '' : 'none');
+      pwForm.querySelector('.uc-primary').textContent = m === 'signup' ? 'Create my account' : 'Sign in';
     };
     host.querySelectorAll('.uc-tab').forEach((b) => b.onclick = () => setMode(b.dataset.tab));
     host.querySelector('[data-act="linkedin"]').onclick = () => { close(); openLinkedIn(); };
-    host.querySelector('#uc-auth-form').onsubmit = async (e) => {
+
+    // --- Magic link / OTP ---
+    magicForm.onsubmit = async (e) => {
       e.preventDefault();
       if (!requireBackend()) return;
-      const f = e.target; const errEl = f.querySelector('.uc-err');
-      errEl.hidden = true;
-      const email = f.email.value.trim(), password = f.password.value, name = f.name?.value.trim();
-      const confirmVal = f.passwordConfirm?.value;
-      if (mode === 'signup' && confirmVal !== undefined && confirmVal !== password) {
+      const errEl = magicForm.querySelector('.uc-err'); errEl.hidden = true;
+      const hint = magicForm.querySelector('#uc-magic-hint');
+      const email = magicForm.email.value.trim();
+      const otpStep = magicForm.querySelector('#uc-otp-step');
+      try {
+        if (!otpId) {
+          const r = await api('POST', '/api/collections/users/request-otp', { email }, { auth: false });
+          otpId = r.otpId;
+          otpStep.hidden = false;
+          magicForm.querySelector('.uc-primary').textContent = 'Verify & sign in';
+          hint.textContent = 'If that email is registered, a 6-digit code is on its way — enter it above. New here? Use “Create account”.';
+          magicForm.code.focus();
+        } else {
+          const code = magicForm.code.value.trim();
+          if (!code) { errEl.textContent = 'Enter the code from your email.'; errEl.hidden = false; return; }
+          const r = await api('POST', '/api/collections/users/auth-with-otp', { otpId, password: code }, { auth: false });
+          completeAuth(r, close);
+        }
+      } catch (err) {
+        // OTP for an unknown email → offer to create an account (backend policy dependent)
+        errEl.textContent = err.status === 400
+          ? (otpId ? 'That code is incorrect or expired — try again.' : 'Could not send a code to that address.')
+          : (err.message || 'Something went wrong.');
+        errEl.hidden = false;
+      }
+    };
+
+    // --- Email + password (fallback) ---
+    pwForm.onsubmit = async (e) => {
+      e.preventDefault();
+      if (!requireBackend()) return;
+      const errEl = pwForm.querySelector('.uc-err'); errEl.hidden = true;
+      const email = pwForm.email.value.trim(), password = pwForm.password.value, name = pwForm.name?.value.trim();
+      const confirmVal = pwForm.passwordConfirm?.value;
+      if (mode === 'signup' && confirmVal !== undefined && confirmVal !== '' && confirmVal !== password) {
         errEl.textContent = 'Passwords do not match.'; errEl.hidden = false; return;
       }
       try {
         if (mode === 'signup') {
           await api('POST', '/api/collections/users/records',
             { email, password, passwordConfirm: password, name: name || email.split('@')[0] }, { auth: false });
+          // fire-and-forget verification email (backend SMTP required)
+          api('POST', '/api/collections/users/request-verification', { email }, { auth: false }).catch(() => {});
         }
         const r = await api('POST', '/api/collections/users/auth-with-password', { identity: email, password }, { auth: false });
-        state.token = r.token; state.user = r.record; saveAuth();
-        close(); renderHeaderAuth();
-        toast(`Welcome${state.user.name ? ', ' + esc(state.user.name.split(' ')[0]) : ''}! 🎉`);
-        document.dispatchEvent(new CustomEvent('uc:login', { detail: { user: state.user } }));
-        refreshLiveFeed();
+        completeAuth(r, close);
       } catch (err) {
         errEl.textContent = err.status === 400 ? 'Check your details — email may already be registered or password too short.' : (err.message || 'Something went wrong.');
         errEl.hidden = false;
       }
+    };
+
+    // --- Forgot password ---
+    pwForm.querySelector('[data-act="forgot"]').onclick = async (ev) => {
+      ev.preventDefault();
+      if (!requireBackend()) return;
+      const email = pwForm.email.value.trim();
+      if (!email) { const el = pwForm.querySelector('.uc-err'); el.textContent = 'Enter your email above first, then tap “Forgot password?”.'; el.hidden = false; return; }
+      try {
+        await api('POST', '/api/collections/users/request-password-reset', { email }, { auth: false });
+        toast('Password reset link sent — check your inbox.');
+      } catch (err) { toast('Could not send a reset link.', 'warn'); }
     };
   }
 
@@ -329,7 +409,9 @@
   async function fetchLivePosts() {
     if (!state.online) return [];
     try {
-      const r = await api('GET', '/api/collections/posts/records?perPage=20&sort=-created&expand=author', null, { auth: false });
+      // Auth sent when logged in so expand=author resolves (users are now authed-only);
+      // guests still read the public posts list, just without author details.
+      const r = await api('GET', '/api/collections/posts/records?perPage=20&sort=-created&expand=author');
       return r.items || [];
     } catch { return []; }
   }
@@ -417,7 +499,7 @@
     }
     drawer.classList.add('open');
     try {
-      const r = await api('GET', `/api/collections/users/records?perPage=50&filter=${encodeURIComponent('id != "' + state.user.id + '"')}`, null, { auth: false });
+      const r = await api('GET', `/api/collections/users/records?perPage=50&filter=${encodeURIComponent('id != "' + state.user.id + '"')}`);
       chatUsers = r.items || [];
     } catch { chatUsers = []; }
     const peers = drawer.querySelector('#uc-peers');
