@@ -1627,7 +1627,48 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ==========================================
      2. AI NETWORK INTERACTIVITY
      ========================================== */
+  // Reference slice: wires the static Mentorship section (#mentorship) to the
+  // live PocketBase-backed feature layer (window.UCF). Same pattern applies to
+  // the ideas (pbl-hub), events, and directory slices. No-ops gracefully when
+  // the backend is offline, so the demo UI still renders.
+  function wireMentorshipSlice() {
+    const section = document.getElementById('mentorship');
+    if (!section || !window.UCF) return;
+
+    // vendor-neutral heading (was "UM Mentorship Exchange")
+    const h = section.querySelector('h3');
+    if (h) h.textContent = 'Mentorship Exchange';
+
+    const btns = section.querySelectorAll('button');
+    btns.forEach(btn => {
+      const label = (btn.textContent || '').toLowerCase();
+      if (label.includes('become a mentor')) {
+        btn.addEventListener('click', async () => {
+          try {
+            await window.UCF.mentorships.becomeMentor('1-on-1 mentorship & CV review');
+            window.UC?.toast('You are now listed as a mentor 🎓');
+          } catch (e) { if (e.message !== 'auth') window.UC?.toast('Could not update — try again', 'err'); }
+        });
+      } else if (label.includes('find a mentor')) {
+        btn.addEventListener('click', () => {
+          section.querySelector('.alumni-grid')?.scrollIntoView({ behavior: 'smooth' });
+        });
+      } else if (label.includes('request mentorship')) {
+        btn.addEventListener('click', async (ev) => {
+          const card = ev.target.closest('.alumni-card');
+          const name = card?.querySelector('.name')?.textContent || 'a mentor';
+          const mentorId = card?.getAttribute('data-user-id'); // set when cards are live
+          try {
+            if (mentorId) await window.UCF.mentorships.request(mentorId, `Mentorship with ${name}`);
+            window.UC?.toast(`Mentorship request sent to ${name} ✉️`);
+          } catch (e) { if (e.message !== 'auth') window.UC?.toast('Could not send request', 'err'); }
+        });
+      }
+    });
+  }
+
   function initNetworkInteractivity() {
+    wireMentorshipSlice();
     const searchInput = document.querySelector('.ai-search-container .search-input');
     const searchSubmit = document.querySelector('.ai-search-container .search-submit');
     const suggestionTags = document.querySelectorAll('.ai-search-container .tag');

@@ -582,8 +582,15 @@
     document.body.appendChild(b);
   }
 
-  // expose a tiny API for debugging / mentorship buttons elsewhere
-  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API };
+  // expose a tiny API for debugging + the premium feature slices (uc-features.js).
+  // `api` is the authed REST helper; `requireAuth` gates an action behind login.
+  function requireAuth(mode) {
+    if (state.token) return true;
+    openAuth(mode || 'signin');
+    return false;
+  }
+  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed,
+                API, api, requireAuth, esc, toast };
 
   document.addEventListener('DOMContentLoaded', () => {
     handleOAuthRedirect();
