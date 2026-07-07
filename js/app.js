@@ -1133,186 +1133,141 @@ document.addEventListener('DOMContentLoaded', () => {
     // LANDING PAGE — shown to non-logged users
     // ========================================
     landing: `
-<div class="uc-landing">
+<div class="uc-page uc-landing">
 
-  <!-- ===== HERO ===== -->
-  <section class="uc-lp-hero">
-    <div class="uc-lp-hero-inner">
-      <div>
-        <div class="uc-lp-eyebrow">
-          <img src="unicircle-logo.png" alt="UniCircle" style="height:18px;display:inline;vertical-align:middle;filter:brightness(10);">
-          The independent Maastricht University alumni network
+  <!-- ===== HERO (constellation) ===== -->
+  <section class="uc-hero" data-uc-hero>
+    <canvas class="uc-hero-canvas" id="lp-constellation"></canvas>
+
+    <div style="position:absolute;top:0;left:0;right:0;z-index:2;padding:24px 24px 0;display:flex;justify-content:center;">
+      <div class="uc-navpill">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <img src="assets/img/logo-circle.jpg" alt="UniCircle" style="width:34px;height:34px;border-radius:50%;object-fit:cover;">
+          <span style="font-weight:700;font-size:17px;letter-spacing:-.01em;">UniCircle</span>
+          <div data-nav-links style="display:flex;gap:24px;margin-left:28px;">
+            <a href="#uc-network" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">Network</a>
+            <a href="#uc-events" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">Events</a>
+            <a href="#uc-about" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">About</a>
+          </div>
         </div>
-        <h1 class="uc-lp-h1">Welcome to your lifelong <span style="color:var(--uc-sky)">UM professional network</span></h1>
-        <p class="uc-lp-sub">Connect, mentor and grow with 50,000+ Maastricht University graduates across 80+ countries — City Hubs, mentorship, events, jobs and the PBL Hub, all in one place.</p>
-        <div class="uc-lp-join-form">
-          <input type="email" id="lp-email" class="uc-lp-email" placeholder="Enter your email address" autocomplete="email">
-          <button class="uc-lp-join-btn" id="lp-join-btn">Join now</button>
-        </div>
-        <p class="uc-lp-signin-hint">Already a member? <a id="lp-signin-link">Sign in</a></p>
-        <div class="uc-lp-badges">
-          <span class="uc-lp-badge"><span class="iconify" data-icon="ph:shield-check-fill"></span> Alumni-run &amp; independent</span>
-          <span class="uc-lp-badge"><span class="iconify" data-icon="ph:heart-fill"></span> Give What You Can</span>
-          <span class="uc-lp-badge"><span class="iconify" data-icon="ph:flag-fill"></span> EU-hosted</span>
+        <div style="display:flex;align-items:center;gap:18px;">
+          <a id="lp-signin-link" href="#" style="font-size:14px;font-weight:600;color:var(--uc-ink);">Sign in</a>
+          <button class="uc-btn-dark" id="lp-bottom-join">Request access</button>
         </div>
       </div>
-      <div class="uc-lp-visual">
-        <img src="Image_ressources/banner_stay_connected_to_your_lifelong_global_network.png" alt="UniCircle alumni network" loading="eager">
+    </div>
+
+    <h1 class="uc-hero-h1" style="white-space:nowrap;"><span>Stay in</span> <em>the circle.</em></h1>
+    <p class="uc-lead">The lifelong alumni network — thousands of points of light, one constellation.</p>
+    <div class="uc-join-row">
+      <input type="email" id="lp-email" placeholder="Enter your university email" autocomplete="email">
+      <button class="uc-arrow-btn" id="lp-join-btn" aria-label="Join" style="width:48px;height:48px;font-size:20px;">→</button>
+    </div>
+    <div style="margin-top:26px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--uc-muted);">
+      UniCircle Network — connect the dots, be part of your network.
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="uc-about" style="padding:140px 24px 60px;text-align:center;">
+    <div class="uc-eyebrow" style="margin-bottom:28px;">About UniCircle</div>
+    <h2 class="uc-serif" style="margin:0 auto;max-width:1100px;font-weight:400;font-size:clamp(40px,5.5vw,72px);line-height:1.12;letter-spacing:-.01em;">
+      <span>A network for</span> <em style="font-style:italic;color:var(--uc-muted);">minds</em> <span>that</span> <em style="font-style:italic;color:var(--uc-muted);">connect, mentor, and give back.</em>
+    </h2>
+  </section>
+
+  <!-- ===== FEATURED IMAGE ===== -->
+  <section style="padding:40px 24px 120px;display:flex;justify-content:center;">
+    <div style="position:relative;width:100%;max-width:1152px;aspect-ratio:16/9;border-radius:32px;overflow:hidden;">
+      <img src="assets/img/campus-tapijn.jpg" alt="Campus" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(43,42,38,.55),transparent 55%);"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:clamp(16px,3vw,40px);display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+        <div style="max-width:440px;padding:28px 32px;border-radius:20px;background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.4);text-align:left;">
+          <div class="uc-eyebrow" style="margin-bottom:10px;">Our approach</div>
+          <p style="margin:0;font-size:15px;line-height:1.65;color:var(--uc-ink);">Every connection starts on campus and never ends. We keep the door open — wherever your career takes you.</p>
+        </div>
+        <a href="#uc-network" class="uc-btn-ghost" style="background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);">Explore more</a>
       </div>
     </div>
   </section>
 
-  <!-- ===== STATS BAR ===== -->
-  <section class="uc-lp-stats">
-    <div class="uc-lp-stats-row">
-      <div class="uc-lp-stat">
-        <span class="uc-lp-stat-n">50,000+</span>
-        <span class="uc-lp-stat-l">UM alumni worldwide</span>
-      </div>
-      <div class="uc-lp-sep"></div>
-      <div class="uc-lp-stat">
-        <span class="uc-lp-stat-n">80+</span>
-        <span class="uc-lp-stat-l">countries represented</span>
-      </div>
-      <div class="uc-lp-sep"></div>
-      <div class="uc-lp-stat">
-        <span class="uc-lp-stat-n">30+</span>
-        <span class="uc-lp-stat-l">active city hubs</span>
-      </div>
-      <div class="uc-lp-sep"></div>
-      <div class="uc-lp-stat">
-        <span class="uc-lp-stat-n">2,500+</span>
-        <span class="uc-lp-stat-l">alumni mentors</span>
+  <!-- ===== COMMUNITY x CAREER ===== -->
+  <section style="padding:20px 24px 120px;display:flex;justify-content:center;">
+    <div style="width:100%;max-width:1152px;">
+      <h2 class="uc-serif" style="margin:0 0 64px;font-weight:400;font-size:clamp(48px,6.5vw,88px);line-height:1.05;letter-spacing:-.01em;">
+        <span>Community</span> <em style="font-style:italic;color:var(--uc-muted);">×</em> <span>Career</span>
+      </h2>
+      <div class="uc-feature-grid" style="align-items:center;gap:56px;">
+        <div style="position:relative;aspect-ratio:4/3;border-radius:50% 50% 32px 32px / 40% 40% 32px 32px;overflow:hidden;">
+          <img src="assets/img/servaasbrug.jpg" alt="City" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:36px;">
+          <div>
+            <div class="uc-eyebrow" style="margin-bottom:14px;">Find your people</div>
+            <p style="margin:0;font-size:17px;line-height:1.7;color:var(--uc-ink-2);">From class reunions to city chapters in Amsterdam, London and Singapore — the circle keeps meeting. Search classmates by year, discipline or city and pick up where you left off.</p>
+          </div>
+          <div style="width:100%;height:1px;background:var(--uc-border);"></div>
+          <div>
+            <div class="uc-eyebrow" style="margin-bottom:14px;">Grow your career</div>
+            <p style="margin:0;font-size:17px;line-height:1.7;color:var(--uc-ink-2);">Mentorship matching, an alumni-only job board and lifelong learning with faculty. Give a talk, hire a graduate or find your next role inside the network.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== FEATURES GRID ===== -->
-  <section class="uc-lp-feats">
-    <h2 class="uc-lp-title">Everything your UM career needs</h2>
-    <p class="uc-lp-sub2">Built by alumni, for alumni — shaped by 40+ graduate interviews</p>
-    <div class="uc-lp-grid">
-
-      <div class="uc-lp-feat">
-        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-cobalt),var(--uc-navy))">
-          <span class="iconify" data-icon="ph:map-pin-area-fill"></span>
+  <!-- ===== WHAT THE CIRCLE OFFERS ===== -->
+  <section id="uc-network" style="padding:20px 24px 120px;display:flex;justify-content:center;">
+    <div style="width:100%;max-width:1152px;">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:44px;">
+        <h2 class="uc-serif" style="margin:0;font-weight:400;font-size:clamp(36px,4.5vw,56px);letter-spacing:-.01em;">What the circle offers</h2>
+        <span style="font-size:14px;color:var(--uc-muted);">For every generation</span>
+      </div>
+      <div class="uc-feature-grid">
+        <div class="uc-feature-card">
+          <img src="assets/img/community.jpg" alt="Directory & mentorship">
+          <div class="body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <span class="uc-eyebrow">Network</span>
+              <button class="uc-arrow-btn uc-lp-cta" aria-label="Open directory" style="width:38px;height:38px;font-size:16px;">↗</button>
+            </div>
+            <h3 style="margin:0 0 10px;font-size:24px;font-weight:600;letter-spacing:-.01em;font-family:var(--uc-font-body);">Directory &amp; Mentorship</h3>
+            <p style="margin:0;font-size:14px;line-height:1.65;color:var(--uc-ink-2);">Thousands of searchable profiles, mentor matching by discipline and ambition, and warm introductions instead of cold calls.</p>
+          </div>
         </div>
-        <h3>City Hubs</h3>
-        <p>See which UM alumni are in your city. Join subgroups in Amsterdam, Munich, London, Dubai, New York and 25+ more.</p>
-      </div>
-
-      <div class="uc-lp-feat">
-        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-azure),var(--uc-cobalt))">
-          <span class="iconify" data-icon="ph:handshake-fill"></span>
+        <div class="uc-feature-card">
+          <img src="assets/img/vrijthof.jpg" alt="Reunions & chapters">
+          <div class="body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+              <span class="uc-eyebrow">Events</span>
+              <button class="uc-arrow-btn uc-lp-cta" aria-label="Open events" style="width:38px;height:38px;font-size:16px;">↗</button>
+            </div>
+            <h3 style="margin:0 0 10px;font-size:24px;font-weight:600;letter-spacing:-.01em;font-family:var(--uc-font-body);">Reunions &amp; Chapters</h3>
+            <p style="margin:0;font-size:14px;line-height:1.65;color:var(--uc-ink-2);">Annual reunions, faculty lectures and alumni chapters in 40 cities — RSVP in one tap from your dashboard.</p>
+          </div>
         </div>
-        <h3>Alumni Mentorship</h3>
-        <p>Toggle your mentor status to support current UM students — or find a senior alumni mentor in your exact field.</p>
-      </div>
-
-      <div class="uc-lp-feat">
-        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-sky),var(--uc-azure))">
-          <span class="iconify" data-icon="ph:calendar-check-fill"></span>
-        </div>
-        <h3>Events — See Who's Coming</h3>
-        <p>LinkedIn-style RSVP. Know which classmates from your exact tutorial group are attending <em>before</em> you commit.</p>
-      </div>
-
-      <div class="uc-lp-feat">
-        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-navy),var(--uc-cobalt))">
-          <span class="iconify" data-icon="ph:briefcase-metal-fill"></span>
-        </div>
-        <h3>UM-Only Jobs &amp; Internships</h3>
-        <p>Post or discover vacancies explicitly seeking Maastricht graduates. PBL-culture employers, instantly searchable.</p>
-      </div>
-
-      <div class="uc-lp-feat">
-        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-cobalt),var(--uc-azure))">
-          <span class="iconify" data-icon="ph:lightbulb-filament-fill"></span>
-        </div>
-        <h3>PBL Hub</h3>
-        <p>Post real academic case challenges and get answers from alumni practitioners — the PBL spirit lives on after graduation.</p>
-      </div>
-
-      <div class="uc-lp-feat">
-        <div class="uc-lp-feat-ico" style="background:linear-gradient(135deg,var(--uc-sky),var(--uc-cobalt))">
-          <span class="iconify" data-icon="ph:chat-circle-dots-fill"></span>
-        </div>
-        <h3>Direct Messaging</h3>
-        <p>Instant 1-on-1 conversation with any UniCircle member. No InMail credits, no premium paywalls. Just alumni talking.</p>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===== WHY UNICIRCLE ===== -->
-  <section class="uc-lp-why">
-    <div class="uc-lp-why-inner">
-      <div class="uc-lp-why-text">
-        <span class="uc-lp-tag">Why UniCircle?</span>
-        <h2>Not the official UM Alumni platform. Faster, more personal, alumni-run.</h2>
-        <ul class="uc-lp-checks">
-          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>UM-wide, not faculty-specific</strong> — all 16 faculties, one network, one shared identity</span></li>
-          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>Alumni-built</strong> — no committees, no 6-month approval cycles; features ship weekly</span></li>
-          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>Give What You Can</strong> — €5–€10/month or €0; your choice, no pressure</span></li>
-          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>Student–alumni bridge</strong> — mentoring and PBL collaboration built in from day one</span></li>
-          <li><span class="iconify" data-icon="ph:check-circle-fill" style="color:var(--uc-sky)"></span><span><strong>EU data sovereignty</strong> — hosted on Hetzner, Germany; no US data dependency</span></li>
-        </ul>
-        <p class="uc-lp-prof">Prof. Dr. Jan M. Smits (UM Law Faculty) is in conversations to co-fund a UM-endorsed version of UniCircle. Faculty backing is building.</p>
-      </div>
-      <div class="uc-lp-visual">
-        <img src="Image_ressources/Mood_images/um-tapijn-202010-005_2.jpg" alt="UM Tapijn campus" loading="lazy">
       </div>
     </div>
   </section>
 
-  <!-- ===== TESTIMONIALS ===== -->
-  <section class="uc-lp-quotes">
-    <h2 class="uc-lp-title">What alumni say</h2>
-    <p class="uc-lp-sub2">From our community interviews — 40+ UM graduates surveyed</p>
-    <div class="uc-lp-grid">
-      <blockquote class="uc-lp-quote">
-        <p>"The City Hub feature is exactly what I needed. I found 40 UM alumni in Amsterdam in minutes — we now have a monthly meetup."</p>
-        <footer class="uc-lp-quote-foot">
-          <img src="Image_ressources/Mood_images/conik_photograph_slightly_high-angle_top-down_view_early_mornin_e5cdc1d7-d669-4f45-8b59-5533de6fd313.png" alt="">
-          <div><strong>Elena V.</strong><span>MSc Finance · Amsterdam Hub</span></div>
-        </footer>
-      </blockquote>
-      <blockquote class="uc-lp-quote">
-        <p>"I posted a PBL case on ECB hedging and had three senior risk architects reply within hours. UniCircle bridges the gap LinkedIn can't."</p>
-        <footer class="uc-lp-quote-foot">
-          <img src="Image_ressources/Mood_images/nikhil1256_A_man_walking_dressed_in_professional_business_attir_8fa44d19-f313-4ba2-aba1-72254228f5eb.png" alt="">
-          <div><strong>Jean Maurice H.</strong><span>MSc Financial Economics · Maastricht</span></div>
-        </footer>
-      </blockquote>
-      <blockquote class="uc-lp-quote">
-        <p>"I hire interns who understand PBL culture. UniCircle gives me direct access to UM graduates — no recruitment fees, no middleman."</p>
-        <footer class="uc-lp-quote-foot">
-          <img src="Image_ressources/Mood_images/eukste_bezienswaardigheden_maastricht_townhouse.jpg" alt="">
-          <div><strong>David D.</strong><span>Co-Founder · Munich Alumni Chair</span></div>
-        </footer>
-      </blockquote>
-    </div>
-  </section>
-
-  <!-- ===== BOTTOM CTA ===== -->
-  <section class="uc-lp-cta">
-    <h2>Ready to reconnect with your UM network?</h2>
-    <p>Join thousands of Maastricht University alumni already on UniCircle.</p>
-    <button class="uc-lp-cta-big" id="lp-bottom-join">Join UniCircle — it's free</button>
-    <p class="uc-lp-fine">No credit card required · Give What You Can · EU-hosted · Independent</p>
-  </section>
-
-  <!-- ===== FOOTER ===== -->
-  <footer class="uc-lp-foot">
-    <div class="uc-lp-foot-row">
-      <div class="uc-lp-foot-brand">
-        <img src="unicircle-logo.png" alt="UniCircle" style="height:20px;">
-        UniCircle — unicircle.eu
+  <!-- ===== FOOTER (dark) ===== -->
+  <footer id="uc-events" class="uc-footer-dark">
+    <div style="max-width:1152px;margin:0 auto;display:flex;flex-direction:column;gap:44px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:14px;">
+          <img src="assets/img/logo-circle.jpg" alt="UniCircle" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
+          <span class="uc-serif" style="font-size:28px;">UniCircle</span>
+        </div>
+        <button class="uc-btn-dark" id="lp-foot-join" style="background:var(--uc-bg);color:var(--uc-ink);">Join now</button>
       </div>
-      <div class="uc-lp-foot-links">
-        <a id="lp-foot-signin">Sign in</a>
-        <a id="lp-foot-join">Join now</a>
-        <span>© 2026 UniCircle · Independent UM Alumni Community</span>
+      <div style="width:100%;height:1px;background:rgba(250,249,246,.15);"></div>
+      <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(250,249,246,.55);">
+        <span>© 2026 UniCircle · unicircle.eu</span>
+        <div style="display:flex;gap:24px;">
+          <a id="lp-foot-signin" href="#" style="color:rgba(250,249,246,.7);">Sign in</a>
+          <a href="#" style="color:rgba(250,249,246,.7);">Privacy</a>
+          <a href="#" style="color:rgba(250,249,246,.7);">Contact</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -1381,6 +1336,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Load page content from inline fallback templates (single source of truth)
   function loadPage(pageName) {
+    // Guest landing carries its own nav pill → hide the global SPA header there
+    document.body.classList.toggle('uc-hide-header', pageName === 'landing');
     // Update active nav class
     navItems.forEach(item => {
       if (item.getAttribute('data-page') === pageName) {
@@ -1449,6 +1406,76 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('lp-email')?.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') joinBtn?.click();
     });
+
+    // Feature-card "↗" CTAs → open signup (guests) or route (handled by nav for members)
+    document.querySelectorAll('.uc-lp-cta').forEach(b => b.addEventListener('click', openSignup));
+
+    // Constellation particle field behind the hero
+    mountConstellation(document.getElementById('lp-constellation'), 340);
+  }
+
+  /* Lightweight constellation swarm (ported from the redesign hero canvas).
+     Respects prefers-reduced-motion; cleans itself up on next page render. */
+  let _ucRaf = null;
+  function mountConstellation(canvas, count) {
+    if (_ucRaf) { cancelAnimationFrame(_ucRaf); _ucRaf = null; }
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext('2d');
+    const palette = ['oklch(0.62 0.14 235)', 'oklch(0.62 0.14 275)', 'oklch(0.62 0.14 305)', 'oklch(0.62 0.14 185)'];
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0, particles = [];
+    const resize = () => {
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    const mouse = { x: null, y: null };
+    canvas.parentElement.addEventListener('pointermove', (e) => {
+      const r = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+    });
+    function P() {
+      this.x = Math.random() * W; this.y = Math.random() * H;
+      this.vx = Math.random() - 0.5; this.vy = Math.random() - 0.5;
+      this.size = Math.random() * 3 + 1.2;
+      this.color = palette[Math.floor(Math.random() * palette.length)];
+      this.alpha = Math.random() * 0.35 + 0.3; this.off = Math.random() * Math.PI * 2;
+    }
+    P.prototype.update = function (t) {
+      const a = Math.sin(this.y * 0.004 + t * 0.0004 + this.off) + Math.cos(this.x * 0.003 - t * 0.0003);
+      this.vx += Math.cos(a) * 0.03; this.vy += Math.sin(a) * 0.03;
+      const cx = W / 2, cy = H * 0.55, dx = cx - this.x, dy = cy - this.y, d = Math.hypot(dx, dy) || 1;
+      this.vx += (dx / d) * 0.007; this.vy += (dy / d) * 0.007;
+      if (mouse.x !== null) {
+        const mx = mouse.x - this.x, my = mouse.y - this.y, md = Math.hypot(mx, my);
+        if (md < 180) { this.vx += (mx / md) * 0.05; this.vy += (my / md) * 0.05; }
+      }
+      this.vx *= 0.96; this.vy *= 0.96; this.x += this.vx; this.y += this.vy;
+      if (this.x < -20) this.x = W + 20; if (this.x > W + 20) this.x = -20;
+      if (this.y < -20) this.y = H + 20; if (this.y > H + 20) this.y = -20;
+    };
+    P.prototype.draw = function () {
+      ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; const s = this.size;
+      ctx.beginPath(); ctx.roundRect(this.x - s, this.y - s, s * 2, s * 2, s * 0.7); ctx.fill();
+    };
+    for (let i = 0; i < count; i++) particles.push(new P());
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const step = (t) => {
+      ctx.globalAlpha = 1; ctx.fillStyle = 'rgba(250,249,246,0.28)'; ctx.fillRect(0, 0, W, H);
+      for (const p of particles) { p.update(t); p.draw(); }
+      ctx.globalAlpha = 1; ctx.strokeStyle = 'rgba(43,42,38,0.06)'; ctx.lineWidth = 1;
+      for (let i = 0; i < particles.length; i += 3) {
+        for (let j = i + 3; j < particles.length; j += 3) {
+          const a = particles[i], b = particles[j], dx = a.x - b.x, dy = a.y - b.y;
+          if (dx * dx + dy * dy < 4900) { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+        }
+      }
+      if (!reduced && document.getElementById('lp-constellation')) _ucRaf = requestAnimationFrame(step);
+    };
+    ctx.fillStyle = '#faf9f6'; ctx.fillRect(0, 0, W, H);
+    _ucRaf = requestAnimationFrame(step);
   }
 
   /* ==========================================
