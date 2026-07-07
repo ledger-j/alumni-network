@@ -288,3 +288,124 @@ body.uc-hide-header .skip-link { display: none; }
 .uc-ribbon { position: relative; height: 210px; overflow: hidden; flex-shrink: 0; }
 @media (max-width:1100px) { .uc-content-grid { grid-template-columns: 1fr; } }
 @media (max-width:900px) { .uc-feature-grid { grid-template-columns: 1fr; } .uc-content-grid { padding: 20px 24px 40px; } }
+
+/* ==========================================================================
+   AUTH FRAME — Neo-modern re-skin (Design System v2).
+   Restyles the auth/LinkedIn modal that unicircle.js injects (.uc-modal-host
+   and its children) to the paper-glass language: NO navy header bar, Instrument
+   Serif title, ink pill buttons, mist tab track, white LinkedIn button with a
+   blue brand chip, indigo focus ring. Pure appearance — the JS markup and
+   contract classes (.uc-tab[data-tab], #uc-magic-form, .uc-primary…) are
+   untouched. Loads last, so these win over css/unicircle.css.
+   ========================================================================== */
+.uc-modal-host { font-family: var(--uc-font-body); color: var(--uc-ink); }
+
+/* Scrim: warm ink wash, gentle blur (not the old cold navy) */
+.uc-modal-host .uc-modal-backdrop {
+  background: rgba(43,42,38,0.35) !important;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+
+/* White-glass card, 28px radius, warm soft shadow, inset top highlight */
+.uc-modal-host .uc-modal {
+  width: min(432px, 92vw);
+  background: rgba(255,255,255,0.92) !important;
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border: 1px solid var(--uc-border) !important;
+  border-radius: var(--uc-r-lg) !important;
+  box-shadow: 0 24px 70px rgba(43,42,38,0.14), inset 0 1px 1px rgba(255,255,255,0.9) !important;
+}
+
+/* Header: no colored bar — serif title inline with a circular close button */
+.uc-modal-host .uc-modal-head {
+  background: transparent !important;
+  padding: 30px 32px 6px !important;
+  align-items: flex-start;
+}
+.uc-modal-host .uc-modal-head h3 {
+  color: var(--uc-ink) !important;
+  font-family: var(--uc-font-display);
+  font-weight: 400; font-size: 27px; line-height: 1.15; letter-spacing: 0;
+}
+.uc-modal-host .uc-x {
+  width: 34px; height: 34px; flex: none; display: grid; place-items: center;
+  border-radius: var(--uc-r-pill); background: var(--uc-mist, #f1efe9);
+  color: var(--uc-ink-2) !important; font-size: 15px; opacity: 1;
+  transition: background .18s, color .18s;
+}
+.uc-modal-host .uc-x:hover { background: rgba(43,42,38,0.10); color: var(--uc-ink) !important; }
+.uc-modal-host .uc-modal-body { padding: 18px 32px 30px !important; gap: 16px; }
+.uc-modal-host .uc-lead { color: var(--uc-ink-2); font-size: 14px; }
+
+/* Segmented tabs on a mist track */
+.uc-modal-host .uc-tabs {
+  background: #f1efe9; padding: 4px; gap: 4px;
+  border: 1px solid rgba(43,42,38,0.08); border-radius: var(--uc-r-pill);
+}
+.uc-modal-host .uc-tab {
+  font-family: var(--uc-font-body); font-weight: 600; font-size: 13px;
+  color: var(--uc-muted); border-radius: var(--uc-r-pill); padding: 9px 8px;
+  transition: background .18s, color .18s;
+}
+.uc-modal-host .uc-tab.active {
+  background: #fff; color: var(--uc-ink) !important;
+  box-shadow: 0 2px 8px rgba(43,42,38,0.10);
+}
+
+/* LinkedIn: white secondary button; only the icon carries brand blue */
+.uc-modal-host .uc-linkedin {
+  background: #fff !important; color: var(--uc-ink) !important;
+  border: 1px solid rgba(43,42,38,0.14) !important; border-radius: var(--uc-r-pill);
+  font-family: var(--uc-font-body); font-weight: 600; font-size: 14px; padding: 13px;
+  transition: background .18s, box-shadow .18s;
+}
+.uc-modal-host .uc-linkedin:hover { background: #faf9f6 !important; filter: none; box-shadow: var(--uc-shadow); }
+.uc-modal-host .uc-linkedin .iconify { color: #0A66C2; font-size: 20px; }
+
+/* Labelled hairline divider */
+.uc-modal-host .uc-or {
+  color: var(--uc-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em;
+}
+.uc-modal-host .uc-or::before, .uc-modal-host .uc-or::after { background: var(--uc-border); }
+
+/* Inputs: white pills, uppercase micro-labels, indigo focus ring */
+.uc-modal-host .uc-form { gap: 14px; }
+.uc-modal-host .uc-form label {
+  font-family: var(--uc-font-body); font-weight: 600; font-size: 11px;
+  text-transform: uppercase; letter-spacing: 0.14em; color: var(--uc-muted); gap: 7px;
+}
+.uc-modal-host .uc-form input {
+  background: #fff; border: 1px solid rgba(43,42,38,0.12); border-radius: var(--uc-r-pill);
+  padding: 13px 20px; font-size: 15px; font-family: var(--uc-font-body); color: var(--uc-ink);
+  text-transform: none; letter-spacing: normal;
+}
+.uc-modal-host .uc-form input::placeholder { color: var(--uc-muted); }
+.uc-modal-host .uc-form input:focus {
+  outline: 2px solid var(--uc-focus); outline-offset: 2px; border-color: transparent; box-shadow: none;
+}
+
+/* Primary: ink fill, paper text, pill; hover deepens to dark nuance */
+.uc-modal-host .uc-primary {
+  background: var(--uc-ink) !important; color: var(--uc-bg) !important;
+  border-radius: var(--uc-r-pill); font-family: var(--uc-font-body); font-weight: 600;
+  font-size: 14px; padding: 14px; transition: background .18s, transform .12s;
+}
+.uc-modal-host .uc-primary:hover { background: var(--uc-panel) !important; }
+.uc-modal-host .uc-primary:active { transform: scale(0.98); }
+
+.uc-modal-host .uc-hint { color: var(--uc-ink-2); font-size: 12px; }
+.uc-modal-host .uc-hint code { background: #f1efe9; color: var(--uc-ink); }
+.uc-modal-host .uc-err { color: oklch(0.55 0.15 25); font-size: 12px; }
+.uc-modal-host .uc-link-muted { color: var(--uc-ink-2); font-weight: 600; }
+.uc-modal-host .uc-row-between { display: flex; justify-content: flex-end; }
+
+/* Dropzone (LinkedIn CSV import): dashed paper, indigo on hover */
+.uc-modal-host .uc-drop {
+  border: 1.5px dashed rgba(43,42,38,0.25); background: var(--uc-bg);
+  color: var(--uc-ink-2); border-radius: 18px; font-family: var(--uc-font-body); font-weight: 600;
+}
+.uc-modal-host .uc-drop:hover { border-color: var(--uc-focus); color: var(--uc-ink); background: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  .uc-modal-host .uc-modal { animation: none; }
+}
