@@ -65,8 +65,12 @@ extra = [text("headline", maxlen=255), text("location", maxlen=120), text("degre
          urlf("linkedin_url"), boolf("linkedin_imported"), boolf("supporter"),
          boolf("mentor"), text("mentor_offer", maxlen=255)]
 merged = users["fields"] + [f for f in extra if f["name"] not in existing]
+# Security: the alumni directory is authenticated-only — anonymous visitors can
+# sign up (createRule stays open) but cannot list/scrape member profiles. This is
+# also the groundwork for premium-gating deeper directory search.
+AUTHED = '@request.auth.id != ""'
 st, r = req("PATCH", f"/api/collections/{USERS_ID}",
-            {"fields": merged, "listRule": "", "viewRule": ""})
+            {"fields": merged, "listRule": AUTHED, "viewRule": AUTHED})
 print("users extend:", st, r.get("name") or r)
 
 # 2) posts
