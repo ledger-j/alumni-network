@@ -603,3 +603,10 @@ body {
 }
 .uc-login-card .uc-tab { font-size: 12.5px; padding: 8px 0; }
 .uc-login-card .uc-input-pill { font-size: 14px; }
+
+/* ==========================================================================
+   AUTH MODAL FIX — [hidden] must win over .uc-form{display:flex}. Without this
+   the inactive tab's form (magic vs password/create) stays visible and both
+   panels stack. A blanket rule keeps 'hidden' authoritative everywhere.
+   ========================================================================== */
+[hidden] { display: none !important; }
