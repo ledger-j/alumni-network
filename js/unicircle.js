@@ -158,7 +158,7 @@
         <button class="uc-tab ${initial === 'signup' ? 'active' : ''}" data-tab="signup">Create account</button>
       </div>
       <button class="uc-linkedin" data-act="linkedin">
-        <span class="iconify" data-icon="ph:linkedin-logo-fill"></span> Continue with LinkedIn
+        <span class="uc-li-chip">in</span> Continue with LinkedIn
       </button>
 
       <!-- MAGIC LINK / OTP (primary) -->
@@ -190,7 +190,7 @@
         <p class="uc-row-between"><a href="#" data-act="forgot" class="uc-link-muted">Forgot password?</a></p>
         <p class="uc-err" hidden></p>
       </form>`;
-    const { host, close } = modal('Welcome to UniCircle', body);
+    const { host, close } = modal('<img src="unicircle-logo.png" alt="">Welcome to <em>the circle.</em>', body);
     const magicForm = host.querySelector('#uc-magic-form');
     const pwForm = host.querySelector('#uc-auth-form');
     let mode = initial;      // 'magic' | 'signin' | 'signup'
@@ -281,7 +281,7 @@
     const body = `
       <p class="uc-lead">Bring your professional profile across in one step.</p>
       <button class="uc-linkedin" id="uc-li-signin">
-        <span class="iconify" data-icon="ph:linkedin-logo-fill"></span> Sign in with LinkedIn
+        <span class="uc-li-chip">in</span> Sign in with LinkedIn
       </button>
       <p class="uc-hint" id="uc-li-hint"></p>
       <div class="uc-or"><span>or import your LinkedIn data export</span></div>
@@ -302,7 +302,7 @@
         <button class="uc-primary" type="submit">Create account from LinkedIn</button>
         <p class="uc-err" hidden></p>
       </form>`;
-    const { host, close } = modal('Import from LinkedIn', body);
+    const { host, close } = modal('Import from <em>LinkedIn.</em>', body);
 
     // OIDC sign-in via PocketBase OAuth2 (works once a LinkedIn provider is configured in PB admin)
     host.querySelector('#uc-li-signin').onclick = async () => {

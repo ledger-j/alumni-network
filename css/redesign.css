@@ -486,3 +486,107 @@ body {
 
 /* --- Green/misc icon accents → ink-soft (swarm colors never as text) --- */
 .media-btn.video .iconify, .iconify.check { color: var(--uc-ink-2) !important; }
+
+/* ==========================================================================
+   FINALISATION v3 — side-rail app shell + rebuilt screens (App.dc.html).
+   Every authenticated page renders inside .uc-dashboard-shell (rail + main).
+   Font coherence: Instrument Serif 400 for display titles, Manrope ≤700 for
+   UI — no faux-bold 800 headings, no clipped pill buttons.
+   ========================================================================== */
+
+/* Shell main column */
+.uc-main-col { min-width: 0; display: flex; flex-direction: column; }
+.uc-page-main { padding: 28px clamp(20px, 3.5vw, 44px) 48px; }
+
+/* Rail brand + dot + link reset (rail links are <a> and <button>) */
+.uc-rail-brand { display: flex; align-items: center; gap: 12px; padding: 0 8px 26px; }
+.uc-rail-brand img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.uc-rail-brand .uc-serif { font-size: 22px; color: var(--uc-bg); }
+.uc-rail-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 12px; flex-shrink: 0; }
+.uc-rail-link {
+  display: flex; align-items: center; width: 100%; text-align: left;
+  padding: 11px 14px; border: none; background: transparent; cursor: pointer;
+  border-radius: var(--uc-r-pill); font-family: var(--uc-font-body);
+  font-size: 14px; font-weight: 500; color: rgba(250,249,246,0.65);
+}
+.uc-rail-link:hover { background: rgba(250,249,246,0.08); color: var(--uc-bg); }
+.uc-rail-link.active, .uc-rail-link[aria-current="page"] { background: rgba(250,249,246,0.12); color: var(--uc-bg); font-weight: 600; }
+
+/* App header row (title + search) on inner screens */
+.uc-app-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 26px; flex-wrap: wrap; }
+.uc-app-title { margin: 0; font-family: var(--uc-font-display); font-weight: 400; font-size: clamp(28px, 3.5vw, 38px); letter-spacing: -0.01em; color: var(--uc-ink); }
+.uc-app-title em { font-style: italic; color: var(--uc-ink-2); }
+.uc-app-search { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 20px; border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid var(--uc-border); }
+.uc-app-search input { width: min(220px, 44vw); border: none; background: transparent; font-family: var(--uc-font-body); font-size: 14px; color: var(--uc-ink); outline: none; }
+.uc-app-search button { width: 38px; height: 38px; min-width: 38px; border-radius: 50%; background: var(--uc-ink); color: var(--uc-bg); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
+
+/* Section title — Manrope 700 (never faux-bold serif) */
+.uc-h2 { margin: 0; font-family: var(--uc-font-body); font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: var(--uc-ink); }
+
+/* Rows, date circles */
+.uc-row { display: flex; align-items: center; gap: 18px; padding: 14px 18px; border-radius: 16px; background: var(--uc-card-solid); border: 1px solid var(--uc-border-2); }
+.uc-datecirc { flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+/* Pills — generous padding, nowrap, no clipping */
+.uc-pill-ink, .uc-pill-ghost, .uc-pill-paper, .uc-pill-outline-paper {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 9px 22px; border-radius: 999px; font-family: var(--uc-font-body);
+  font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; text-decoration: none; line-height: 1.2;
+}
+.uc-pill-ink { background: var(--uc-ink); color: var(--uc-bg); border: none; }
+.uc-pill-ink:hover { background: var(--uc-panel); }
+.uc-pill-ghost { background: transparent; color: var(--uc-ink); border: 1px solid var(--uc-border); }
+.uc-pill-ghost:hover { background: rgba(43,42,38,0.03); }
+.uc-pill-paper { background: var(--uc-bg); color: var(--uc-ink); border: none; padding: 12px 28px; font-weight: 700; }
+.uc-pill-outline-paper { background: transparent; color: var(--uc-bg); border: 1px solid rgba(250,249,246,0.3); padding: 8px 18px; font-weight: 700; }
+.uc-pill-sm { padding: 7px 18px; font-size: 12px; }
+
+/* People / jobs / chips / tags */
+.uc-person { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 14px; border-radius: 16px; background: var(--uc-card-solid); border: 1px solid var(--uc-border-2); text-align: center; }
+.uc-joblink { display: block; padding: 14px 16px; border-radius: 14px; background: var(--uc-card-solid); border: 1px solid var(--uc-border-2); }
+.uc-chip { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--uc-border); background: transparent; font-family: var(--uc-font-body); font-size: 12px; color: var(--uc-ink-2); cursor: pointer; }
+.uc-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--uc-ink-2); background: var(--uc-frost); padding: 5px 12px; border-radius: 999px; margin-bottom: 16px; }
+
+/* Filters + card/stat grids */
+.uc-filters { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.uc-filters select { min-width: 0; width: 100%; padding: 11px 16px; border-radius: 999px; border: 1px solid rgba(43,42,38,0.12); background: #fff; font-family: var(--uc-font-body); font-size: 13px; color: var(--uc-ink); }
+.uc-cards-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.uc-cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.uc-stats-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.uc-stat { padding: 20px 22px; border-radius: 16px; background: var(--uc-card-solid); border: 1px solid var(--uc-border-2); }
+.uc-stat-n { font-family: var(--uc-font-display); font-size: 36px; line-height: 1; }
+.uc-stat-l { font-size: 12px; color: var(--uc-muted); margin-top: 6px; }
+
+@media (max-width: 1150px) {
+  .uc-cards-3 { grid-template-columns: 1fr 1fr; }
+  .uc-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .uc-cards-3, .uc-cards-2, .uc-stats-3 { grid-template-columns: 1fr; }
+  .uc-filters { grid-template-columns: 1fr 1fr; }
+  .uc-app-search input { width: 100%; }
+}
+
+/* ==========================================================================
+   AUTH MODALS v3 — match New_design/Auth Modals.dc.html
+   ========================================================================== */
+.uc-modal { border-radius: 28px !important; padding: 0 !important; }
+.uc-modal-head { padding: 30px 32px 18px !important; }
+.uc-modal-head h3 { display: flex; align-items: center; gap: 12px; font-size: 26px !important; }
+.uc-modal-head h3 img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.uc-modal-head h3 em { font-style: italic; color: var(--uc-ink-2); }
+.uc-modal-body { padding: 0 32px 32px !important; }
+
+/* LinkedIn: white button, ink text, blue brand chip (never a blue fill) */
+.uc-linkedin {
+  background: #fff !important; color: var(--uc-ink) !important;
+  border: 1px solid rgba(43,42,38,0.14) !important; border-radius: 999px !important;
+  font-weight: 600 !important; display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.uc-linkedin:hover { background: var(--uc-bg) !important; }
+.uc-li-chip { width: 20px; height: 20px; border-radius: 4px; background: #0A66C2; color: #fff; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+
+/* Field labels — tiny uppercase */
+.uc-form label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--uc-muted); font-weight: 600; display: flex; flex-direction: column; gap: 8px; }
+.uc-form input { text-transform: none; letter-spacing: normal; }
+.uc-or span { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--uc-muted); font-weight: 600; }

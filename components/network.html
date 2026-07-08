@@ -1,0 +1,72 @@
+<!-- NETWORK — content only; shell + rail supplied by the router. -->
+<div class="uc-page-main">
+  <div class="uc-app-header">
+    <h1 class="uc-app-title">Find <em>your people.</em></h1>
+    <form data-uc-search class="uc-app-search">
+      <input type="search" placeholder="Search the circle…" aria-label="Search">
+      <button type="submit" aria-label="Search"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
+    </form>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:24px;">
+    <div class="uc-card">
+      <div class="uc-eyebrow" style="margin-bottom:14px;">Conversational search</div>
+      <div style="display:flex;align-items:center;gap:10px;padding:6px 6px 6px 22px;border-radius:999px;background:#fff;border:1px solid rgba(43,42,38,0.12);">
+        <input type="text" placeholder="e.g. 'Alumni in Consulting from IFM Period 5 Tutorial 01'…" style="flex:1;min-width:0;border:none;background:transparent;font-family:var(--uc-font-body);font-size:14px;color:var(--uc-ink);outline:none;">
+        <button type="button" class="uc-pill-ink" style="padding:11px 26px;">Search</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;">
+        <span style="font-size:11px;color:var(--uc-muted);align-self:center;font-weight:600;">Try:</span>
+        <button type="button" class="uc-chip">"Finance peers from Period 5"</button>
+        <button type="button" class="uc-chip">"Consultants at McKinsey"</button>
+        <button type="button" class="uc-chip">"IFM Tutorial 01"</button>
+      </div>
+      <div data-filters class="uc-filters">
+        <select><option>All sectors</option><option>Finance</option><option>Consulting</option><option>Technology</option></select>
+        <select><option>All courses</option><option>International Financial Management</option><option>PBL in Finance</option><option>Quantitative Modeling</option></select>
+        <select><option>All periods</option><option>Period 1</option><option>Period 4</option><option>Period 5</option></select>
+        <select><option>All tutorials</option><option>Tutorial 01</option><option>Tutorial 02</option><option>Tutorial 03</option></select>
+        <select><option>All years</option><option>Class of 2025</option><option>Class of 2024</option><option>Class of 2023</option></select>
+      </div>
+    </div>
+
+    <div data-cards-grid class="uc-cards-3">
+      <div class="uc-card" style="padding:24px;">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+          <div class="uc-avatar-initials" style="width:54px;height:54px;font-size:21px;background:oklch(0.9 0.06 275);">LB</div>
+          <div><div style="font-size:15px;font-weight:600;">Linas Beliūnas</div><div style="font-size:12px;color:var(--uc-muted);">M.Sc. Econometrics '24</div></div>
+        </div>
+        <p style="margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--uc-ink-2);">Risk Strategy Architect at Binance · Amsterdam</p>
+        <div class="uc-tag">Classmate overlap: IFM Tutorial 01</div>
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="uc-pill-ink" style="flex:1;" data-uc-connect>Connect</button>
+          <button type="button" class="uc-pill-ghost" style="flex:1;" data-uc-message>Message</button>
+        </div>
+      </div>
+      <div class="uc-card" style="padding:24px;">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+          <div class="uc-avatar-initials" style="width:54px;height:54px;font-size:21px;background:oklch(0.9 0.06 185);">MB</div>
+          <div><div style="font-size:15px;font-weight:600;">Marta Bakker</div><div style="font-size:12px;color:var(--uc-muted);">B.Sc. International Business '22</div></div>
+        </div>
+        <p style="margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--uc-ink-2);">Strategy Consultant at McKinsey · Amsterdam</p>
+        <div class="uc-tag">Same city chapter: Amsterdam</div>
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="uc-pill-ink" style="flex:1;" data-uc-connect>Connect</button>
+          <button type="button" class="uc-pill-ghost" style="flex:1;" data-uc-message>Message</button>
+        </div>
+      </div>
+      <div class="uc-card" style="padding:24px;">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
+          <div class="uc-avatar-initials" style="width:54px;height:54px;font-size:21px;background:oklch(0.9 0.06 235);">TN</div>
+          <div><div style="font-size:15px;font-weight:600;">Thomas Nguyen</div><div style="font-size:12px;color:var(--uc-muted);">M.Sc. Financial Economics '23</div></div>
+        </div>
+        <p style="margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--uc-ink-2);">Quant Researcher at Optiver · Amsterdam</p>
+        <div class="uc-tag">Shared course: Quantitative Modeling</div>
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="uc-pill-ink" style="flex:1;" data-uc-connect>Connect</button>
+          <button type="button" class="uc-pill-ghost" style="flex:1;" data-uc-message>Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
