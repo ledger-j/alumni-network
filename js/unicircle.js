@@ -141,7 +141,7 @@
     state.token = r.token; state.user = r.record; saveAuth();
     if (close) close();
     renderHeaderAuth();
-    toast(`Welcome${state.user.name ? ', ' + esc(state.user.name.split(' ')[0]) : ''}! 🎉`);
+    toast(`Welcome to the circle${state.user.name ? ', ' + esc(state.user.name.split(' ')[0]) : ''}.`);
     document.dispatchEvent(new CustomEvent('uc:login', { detail: { user: state.user } }));
     refreshLiveFeed();
   }
@@ -340,7 +340,7 @@
         await api('POST', '/api/collections/users/records', payload, { auth: false });
         const r = await api('POST', '/api/collections/users/auth-with-password', { identity: payload.email, password: f.password.value }, { auth: false });
         state.token = r.token; state.user = r.record; saveAuth();
-        close(); renderHeaderAuth(); toast('LinkedIn profile imported 🎉'); refreshLiveFeed();
+        close(); renderHeaderAuth(); toast('LinkedIn profile imported.'); refreshLiveFeed();
       } catch (err) {
         errEl.textContent = err.message || 'Import failed.'; errEl.hidden = false;
       }
@@ -368,7 +368,7 @@
       }, { auth: false });
       state.token = r.token; state.user = r.record; saveAuth();
       history.replaceState({}, '', location.pathname);
-      toast('Signed in with LinkedIn 🎉');
+      toast('Signed in with LinkedIn.');
     } catch { /* ignore */ }
   }
 
@@ -531,7 +531,7 @@
     catch { return; }
     const box = document.getElementById('uc-msgs');
     box.innerHTML = items.map((m) => `<div class="uc-msg ${m.sender === me ? 'mine' : ''}">${esc(m.text)}</div>`).join('')
-      || '<p class="uc-hint" style="padding:16px">Say hello 👋</p>';
+      || '<p class="uc-hint" style="padding:16px">Say hello.</p>';
     box.scrollTop = box.scrollHeight;
   }
   async function sendMessage(e) {

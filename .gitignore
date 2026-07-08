@@ -1,2 +1,5 @@
 # Local Claude Code tooling (preview launch config, worktree metadata)
 .claude/
+
+__pycache__/
+*.pyc
