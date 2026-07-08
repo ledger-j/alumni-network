@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     events: 'components/events.html',
     jobs: 'components/jobs.html',
     mentoring: 'components/mentoring.html',
+    profile: 'components/profile.html',
     'pbl-hub': 'components/pbl-hub.html',
     landing: 'components/landing.html'
   };
@@ -42,7 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return '<nav class="uc-rail" aria-label="Primary">'
       + '<div class="uc-rail-brand"><img src="unicircle-logo.png" alt="UniCircle"><span class="uc-serif">UniCircle</span></div>'
       + links
-      + '<button type="button" class="uc-rail-link" data-uc-profile><span class="uc-rail-dot" style="background:rgba(250,249,246,0.4);"></span>My profile</button>'
+      + '<a href="#profile" class="uc-rail-link' + (active === 'profile' ? ' active' : '') + '"'
+      + (active === 'profile' ? ' aria-current="page"' : '')
+      + '><span class="uc-rail-dot" style="background:rgba(250,249,246,0.4);"></span>My profile</a>'
       + '<div style="flex:1"></div>'
       + '<button type="button" class="uc-rail-link" id="uc-dash-signout">← Sign out</button>'
       + '</nav>';
@@ -63,6 +66,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Connect / Message / Accept-match → open the messages drawer.
     document.querySelectorAll('[data-uc-connect],[data-uc-message]').forEach((b) =>
       b.addEventListener('click', () => window.UC && window.UC.openChat()));
+    // Edit-profile affordances → open the profile modal.
+    document.querySelectorAll('[data-uc-profile]').forEach((b) =>
+      b.addEventListener('click', () => window.UC && window.UC.openProfile()));
+    // Personalise the profile screen from the signed-in user.
+    const u = window.UC && window.UC.state && window.UC.state.user;
+    if (u) {
+      const nm = document.getElementById('uc-profile-name'); if (nm && u.name) nm.textContent = u.name;
+      const hl = document.getElementById('uc-profile-headline'); if (hl && u.headline) hl.textContent = u.headline;
+      const loc = document.getElementById('uc-profile-location'); if (loc && u.location) loc.textContent = u.location;
+      const av = document.getElementById('uc-profile-initials');
+      if (av && u.name) av.textContent = u.name.trim().split(/\s+/).map((s) => s[0]).slice(0, 2).join('').toUpperCase();
+    }
     if (window.Iconify) window.Iconify.scan(appViewport);
   }
 
@@ -179,30 +194,71 @@ document.addEventListener('DOMContentLoaded', () => {
     const openSignup = () => window.UC?.openAuth('signup');
     const openSignin = () => window.UC?.openAuth('signin');
 
-    const joinBtn = document.getElementById('lp-join-btn');
-    if (joinBtn) {
-      joinBtn.addEventListener('click', () => {
-        const email = document.getElementById('lp-email')?.value?.trim();
-        if (email && window.UC) {
-          window.UC.openAuth('signup', email);
-        } else {
-          openSignup();
-        }
-      });
-    }
-
+    // Nav + footer + feature CTAs open the full modal (LinkedIn / CSV import live there).
     document.getElementById('lp-bottom-join')?.addEventListener('click', openSignup);
     document.getElementById('lp-signin-link')?.addEventListener('click', (e) => { e.preventDefault(); openSignin(); });
     document.getElementById('lp-foot-signin')?.addEventListener('click', (e) => { e.preventDefault(); openSignin(); });
     document.getElementById('lp-foot-join')?.addEventListener('click', (e) => { e.preventDefault(); openSignup(); });
-
-    // Allow pressing Enter in the email field
-    document.getElementById('lp-email')?.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') joinBtn?.click();
-    });
-
-    // Feature-card "↗" CTAs → open signup (guests) or route (handled by nav for members)
     document.querySelectorAll('.uc-lp-cta').forEach(b => b.addEventListener('click', openSignup));
+
+    // --- Tabbed inline sign-in card (Password / Email link / Create) ---
+    const card = document.getElementById('lp-login');
+    if (card) {
+      const form = document.getElementById('lp-auth');
+      const nameEl = form.name, emailEl = form.email, pwEl = form.password, codeEl = form.code;
+      const hint = document.getElementById('lp-hint');
+      const forgot = document.getElementById('lp-forgot');
+      const errEl = form.querySelector('.uc-err');
+      let mode = 'password';   // 'password' | 'magic' | 'create'
+      let otpId = null;
+
+      const setMode = (m) => {
+        mode = m; otpId = null; errEl.hidden = true; hint.textContent = '';
+        codeEl.hidden = true; codeEl.value = '';
+        card.querySelectorAll('.uc-tab').forEach(b => b.classList.toggle('active', b.dataset.lpTab === m));
+        nameEl.hidden = m !== 'create';
+        pwEl.hidden = m === 'magic';
+        forgot.style.visibility = m === 'password' ? 'visible' : 'hidden';
+      };
+      card.querySelectorAll('[data-lp-tab]').forEach(b => b.addEventListener('click', () => setMode(b.dataset.lpTab)));
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!(window.UC && window.UC.auth.requireBackend())) return;
+        errEl.hidden = true;
+        const email = emailEl.value.trim();
+        try {
+          if (mode === 'password') {
+            await window.UC.auth.password(email, pwEl.value);
+          } else if (mode === 'create') {
+            await window.UC.auth.signup(nameEl.value.trim(), email, pwEl.value);
+          } else if (!otpId) {
+            otpId = await window.UC.auth.otpRequest(email);
+            codeEl.hidden = false; codeEl.focus();
+            hint.textContent = 'Code sent — check your inbox.';
+          } else {
+            await window.UC.auth.otpVerify(otpId, codeEl.value.trim());
+          }
+          // success → completeAuth fires 'uc:login' and the app loads the dashboard
+        } catch (err) {
+          errEl.textContent = err && err.status === 400
+            ? (mode === 'magic' && otpId ? 'That code is incorrect or expired.' :
+               mode === 'create' ? 'Check your details — email may already be registered.' :
+               'Email or password not recognised.')
+            : (err && err.message) || 'Something went wrong.';
+          errEl.hidden = false;
+        }
+      });
+
+      forgot.addEventListener('click', async (e) => {
+        e.preventDefault();
+        if (!(window.UC && window.UC.auth.requireBackend())) return;
+        const email = emailEl.value.trim();
+        if (!email) { errEl.textContent = 'Enter your email above first.'; errEl.hidden = false; return; }
+        try { await window.UC.auth.resetRequest(email); hint.textContent = 'Reset link sent — check your inbox.'; }
+        catch { errEl.textContent = 'Could not send a reset link.'; errEl.hidden = false; }
+      });
+    }
 
     // Constellation particle field behind the hero
     mountConstellation(document.getElementById('lp-constellation'), 340);

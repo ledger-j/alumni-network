@@ -590,3 +590,16 @@ body {
 .uc-form label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--uc-muted); font-weight: 600; display: flex; flex-direction: column; gap: 8px; }
 .uc-form input { text-transform: none; letter-spacing: normal; }
 .uc-or span { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--uc-muted); font-weight: 600; }
+
+/* Landing tabbed sign-in card */
+.uc-login-card {
+  width: 100%; max-width: 400px; margin: 0 auto; padding: 26px 28px;
+  border-radius: 24px; background: rgba(255,255,255,0.62);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid var(--uc-border);
+  box-shadow: 0 18px 50px rgba(43,42,38,0.10), inset 0 1px 1px rgba(255,255,255,0.9);
+  display: flex; flex-direction: column; gap: 14px; text-align: left;
+  animation: uc-cardIn .7s ease .15s both;
+}
+.uc-login-card .uc-tab { font-size: 12.5px; padding: 8px 0; }
+.uc-login-card .uc-input-pill { font-size: 14px; }

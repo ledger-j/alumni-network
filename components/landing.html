@@ -22,14 +22,37 @@
       </div>
     </div>
 
-    <h1 class="uc-hero-h1" style="white-space:nowrap;"><span>Stay in</span> <em>the circle.</em></h1>
-    <p class="uc-lead">The lifelong alumni network — thousands of points of light, one constellation.</p>
-    <div class="uc-join-row">
-      <input type="email" id="lp-email" placeholder="Enter your university email" autocomplete="email">
-      <button class="uc-arrow-btn" id="lp-join-btn" aria-label="Join" style="width:48px;height:48px;font-size:20px;">→</button>
+    <h1 class="uc-hero-h1"><span>Your circle,</span> <em>for life.</em></h1>
+    <p class="uc-lead">The alumni network of lifelong connections — every point of light is one of us.</p>
+
+    <!-- Tabbed sign-in card -->
+    <div class="uc-login-card" id="lp-login">
+      <div class="uc-eyebrow" style="text-align:left;">Sign in</div>
+      <div class="uc-tabs" role="tablist">
+        <button type="button" class="uc-tab active" data-lp-tab="password">Password</button>
+        <button type="button" class="uc-tab" data-lp-tab="magic">Email link</button>
+        <button type="button" class="uc-tab" data-lp-tab="create">Create</button>
+      </div>
+      <form id="lp-auth" class="uc-form" style="gap:12px;margin-top:2px;">
+        <input name="name" type="text" placeholder="Full name" autocomplete="name" class="uc-input-pill" hidden>
+        <input name="email" id="lp-email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">
+        <div style="display:flex;align-items:center;gap:10px;" data-lp-pwrow>
+          <input name="password" type="password" placeholder="Password" autocomplete="current-password" minlength="8" class="uc-input-pill" style="flex:1;">
+          <button class="uc-arrow-btn" id="lp-auth-submit" type="submit" aria-label="Sign in" style="width:50px;height:50px;font-size:20px;">→</button>
+        </div>
+        <input name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" class="uc-input-pill" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--uc-muted);" data-lp-foot>
+          <a href="#" id="lp-forgot" style="color:var(--uc-muted);">Forgot password?</a>
+          <span id="lp-hint" style="color:var(--uc-ink-2);"></span>
+        </div>
+        <p class="uc-err" hidden style="color:#b3261e;font-size:13px;margin:0;"></p>
+      </form>
     </div>
-    <div style="margin-top:26px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--uc-muted);">
-      UniCircle Network — connect the dots, be part of your network.
+
+    <div data-footer-strip style="margin-top:34px;display:flex;justify-content:center;gap:16px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--uc-muted);">
+      <span>School of Business &amp; Economics</span>
+      <span style="color:rgba(43,42,38,.25);">•</span>
+      <span>Alumni Office Network</span>
     </div>
   </section>
 

@@ -146,6 +146,33 @@
     refreshLiveFeed();
   }
 
+  // Reusable auth actions so the inline landing login and the modal share ONE
+  // implementation (no duplicated flows). Each throws on failure for the caller.
+  const auth = {
+    async password(identity, password) {
+      const r = await api('POST', '/api/collections/users/auth-with-password', { identity, password }, { auth: false });
+      completeAuth(r); return r;
+    },
+    async signup(name, email, password) {
+      await api('POST', '/api/collections/users/records',
+        { email, password, passwordConfirm: password, name: name || email.split('@')[0] }, { auth: false });
+      api('POST', '/api/collections/users/request-verification', { email }, { auth: false }).catch(() => {});
+      return auth.password(email, password);
+    },
+    async otpRequest(email) {
+      const r = await api('POST', '/api/collections/users/request-otp', { email }, { auth: false });
+      return r.otpId;
+    },
+    async otpVerify(otpId, code) {
+      const r = await api('POST', '/api/collections/users/auth-with-otp', { otpId, password: code }, { auth: false });
+      completeAuth(r); return r;
+    },
+    async resetRequest(email) {
+      return api('POST', '/api/collections/users/request-password-reset', { email }, { auth: false });
+    },
+    requireBackend,
+  };
+
   // Primary schema: passwordless magic link / one-time code (PocketBase OTP).
   // Fallbacks: email+password, LinkedIn (OIDC or CSV import). Reset + verification wired.
   function openAuth(tab, prefillEmail) {
@@ -583,7 +610,7 @@
   }
 
   // expose a tiny API for debugging / mentorship buttons elsewhere
-  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API };
+  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth };
 
   document.addEventListener('DOMContentLoaded', () => {
     handleOAuthRedirect();
