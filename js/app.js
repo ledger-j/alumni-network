@@ -826,7 +826,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <h3>Membership Registration</h3>
             </div>
             <div class="modal-body" style="padding: var(--space-5); text-align: center;">
-              <p>You have selected the <strong>${tierName} Membership</strong>. Would you like to confirm registration and sync this selection with your active Maastricht Student Portfolio?</p>
+              <p>You have selected the <strong>${tierName} Membership</strong>. Would you like to confirm registration and sync this selection with your UniCircle profile?</p>
             </div>
             <div class="modal-footer">
               <button class="cancel-btn">Back</button>
