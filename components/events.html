@@ -1,0 +1,49 @@
+<!-- EVENTS — content only; shell + rail supplied by the router. -->
+<div class="uc-page-main">
+  <div class="uc-app-header">
+    <h1 class="uc-app-title">The circle <em>keeps meeting.</em></h1>
+    <form data-uc-search class="uc-app-search">
+      <input type="search" placeholder="Search events…" aria-label="Search">
+      <button type="submit" aria-label="Search"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
+    </form>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:24px;">
+    <!-- Featured -->
+    <div style="position:relative;border-radius:28px;overflow:hidden;aspect-ratio:21/8;min-height:220px;">
+      <img src="assets/img/vrijthof.jpg" alt="Vrijthof, Maastricht" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(43,42,38,0.6),transparent 55%);"></div>
+      <div style="position:absolute;bottom:0;left:0;right:0;padding:32px 36px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+        <div style="color:var(--uc-bg);">
+          <div style="display:inline-block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:8px;background:rgba(43,42,38,0.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:5px 14px;border-radius:999px;">Featured · 18 July</div>
+          <div style="font-family:var(--uc-font-display);font-size:clamp(24px,3.5vw,34px);letter-spacing:-0.01em;">Summer Reunion at the <em style="font-style:italic;">Vrijthof.</em></div>
+        </div>
+        <button type="button" class="uc-pill-paper">RSVP now</button>
+      </div>
+    </div>
+
+    <div class="uc-card">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;">
+        <h2 class="uc-h2">Coming up</h2>
+        <span style="font-size:13px;color:var(--uc-muted);">Chapters in 40 cities</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="uc-row" style="flex-wrap:wrap;">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 305);"><span style="font-size:18px;font-weight:700;line-height:1;">02</span><span class="uc-eyebrow" style="font-size:10px;">Sep</span></div>
+          <div style="flex:1;min-width:180px;"><div style="font-size:15px;font-weight:600;">Amsterdam Chapter — Fintech evening</div><div style="font-size:13px;color:var(--uc-muted);">Amsterdam · 18:30 · 34 classmates going</div></div>
+          <button type="button" class="uc-pill-ink">RSVP</button>
+        </div>
+        <div class="uc-row" style="flex-wrap:wrap;">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 185);"><span style="font-size:18px;font-weight:700;line-height:1;">14</span><span class="uc-eyebrow" style="font-size:10px;">Sep</span></div>
+          <div style="flex:1;min-width:180px;"><div style="font-size:15px;font-weight:600;">Faculty lecture — The future of European markets</div><div style="font-size:13px;color:var(--uc-muted);">Online · 12:00 CET · Prof. J. van der Berg</div></div>
+          <button type="button" class="uc-pill-ghost">Details</button>
+        </div>
+        <div class="uc-row" style="flex-wrap:wrap;">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 235);"><span style="font-size:18px;font-weight:700;line-height:1;">26</span><span class="uc-eyebrow" style="font-size:10px;">Sep</span></div>
+          <div style="flex:1;min-width:180px;"><div style="font-size:15px;font-weight:600;">Tutorial reunion — 2024 Period 5 Finance T01</div><div style="font-size:13px;color:var(--uc-muted);">Maastricht · 19:00 · 9 of 12 classmates confirmed</div></div>
+          <button type="button" class="uc-pill-ghost">Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

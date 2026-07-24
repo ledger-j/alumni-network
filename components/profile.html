@@ -1,0 +1,89 @@
+<!-- MY PROFILE — content only; shell + rail supplied by the router. -->
+<div class="uc-page-main">
+  <div class="uc-app-header">
+    <h1 class="uc-app-title">This is <em>you.</em></h1>
+    <form data-uc-search class="uc-app-search">
+      <input type="search" placeholder="Search the circle…" aria-label="Search">
+      <button type="submit" aria-label="Search"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
+    </form>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:24px;">
+
+    <!-- Identity card -->
+    <div style="border-radius:28px;background:var(--uc-card);border:1px solid var(--uc-border);box-shadow:var(--uc-shadow);overflow:hidden;">
+      <div style="position:relative;height:160px;">
+        <img src="assets/img/servaasbrug.jpg" alt="Cover — Maastricht" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(250,249,246,0.9),transparent 55%);"></div>
+        <button type="button" data-uc-profile aria-label="Edit cover" style="position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,0.7);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--uc-ink);font-size:14px;cursor:pointer;">✎</button>
+      </div>
+      <div style="padding:0 clamp(20px,3vw,32px) 30px;margin-top:-52px;position:relative;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px;">
+          <div id="uc-profile-initials" class="uc-avatar-initials" style="width:104px;height:104px;font-size:38px;border:4px solid var(--uc-bg);box-shadow:0 8px 24px rgba(43,42,38,0.15);background:oklch(0.9 0.06 235);">JM</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button type="button" data-uc-profile class="uc-pill-ink">Edit profile</button>
+            <button type="button" data-uc-profile class="uc-pill-ghost">Open to</button>
+            <button type="button" data-uc-profile class="uc-pill-ghost">Enhance</button>
+          </div>
+        </div>
+        <h2 id="uc-profile-name" style="margin:0 0 6px;font-family:var(--uc-font-display);font-weight:400;font-size:34px;letter-spacing:-0.01em;">Jean Maurice Henkel</h2>
+        <p id="uc-profile-headline" style="margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--uc-ink-2);max-width:620px;">M.Sc. Financial Economics · B.Sc. International Marketing · UniCircle member.</p>
+        <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--uc-muted);">
+          <span id="uc-profile-location">Maastricht, Limburg</span>
+          <span style="font-weight:700;color:var(--uc-ink);">500+ connections</span>
+          <a href="#" style="font-weight:600;color:var(--uc-ink-2);">Contact info</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="uc-card">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;">
+        <h2 class="uc-h2">Analytics</h2>
+        <span style="font-size:12px;color:var(--uc-muted);">Private to you · past 7 days</span>
+      </div>
+      <div class="uc-stats-3">
+        <div class="uc-stat"><div class="uc-stat-n">133</div><div class="uc-stat-l">Profile views</div></div>
+        <div class="uc-stat"><div class="uc-stat-n">1,522</div><div class="uc-stat-l">Post impressions</div></div>
+        <div class="uc-stat"><div class="uc-stat-n">76</div><div class="uc-stat-l">Search appearances</div></div>
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="uc-card">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
+        <h2 class="uc-h2">About</h2>
+        <button type="button" data-uc-profile aria-label="Edit about" style="width:32px;height:32px;border-radius:50%;border:1px solid var(--uc-border);background:transparent;color:var(--uc-ink-2);font-size:13px;cursor:pointer;">✎</button>
+      </div>
+      <p style="margin:0;font-size:14px;line-height:1.7;color:var(--uc-ink-2);"><strong style="color:var(--uc-ink);">Shaping and reshaping a new world.</strong> Every day, everyone has the choice to build something. I want to help shape ours so that each person recognises what truly fulfils them — and to build the connections that carry that forward.</p>
+    </div>
+
+    <!-- Activity -->
+    <div class="uc-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;">
+        <div>
+          <h2 class="uc-h2" style="margin:0 0 4px;">Activity</h2>
+          <span style="font-size:12px;color:var(--uc-muted);">1,295 followers</span>
+        </div>
+        <button type="button" class="uc-pill-ink" data-uc-message>Create a post</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+        <button type="button" class="uc-pill-ink" style="padding:7px 18px;font-size:12px;">Posts</button>
+        <button type="button" class="uc-pill-ghost" style="padding:7px 18px;font-size:12px;">Comments</button>
+        <button type="button" class="uc-pill-ghost" style="padding:7px 18px;font-size:12px;">Documents</button>
+      </div>
+      <div class="uc-cards-2">
+        <div class="uc-stat" style="padding:20px 22px;">
+          <div style="font-size:12px;color:var(--uc-muted);margin-bottom:8px;">4h · edited</div>
+          <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--uc-ink);">Your sales conversation now happens before anyone reaches your site — it happens inside an AI answer. The zero-click shortlist.</p>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--uc-muted);"><span>3 reactions</span><span style="font-weight:600;color:var(--uc-ink-2);">189 impressions</span></div>
+        </div>
+        <div class="uc-stat" style="padding:20px 22px;">
+          <div style="font-size:12px;color:var(--uc-muted);margin-bottom:8px;">3d · document</div>
+          <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--uc-ink);">Ex-ante analysis on frontier LLMs for alumni research workflows — a 6-page brief for the network.</p>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--uc-muted);"><span>3 reactions</span><span style="font-weight:600;color:var(--uc-ink-2);">408 impressions</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

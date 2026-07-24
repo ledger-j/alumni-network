@@ -141,10 +141,37 @@
     state.token = r.token; state.user = r.record; saveAuth();
     if (close) close();
     renderHeaderAuth();
-    toast(`Welcome${state.user.name ? ', ' + esc(state.user.name.split(' ')[0]) : ''}! 🎉`);
+    toast(`Welcome to the circle${state.user.name ? ', ' + esc(state.user.name.split(' ')[0]) : ''}.`);
     document.dispatchEvent(new CustomEvent('uc:login', { detail: { user: state.user } }));
     refreshLiveFeed();
   }
+
+  // Reusable auth actions so the inline landing login and the modal share ONE
+  // implementation (no duplicated flows). Each throws on failure for the caller.
+  const auth = {
+    async password(identity, password) {
+      const r = await api('POST', '/api/collections/users/auth-with-password', { identity, password }, { auth: false });
+      completeAuth(r); return r;
+    },
+    async signup(name, email, password) {
+      await api('POST', '/api/collections/users/records',
+        { email, password, passwordConfirm: password, name: name || email.split('@')[0] }, { auth: false });
+      api('POST', '/api/collections/users/request-verification', { email }, { auth: false }).catch(() => {});
+      return auth.password(email, password);
+    },
+    async otpRequest(email) {
+      const r = await api('POST', '/api/collections/users/request-otp', { email }, { auth: false });
+      return r.otpId;
+    },
+    async otpVerify(otpId, code) {
+      const r = await api('POST', '/api/collections/users/auth-with-otp', { otpId, password: code }, { auth: false });
+      completeAuth(r); return r;
+    },
+    async resetRequest(email) {
+      return api('POST', '/api/collections/users/request-password-reset', { email }, { auth: false });
+    },
+    requireBackend,
+  };
 
   // Primary schema: passwordless magic link / one-time code (PocketBase OTP).
   // Fallbacks: email+password, LinkedIn (OIDC or CSV import). Reset + verification wired.
@@ -158,7 +185,7 @@
         <button class="uc-tab ${initial === 'signup' ? 'active' : ''}" data-tab="signup">Create account</button>
       </div>
       <button class="uc-linkedin" data-act="linkedin">
-        <span class="iconify" data-icon="ph:linkedin-logo-fill"></span> Continue with LinkedIn
+        <span class="uc-li-chip">in</span> Continue with LinkedIn
       </button>
 
       <!-- MAGIC LINK / OTP (primary) -->
@@ -190,7 +217,7 @@
         <p class="uc-row-between"><a href="#" data-act="forgot" class="uc-link-muted">Forgot password?</a></p>
         <p class="uc-err" hidden></p>
       </form>`;
-    const { host, close } = modal('Welcome to UniCircle', body);
+    const { host, close } = modal('<img src="unicircle-logo.png" alt="">Welcome to <em>the circle.</em>', body);
     const magicForm = host.querySelector('#uc-magic-form');
     const pwForm = host.querySelector('#uc-auth-form');
     let mode = initial;      // 'magic' | 'signin' | 'signup'
@@ -281,7 +308,7 @@
     const body = `
       <p class="uc-lead">Bring your professional profile across in one step.</p>
       <button class="uc-linkedin" id="uc-li-signin">
-        <span class="iconify" data-icon="ph:linkedin-logo-fill"></span> Sign in with LinkedIn
+        <span class="uc-li-chip">in</span> Sign in with LinkedIn
       </button>
       <p class="uc-hint" id="uc-li-hint"></p>
       <div class="uc-or"><span>or import your LinkedIn data export</span></div>
@@ -302,7 +329,7 @@
         <button class="uc-primary" type="submit">Create account from LinkedIn</button>
         <p class="uc-err" hidden></p>
       </form>`;
-    const { host, close } = modal('Import from LinkedIn', body);
+    const { host, close } = modal('Import from <em>LinkedIn.</em>', body);
 
     // OIDC sign-in via PocketBase OAuth2 (works once a LinkedIn provider is configured in PB admin)
     host.querySelector('#uc-li-signin').onclick = async () => {
@@ -340,7 +367,7 @@
         await api('POST', '/api/collections/users/records', payload, { auth: false });
         const r = await api('POST', '/api/collections/users/auth-with-password', { identity: payload.email, password: f.password.value }, { auth: false });
         state.token = r.token; state.user = r.record; saveAuth();
-        close(); renderHeaderAuth(); toast('LinkedIn profile imported 🎉'); refreshLiveFeed();
+        close(); renderHeaderAuth(); toast('LinkedIn profile imported.'); refreshLiveFeed();
       } catch (err) {
         errEl.textContent = err.message || 'Import failed.'; errEl.hidden = false;
       }
@@ -368,7 +395,7 @@
       }, { auth: false });
       state.token = r.token; state.user = r.record; saveAuth();
       history.replaceState({}, '', location.pathname);
-      toast('Signed in with LinkedIn 🎉');
+      toast('Signed in with LinkedIn.');
     } catch { /* ignore */ }
   }
 
@@ -531,7 +558,7 @@
     catch { return; }
     const box = document.getElementById('uc-msgs');
     box.innerHTML = items.map((m) => `<div class="uc-msg ${m.sender === me ? 'mine' : ''}">${esc(m.text)}</div>`).join('')
-      || '<p class="uc-hint" style="padding:16px">Say hello 👋</p>';
+      || '<p class="uc-hint" style="padding:16px">Say hello.</p>';
     box.scrollTop = box.scrollHeight;
   }
   async function sendMessage(e) {
@@ -583,7 +610,7 @@
   }
 
   // expose a tiny API for debugging / mentorship buttons elsewhere
-  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API };
+  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth };
 
   document.addEventListener('DOMContentLoaded', () => {
     handleOAuthRedirect();

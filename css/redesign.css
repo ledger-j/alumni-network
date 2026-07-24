@@ -26,12 +26,58 @@
   --uc-shadow-lg: 0 18px 50px rgba(43,42,38,0.10);
   /* --- bridge vars the existing JS depends on --- */
   --uc-sky: oklch(0.62 0.14 235);
-  --color-text-secondary: var(--uc-ink-2);
-  --font-heading: var(--uc-font-display);
   --text-xs: 12px;
   --space-2: 8px;
   --space-3: 12px;
   --space-8: 40px;
+}
+
+/* ==========================================================================
+   MEMBER-AREA REDESIGN (v2) — token remap + component re-skin.
+   The authenticated app (feed · network · mentorship · pbl-hub · events ·
+   jobs) renders from js/app.js markup that reads the legacy um / uc / color
+   custom-property tokens. Retargeting those tokens to the paper/ink palette re-skins
+   every surface at once; the override blocks below fix the few design-system
+   hard-don'ts that a pure remap can't (colored modal/nav headers, accent
+   stripes, azure chat bubbles, gold badges). Loaded last → wins the cascade.
+   ========================================================================== */
+:root {
+  /* NOTE: main.css defines these tokens inside `@layer tokens`. To override a
+     layered token from this unlayered sheet reliably across engines, the custom
+     properties carry !important — the standard escape hatch for re-skinning a
+     design-token layer from an outside stylesheet. */
+
+  /* Typography: UI/body = Manrope; display serif applied selectively (never
+     as bold UI labels). Reverses the earlier serif-everywhere bridge. */
+  --font-heading: 'Manrope', system-ui, sans-serif !important;
+  --font-body: 'Manrope', system-ui, sans-serif !important;
+
+  /* Legacy blue/navy structure tokens → warm ink + dark nuance.
+     Dark surfaces (rails, banners, footers) legitimately use --shadow-nuance. */
+  --um-dark-blue: #3a3934 !important;   /* deep navy → dark nuance panel      */
+  --um-light-blue: #2b2a26 !important;  /* sky blue  → ink (fills/links)      */
+  --um-orange-red: #2b2a26 !important;  /* azure CTA → ink (primary accent)   */
+  --um-white: #faf9f6 !important;       /* text-on-dark = paper               */
+  --um-bachelor: #5c5a53 !important;    /* degree badge → ink-soft            */
+  --um-master: #2b2a26 !important;      /* degree badge → ink                 */
+
+  --uc-navy: #3a3934 !important;
+  --uc-cobalt: #4a4842 !important;      /* mid nuance for the few gradients    */
+  --uc-azure: #2b2a26 !important;       /* chat bubbles / chips / tabs → ink   */
+  --uc-sky: oklch(0.62 0.14 275) !important;  /* focus/link → indigo swarm     */
+  --uc-frost: #f1efe9 !important;
+  --uc-ice: #faf9f6 !important;
+
+  /* Surface + text tokens → paper / ink scale. */
+  --color-bg: #faf9f6 !important;
+  --color-surface: #ffffff !important;
+  --color-surface-hover: #f1efe9 !important;
+  --color-border: rgba(43,42,38,0.10) !important;
+  --color-text-primary: #2b2a26 !important;
+  --color-text-secondary: #5c5a53 !important;
+  --color-text-muted: #8b887e !important;
+  --color-accent-bg: rgba(43,42,38,0.05) !important;
+  --color-premium: #2b2a26 !important;
 }
 /* Brand typography is SCOPED to redesigned surfaces (.uc-page) so the existing
    authenticated app keeps its own Outfit/Inter look until it is migrated too. */
@@ -288,3 +334,279 @@ body.uc-hide-header .skip-link { display: none; }
 .uc-ribbon { position: relative; height: 210px; overflow: hidden; flex-shrink: 0; }
 @media (max-width:1100px) { .uc-content-grid { grid-template-columns: 1fr; } }
 @media (max-width:900px) { .uc-feature-grid { grid-template-columns: 1fr; } .uc-content-grid { padding: 20px 24px 40px; } }
+
+/* ==========================================================================
+   MEMBER-AREA COMPONENT OVERRIDES (v2)
+   Fixes design-system hard-don'ts the token remap can't reach.
+   ========================================================================== */
+
+/* Page canvas: warm paper + Manrope. main.css sets body bg via a literal in
+   @layer base, so it needs an explicit override. The guest landing paints its
+   own surfaces (.uc-landing / .uc-hero) on top, so this is safe there too. */
+body {
+  background: var(--uc-bg) !important;
+  color: var(--uc-ink);
+  font-family: var(--uc-font-body);
+}
+
+/* --- Cards: soft warm shadow + generous radius. Background is left to the
+   token-remapped --color-surface (white) so intentional inline dark-gradient
+   banners keep their fill; only shape/elevation are unified here. --- */
+.sbe-card {
+  border: 1px solid var(--uc-border) !important;
+  border-radius: var(--uc-r-md) !important;
+  box-shadow: 0 8px 30px rgba(43,42,38,0.06) !important;
+}
+
+/* Hard-don't: no left accent stripes. Neutralise both inline and class-based
+   border-left stripes (post-pbl-box + solution-item define them in rules). */
+.sbe-card[style*="border-left"] { border-left: 1px solid var(--uc-border) !important; }
+.feed-post[style*="border-left"] { border-left: 1px solid var(--uc-border) !important; }
+.post-pbl-box, .solution-item { border-left: 1px solid var(--uc-border-2) !important; }
+
+/* --- Display serif ONLY on true page/section titles (weight 400) --- */
+.pbl-hub-intro h2,
+.pbl-hub-header h2,
+.uc-serif,
+.sbe-modal .modal-header h3,
+.uc-modal-head h3 {
+  font-family: var(--uc-font-display) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+
+/* --- Buttons: ink primary / white secondary pills, min 44px touch --- */
+.connect-btn, .attend-btn, .search-submit, .pbl-create-btn,
+.submit-btn, .follow-btn, .trigger-btn {
+  border-radius: var(--uc-r-pill) !important;
+}
+.connect-btn, .attend-btn, .search-submit, .pbl-create-btn, .submit-btn {
+  background-color: var(--uc-ink) !important;
+  color: var(--uc-bg) !important;
+  border: none !important;
+  font-weight: 600 !important;
+}
+.connect-btn:hover, .attend-btn:hover, .search-submit:hover,
+.pbl-create-btn:hover, .submit-btn:hover {
+  background-color: var(--uc-panel) !important;
+}
+.pbl-btn, .details-btn, .cancel-btn, .follow-btn {
+  background: var(--uc-card-solid) !important;
+  border: 1px solid var(--uc-border) !important;
+  color: var(--uc-ink) !important;
+  border-radius: var(--uc-r-pill) !important;
+  font-weight: 600 !important;
+}
+.action-btn { border-radius: var(--uc-r-pill) !important; }
+.action-btn.active {
+  background-color: var(--uc-ink) !important;
+  color: var(--uc-bg) !important;
+}
+
+/* --- Segmented sub-nav tabs: mist track, white active pill --- */
+.uc-tabs { background: var(--uc-frost) !important; border: 1px solid var(--uc-border-2); }
+.uc-tab.active {
+  background: #fff !important;
+  color: var(--uc-ink) !important;
+  box-shadow: 0 2px 8px rgba(43,42,38,0.10) !important;
+}
+
+/* --- Modals: NO colored header bar; serif title, paper surface --- */
+.uc-modal, .sbe-modal .modal-wrapper {
+  border-radius: var(--uc-r-lg) !important;
+  box-shadow: 0 24px 70px rgba(43,42,38,0.14) !important;
+}
+.uc-modal-head, .sbe-modal .modal-header {
+  background: transparent !important;
+  color: var(--uc-ink) !important;
+  border-bottom: 1px solid var(--uc-border) !important;
+}
+.uc-modal-head h3, .sbe-modal .modal-header h3 { color: var(--uc-ink) !important; }
+.uc-x, .sbe-modal .close-btn {
+  color: var(--uc-ink) !important;
+  background: var(--uc-frost) !important;
+  border-radius: 50% !important;
+  width: 34px; height: 34px;
+}
+.uc-modal-backdrop, .sbe-modal::backdrop {
+  background: rgba(43,42,38,0.35) !important;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+
+/* --- Chat drawer / FAB / bubbles: ink + nuance, no azure/gradient --- */
+#uc-fab {
+  background: var(--uc-ink) !important;
+  color: var(--uc-bg) !important;
+  box-shadow: 0 14px 40px rgba(43,42,38,0.18) !important;
+}
+#uc-fab:hover { filter: none; background: var(--uc-panel) !important; }
+#uc-chat { border-radius: var(--uc-r-lg) !important; border: 1px solid var(--uc-border); }
+.uc-chat-head { background: var(--uc-panel) !important; color: var(--uc-bg) !important; }
+.uc-msg { background: var(--uc-frost) !important; color: var(--uc-ink) !important; }
+.uc-msg.mine { background: var(--uc-ink) !important; color: var(--uc-bg) !important; }
+.uc-peer.active { background: var(--uc-frost) !important; color: var(--uc-ink) !important; }
+.uc-primary { background: var(--uc-ink) !important; color: var(--uc-bg) !important; border-radius: var(--uc-r-pill) !important; }
+.uc-primary:hover { background: var(--uc-panel) !important; }
+.uc-livechip { background: var(--uc-ink) !important; color: var(--uc-bg) !important; }
+
+/* --- Toasts: dark nuance surface (allowed), paper text --- */
+.uc-toast { background: var(--uc-panel) !important; color: var(--uc-bg) !important; }
+.uc-toast--warn { background: var(--uc-panel) !important; }
+.uc-toast b { color: #fff !important; }
+
+/* --- Inputs: white pill, indigo focus ring --- */
+.uc-form input, .search-input, .sbe-modal input, .sbe-modal textarea, .sbe-modal select {
+  border-radius: var(--uc-r-pill) !important;
+  border: 1px solid rgba(43,42,38,0.12) !important;
+}
+.sbe-modal textarea { border-radius: var(--uc-r-sm) !important; }
+.uc-form input:focus, .search-input:focus {
+  border-color: var(--uc-focus) !important;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--uc-focus) 22%, transparent) !important;
+}
+
+/* --- Badges / ribbons: neutralise gold + saturated fills to ink/mist --- */
+.premium-badge, .premium-ribbon, .degree-badge, .mentor-badge, .badge {
+  background: var(--uc-ink) !important;
+  color: var(--uc-bg) !important;
+  background-image: none !important;
+}
+.degree-badge.msc, .degree-badge.bsc { background: var(--uc-frost) !important; color: var(--uc-ink) !important; }
+
+/* --- Academic-overlap highlight: mist chip, not blue wash --- */
+.academic-overlap, .tutorial-overlap-pill, .post-pbl-box {
+  background: var(--uc-frost) !important;
+  border: 1px solid var(--uc-border-2) !important;
+  color: var(--uc-ink-2) !important;
+}
+
+/* --- AI search header: paper card, not blue --- */
+.ai-search-container { background: var(--uc-card-solid) !important; border: 1px solid var(--uc-border) !important; border-radius: var(--uc-r-md) !important; }
+.ai-search-container .sparkle-icon { color: var(--uc-focus) !important; }
+
+/* --- Green/misc icon accents → ink-soft (swarm colors never as text) --- */
+.media-btn.video .iconify, .iconify.check { color: var(--uc-ink-2) !important; }
+
+/* ==========================================================================
+   FINALISATION v3 — side-rail app shell + rebuilt screens (App.dc.html).
+   Every authenticated page renders inside .uc-dashboard-shell (rail + main).
+   Font coherence: Instrument Serif 400 for display titles, Manrope ≤700 for
+   UI — no faux-bold 800 headings, no clipped pill buttons.
+   ========================================================================== */
+
+/* Shell main column */
+.uc-main-col { min-width: 0; display: flex; flex-direction: column; }
+.uc-page-main { padding: 28px clamp(20px, 3.5vw, 44px) 48px; }
+
+/* Rail brand + dot + link reset (rail links are <a> and <button>) */
+.uc-rail-brand { display: flex; align-items: center; gap: 12px; padding: 0 8px 26px; }
+.uc-rail-brand img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.uc-rail-brand .uc-serif { font-size: 22px; color: var(--uc-bg); }
+.uc-rail-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 12px; flex-shrink: 0; }
+.uc-rail-link {
+  display: flex; align-items: center; width: 100%; text-align: left;
+  padding: 11px 14px; border: none; background: transparent; cursor: pointer;
+  border-radius: var(--uc-r-pill); font-family: var(--uc-font-body);
+  font-size: 14px; font-weight: 500; color: rgba(250,249,246,0.65);
+}
+.uc-rail-link:hover { background: rgba(250,249,246,0.08); color: var(--uc-bg); }
+.uc-rail-link.active, .uc-rail-link[aria-current="page"] { background: rgba(250,249,246,0.12); color: var(--uc-bg); font-weight: 600; }
+
+/* App header row (title + search) on inner screens */
+.uc-app-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-bottom: 26px; flex-wrap: wrap; }
+.uc-app-title { margin: 0; font-family: var(--uc-font-display); font-weight: 400; font-size: clamp(28px, 3.5vw, 38px); letter-spacing: -0.01em; color: var(--uc-ink); }
+.uc-app-title em { font-style: italic; color: var(--uc-ink-2); }
+.uc-app-search { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 20px; border-radius: 999px; background: rgba(255,255,255,0.7); border: 1px solid var(--uc-border); }
+.uc-app-search input { width: min(220px, 44vw); border: none; background: transparent; font-family: var(--uc-font-body); font-size: 14px; color: var(--uc-ink); outline: none; }
+.uc-app-search button { width: 38px; height: 38px; min-width: 38px; border-radius: 50%; background: var(--uc-ink); color: var(--uc-bg); display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
+
+/* Section title — Manrope 700 (never faux-bold serif) */
+.uc-h2 { margin: 0; font-family: var(--uc-font-body); font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: var(--uc-ink); }
+
+/* Rows, date circles */
+.uc-row { display: flex; align-items: center; gap: 18px; padding: 14px 18px; border-radius: 16px; background: var(--uc-card-solid); border: 1px solid var(--uc-border-2); }
+.uc-datecirc { flex-shrink: 0; width: 56px; height: 56px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+/* Pills — generous padding, nowrap, no clipping */
+.uc-pill-ink, .uc-pill-ghost, .uc-pill-paper, .uc-pill-outline-paper {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 9px 22px; border-radius: 999px; font-family: var(--uc-font-body);
+  font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; text-decoration: none; line-height: 1.2;
+}
+.uc-pill-ink { background: var(--uc-ink); color: var(--uc-bg); border: none; }
+.uc-pill-ink:hover { background: var(--uc-panel); }
+.uc-pill-ghost { background: transparent; color: var(--uc-ink); border: 1px solid var(--uc-border); }
+.uc-pill-ghost:hover { background: rgba(43,42,38,0.03); }
+.uc-pill-paper { background: var(--uc-bg); color: var(--uc-ink); border: none; padding: 12px 28px; font-weight: 700; }
+.uc-pill-outline-paper { background: transparent; color: var(--uc-bg); border: 1px solid rgba(250,249,246,0.3); padding: 8px 18px; font-weight: 700; }
+.uc-pill-sm { padding: 7px 18px; font-size: 12px; }
+
+/* People / jobs / chips / tags */
+.uc-person { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 14px; border-radius: 16px; background: var(--uc-card-solid); border: 1px solid var(--uc-border-2); text-align: center; }
+.uc-joblink { display: block; padding: 14px 16px; border-radius: 14px; background: var(--uc-card-solid); border: 1px solid var(--uc-border-2); }
+.uc-chip { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--uc-border); background: transparent; font-family: var(--uc-font-body); font-size: 12px; color: var(--uc-ink-2); cursor: pointer; }
+.uc-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--uc-ink-2); background: var(--uc-frost); padding: 5px 12px; border-radius: 999px; margin-bottom: 16px; }
+
+/* Filters + card/stat grids */
+.uc-filters { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.uc-filters select { min-width: 0; width: 100%; padding: 11px 16px; border-radius: 999px; border: 1px solid rgba(43,42,38,0.12); background: #fff; font-family: var(--uc-font-body); font-size: 13px; color: var(--uc-ink); }
+.uc-cards-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+.uc-cards-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.uc-stats-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.uc-stat { padding: 20px 22px; border-radius: 16px; background: var(--uc-card-solid); border: 1px solid var(--uc-border-2); }
+.uc-stat-n { font-family: var(--uc-font-display); font-size: 36px; line-height: 1; }
+.uc-stat-l { font-size: 12px; color: var(--uc-muted); margin-top: 6px; }
+
+@media (max-width: 1150px) {
+  .uc-cards-3 { grid-template-columns: 1fr 1fr; }
+  .uc-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .uc-cards-3, .uc-cards-2, .uc-stats-3 { grid-template-columns: 1fr; }
+  .uc-filters { grid-template-columns: 1fr 1fr; }
+  .uc-app-search input { width: 100%; }
+}
+
+/* ==========================================================================
+   AUTH MODALS v3 — match New_design/Auth Modals.dc.html
+   ========================================================================== */
+.uc-modal { border-radius: 28px !important; padding: 0 !important; }
+.uc-modal-head { padding: 30px 32px 18px !important; }
+.uc-modal-head h3 { display: flex; align-items: center; gap: 12px; font-size: 26px !important; }
+.uc-modal-head h3 img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.uc-modal-head h3 em { font-style: italic; color: var(--uc-ink-2); }
+.uc-modal-body { padding: 0 32px 32px !important; }
+
+/* LinkedIn: white button, ink text, blue brand chip (never a blue fill) */
+.uc-linkedin {
+  background: #fff !important; color: var(--uc-ink) !important;
+  border: 1px solid rgba(43,42,38,0.14) !important; border-radius: 999px !important;
+  font-weight: 600 !important; display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.uc-linkedin:hover { background: var(--uc-bg) !important; }
+.uc-li-chip { width: 20px; height: 20px; border-radius: 4px; background: #0A66C2; color: #fff; font-size: 11px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; }
+
+/* Field labels — tiny uppercase */
+.uc-form label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--uc-muted); font-weight: 600; display: flex; flex-direction: column; gap: 8px; }
+.uc-form input { text-transform: none; letter-spacing: normal; }
+.uc-or span { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--uc-muted); font-weight: 600; }
+
+/* Landing tabbed sign-in card */
+.uc-login-card {
+  width: 100%; max-width: 400px; margin: 0 auto; padding: 26px 28px;
+  border-radius: 24px; background: rgba(255,255,255,0.62);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid var(--uc-border);
+  box-shadow: 0 18px 50px rgba(43,42,38,0.10), inset 0 1px 1px rgba(255,255,255,0.9);
+  display: flex; flex-direction: column; gap: 14px; text-align: left;
+  animation: uc-cardIn .7s ease .15s both;
+}
+.uc-login-card .uc-tab { font-size: 12.5px; padding: 8px 0; }
+.uc-login-card .uc-input-pill { font-size: 14px; }
+
+/* ==========================================================================
+   AUTH MODAL FIX — [hidden] must win over .uc-form{display:flex}. Without this
+   the inactive tab's form (magic vs password/create) stays visible and both
+   panels stack. A blanket rule keeps 'hidden' authoritative everywhere.
+   ========================================================================== */
+[hidden] { display: none !important; }
