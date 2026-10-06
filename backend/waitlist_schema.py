@@ -57,8 +57,7 @@ def ensure_token():
             ident = ident or input("PocketBase superuser email: ").strip()
             pw = pw or getpass.getpass("PocketBase superuser password: ")
         except (EOFError, KeyboardInterrupt):
-            sys.exit("
-Cancelled.")
+            sys.exit("Cancelled.")
     if not (ident and pw):
         sys.exit("Need PB_TOKEN, or PB_IDENTITY + PB_PASSWORD (superuser), or run in a terminal to be prompted.")
     st, r = req("POST", "/api/collections/_superusers/auth-with-password",
