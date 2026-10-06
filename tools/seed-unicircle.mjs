@@ -61,6 +61,17 @@ const POSTS = [
   `How reconnection works here: because members keep their own details current, UniCircle can surface classmates by year, programme and city — the connections a broadcast feed simply can't reconstruct.`,
   `A note on where we are: UniCircle is early, and deliberately so. We'd rather build the right thing with the community than ship a polished shell. If something's missing or clunky, tell us — this account reads every reply.`,
   `You can now sign in with LinkedIn — one click, no new password to remember. Your data still lives in the university's own network, not a third party's.`,
+  `New: the UniCircle map 🗺️
+
+Red dots show where alumni are; blue dots show which students from your course or tutorial are where this term. Every dot is a neighbourhood — never a street, never GPS — and people nearby merge into one dot. Add your city to your profile to appear. Open "Map" in the side rail.`,
+  `Student exchange, solved by a map 🔵
+
+Going abroad next term? Pick your tutorial group on the map and see who from it is in the same city — or one district over. Study groups and flat tips, without a single cold message.`,
+  `Mentoring works best when the ask is small. Alumni: write a one-line offer — "a 20-minute call on breaking into consulting", "I'll review one CV a month". Students: pick an offer and ask in one tap from the Mentoring page.`,
+  `Moving to a new city? Search the map for it, tap the dot, and see who from your university is already there and who's open to a coffee. That's the whole point of a network you actually own.`,
+  `The Case Hub is open: real, problem-based cases that students and alumni solve together. Post a case from your work (anonymised), or sharpen a solution with people from other programmes. Find it in the side rail.`,
+  `UniCircle is opening in waves, city by city. Know someone who should be in the circle? Send them to unicircle.eu/waitlist.html — the more people on the map, the more useful it gets for everyone.`,
+  `Privacy, plainly: we store the city (and, if you want, the neighbourhood) you type in — nothing more precise. Your data stays on EU servers, we don't sell it, and you can export or delete it any time.`,
   `Our promise: a European network where universities keep ownership of their data, alumni stay connected on their own terms, and students get a real bridge to the people who came before them. That's the circle. Glad you're in it.`,
 ];
 

@@ -1,0 +1,41 @@
+<!-- MAP — content only; shell + rail supplied by the router. Logic: js/pages/map.js + js/uc-map.js -->
+<div class="uc-page-main">
+  <div class="uc-app-header">
+    <h1 class="uc-app-title">Where the circle <em>is.</em></h1>
+    <form data-uc-search class="uc-app-search">
+      <input type="search" placeholder="Search the circle…" aria-label="Search">
+      <button type="submit" aria-label="Search"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
+    </form>
+  </div>
+
+  <div class="uc-map-bar">
+    <div class="uc-map-toggle" role="group" aria-label="Map layers">
+      <button type="button" class="active" data-layer="alumni" aria-pressed="true"><i class="uc-map-dot red"></i>Alumni</button>
+      <button type="button" data-layer="students" aria-pressed="false"><i class="uc-map-dot blue"></i>Student exchange</button>
+    </div>
+    <label class="uc-map-select" data-tutorial-wrap hidden>
+      <span class="uc-sr">Tutorial group</span>
+      <select data-tutorial><option value="">All tutorial groups</option></select>
+    </label>
+    <form class="uc-map-find" data-city-form>
+      <input list="uc-map-cities" data-city-input type="search" placeholder="Jump to a city…" aria-label="Jump to a city">
+      <datalist id="uc-map-cities"></datalist>
+    </form>
+  </div>
+
+  <div class="uc-map-grid">
+    <div class="uc-map-canvas" id="uc-map" role="region" aria-label="Map of members by neighbourhood"></div>
+    <aside class="uc-card uc-map-side" aria-live="polite">
+      <div data-map-panel>
+        <div class="uc-eyebrow">Tap a dot</div>
+        <p>Each dot is a neighbourhood, never an address. People nearby are merged into one dot, and the map stops at district level.</p>
+      </div>
+      <div class="uc-map-stats" data-map-stats></div>
+      <div class="uc-map-privacy">
+        <div class="uc-eyebrow">Your dot</div>
+        <p data-my-dot>Your dot uses the city in your profile.</p>
+        <button type="button" class="uc-btn-ghost" data-uc-profile>Edit city in my profile</button>
+      </div>
+    </aside>
+  </div>
+</div>
