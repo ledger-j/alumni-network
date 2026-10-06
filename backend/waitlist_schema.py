@@ -13,10 +13,10 @@ Privacy by design (GDPR data minimisation): the form stores a CITY and an
 optional NEIGHBOURHOOD — never a street address or coordinates. The alumni map
 and the student-exchange map are built on that same coarse location.
 
-Run on the box (same auth options as the other backend scripts):
-  PB_TOKEN=$(cat /opt/unicircle/.admin_token) python3 waitlist_schema.py
-  # or
-  PB_IDENTITY=<superuser email> PB_PASSWORD=<pw> python3 waitlist_schema.py
+Run on the box — it asks for the PocketBase superuser email + password
+(from /opt/unicircle/ADMIN_CREDENTIALS.txt); --verify also runs the gate:
+  python3 waitlist_schema.py --verify
+  # non-interactive alternatives: PB_TOKEN=<token> or PB_IDENTITY=<email> PB_PASSWORD=<pw>
 
 Then grant a teammate read access (their UniCircle account must exist):
   ... python3 waitlist_schema.py --grant teammate@example.com
@@ -49,8 +49,18 @@ def ensure_token():
     if TOKEN:
         return
     ident, pw = os.environ.get("PB_IDENTITY"), os.environ.get("PB_PASSWORD")
+    if not (ident and pw) and sys.stdin.isatty():
+        # Interactive: ask for the PocketBase superuser login (password not echoed,
+        # nothing stored). The login is in /opt/unicircle/ADMIN_CREDENTIALS.txt.
+        import getpass
+        try:
+            ident = ident or input("PocketBase superuser email: ").strip()
+            pw = pw or getpass.getpass("PocketBase superuser password: ")
+        except (EOFError, KeyboardInterrupt):
+            sys.exit("
+Cancelled.")
     if not (ident and pw):
-        sys.exit("Need PB_TOKEN, or PB_IDENTITY + PB_PASSWORD (superuser).")
+        sys.exit("Need PB_TOKEN, or PB_IDENTITY + PB_PASSWORD (superuser), or run in a terminal to be prompted.")
     st, r = req("POST", "/api/collections/_superusers/auth-with-password",
                 {"identity": ident, "password": pw})
     if st != 200:
@@ -162,6 +172,13 @@ def main():
 
     st, cols = req("GET", "/api/collections?perPage=200")
     print("collections now:", sorted(c["name"] for c in cols.get("items", [])))
+
+    if "--verify" in sys.argv:
+        # Run the gate with the same login (no second password prompt).
+        import runpy
+        os.environ["PB_TOKEN"] = TOKEN
+        print("\n--- verify_waitlist.py ---")
+        runpy.run_path(os.path.join(os.path.dirname(os.path.abspath(__file__)), "verify_waitlist.py"), run_name="__main__")
 
 
 if __name__ == "__main__":
