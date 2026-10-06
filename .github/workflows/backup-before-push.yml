@@ -24,7 +24,7 @@ jobs:
           PUSHER: ${{ github.actor }}
         run: |
           stamp=$(date -u +%Y%m%d-%H%M%S)
-          safe_branch=$(echo "$BRANCH" | tr -c 'A-Za-z0-9._/-' '-')
+          safe_branch=$(printf '%s' "$BRANCH" | tr -c 'A-Za-z0-9._/-' '-')
           tag="backup/${safe_branch}/${stamp}-${BEFORE:0:7}"
           gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref="refs/tags/${tag}" -f sha="${BEFORE}" --silent
           echo "Restore point ${tag} (state before ${PUSHER}'s push)" >> "$GITHUB_STEP_SUMMARY"
