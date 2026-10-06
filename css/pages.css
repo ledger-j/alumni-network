@@ -1,0 +1,16 @@
+/* UniCircle — styles for js/pages/* modules (dialogs, chips, live cards).
+   Built only on redesign.css tokens (--uc-*). Page lanes append below their
+   own banner comment; keep selectors prefixed .uc-. */
+
+/* ---- shared dialog (UCP.dialog) ---- */
+.uc-dialog { border: 1px solid var(--uc-border); border-radius: var(--uc-r-md); padding: 0;
+  width: min(560px, calc(100vw - 32px)); background: var(--uc-card-solid); color: var(--uc-ink);
+  font-family: var(--uc-font-body); box-shadow: var(--uc-shadow-lg); }
+.uc-dialog::backdrop { background: rgba(43,42,38,.35); backdrop-filter: blur(4px); }
+.uc-dialog-head { display: flex; align-items: center; justify-content: space-between; padding: 22px 26px 6px; }
+.uc-dialog-head h3 { margin: 0; font-weight: 400; font-size: 28px; }
+.uc-dialog-x { border: 0; background: transparent; font-size: 26px; line-height: 1; cursor: pointer; color: var(--uc-muted); }
+.uc-dialog-body { padding: 10px 26px 4px; font-size: 15px; line-height: 1.65; color: var(--uc-ink-2); }
+.uc-dialog-body textarea, .uc-dialog-body input, .uc-dialog-body select { width: 100%; box-sizing: border-box;
+  border: 1px solid var(--uc-border); border-radius: var(--uc-r-sm); padding: 12px 14px; font: inherit; color: var(--uc-ink); background: var(--uc-bg); }
+.uc-dialog-actions { display: flex; justify-content: flex-end; gap: 10px; padding: 18px 26px 24px; flex-wrap: wrap; }

@@ -622,7 +622,7 @@
   }
 
   // expose a tiny API for debugging / mentorship buttons elsewhere
-  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth };
+  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth, api, toast };
 
   document.addEventListener('DOMContentLoaded', () => {
     handleOAuthRedirect();

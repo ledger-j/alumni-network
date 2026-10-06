@@ -14,12 +14,22 @@ document.addEventListener('DOMContentLoaded', () => {
     mentoring: 'components/mentoring.html',
     profile: 'components/profile.html',
     'pbl-hub': 'components/pbl-hub.html',
+    map: 'components/map.html',
     landing: 'components/landing.html'
   };
+  // `#page?key=value` → page name + params (e.g. #network?q=finance&city=Berlin).
+  // Page modules read the params from window.UCP.params().
+  function parseHash() {
+    const raw = window.location.hash.replace(/^#/, '');
+    const i = raw.indexOf('?');
+    return { page: i < 0 ? raw : raw.slice(0, i), params: new URLSearchParams(i < 0 ? '' : raw.slice(i + 1)) };
+  }
+  window.UCP = window.UCP || {};
+  window.UCP.params = () => parseHash().params;
   const pageCache = {};
   async function fetchPage(name) {
     if (pageCache[name] != null) return pageCache[name];
-    const res = await fetch(routes[name] + '?v=4');
+    const res = await fetch(routes[name] + '?v=5');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const html = await res.text();
     pageCache[name] = html;
@@ -31,8 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function railHtml(active) {
     const items = [
       ['feed', 'Feed', '235'], ['network', 'Network', '275'],
-      ['events', 'Events', '305'], ['jobs', 'Jobs', '185'],
-      ['mentoring', 'Mentoring', '45']
+      ['map', 'Map', '25'], ['mentoring', 'Mentoring', '45'],
+      ['events', 'Events', '305'], ['pbl-hub', 'Case Hub', '145'],
+      ['jobs', 'Jobs', '185']
     ];
     const links = items.map(function (it) {
       const on = active === it[0];
@@ -59,9 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.hash = '';
       window.location.reload();
     });
+    // Header search → the directory, carrying the query (#network?q=…).
     document.querySelector('[data-uc-search]')?.addEventListener('submit', (e) => {
       e.preventDefault();
-      window.location.hash = '#network';
+      const q = (e.target.querySelector('input')?.value || '').trim();
+      window.location.hash = '#network' + (q ? '?q=' + encodeURIComponent(q) : '');
     });
     // Connect / Message / Accept-match → open the messages drawer.
     document.querySelectorAll('[data-uc-connect],[data-uc-message]').forEach((b) =>
@@ -93,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Hash-change: only route when a user is authenticated
     window.addEventListener('hashchange', () => {
       if (!_navReady) return;
-      const newPage = window.location.hash.replace('#', '');
+      const newPage = parseHash().page;
       if (routes[newPage]) loadPage(newPage);
     });
 
@@ -122,9 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('uc:auth-ready', (e) => {
       if (e.detail && e.detail.user) {
         _navReady = true;
-        let page = window.location.hash.replace('#', '');
-        if (!routes[page] || page === 'landing') page = 'feed';
-        window.location.hash = '#' + page;
+        const h = parseHash();
+        let page = h.page;
+        if (!routes[page] || page === 'landing') { page = 'feed'; window.location.hash = '#feed'; }
         loadPage(page);
       } else {
         _navReady = false;
@@ -183,8 +196,13 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (pageName === 'pbl-hub') {
       initPblInteractivity();
     }
-    // network / events / jobs / mentoring are static screens fully wired by
-    // initShell() (search, connect/message, profile, sign-out) — no extra init.
+    // Page modules (js/pages/*.js) register window.UCPages[page](root) and wire
+    // everything page-specific: cross-links, filters, dialogs, live data.
+    const mod = window.UCPages && window.UCPages[pageName];
+    if (typeof mod === 'function') {
+      try { mod(appViewport); } catch (err) { console.error('[UCPages:' + pageName + ']', err); }
+    }
+    if (window.Iconify) window.Iconify.scan(appViewport);
   }
 
   /* ==========================================
@@ -620,14 +638,11 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         btn.classList.toggle('voted');
         const countSpan = btn.querySelector('.count');
-        let currentCount = parseInt(countSpan.textContent);
-        if (btn.classList.contains('voted')) {
-          btn.innerHTML = `<span class="iconify" data-icon="ph:caret-up-fill"></span> <span class="count">${currentCount + 1}</span>`;
-        } else {
-          btn.innerHTML = `<span class="iconify" data-icon="ph:caret-up-bold"></span> <span class="count">${currentCount - 1}</span>`;
-        }
-        // Recursively re-bind click
-        initPblInteractivity();
+        const currentCount = parseInt(countSpan.textContent, 10) || 0;
+        const voted = btn.classList.contains('voted');
+        btn.innerHTML = `<span class="iconify" data-icon="ph:caret-up-${voted ? 'fill' : 'bold'}"></span> <span class="count">${currentCount + (voted ? 1 : -1)}</span>`;
+        // (The listener stays on `btn`; re-running the init here used to stack
+        //  duplicate listeners and double-toggle the vote.)
       });
     });
 

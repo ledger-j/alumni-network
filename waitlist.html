@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>UniCircle — Join the waitlist</title>
+  <meta name="description" content="Join the UniCircle waitlist: alumni mentoring for students, a privacy-first alumni map, and a student-exchange map to find the people in your tutorial.">
+  <link rel="icon" type="image/png" href="unicircle-logo.png">
+  <link rel="apple-touch-icon" href="unicircle-logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://unicircle.eu/waitlist.html">
+  <meta property="og:title" content="UniCircle — Join the waitlist">
+  <meta property="og:description" content="Mentoring between alumni and students, an alumni map and a student-exchange map. Be first in the circle.">
+  <meta property="og:image" content="https://unicircle.eu/assets/img/vrijthof.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+
+  <link rel="stylesheet" href="css/main.css?v=1.0.5">
+  <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
+  <link rel="stylesheet" href="css/waitlist.css?v=1.0.0">
+</head>
+<body class="uc-hide-header">
+<div class="uc-page uc-landing uc-wl">
+
+  <!-- ===== HERO + FORM ===== -->
+  <section class="uc-hero uc-wl-hero">
+    <canvas class="uc-hero-canvas" id="wl-constellation" aria-hidden="true"></canvas>
+
+    <div class="uc-wl-navwrap">
+      <div class="uc-navpill">
+        <a href="index.html" style="display:flex;align-items:center;gap:12px;">
+          <img src="assets/img/logo-circle.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;">
+          <span style="font-weight:700;font-size:17px;letter-spacing:-.01em;">UniCircle</span>
+        </a>
+        <div class="uc-wl-navlinks">
+          <a href="#wl-mentoring">Mentoring</a>
+          <a href="#wl-map">The map</a>
+          <a href="#wl-exchange">Student exchange</a>
+        </div>
+        <a class="uc-btn-dark" href="#wl-form">Join the waitlist</a>
+      </div>
+    </div>
+
+    <div class="uc-eyebrow" style="margin-bottom:18px;">Waitlist · opening in waves</div>
+    <h1 class="uc-hero-h1"><span>The circle</span> <em>is opening.</em></h1>
+    <p class="uc-lead">Mentoring between alumni and students, and a map of where your people are — city and neighbourhood, never your street. Be one of the first in.</p>
+
+    <!-- Waitlist card -->
+    <div class="uc-login-card uc-wl-card" id="wl-form">
+      <form id="wl" class="uc-form" novalidate>
+        <div class="uc-eyebrow" style="text-align:left;">I am</div>
+        <div class="uc-tabs" role="radiogroup" aria-label="I am">
+          <button type="button" class="uc-tab active" data-role="alumnus" role="radio" aria-checked="true">Alumnus</button>
+          <button type="button" class="uc-tab" data-role="student" role="radio" aria-checked="false">Student</button>
+          <button type="button" class="uc-tab" data-role="university_staff" role="radio" aria-checked="false">University</button>
+        </div>
+
+        <input name="name" type="text" placeholder="Full name" autocomplete="name" class="uc-input-pill" maxlength="120">
+        <input name="email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">
+        <input name="institution" type="text" placeholder="University" autocomplete="organization" class="uc-input-pill" maxlength="160">
+
+        <div class="uc-wl-row">
+          <input name="city" type="text" placeholder="City" autocomplete="address-level2" required class="uc-input-pill" maxlength="80">
+          <input name="neighbourhood" type="text" placeholder="Neighbourhood (optional)" class="uc-input-pill" maxlength="80">
+        </div>
+
+        <div class="uc-wl-row" data-for="alumnus">
+          <input name="programme" type="text" placeholder="Programme / degree" class="uc-input-pill" maxlength="160">
+          <input name="grad_year" type="text" inputmode="numeric" pattern="[0-9]{4}" placeholder="Grad year" class="uc-input-pill" maxlength="4">
+        </div>
+        <div class="uc-wl-row" data-for="student" hidden>
+          <input name="programme_s" type="text" placeholder="Programme" class="uc-input-pill" maxlength="160">
+          <input name="tutorial" type="text" placeholder="Course / tutorial group" class="uc-input-pill" maxlength="80">
+        </div>
+
+        <fieldset class="uc-wl-chips">
+          <legend class="uc-eyebrow">I'm most interested in</legend>
+          <label data-for="alumnus"><input type="checkbox" name="interests" value="mentor_others" checked><span>Mentoring students</span></label>
+          <label data-for="student" hidden><input type="checkbox" name="interests" value="find_a_mentor"><span>Finding a mentor</span></label>
+          <label><input type="checkbox" name="interests" value="alumni_map" checked><span>The alumni map</span></label>
+          <label data-for="student" hidden><input type="checkbox" name="interests" value="student_exchange"><span>Student exchange</span></label>
+          <label><input type="checkbox" name="interests" value="events"><span>Events &amp; chapters</span></label>
+          <label><input type="checkbox" name="interests" value="jobs"><span>Jobs</span></label>
+        </fieldset>
+
+        <label class="uc-wl-consent">
+          <input type="checkbox" name="consent" required>
+          <span>Email me when my spot opens. I can unsubscribe any time; my details are only used for UniCircle. <a href="privacy.html">Privacy</a></span>
+        </label>
+
+        <button class="uc-btn-dark uc-wl-submit" type="submit">Join the waitlist →</button>
+        <p class="uc-err" role="alert" hidden></p>
+      </form>
+
+      <div class="uc-wl-done" id="wl-done" hidden tabindex="-1">
+        <div class="uc-wl-done-mark" aria-hidden="true">✓</div>
+        <h2 class="uc-serif">You're in the circle.</h2>
+        <p id="wl-done-msg">We'll email you as soon as your spot opens.</p>
+        <p class="uc-wl-share">Bring your people — the map is only as good as who's on it.
+          <button type="button" class="uc-btn-ghost" id="wl-share">Copy invite link</button></p>
+      </div>
+    </div>
+
+    <div style="margin-top:34px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--uc-muted);">
+      A Beyond Borders Marketing Consultancy project
+    </div>
+  </section>
+
+  <!-- ===== 1 · MENTORING ===== -->
+  <section id="wl-mentoring" class="uc-wl-section">
+    <div class="uc-wl-inner uc-feature-grid" style="align-items:center;gap:56px;">
+      <div>
+        <div class="uc-eyebrow" style="margin-bottom:18px;">01 · Mentoring</div>
+        <h2 class="uc-serif uc-wl-h2">Students meet the alumni <em>who were in their seat.</em></h2>
+        <p class="uc-wl-p">Alumni switch on “open to mentor” with a one-line offer — a CV review, a 20-minute call, a city tip. Students search by programme, sector and city, and ask in one tap. Opt-in on both sides, no cold messages, no paywall for students.</p>
+        <ul class="uc-wl-list">
+          <li><b>Matching by path</b> — same programme, same sector, or the city you're moving to.</li>
+          <li><b>Small asks</b> — every offer is scoped, so saying yes is easy.</li>
+          <li><b>Give back</b> — mentors show up first on the map and in the directory.</li>
+        </ul>
+      </div>
+      <div class="uc-wl-mentor-demo" aria-label="Example mentor offers">
+        <div class="uc-wl-offer"><span class="uc-avatar-initials">AM</span><div><b>Alumna · Finance, '14</b><span>Amsterdam · Zuid</span><em>“30-min call on breaking into asset management.”</em></div></div>
+        <div class="uc-wl-offer"><span class="uc-avatar-initials">TK</span><div><b>Alumnus · Data Science, '19</b><span>Berlin · Kreuzberg</span><em>“I review CVs for analytics roles — send yours.”</em></div></div>
+        <div class="uc-wl-offer"><span class="uc-avatar-initials">LS</span><div><b>Alumna · Law, '09</b><span>Brussels · Ixelles</span><em>“Coffee for anyone moving to Brussels.”</em></div></div>
+        <p class="uc-wl-note">Illustrative examples — not real members.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 2 + 3 · THE MAP ===== -->
+  <section id="wl-map" class="uc-wl-section">
+    <div class="uc-wl-inner">
+      <div class="uc-wl-maphead">
+        <div>
+          <div class="uc-eyebrow" style="margin-bottom:18px;">02 · The alumni map</div>
+          <h2 class="uc-serif uc-wl-h2">See where your people are. <em>Not where they live.</em></h2>
+        </div>
+        <div class="uc-wl-toggle" role="group" aria-label="Map layers">
+          <button type="button" class="active" data-layer="alumni" aria-pressed="true"><i class="dot red"></i>Alumni</button>
+          <button type="button" data-layer="students" aria-pressed="false"><i class="dot blue"></i>Students</button>
+        </div>
+      </div>
+
+      <div class="uc-wl-mapwrap">
+        <div id="wl-leaflet" class="uc-wl-map" role="img" aria-label="Map preview with red dots for alumni and blue dots for students, placed by neighbourhood"></div>
+        <div class="uc-wl-mapside">
+          <div id="wl-map-panel">
+            <div class="uc-eyebrow">Tap a dot</div>
+            <p>Each dot is a neighbourhood, not an address. Zoom stops at district level — by design.</p>
+          </div>
+          <p class="uc-wl-note">Illustrative preview with sample positions — not real members.</p>
+        </div>
+      </div>
+
+      <div class="uc-wl-three">
+        <div><b><i class="dot red"></i>Red — alumni</b><p>Which city, which neighbourhood. Moving to Lisbon? See who from your university is already there, and who's open to a coffee.</p></div>
+        <div id="wl-exchange"><b><i class="dot blue"></i>Blue — student exchange</b><p>03 · For students: find the others from your course or tutorial group — on exchange, in the same city, or one district over. Study groups form themselves.</p></div>
+        <div><b>Privacy by design</b><p>You choose city and, optionally, neighbourhood. No street, no GPS, no live location. You can hide your dot any time.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CLOSING CTA ===== -->
+  <footer class="uc-footer-dark">
+    <div style="max-width:1152px;margin:0 auto;display:flex;flex-direction:column;gap:44px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+        <div>
+          <span class="uc-serif" style="font-size:clamp(30px,4vw,48px);line-height:1.1;">Your circle, <em>for life.</em></span>
+        </div>
+        <a class="uc-btn-dark" href="#wl-form" style="background:var(--uc-bg);color:var(--uc-ink);">Join the waitlist</a>
+      </div>
+      <div style="width:100%;height:1px;background:rgba(250,249,246,.15);"></div>
+      <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(250,249,246,.55);">
+        <span>© 2026 UniCircle · unicircle.eu · a Beyond Borders Marketing Consultancy project</span>
+        <div style="display:flex;gap:24px;">
+          <a href="index.html" style="color:rgba(250,249,246,.7);">Sign in</a>
+          <a href="privacy.html" style="color:rgba(250,249,246,.7);">Privacy</a>
+          <a href="mailto:hello@unicircle.eu" style="color:rgba(250,249,246,.7);">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script src="js/waitlist.js?v=1.0.0" defer></script>
+</body>
+</html>
