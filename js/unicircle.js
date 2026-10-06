@@ -232,7 +232,19 @@
       pwForm.querySelector('.uc-primary').textContent = m === 'signup' ? 'Create my account' : 'Sign in';
     };
     host.querySelectorAll('.uc-tab').forEach((b) => b.onclick = () => setMode(b.dataset.tab));
-    host.querySelector('[data-act="linkedin"]').onclick = () => { close(); openLinkedIn(); };
+    // "Continue with LinkedIn" runs the OAuth sign-in directly from the social
+    // login area. Falls back to the LinkedIn import screen only if the OIDC
+    // provider isn't configured / reachable.
+    host.querySelector('[data-act="linkedin"]').onclick = async () => {
+      if (!requireBackend()) return;
+      try {
+        const methods = await api('GET', '/api/collections/users/auth-methods', null, { auth: false });
+        const providers = (methods.oauth2 && methods.oauth2.providers) || methods.authProviders || [];
+        const li = providers.find((p) => /linkedin|oidc/i.test(p.name));
+        if (li) { startOAuth(li, close); return; }
+      } catch (e) { /* fall through to import */ }
+      close(); openLinkedIn();
+    };
 
     // --- Magic link / OTP ---
     magicForm.onsubmit = async (e) => {
