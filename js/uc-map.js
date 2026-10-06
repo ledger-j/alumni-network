@@ -101,10 +101,15 @@
       zoomControl: true, scrollWheelZoom: false, minZoom: 3, maxZoom: 11, worldCopyJump: true,
       attributionControl: true,
     }).setView(opts.center || [50.5, 8], opts.zoom || 4);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      subdomains: 'abcd', maxZoom: 11,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    // OpenStreetMap standard tiles (no key; fine for low volume under the OSM
+    // tile usage policy). Muted with a CSS filter to sit on the paper palette.
+    // At scale, switch to a keyed provider (e.g. MapTiler/Stadia) — URL only.
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 11,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
+    const tc = tiles.getContainer && tiles.getContainer();
+    if (tc) tc.style.filter = 'grayscale(0.9) sepia(0.12) brightness(1.04) contrast(0.92)';
     // Wheel-zoom only after a click, so the page scroll isn't hijacked.
     map.once('focus', () => map.scrollWheelZoom.enable());
 
