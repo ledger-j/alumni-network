@@ -38,3 +38,15 @@
 .uc-lp-wl-done p { margin: 0 0 14px; color: var(--uc-ink-2); line-height: 1.6; }
 .uc-landing a.uc-btn-dark { display: inline-flex; align-items: center; justify-content: center; }
 @media (max-width: 480px) { .uc-lp-wl-row { grid-template-columns: 1fr; } }
+
+/* landing nav on small screens: the links div carries an inline display:flex,
+   so redesign.css's (max-width:900px) hide rule never won — force it here. */
+@media (max-width: 900px) {
+  .uc-landing [data-nav-links] { display: none !important; }
+  .uc-landing .uc-hero { padding-top: 120px; }
+}
+@media (max-width: 480px) {
+  .uc-landing .uc-navpill { gap: 10px; padding-left: 12px; padding-right: 8px; }
+  .uc-landing .uc-navpill .uc-btn-dark { padding: 9px 14px; font-size: 13px; white-space: nowrap; }
+  .uc-landing .uc-navpill > div:first-child span { font-size: 15px !important; }
+}
