@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageCache = {};
   async function fetchPage(name) {
     if (pageCache[name] != null) return pageCache[name];
-    const res = await fetch(routes[name] + '?v=6');
+    const res = await fetch(routes[name] + '?v=7');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const html = await res.text();
     pageCache[name] = html;
