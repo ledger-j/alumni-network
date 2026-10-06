@@ -34,7 +34,7 @@
       + PAGES.map((p) => '<a href="' + p[2] + '"' + (p[0] === page ? ' aria-current="page"' : '') + '>' + p[1] + '</a>').join('')
       + '</div>'
       + '<div class="uc-s-actions"><a class="uc-s-signin" href="index.html">Sign in</a>'
-      + '<a class="uc-btn-dark" href="#join">Join the waitlist</a></div>'
+      + '<a class="uc-btn-dark" href="waitlist.html?ref=' + encodeURIComponent(page + '-nav') + '">Join the waitlist</a></div>'
       + '</nav></header>';
     const burger = document.querySelector('.uc-s-burger');
     const links = document.getElementById('uc-s-links');
