@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Student exchange — find your course abroad · UniCircle</title>
+  <meta name="description" content="Going abroad for an exchange semester, internship or double degree? UniCircle shows who from your course and tutorial group is in the same city — and which alumni live there to ask for advice.">
+  <link rel="icon" type="image/png" href="unicircle-logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://unicircle.eu/student-exchange.html">
+  <meta property="og:title" content="Student exchange on UniCircle">
+  <meta property="og:description" content="See who from your tutorial group is in your exchange city — and which alumni live there.">
+  <meta property="og:image" content="https://unicircle.eu/assets/img/campus-tapijn.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/main.css?v=1.0.5">
+  <link rel="stylesheet" href="css/unicircle.css?v=1.0.3">
+  <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
+  <link rel="stylesheet" href="css/site.css?v=1.0.0">
+</head>
+<body data-page="exchange" data-source="page-exchange">
+<div class="uc-page uc-site">
+  <div data-site-nav></div>
+
+  <main>
+    <section class="uc-s-hero">
+      <div class="uc-s-hero-inner">
+        <div class="uc-eyebrow">Student exchange</div>
+        <h1>Going abroad? <em>Your course is already there.</em></h1>
+        <p class="uc-s-lead">Pick your course and tutorial group, choose your exchange city, and see who from it lives in the same city — or one district over. Plus the alumni who already call that city home.</p>
+        <div class="uc-s-hero-actions">
+          <a class="uc-btn-dark" href="#join">Join the waitlist</a>
+          <a class="uc-btn-ghost" href="#exchange-map">See it on the map</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- The problem -->
+    <section class="uc-s-section uc-s-section--tint">
+      <div class="uc-s-inner uc-s-split">
+        <div class="uc-s-reveal">
+          <div class="uc-eyebrow">The problem</div>
+          <h2 class="uc-s-h2">You land in a new city <em>knowing nobody</em> — while half your tutorial is a tram ride away.</h2>
+        </div>
+        <div class="uc-s-reveal">
+          <p class="uc-s-p">An exchange semester scatters a cohort across Europe. Someone you sat next to every week might be renting a room three streets from yours, and you would never know.</p>
+          <p class="uc-s-p">The group chat doesn't fix it. It splits into a dozen smaller chats, the useful message about a flat or a study room sinks under a hundred others, and nobody can see <b>who is actually where</b>.</p>
+          <p class="uc-s-p">UniCircle puts the answer on a map: your course, your tutorial group, your city — by neighbourhood, never by street.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive map -->
+    <section class="uc-s-section" id="exchange-map">
+      <div class="uc-s-inner">
+        <div class="uc-s-reveal">
+          <div class="uc-eyebrow">Try it</div>
+          <h2 class="uc-s-h2">Pick a tutorial group. <em>See where it went.</em></h2>
+          <p class="uc-s-p"><span class="uc-s-dot blue" aria-hidden="true"></span>Blue dots are students, one per tutorial group per neighbourhood. People close together merge into one dot, and the map stops zooming at district level.</p>
+        </div>
+        <div class="uc-s-split" style="align-items:start;margin-top:24px;">
+          <div>
+            <div class="uc-s-figure">
+              <div id="ex-leaflet" class="uc-s-map" role="region" aria-label="Illustrative map of sample students on exchange, grouped by tutorial group and neighbourhood"></div>
+            </div>
+            <p class="uc-s-note">Illustrative preview with sample positions — not real students. Course codes and groups are invented.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div>
+              <label class="uc-eyebrow" for="ex-tutorial" style="display:block;margin-bottom:8px;">Tutorial group</label>
+              <select id="ex-tutorial" class="uc-input-pill">
+                <option value="">All tutorial groups</option>
+              </select>
+            </div>
+            <button type="button" id="ex-alumni" class="uc-btn-ghost" aria-pressed="false" style="padding:12px 18px;">Also show alumni in these cities</button>
+            <p class="uc-s-note" id="ex-summary" aria-live="polite" style="margin:0;"></p>
+            <div class="uc-s-card" id="ex-panel" aria-live="polite">
+              <div class="uc-eyebrow"><span class="uc-s-dot blue" aria-hidden="true"></span>All tutorial groups</div>
+              <p>Every blue dot is a tutorial group in a neighbourhood. Tap one to see who is there.</p>
+            </div>
+            <div>
+              <div class="uc-eyebrow" id="ex-groups-label" style="margin-bottom:8px;">Or choose a dot from the list</div>
+              <div id="ex-groups" role="group" aria-labelledby="ex-groups-label" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="uc-s-section uc-s-section--tint">
+      <div class="uc-s-inner">
+        <div class="uc-s-reveal">
+          <div class="uc-eyebrow">How it works</div>
+          <h2 class="uc-s-h2">Four steps from <em>"who else is here?"</em> to a study group.</h2>
+        </div>
+        <ol class="uc-s-steps">
+          <li class="uc-s-reveal"><b>Add your course and tutorial</b><span>The courses you take and the tutorial group you meet in each week. That's what links you to the people you already know.</span></li>
+          <li class="uc-s-reveal"><b>Choose your city</b><span>Where you're going this term. Add a neighbourhood if you like — it helps people one district over find you. Never a street.</span></li>
+          <li class="uc-s-reveal"><b>See your group</b><span>Your tutorial group appears as blue dots: who is in the same city, who is in the next district, who is arriving later.</span></li>
+          <li class="uc-s-reveal"><b>Message and plan</b><span>Start a study session, share a flat tip, find a travel buddy for the weekend. Red dots show alumni nearby you can ask for local advice.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Use cases -->
+    <section class="uc-s-section">
+      <div class="uc-s-inner">
+        <div class="uc-s-reveal">
+          <div class="uc-eyebrow">When it helps</div>
+          <h2 class="uc-s-h2">Every way of going abroad, <em>with your people nearby.</em></h2>
+        </div>
+        <div class="uc-s-grid-3">
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">◐</div><h3>Exchange semester</h3><p>See which classmates chose the same partner city, form a study group for the courses you still have back home, and split the cost of the first weekend trip.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">⌂</div><h3>Internship abroad</h3><p>Interning on your own in a big city? Find the students from your programme doing the same, and alumni there who know which neighbourhoods are worth the commute.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">⇄</div><h3>Double degree</h3><p>A year at a partner university with a small group from home. Keep that group together, and meet the alumni who did the same track before you.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">☀</div><h3>Summer school</h3><p>A few intense weeks somewhere new. Check who from your course is enrolled in the same city so you're not starting from zero on day one.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">✦</div><h3>Arriving early for a flat</h3><p>Flat hunting goes faster with company. Find who else is arriving early, compare viewings, and ask alumni in the city which offers look too good to be true.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">↺</div><h3>Coming home</h3><p>Exchange ends; the connection doesn't. The people you met abroad stay in your circle, and one day you'll be the red dot a new student asks for advice.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Privacy -->
+    <section class="uc-s-section uc-s-section--tint">
+      <div class="uc-s-inner uc-s-split" style="align-items:start;">
+        <div class="uc-s-reveal">
+          <div class="uc-eyebrow">Privacy for students</div>
+          <h2 class="uc-s-h2">Visible to your group. <em>Invisible to everyone else.</em></h2>
+          <p class="uc-s-p">Being findable abroad should feel safe. The blue layer is built on the same rules as the rest of the map — and a few stricter ones.</p>
+          <p class="uc-s-p"><a href="map.html" style="text-decoration:underline;">Read the full privacy model of the map</a>.</p>
+        </div>
+        <ul class="uc-s-list uc-s-reveal">
+          <li><b>City and neighbourhood only.</b> Your dot is the city you chose, or a neighbourhood if you add one. Never a street, never GPS.</li>
+          <li><b>Merged with others.</b> People close together share one dot with a count, and the map can't zoom past district level.</li>
+          <li><b>Tutorial groups stay private.</b> Only members of a tutorial group can see who in that group is where.</li>
+          <li><b>No live location.</b> The dot moves only when you change it. Nothing tracks you in the background.</li>
+          <li><b>Leave any time.</b> Remove your city and your dot is gone, for a day or for good.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="uc-s-section">
+      <div class="uc-s-inner uc-s-narrow" style="margin:0 auto;">
+        <div class="uc-eyebrow">Questions</div>
+        <h2 class="uc-s-h2">Student exchange, <em>answered.</em></h2>
+        <div class="uc-s-faq">
+          <details>
+            <summary>Is it only for students from my university?</summary>
+            <p>Your courses and tutorial groups are your own university's, so the blue dots you see first are the people you study with. Each university runs its own circle on UniCircle; anything shared beyond it is the university's choice, and we'll say clearly what is switched on when yours opens.</p>
+          </details>
+          <details>
+            <summary>What counts as a tutorial group?</summary>
+            <p>The small group you meet with each week for a course — some programmes call it a seminar, workgroup or section. On UniCircle it is the course code plus the group, so classmates find each other without sharing anything else.</p>
+          </details>
+          <details>
+            <summary>Who can see my dot?</summary>
+            <p>Members of your tutorial groups see you under that group, at city or neighbourhood level. Nobody sees a street or a live position, and you can remove your dot whenever you want.</p>
+          </details>
+          <details>
+            <summary>What does it cost?</summary>
+            <p>Nothing. UniCircle is free for students — including the map, your tutorial groups and reaching alumni for advice.</p>
+          </details>
+          <details>
+            <summary>Can I ask alumni in my exchange city for help?</summary>
+            <p>Yes. Red dots are alumni; those who opted in to mentoring show it. Small, specific asks work best: a neighbourhood to live in, a coffee, a view on the local job market. See <a href="mentoring.html" style="text-decoration:underline;">how mentoring works</a>.</p>
+          </details>
+          <details>
+            <summary>My exchange city isn't on the map yet. What now?</summary>
+            <p>We open city by city. Join the waitlist with the city you're heading to — that tells us where to open next, and you'll be on the map as soon as it does. Without a neighbourhood, you simply appear at city level.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Keep exploring -->
+    <section class="uc-s-section uc-s-section--tint">
+      <div class="uc-s-inner">
+        <div class="uc-eyebrow">Keep exploring</div>
+        <div class="uc-s-next">
+          <a href="map.html"><b>The map</b><span>Red for alumni, blue for students — by neighbourhood, never by street.</span></a>
+          <a href="mentoring.html"><b>Mentoring</b><span>How alumni and students find each other, with small, easy asks.</span></a>
+          <a href="universities.html"><b>For universities</b><span>Own your alumni relationship, data and events.</span></a>
+          <a href="about.html"><b>About UniCircle</b><span>Why a university-owned network, and who is building it.</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div data-site-cta data-title="Find your people <em>abroad.</em>"></div>
+  </main>
+
+  <div data-site-footer></div>
+</div>
+<script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
+<script src="js/site.js?v=1.0.0" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script src="js/uc-map.js?v=1.0.1" defer></script>
+<script src="js/page-exchange.js?v=1.0.0" defer></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>The UniCircle map — where your people are, not where they live</title>
+  <meta name="description" content="The UniCircle map shows where alumni (red) and students (blue) are — by city and neighbourhood, never by street. How it works, what it's for, and how your privacy is protected.">
+  <link rel="icon" type="image/png" href="unicircle-logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://unicircle.eu/map.html">
+  <meta property="og:title" content="The UniCircle map">
+  <meta property="og:description" content="See where your people are. Not where they live.">
+  <meta property="og:image" content="https://unicircle.eu/assets/img/campus-tapijn.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="css/main.css?v=1.0.5">
+  <link rel="stylesheet" href="css/unicircle.css?v=1.0.3">
+  <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
+  <link rel="stylesheet" href="css/site.css?v=1.0.0">
+</head>
+<body data-page="map" data-source="page-map">
+<div class="uc-page uc-site">
+  <div data-site-nav></div>
+
+  <main>
+    <section class="uc-s-hero">
+      <div class="uc-s-hero-inner">
+        <div class="uc-eyebrow">The map</div>
+        <h1>See where your people are. <em>Not where they live.</em></h1>
+        <p class="uc-s-lead">Red dots are alumni, blue dots are students. Each dot is a neighbourhood — never a street — so you can find the people you studied with in any city without anyone giving away their address.</p>
+        <div class="uc-s-hero-actions">
+          <a class="uc-btn-dark" href="#join">Join the waitlist</a>
+          <a class="uc-btn-ghost" href="#explore">Explore the map</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive map -->
+    <section class="uc-s-section uc-s-section--tint" id="explore">
+      <div class="uc-s-inner">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px;">
+          <div>
+            <div class="uc-eyebrow">Try it</div>
+            <h2 class="uc-s-h2" style="margin-bottom:0;">Tap a dot.</h2>
+          </div>
+          <div class="uc-tabs" role="group" aria-label="Map layers" style="display:inline-flex;min-width:300px;">
+            <button type="button" class="uc-tab active" data-layer="alumni" aria-pressed="true"><span class="uc-s-dot red"></span>Alumni</button>
+            <button type="button" class="uc-tab" data-layer="students" aria-pressed="false"><span class="uc-s-dot blue"></span>Students</button>
+            <button type="button" class="uc-tab" data-layer="both" aria-pressed="false">Both</button>
+          </div>
+        </div>
+        <div class="uc-s-split" style="grid-template-columns:1fr 320px;gap:20px;align-items:stretch;">
+          <div class="uc-s-figure"><div id="map-demo" class="uc-s-map" role="region" aria-label="Map preview: red dots are alumni, blue dots are students, placed by neighbourhood"></div></div>
+          <div class="uc-s-card" aria-live="polite" style="display:flex;flex-direction:column;justify-content:space-between;">
+            <div id="map-panel">
+              <div class="uc-eyebrow">Each dot is a neighbourhood</div>
+              <p style="margin-top:10px;">Bigger dot, more people. Tap one to see who's there — in the app you'd see names, programmes and who's open to mentoring.</p>
+            </div>
+            <p class="uc-s-note">Illustrative preview with sample positions — not real members.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How a dot is made -->
+    <section class="uc-s-section">
+      <div class="uc-s-inner">
+        <div class="uc-eyebrow">How a dot is made</div>
+        <h2 class="uc-s-h2" style="max-width:820px;">Privacy isn't a setting here. <em>It's how the map is built.</em></h2>
+        <ol class="uc-s-steps">
+          <li><b>You type a city</b><span>And, if you like, a neighbourhood. Never a street, never a postcode. No GPS, no live location — ever.</span></li>
+          <li><b>We place a neighbourhood dot</b><span>Your dot sits on the neighbourhood (or city) centre, not on you. Without a neighbourhood, you're simply part of the city.</span></li>
+          <li><b>Neighbours merge</b><span>Everyone in the same area becomes one dot with a count. The more people, the less any single person stands out.</span></li>
+          <li><b>Zoom stops at district</b><span>The map can't zoom to street level. There's nothing finer to see, because nothing finer is stored.</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Red vs blue -->
+    <section class="uc-s-section uc-s-section--tint">
+      <div class="uc-s-inner">
+        <div class="uc-eyebrow">Two colours, two jobs</div>
+        <h2 class="uc-s-h2">Red for the circle you've built. <em>Blue for the one you're building.</em></h2>
+        <div class="uc-s-grid-2">
+          <div class="uc-s-card uc-s-reveal">
+            <div class="uc-s-icon"><span class="uc-s-dot red" style="margin:0;"></span></div>
+            <h3>Alumni</h3>
+            <p>Which city, which neighbourhood, who's open to a coffee or to mentoring. Moving to Lisbon? Hiring in Berlin? Planning a reunion? Start with the red dots.</p>
+          </div>
+          <div class="uc-s-card uc-s-reveal">
+            <div class="uc-s-icon"><span class="uc-s-dot blue" style="margin:0;"></span></div>
+            <h3>Students</h3>
+            <p>Grouped by course and tutorial, so you find the people from your class who are on exchange in the same city — and the alumni already there. <a href="student-exchange.html" style="text-decoration:underline;">How student exchange works</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What it's for -->
+    <section class="uc-s-section">
+      <div class="uc-s-inner">
+        <div class="uc-eyebrow">What people use it for</div>
+        <h2 class="uc-s-h2">A map that turns into plans.</h2>
+        <div class="uc-s-grid-3">
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">✈</div><h3>Moving to a new city</h3><p>See who from your university is already there before you land — and who has offered to help newcomers settle in.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">☕</div><h3>Finding a mentor nearby</h3><p>Mentors show up on the map. Filter for people open to mentoring in your city and ask for a coffee. <a href="mentoring.html" style="text-decoration:underline;">About mentoring</a>.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">◎</div><h3>City chapters &amp; events</h3><p>When enough red dots cluster, a chapter forms. Organisers see where people are, so events happen where they actually live.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">⇄</div><h3>Exchange semesters</h3><p>Students find classmates abroad and the alumni who can tell them where to live, eat and work.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">◇</div><h3>Hiring &amp; internships</h3><p>Looking for someone in Munich with your background? The map shows where talent from your circle is.</p></div>
+          <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon">↺</div><h3>Reunions that happen</h3><p>See where your cohort ended up and pick the city that works for most — instead of guessing.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- You're in control -->
+    <section class="uc-s-section uc-s-section--tint">
+      <div class="uc-s-inner uc-s-split" style="align-items:start;">
+        <div class="uc-s-reveal">
+          <div class="uc-eyebrow">You're in control</div>
+          <h2 class="uc-s-h2">Your dot, your rules.</h2>
+          <p class="uc-s-p">The map only works if people trust it. So every choice is yours, and every default is the private one.</p>
+        </div>
+        <ul class="uc-s-list uc-s-reveal">
+          <li><b>Opt-in.</b> You appear on the map only once you add a city to your profile.</li>
+          <li><b>Leave any time.</b> Remove your city from your profile and your dot disappears.</li>
+          <li><b>Members only.</b> Names behind a dot are visible to signed-in members of your circle — never to the public or search engines.</li>
+          <li><b>Coarse by design.</b> City and optional neighbourhood; no street, no coordinates, no movement history.</li>
+          <li><b>EU-hosted.</b> Data stays in Europe and is never sold. <a href="privacy.html" style="text-decoration:underline;">Privacy policy</a>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="uc-s-section">
+      <div class="uc-s-inner uc-s-narrow" style="margin:0 auto;">
+        <div class="uc-eyebrow">Questions</div>
+        <h2 class="uc-s-h2">About the map</h2>
+        <div class="uc-s-faq">
+          <details><summary>Can anyone see where I live?</summary><p>No. We never ask for or store a street address. The finest level is a neighbourhood you choose to type in, shown as a shared dot with everyone else in that area, and the map can't zoom past district level.</p></details>
+          <details><summary>Who can see that I'm in a city?</summary><p>Signed-in members of your circle. Visitors to the public site only see illustrative sample dots like the ones above.</p></details>
+          <details><summary>What if I don't want to be on the map?</summary><p>Then you aren't. Leave your city empty (or remove it later) — you can still use mentoring, events and everything else.</p></details>
+          <details><summary>My city isn't on the map.</summary><p>We add cities as members join. Add yours to your profile or the waitlist and it will appear once there's a place to put it.</p></details>
+          <details><summary>Does the map track me when I travel?</summary><p>No. It doesn't use your device location at all. It shows what you typed, until you change it.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Keep exploring -->
+    <section class="uc-s-section uc-s-section--tint">
+      <div class="uc-s-inner">
+        <div class="uc-eyebrow">Keep exploring</div>
+        <div class="uc-s-next">
+          <a href="student-exchange.html"><b>Student exchange</b><span>The blue layer: find your tutorial group abroad.</span></a>
+          <a href="mentoring.html"><b>Mentoring</b><span>Ask an alumnus near you — with a small, easy ask.</span></a>
+          <a href="universities.html"><b>For universities</b><span>Chapters and events planned on where alumni really are.</span></a>
+          <a href="about.html"><b>About UniCircle</b><span>Why a university-owned network matters.</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div data-site-cta data-title="Put yourself <em>on the map.</em>"></div>
+  </main>
+
+  <div data-site-footer></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script src="js/uc-map.js?v=1.0.1" defer></script>
+<script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
+<script src="js/site.js?v=1.0.0" defer></script>
+<script src="js/page-map.js?v=1.0.0" defer></script>
+</body>
+</html>

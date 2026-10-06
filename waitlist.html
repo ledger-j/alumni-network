@@ -18,14 +18,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-
+  
   <link rel="stylesheet" href="css/main.css?v=1.0.5">
   <link rel="stylesheet" href="css/unicircle.css?v=1.0.3">
   <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
-  <link rel="stylesheet" href="css/waitlist.css?v=1.0.1">
+  <link rel="stylesheet" href="css/waitlist.css?v=1.1.0">
 </head>
 <body class="uc-hide-header">
+<script>
+  (function () { var to = { '#wl-mentoring': 'mentoring.html', '#wl-map': 'map.html', '#wl-exchange': 'student-exchange.html' }[location.hash];
+    if (to) location.replace(to + location.search); })();
+</script>
 <div class="uc-page uc-landing uc-wl">
 
   <!-- ===== HERO + FORM ===== -->
@@ -39,9 +42,11 @@
           <span style="font-weight:700;font-size:17px;letter-spacing:-.01em;">UniCircle</span>
         </a>
         <div class="uc-wl-navlinks">
-          <a href="#wl-mentoring">Mentoring</a>
-          <a href="#wl-map">The map</a>
-          <a href="#wl-exchange">Student exchange</a>
+          <a href="map.html">The map</a>
+          <a href="mentoring.html">Mentoring</a>
+          <a href="student-exchange.html">Student exchange</a>
+          <a href="universities.html">For universities</a>
+          <a href="about.html">About</a>
         </div>
         <a class="uc-btn-dark" href="#wl-form">Join the waitlist</a>
       </div>
@@ -102,57 +107,17 @@
     </div>
   </section>
 
-  <!-- ===== 1 · MENTORING ===== -->
-  <section id="wl-mentoring" class="uc-wl-section">
-    <div class="uc-wl-inner uc-feature-grid" style="align-items:center;gap:56px;">
-      <div>
-        <div class="uc-eyebrow" style="margin-bottom:18px;">01 · Mentoring</div>
-        <h2 class="uc-serif uc-wl-h2">Students meet the alumni <em>who were in their seat.</em></h2>
-        <p class="uc-wl-p">Alumni switch on “open to mentor” with a one-line offer — a CV review, a 20-minute call, a city tip. Students search by programme, sector and city, and ask in one tap. Opt-in on both sides, no cold messages, no paywall for students.</p>
-        <ul class="uc-wl-list">
-          <li><b>Matching by path</b> — same programme, same sector, or the city you're moving to.</li>
-          <li><b>Small asks</b> — every offer is scoped, so saying yes is easy.</li>
-          <li><b>Give back</b> — mentors show up first on the map and in the directory.</li>
-        </ul>
-      </div>
-      <div class="uc-wl-mentor-demo" aria-label="Example mentor offers">
-        <div class="uc-wl-offer"><span class="uc-avatar-initials">AM</span><div><b>Alumna · Finance, '14</b><span>Amsterdam · Zuid</span><em>“30-min call on breaking into asset management.”</em></div></div>
-        <div class="uc-wl-offer"><span class="uc-avatar-initials">TK</span><div><b>Alumnus · Data Science, '19</b><span>Berlin · Kreuzberg</span><em>“I review CVs for analytics roles — send yours.”</em></div></div>
-        <div class="uc-wl-offer"><span class="uc-avatar-initials">LS</span><div><b>Alumna · Law, '09</b><span>Brussels · Ixelles</span><em>“Coffee for anyone moving to Brussels.”</em></div></div>
-        <p class="uc-wl-note">Illustrative examples — not real members.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== 2 + 3 · THE MAP ===== -->
-  <section id="wl-map" class="uc-wl-section">
+  <!-- ===== EXPLORE (each topic is its own page) ===== -->
+  <section class="uc-wl-section">
     <div class="uc-wl-inner">
-      <div class="uc-wl-maphead">
-        <div>
-          <div class="uc-eyebrow" style="margin-bottom:18px;">02 · The alumni map</div>
-          <h2 class="uc-serif uc-wl-h2">See where your people are. <em>Not where they live.</em></h2>
-        </div>
-        <div class="uc-wl-toggle" role="group" aria-label="Map layers">
-          <button type="button" class="active" data-layer="alumni" aria-pressed="true"><i class="dot red"></i>Alumni</button>
-          <button type="button" data-layer="students" aria-pressed="false"><i class="dot blue"></i>Students</button>
-        </div>
-      </div>
-
-      <div class="uc-wl-mapwrap">
-        <div id="wl-leaflet" class="uc-wl-map" role="img" aria-label="Map preview with red dots for alumni and blue dots for students, placed by neighbourhood"></div>
-        <div class="uc-wl-mapside">
-          <div id="wl-map-panel">
-            <div class="uc-eyebrow">Tap a dot</div>
-            <p>Each dot is a neighbourhood, not an address. Zoom stops at district level — by design.</p>
-          </div>
-          <p class="uc-wl-note">Illustrative preview with sample positions — not real members.</p>
-        </div>
-      </div>
-
-      <div class="uc-wl-three">
-        <div><b><i class="dot red"></i>Red — alumni</b><p>Which city, which neighbourhood. Moving to Lisbon? See who from your university is already there, and who's open to a coffee.</p></div>
-        <div id="wl-exchange"><b><i class="dot blue"></i>Blue — student exchange</b><p>03 · For students: find the others from your course or tutorial group — on exchange, in the same city, or one district over. Study groups form themselves.</p></div>
-        <div><b>Privacy by design</b><p>You choose city and, optionally, neighbourhood. No street, no GPS, no live location. You can hide your dot any time.</p></div>
+      <div class="uc-eyebrow" style="margin-bottom:18px;">What you're signing up for</div>
+      <h2 class="uc-serif uc-wl-h2">Each part of the circle, <em>explained.</em></h2>
+      <div class="uc-wl-explore">
+        <a href="map.html"><span class="dot red"></span><b>The map</b><span>Where your people are — by neighbourhood, never by street.</span></a>
+        <a href="mentoring.html"><b>Mentoring</b><span>Alumni and students, matched by path, with small, easy asks.</span></a>
+        <a href="student-exchange.html"><span class="dot blue"></span><b>Student exchange</b><span>Find the people from your course or tutorial abroad.</span></a>
+        <a href="universities.html"><b>For universities</b><span>Own your alumni relationship, data and events.</span></a>
+        <a href="about.html"><b>About UniCircle</b><span>Why a university-owned network matters.</span></a>
       </div>
     </div>
   </section>
@@ -170,6 +135,7 @@
       <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(250,249,246,.55);">
         <span>© 2026 UniCircle · unicircle.eu · a Beyond Borders Marketing Consultancy project</span>
         <div style="display:flex;gap:24px;">
+          <a href="about.html" style="color:rgba(250,249,246,.7);">About</a>
           <a href="index.html" style="color:rgba(250,249,246,.7);">Sign in</a>
           <a href="privacy.html" style="color:rgba(250,249,246,.7);">Privacy</a>
           <a href="mailto:hello@unicircle.eu" style="color:rgba(250,249,246,.7);">Contact</a>
@@ -179,9 +145,7 @@
   </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
-<script src="js/uc-map.js?v=1.0.1" defer></script>
 <script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
-<script src="js/waitlist.js?v=1.1.0" defer></script>
+<script src="js/waitlist.js?v=1.2.0" defer></script>
 </body>
 </html>

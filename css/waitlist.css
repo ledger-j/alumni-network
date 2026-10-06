@@ -112,3 +112,14 @@ a.uc-btn-dark, a.uc-btn-ghost { display: inline-flex; align-items: center; justi
   .uc-wl-navwrap .uc-navpill span { font-size: 15px !important; }
   .uc-wl-navwrap .uc-btn-dark { padding: 9px 14px; font-size: 13px; }
 }
+
+/* explore cards → the standalone topic pages */
+.uc-wl-explore { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-top: 30px; }
+.uc-wl-explore a { display: block; padding: 22px 22px 20px; border-radius: 20px; background: var(--uc-card-solid); border: 1px solid var(--uc-border);
+  text-decoration: none; color: var(--uc-ink); transition: transform .15s ease, box-shadow .15s ease; }
+.uc-wl-explore a:hover { transform: translateY(-2px); box-shadow: var(--uc-shadow); }
+.uc-wl-explore b { display: inline-block; font-size: 17px; margin-bottom: 6px; }
+.uc-wl-explore b::after { content: ' →'; }
+.uc-wl-explore span:not(.dot) { display: block; font-size: 14px; line-height: 1.55; color: var(--uc-ink-2); }
+.uc-wl-explore .dot { vertical-align: 1px; }
+@media (max-width: 1020px) { .uc-wl-navlinks { display: none; } }

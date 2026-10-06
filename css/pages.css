@@ -51,3 +51,33 @@
   .uc-landing .uc-navpill > div:first-child span { font-size: 15px !important; }
 }
 @media (max-width: 520px) { .uc-landing #lp-signin-link { display: none; } }
+
+/* ---- landing: explore tiles → standalone topic pages ---- */
+.uc-lp-explore { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.uc-lp-tile { display: flex; flex-direction: column; border-radius: var(--uc-r-lg); overflow: hidden; background: var(--uc-card); border: 1px solid var(--uc-border);
+  box-shadow: var(--uc-shadow); text-decoration: none; color: var(--uc-ink); transition: transform .18s ease, box-shadow .18s ease; }
+.uc-lp-tile:hover { transform: translateY(-3px); box-shadow: var(--uc-shadow-lg); }
+.uc-lp-tile img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+.uc-lp-tile .body { padding: 22px 24px 24px; }
+.uc-lp-tile h3 { margin: 10px 0 8px; font-size: 21px; font-weight: 600; letter-spacing: -.01em; font-family: var(--uc-font-body); }
+.uc-lp-tile h3::after { content: ' →'; color: var(--uc-muted); }
+.uc-lp-tile p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--uc-ink-2); }
+.uc-lp-tile--wide { grid-column: span 2; flex-direction: row; }
+.uc-lp-tile--wide .uc-lp-tile-map { flex: 1.2; min-height: 260px; }
+.uc-lp-tile--wide .body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.uc-lp-tile--wide h3 { font-size: 28px; font-family: var(--uc-font-display); font-weight: 400; }
+.uc-lp-tile-map { position: relative; background: #f2f0ea; background-image: radial-gradient(rgba(43,42,38,.06) 1px, transparent 1px); background-size: 18px 18px; }
+.uc-lp-tile-map span { position: absolute; border-radius: 50%; box-shadow: 0 0 0 3px #fff; }
+@media (max-width: 960px) {
+  .uc-lp-explore { grid-template-columns: 1fr 1fr; }
+  .uc-lp-tile--wide { grid-column: span 2; }
+}
+@media (max-width: 620px) {
+  .uc-lp-explore { grid-template-columns: 1fr; }
+  .uc-lp-tile--wide { grid-column: auto; flex-direction: column; }
+  .uc-lp-tile--wide .uc-lp-tile-map { min-height: 200px; }
+}
+/* five page links in the landing nav: give the hero room at every width,
+   and collapse the links before they crowd the pill */
+.uc-landing .uc-hero { padding-top: 130px; }
+@media (max-width: 1100px) { .uc-landing [data-nav-links] { display: none !important; } }
