@@ -50,3 +50,5 @@ Open http://localhost:5173 (app) or http://localhost:5173/waitlist.html.
 - No fake engagement. Demo content is labelled **Sample**.
 - Escape anything user-written (`UCP.esc`). Buttons are `<button>`, links are `<a href>`.
 - Bump the `?v=` query on any CSS/JS you change in `index.html` so browsers refetch it.
+
+_Restore points are listed under Tags on GitHub (`backup/…`)._
