@@ -1,2 +1,3 @@
-# Every change needs a review from Jean before it can be merged.
+# Jean is auto-requested as reviewer on pull requests (informational — direct
+# pushes are allowed; every push leaves a backup/ tag, see CONTRIBUTING.md).
 * @ledger-j

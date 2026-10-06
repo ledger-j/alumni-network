@@ -1,8 +1,20 @@
 # Working on UniCircle (team guide)
 
 ## The rule
-Nobody edits the live server by hand. Changes go **branch → pull request → Jean approves → deploy**.
+Work on **`uc-next`** (push directly, or use a branch + pull request for bigger changes).
+Nobody edits the live server by hand — the live site only changes when Jean deploys.
 FTP accounts are for the deploy step only, and each is limited to one folder.
+
+## Backups & rolling back
+Every push automatically creates a restore point: a tag `backup/<branch>/<time>-<sha>`
+pointing at the state **just before** that push (workflow: `.github/workflows/backup-before-push.yml`).
+```bash
+git fetch --tags
+git tag -l "backup/uc-next/*"          # list restore points (newest last)
+git revert <bad-commit>                 # preferred: undo one commit, keeps history
+git reset --hard backup/uc-next/<tag>   # or: go back to a restore point locally…
+git push --force-with-lease             # …and publish it (admin only)
+```
 
 ## Where things are
 | What | Where |

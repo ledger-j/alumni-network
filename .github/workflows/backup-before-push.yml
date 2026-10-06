@@ -1,0 +1,30 @@
+# Restore point on every push: tags the commit the branch pointed to BEFORE the
+# push (backup/<branch>/<UTC time>-<sha>), so any push — even a force-push — can
+# be rolled back. Tags are cheap and permanent; prune old ones whenever you like.
+name: Backup before push
+
+on:
+  push:
+    branches: ['**']
+
+permissions:
+  contents: write
+
+jobs:
+  tag-previous-state:
+    runs-on: ubuntu-latest
+    # Skip brand-new branches (nothing existed before the push).
+    if: github.event.before != '0000000000000000000000000000000000000000'
+    steps:
+      - name: Tag the pre-push commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BEFORE: ${{ github.event.before }}
+          BRANCH: ${{ github.ref_name }}
+          PUSHER: ${{ github.actor }}
+        run: |
+          stamp=$(date -u +%Y%m%d-%H%M%S)
+          safe_branch=$(echo "$BRANCH" | tr -c 'A-Za-z0-9._/-' '-')
+          tag="backup/${safe_branch}/${stamp}-${BEFORE:0:7}"
+          gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref="refs/tags/${tag}" -f sha="${BEFORE}" --silent
+          echo "Restore point ${tag} (state before ${PUSHER}'s push)" >> "$GITHUB_STEP_SUMMARY"
