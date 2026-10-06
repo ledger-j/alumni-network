@@ -104,3 +104,11 @@ a.uc-btn-dark, a.uc-btn-ghost { display: inline-flex; align-items: center; justi
 .uc-wl .uc-form .uc-wl-consent { flex-direction: row; display: flex; gap: 10px; }
 .uc-wl .uc-form .uc-wl-chips label { display: inline-block; }
 .uc-wl .uc-form .uc-wl-chips label[hidden] { display: none; }
+/* phones: keep the nav pill on one line and clear of the eyebrow */
+.uc-wl-navwrap .uc-btn-dark { white-space: nowrap; }
+@media (max-width: 640px) {
+  .uc-wl-hero { padding-top: 120px; }
+  .uc-wl-navwrap .uc-navpill { gap: 10px; }
+  .uc-wl-navwrap .uc-navpill span { font-size: 15px !important; }
+  .uc-wl-navwrap .uc-btn-dark { padding: 9px 14px; font-size: 13px; }
+}
