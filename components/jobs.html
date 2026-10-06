@@ -1,46 +1,135 @@
-<!-- JOBS & SUPPORT — content only; shell + rail supplied by the router. -->
-<div class="uc-page-main">
+<!-- JOBS & SUPPORT — content only; shell + rail supplied by the router.
+     Job listings are curated SAMPLES with fictional employers (the backend has no
+     jobs collection). Each job: data-uc-job, data-id = slug of its title,
+     data-company, data-city ("" when fully remote), data-type, data-mode
+     (remote|hybrid|onsite), data-poster = PocketBase user id of a real poster
+     ("" for samples → "Ask the poster" explains it is a sample).
+     Behaviour lives in js/pages/jobs.js. Payments are NOT live: the supporter
+     card only records interest on this device. -->
+<div class="uc-page-main uc-jobs-page">
   <div class="uc-app-header">
     <h1 class="uc-app-title">Careers inside <em>the circle.</em></h1>
-    <form data-uc-search class="uc-app-search">
-      <input type="search" placeholder="Search jobs…" aria-label="Search">
-      <button type="submit" aria-label="Search"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
+    <form data-uc-search class="uc-app-search" role="search">
+      <input type="search" placeholder="Search jobs…" aria-label="Search jobs">
+      <button type="submit" aria-label="Search jobs"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
     </form>
   </div>
 
-  <div style="display:flex;flex-direction:column;gap:24px;">
-    <!-- Partner banner -->
-    <div class="uc-panel-dark" style="padding:28px 32px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
-      <div style="flex:1;min-width:260px;">
-        <div class="uc-eyebrow" style="color:rgba(250,249,246,0.5);margin-bottom:10px;">Official UM career partner</div>
-        <p style="margin:0;font-family:var(--uc-font-display);font-size:24px;line-height:1.35;">Carl Square — priority access, exclusive internships, senior placements for <em style="font-style:italic;">the circle.</em></p>
+  <div class="uc-jobs-stack">
+    <!-- Hiring banner -->
+    <div class="uc-panel-dark uc-jobs-banner">
+      <div class="uc-jobs-banner-text">
+        <div class="uc-eyebrow" style="color:rgba(250,249,246,0.5);margin-bottom:10px;">Hiring from the circle</div>
+        <p class="uc-jobs-banner-lead">Roles shared by alumni, for alumni — internships, first jobs and senior moves, <em>vouched for by people you know.</em></p>
       </div>
-      <button type="button" class="uc-pill-paper">About the partnership</button>
+      <button type="button" class="uc-pill-paper" data-job-post>Post a job</button>
     </div>
 
-    <!-- Featured opportunities -->
+    <!-- Opportunities -->
     <div class="uc-card">
-      <h2 class="uc-h2" style="margin:0 0 20px;">Featured UM opportunities</h2>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div class="uc-row" style="flex-wrap:wrap;">
-          <div class="uc-avatar-initials" style="width:50px;height:50px;font-size:19px;background:oklch(0.95 0.03 235);">CS</div>
-          <div style="flex:1;min-width:200px;"><div style="font-size:15px;font-weight:600;">Risk Strategy Analyst Intern</div><div style="font-size:13px;color:var(--uc-muted);">Carl Square · Munich · 6-month internship · Students &amp; alumni</div></div>
-          <button type="button" class="uc-pill-ink">Quick apply</button>
-        </div>
-        <div class="uc-row" style="flex-wrap:wrap;">
-          <div class="uc-avatar-initials" style="width:50px;height:50px;font-size:19px;background:oklch(0.95 0.03 275);">CS</div>
-          <div style="flex:1;min-width:200px;"><div style="font-size:15px;font-weight:600;">Corporate M&amp;A Senior Associate</div><div style="font-size:13px;color:var(--uc-muted);">Carl Square · Amsterdam · Permanent · 2–4 years experience</div></div>
-          <button type="button" class="uc-pill-ink">Quick apply</button>
-        </div>
-        <div class="uc-row" style="flex-wrap:wrap;">
-          <div class="uc-avatar-initials" style="width:50px;height:50px;font-size:19px;background:oklch(0.95 0.03 185);">CS</div>
-          <div style="flex:1;min-width:200px;"><div style="font-size:15px;font-weight:600;">Technology Investment Director</div><div style="font-size:13px;color:var(--uc-muted);">Carl Square · London · Permanent · Senior executive</div></div>
-          <button type="button" class="uc-pill-ghost">Apply</button>
+      <div class="uc-ev-head">
+        <h2 class="uc-h2">Opportunities</h2>
+        <span class="uc-ej-sample" title="Fictional employers — these listings illustrate how jobs will look.">Sample listings</span>
+      </div>
+
+      <div class="uc-jobs-filters" data-job-filters>
+        <label class="uc-jobs-filter"><span>Location</span><select data-jf="loc" aria-label="Filter by location"><option value="">All locations</option><option value="remote">Remote</option></select></label>
+        <label class="uc-jobs-filter"><span>Type</span><select data-jf="type" aria-label="Filter by job type"><option value="">All types</option></select></label>
+        <label class="uc-jobs-filter"><span>Work mode</span><select data-jf="mode" aria-label="Filter by work mode"><option value="">Any</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></label>
+        <button type="button" class="uc-chip uc-ej-chip uc-jobs-saved-chip" data-jf-saved aria-pressed="false">
+          <span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span> Saved
+        </button>
+      </div>
+      <p class="uc-ej-status" role="status" aria-live="polite" data-job-status></p>
+
+      <div class="uc-jobs-list" data-job-list>
+        <article class="uc-row uc-job" data-uc-job
+          id="job-risk-strategy-analyst-intern" data-id="risk-strategy-analyst-intern"
+          data-company="Northwind Capital" data-city="Munich" data-type="Internship" data-mode="onsite" data-poster="">
+          <div class="uc-avatar-initials uc-job-logo" style="background:oklch(0.95 0.03 235);" aria-hidden="true">NC</div>
+          <div class="uc-job-body">
+            <h3 class="uc-job-title">Risk Strategy Analyst Intern</h3>
+            <div class="uc-job-meta"><button type="button" class="uc-ej-link" data-job-company>Northwind Capital</button> · <button type="button" class="uc-ej-link" data-job-city>Munich</button> · 6-month internship · On-site · Students &amp; recent graduates</div>
+            <p class="uc-job-desc" hidden>Support the credit-risk strategy team on portfolio monitoring and scenario analysis. Strong Excel/Python and an interest in banking regulation help.</p>
+          </div>
+          <div class="uc-job-actions">
+            <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
+            <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
+          </div>
+        </article>
+
+        <article class="uc-row uc-job" data-uc-job
+          id="job-corporate-m-a-senior-associate" data-id="corporate-m-a-senior-associate"
+          data-company="Harbour &amp; Vale Advisory" data-city="Amsterdam" data-type="Permanent" data-mode="hybrid" data-poster="">
+          <div class="uc-avatar-initials uc-job-logo" style="background:oklch(0.95 0.03 275);" aria-hidden="true">HV</div>
+          <div class="uc-job-body">
+            <h3 class="uc-job-title">Corporate M&amp;A Senior Associate</h3>
+            <div class="uc-job-meta"><button type="button" class="uc-ej-link" data-job-company>Harbour &amp; Vale Advisory</button> · <button type="button" class="uc-ej-link" data-job-city>Amsterdam</button> · Permanent · Hybrid · 2–4 years experience</div>
+            <p class="uc-job-desc" hidden>Run workstreams on mid-market buy- and sell-side mandates: modelling, due-diligence coordination and client materials.</p>
+          </div>
+          <div class="uc-job-actions">
+            <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
+            <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
+          </div>
+        </article>
+
+        <article class="uc-row uc-job" data-uc-job
+          id="job-data-analyst-sustainability" data-id="data-analyst-sustainability"
+          data-company="Fieldstone Energy" data-city="" data-type="Permanent" data-mode="remote" data-poster="">
+          <div class="uc-avatar-initials uc-job-logo" style="background:oklch(0.95 0.03 145);" aria-hidden="true">FE</div>
+          <div class="uc-job-body">
+            <h3 class="uc-job-title">Data Analyst (Sustainability)</h3>
+            <div class="uc-job-meta"><button type="button" class="uc-ej-link" data-job-company>Fieldstone Energy</button> · Remote (EU time zones) · Permanent · 1–3 years experience</div>
+            <p class="uc-job-desc" hidden>Build the emissions-reporting data pipeline and dashboards used by the finance and operations teams. SQL required; dbt a plus.</p>
+          </div>
+          <div class="uc-job-actions">
+            <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
+            <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
+          </div>
+        </article>
+
+        <article class="uc-row uc-job" data-uc-job
+          id="job-marketing-analytics-working-student" data-id="marketing-analytics-working-student"
+          data-company="Kestrel Health" data-city="Berlin" data-type="Part-time" data-mode="hybrid" data-poster="">
+          <div class="uc-avatar-initials uc-job-logo" style="background:oklch(0.95 0.03 25);" aria-hidden="true">KH</div>
+          <div class="uc-job-body">
+            <h3 class="uc-job-title">Marketing Analytics Working Student</h3>
+            <div class="uc-job-meta"><button type="button" class="uc-ej-link" data-job-company>Kestrel Health</button> · <button type="button" class="uc-ej-link" data-job-city>Berlin</button> · Part-time (16–20 h) · Hybrid · Current students</div>
+            <p class="uc-job-desc" hidden>Help the growth team measure campaigns: attribution reports, A/B-test analysis and a weekly KPI review.</p>
+          </div>
+          <div class="uc-job-actions">
+            <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
+            <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
+          </div>
+        </article>
+
+        <article class="uc-row uc-job" data-uc-job
+          id="job-technology-investment-director" data-id="technology-investment-director"
+          data-company="Lindqvist &amp; Rowe Partners" data-city="London" data-type="Permanent" data-mode="onsite" data-poster="">
+          <div class="uc-avatar-initials uc-job-logo" style="background:oklch(0.95 0.03 185);" aria-hidden="true">LR</div>
+          <div class="uc-job-body">
+            <h3 class="uc-job-title">Technology Investment Director</h3>
+            <div class="uc-job-meta"><button type="button" class="uc-ej-link" data-job-company>Lindqvist &amp; Rowe Partners</button> · <button type="button" class="uc-ej-link" data-job-city>London</button> · Permanent · On-site · Senior executive</div>
+            <p class="uc-job-desc" hidden>Lead growth-equity investments in European B2B software, from sourcing through board work. 10+ years in investing or operating roles.</p>
+          </div>
+          <div class="uc-job-actions">
+            <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
+            <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="uc-ej-empty" data-job-empty hidden>
+        <p>No roles match these filters.</p>
+        <div class="uc-ej-empty-actions">
+          <button type="button" class="uc-pill-ghost uc-pill-sm" data-job-clear>Clear filters</button>
+          <button type="button" class="uc-pill-ink uc-pill-sm" data-job-post>Post a job</button>
         </div>
       </div>
+      <p class="uc-ej-footnote">Saved jobs and cover notes stay on this device. Applying through UniCircle opens once real listings go live.</p>
     </div>
 
-    <!-- Pricing tiers -->
+    <!-- Membership tiers -->
     <div data-cards-grid class="uc-cards-2">
       <div class="uc-card" style="padding:28px;">
         <div class="uc-eyebrow" style="margin-bottom:10px;">Standard access</div>
@@ -48,32 +137,33 @@
           <span style="font-family:var(--uc-font-display);font-size:42px;">€0</span>
           <span style="font-size:13px;color:var(--uc-muted);">/ forever</span>
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--uc-ink-2);margin-bottom:24px;">
-          <span>✓ Monthly UM newsletter</span>
-          <span>✓ Mentorship &amp; guest lectures</span>
-          <span>✓ Register for UniCircle events</span>
-          <span style="opacity:0.45;">✗ Priority profile visibility</span>
-        </div>
-        <button type="button" class="uc-pill-ghost" style="width:100%;padding:13px 0;">Active membership</button>
+        <ul class="uc-jobs-perks">
+          <li>✓ Monthly community newsletter</li>
+          <li>✓ Mentorship &amp; guest lectures</li>
+          <li>✓ Join UniCircle events</li>
+          <li class="is-off">✗ Supporter profile badge</li>
+        </ul>
+        <p class="uc-pill-ghost uc-jobs-tier-status" aria-label="Standard access is free and always included">Included for every member</p>
       </div>
-      <div class="uc-panel-dark" style="padding:28px;">
+      <div class="uc-panel-dark" style="padding:28px;" data-supporter>
         <div class="uc-eyebrow" style="color:rgba(250,249,246,0.5);margin-bottom:10px;">Give what you can</div>
         <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:18px;">
           <span style="font-family:var(--uc-font-display);font-size:42px;">Supporter</span>
         </div>
-        <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
-          <button type="button" class="uc-pill-outline-paper">€5</button>
-          <button type="button" class="uc-pill-paper">€10</button>
-          <button type="button" class="uc-pill-outline-paper">€25</button>
-          <input type="number" placeholder="Other" style="width:80px;padding:8px 14px;border-radius:999px;border:1px solid rgba(250,249,246,0.3);background:transparent;color:var(--uc-bg);font-family:var(--uc-font-body);font-size:13px;outline:none;">
+        <div class="uc-jobs-amounts" role="group" aria-label="Choose a contribution amount">
+          <button type="button" class="uc-pill-outline-paper" data-amount="5" aria-pressed="false">€5</button>
+          <button type="button" class="uc-pill-outline-paper" data-amount="10" aria-pressed="true">€10</button>
+          <button type="button" class="uc-pill-outline-paper" data-amount="25" aria-pressed="false">€25</button>
+          <input type="number" min="1" max="1000" step="1" inputmode="numeric" placeholder="Other" aria-label="Other amount in euros" data-amount-other class="uc-jobs-amount-other">
         </div>
-        <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;color:rgba(250,249,246,0.8);margin-bottom:24px;">
-          <span>✓ Everything in Standard</span>
-          <span>✓ Fund independent hosting directly</span>
-          <span>✓ Supporter profile badge</span>
-          <span>✓ Priority for Carl Square vacancies</span>
-        </div>
-        <button type="button" class="uc-pill-paper" style="width:100%;padding:13px 0;">Become a supporter</button>
+        <ul class="uc-jobs-perks uc-jobs-perks--paper">
+          <li>✓ Everything in Standard</li>
+          <li>✓ Fund independent hosting directly</li>
+          <li>✓ Supporter profile badge</li>
+          <li>✓ Early access to new features</li>
+        </ul>
+        <button type="button" class="uc-pill-paper" style="width:100%;padding:13px 0;" data-supporter-cta>Become a supporter</button>
+        <p class="uc-jobs-pay-note">Payments aren't live yet — nothing is charged.</p>
       </div>
     </div>
   </div>

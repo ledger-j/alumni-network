@@ -1,90 +1,161 @@
 <!-- DASHBOARD (authenticated home) — content only; the side-rail shell is
-     supplied by the router (railHtml). Quiet swarm ribbon + 2fr/1fr hub grid. -->
+     supplied by the router (railHtml). Quiet swarm ribbon + 2fr/1fr hub grid.
+     Live posts, composer, likes, delete and the "New in your circle" swap-in
+     are wired by js/pages/feed.js. Do NOT use the class `feed-posts-list`
+     here: unicircle.js observes it and would inject legacy cards. -->
 
 <!-- Quiet swarm ribbon header -->
 <div class="uc-ribbon" data-uc-ribbon>
-  <canvas id="uc-ribbon-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+  <canvas id="uc-ribbon-canvas" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
   <div style="position:relative;z-index:10;height:100%;display:flex;align-items:flex-end;justify-content:space-between;padding:0 clamp(20px,3.5vw,44px) 28px;box-sizing:border-box;gap:18px;flex-wrap:wrap;">
     <div>
       <div class="uc-eyebrow" style="margin-bottom:8px;">Your circle</div>
       <h1 style="margin:0;font-family:var(--uc-font-display);font-weight:400;font-size:clamp(30px,4vw,44px);letter-spacing:-0.01em;">Welcome back, <em id="uc-welcome-name" style="font-style:italic;color:var(--uc-ink-2);">there.</em></h1>
     </div>
-    <form data-uc-search style="display:flex;align-items:center;gap:10px;padding:6px 6px 6px 20px;border-radius:999px;background:rgba(255,255,255,0.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--uc-border);">
-      <input id="uc-dash-search" type="search" placeholder="Search the circle…" aria-label="Search" style="width:min(220px,44vw);border:none;background:transparent;font-family:var(--uc-font-body);font-size:14px;color:var(--uc-ink);outline:none;">
-      <button type="submit" aria-label="Search" style="width:38px;height:38px;min-width:38px;border-radius:50%;background:var(--uc-ink);color:var(--uc-bg);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
+    <form data-uc-search role="search" style="display:flex;align-items:center;gap:10px;padding:6px 6px 6px 20px;border-radius:999px;background:rgba(255,255,255,0.7);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--uc-border);">
+      <input id="uc-dash-search" type="search" placeholder="Search the circle…" aria-label="Search the alumni directory" style="width:min(220px,44vw);border:none;background:transparent;font-family:var(--uc-font-body);font-size:14px;color:var(--uc-ink);outline:none;">
+      <button type="submit" aria-label="Search" style="width:38px;height:38px;min-width:38px;border-radius:50%;background:var(--uc-ink);color:var(--uc-bg);display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;"><span class="iconify" data-icon="ph:magnifying-glass-bold" aria-hidden="true"></span></button>
     </form>
   </div>
 </div>
 
 <!-- Content grid -->
-<div data-uc-main-grid style="padding:20px clamp(20px,3.5vw,44px) 48px;display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:start;">
+<div data-uc-main-grid class="uc-feed-grid" style="padding:20px clamp(20px,3.5vw,44px) 48px;display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:start;">
 
-  <!-- LEFT -->
-  <div style="display:flex;flex-direction:column;gap:24px;min-width:0;">
-    <section class="uc-card">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;">
-        <h2 class="uc-h2">Upcoming events</h2>
-        <a href="#events" style="font-size:13px;font-weight:600;color:var(--uc-ink-2);">All events →</a>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div class="uc-row">
-          <div class="uc-datecirc" style="background:oklch(0.95 0.03 235);"><span style="font-size:18px;font-weight:700;line-height:1;">18</span><span class="uc-eyebrow" style="font-size:10px;">Jul</span></div>
-          <div style="flex:1;min-width:0;"><div style="font-size:15px;font-weight:600;">Summer Reunion — Vrijthof</div><div style="font-size:13px;color:var(--uc-muted);">Maastricht · 17:00 · Class of 2010–2020</div></div>
-          <a href="#events" class="uc-pill-ink">RSVP</a>
+  <!-- LEFT: composer + live feed -->
+  <div style="display:flex;flex-direction:column;gap:20px;min-width:0;">
+    <section class="uc-card uc-feed-composer" aria-labelledby="uc-feed-compose-h">
+      <h2 id="uc-feed-compose-h" class="uc-feed-sr">Write a post</h2>
+      <form data-uc-feed-compose novalidate>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <div class="uc-avatar-initials uc-feed-avatar" data-uc-feed-me aria-hidden="true">·</div>
+          <div style="flex:1;min-width:0;">
+            <label for="uc-feed-text" class="uc-feed-sr">Share something with your circle</label>
+            <textarea id="uc-feed-text" name="text" rows="3" maxlength="2000" placeholder="Share an update, a question or an opportunity… use #tags to help people find it."></textarea>
+            <div class="uc-feed-compose-bar">
+              <span class="uc-feed-hint" data-uc-feed-hint aria-live="polite">Visible to all members of your circle.</span>
+              <button type="submit" class="uc-btn-dark" data-uc-feed-submit>Post</button>
+            </div>
+          </div>
         </div>
-        <div class="uc-row">
-          <div class="uc-datecirc" style="background:oklch(0.95 0.03 305);"><span style="font-size:18px;font-weight:700;line-height:1;">02</span><span class="uc-eyebrow" style="font-size:10px;">Sep</span></div>
-          <div style="flex:1;min-width:0;"><div style="font-size:15px;font-weight:600;">Amsterdam Chapter — Fintech evening</div><div style="font-size:13px;color:var(--uc-muted);">Amsterdam · 18:30 · Open to all alumni</div></div>
-          <a href="#events" class="uc-pill-ghost">Details</a>
-        </div>
-        <div class="uc-row">
-          <div class="uc-datecirc" style="background:oklch(0.95 0.03 185);"><span style="font-size:18px;font-weight:700;line-height:1;">14</span><span class="uc-eyebrow" style="font-size:10px;">Sep</span></div>
-          <div style="flex:1;min-width:0;"><div style="font-size:15px;font-weight:600;">Faculty lecture — The future of European markets</div><div style="font-size:13px;color:var(--uc-muted);">Online · 12:00 CET · Prof. J. van der Berg</div></div>
-          <a href="#events" class="uc-pill-ghost">Details</a>
-        </div>
-      </div>
+      </form>
     </section>
 
-    <section class="uc-card">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px;">
-        <h2 class="uc-h2">New in your circle</h2>
-        <a href="#network" style="font-size:13px;font-weight:600;color:var(--uc-ink-2);">Directory →</a>
+    <section class="uc-feed-stream" aria-labelledby="uc-feed-stream-h">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin:4px 4px 14px;">
+        <h2 id="uc-feed-stream-h" class="uc-h2">From your circle</h2>
+        <button type="button" class="uc-feed-linkbtn" data-uc-feed-refresh>Refresh</button>
       </div>
-      <div class="uc-people-grid">
-        <div class="uc-person"><div class="uc-avatar-initials" style="background:oklch(0.9 0.06 275);">LK</div><div style="font-size:14px;font-weight:600;">Lotte Koster</div><div style="font-size:12px;color:var(--uc-muted);">IB '14 · Strategy, London</div><a href="#network" class="uc-pill-ghost uc-pill-sm">Connect</a></div>
-        <div class="uc-person"><div class="uc-avatar-initials" style="background:oklch(0.9 0.06 185);">RD</div><div style="font-size:14px;font-weight:600;">Rafael Duarte</div><div style="font-size:12px;color:var(--uc-muted);">Econ '18 · Data, Lisbon</div><a href="#network" class="uc-pill-ghost uc-pill-sm">Connect</a></div>
-        <div class="uc-person"><div class="uc-avatar-initials" style="background:oklch(0.9 0.06 305);">AY</div><div style="font-size:14px;font-weight:600;">Aylin Yilmaz</div><div style="font-size:12px;color:var(--uc-muted);">Fin '21 · VC, Berlin</div><a href="#network" class="uc-pill-ghost uc-pill-sm">Connect</a></div>
+      <div class="uc-feed-list" data-uc-feed-list aria-live="polite" aria-busy="true">
+        <div class="uc-card uc-feed-state"><p>Loading posts…</p></div>
+      </div>
+      <div class="uc-feed-more-wrap" data-uc-feed-more-wrap hidden>
+        <button type="button" class="uc-btn-ghost" data-uc-feed-more>Load more posts</button>
       </div>
     </section>
   </div>
 
-  <!-- RIGHT -->
+  <!-- RIGHT: side cards -->
   <div style="display:flex;flex-direction:column;gap:24px;min-width:0;">
-    <section class="uc-panel-dark" style="padding:28px 28px 30px;">
-      <div class="uc-eyebrow" style="color:rgba(250,249,246,0.5);margin-bottom:14px;">Mentorship</div>
-      <p style="margin:0 0 20px;font-family:var(--uc-font-display);font-size:24px;line-height:1.3;">Two students matched your profile <em style="font-style:italic;">this week.</em></p>
-      <a href="#mentoring" style="display:inline-block;padding:11px 24px;border-radius:999px;background:var(--uc-bg);color:var(--uc-ink);font-size:13px;font-weight:600;">Review matches</a>
-    </section>
 
-    <section class="uc-card" style="padding:28px 28px;">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;">
-        <h2 class="uc-h2">Jobs for you</h2>
-        <a href="#jobs" style="font-size:13px;font-weight:600;color:var(--uc-ink-2);">Board →</a>
+    <section class="uc-card" style="padding:26px 26px;" aria-labelledby="uc-feed-events-h">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:18px;">
+        <h2 id="uc-feed-events-h" class="uc-h2">Upcoming events <span class="uc-feed-sample">Sample</span></h2>
+        <a href="#events" class="uc-feed-more-link">All →</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:12px;">
-        <a href="#jobs" class="uc-joblink"><div style="font-size:14px;font-weight:600;margin-bottom:3px;">Strategy Consultant</div><div style="font-size:12px;color:var(--uc-muted);">Posted by an alum · Rotterdam · Hybrid</div></a>
-        <a href="#jobs" class="uc-joblink"><div style="font-size:14px;font-weight:600;margin-bottom:3px;">Product Analyst</div><div style="font-size:12px;color:var(--uc-muted);">Posted by an alum · Amsterdam · On-site</div></a>
-        <a href="#jobs" class="uc-joblink"><div style="font-size:14px;font-weight:600;margin-bottom:3px;">Sustainability Lead</div><div style="font-size:12px;color:var(--uc-muted);">Posted by an alum · Brussels · Hybrid</div></a>
+        <div class="uc-feed-side-row">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 145);width:48px;height:48px;"><span style="font-size:16px;font-weight:700;line-height:1;">16</span><span class="uc-eyebrow" style="font-size:9px;">Oct</span></div>
+          <div style="flex:1;min-width:0;">
+            <a href="#events?id=founders-circle-brussels-breakfast" class="uc-feed-side-title">Founders' circle — Brussels breakfast</a>
+            <div class="uc-feed-side-sub"><a href="#map?city=Brussels" class="uc-feed-city" aria-label="Brussels on the map">Brussels</a> · 08:30</div>
+          </div>
+        </div>
+        <div class="uc-feed-side-row">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 305);width:48px;height:48px;"><span style="font-size:16px;font-weight:700;line-height:1;">22</span><span class="uc-eyebrow" style="font-size:9px;">Oct</span></div>
+          <div style="flex:1;min-width:0;">
+            <a href="#events?id=amsterdam-chapter-fintech-evening" class="uc-feed-side-title">Amsterdam Chapter — Fintech evening</a>
+            <div class="uc-feed-side-sub"><a href="#map?city=Amsterdam" class="uc-feed-city" aria-label="Amsterdam on the map">Amsterdam</a> · 18:30</div>
+          </div>
+        </div>
+        <div class="uc-feed-side-row">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 185);width:48px;height:48px;"><span style="font-size:16px;font-weight:700;line-height:1;">29</span><span class="uc-eyebrow" style="font-size:9px;">Oct</span></div>
+          <div style="flex:1;min-width:0;">
+            <a href="#events?id=guest-lecture-the-future-of-european-markets" class="uc-feed-side-title">Guest lecture — The future of European markets</a>
+            <div class="uc-feed-side-sub">Online · 12:00 CET</div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section style="position:relative;border-radius:24px;overflow:hidden;aspect-ratio:4/3;">
-      <img src="assets/img/campus-tapijn.jpg" alt="Tapijn campus" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(43,42,38,0.6),transparent 60%);"></div>
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:20px 22px;color:var(--uc-bg);">
-        <div class="uc-eyebrow" style="color:rgba(250,249,246,0.7);margin-bottom:6px;">From campus</div>
-        <div style="font-family:var(--uc-font-display);font-size:20px;line-height:1.3;">Tapijn wing opens new alumni workspace</div>
+    <section class="uc-card" style="padding:26px 26px;" aria-labelledby="uc-feed-people-h">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:18px;">
+        <h2 id="uc-feed-people-h" class="uc-h2">New in your circle <span class="uc-feed-sample" data-uc-feed-people-sample>Sample</span></h2>
+        <a href="#network" class="uc-feed-more-link">Directory →</a>
       </div>
+      <div class="uc-feed-people" data-uc-feed-people>
+        <div class="uc-feed-person">
+          <div class="uc-avatar-initials uc-feed-avatar-sm" style="background:oklch(0.9 0.06 275);" aria-hidden="true">LB</div>
+          <div style="flex:1;min-width:0;">
+            <a href="#network?q=Lina+Berger" class="uc-feed-side-title">Lina Berger</a>
+            <div class="uc-feed-side-sub">Econometrics '24 · <a href="#map?city=Amsterdam&amp;layer=alumni" class="uc-feed-city" aria-label="Amsterdam on the alumni map">Amsterdam</a></div>
+          </div>
+        </div>
+        <div class="uc-feed-person">
+          <div class="uc-avatar-initials uc-feed-avatar-sm" style="background:oklch(0.9 0.06 25);" aria-hidden="true">SR</div>
+          <div style="flex:1;min-width:0;">
+            <a href="#network?q=Sofia+Romano" class="uc-feed-side-title">Sofia Romano</a>
+            <div class="uc-feed-side-sub">Finance '19 · <a href="#map?city=Berlin&amp;layer=alumni" class="uc-feed-city" aria-label="Berlin on the alumni map">Berlin</a></div>
+          </div>
+        </div>
+        <div class="uc-feed-person">
+          <div class="uc-avatar-initials uc-feed-avatar-sm" style="background:oklch(0.9 0.06 145);" aria-hidden="true">JW</div>
+          <div style="flex:1;min-width:0;">
+            <a href="#network?q=Jonas+Weber" class="uc-feed-side-title">Jonas Weber</a>
+            <div class="uc-feed-side-sub">Data Science '21 · <a href="#map?city=Berlin&amp;layer=alumni" class="uc-feed-city" aria-label="Berlin on the alumni map">Berlin</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="uc-panel-dark" style="padding:28px 28px 30px;" aria-labelledby="uc-feed-mentor-h">
+      <div class="uc-eyebrow" style="color:rgba(250,249,246,0.5);margin-bottom:14px;">Mentorship</div>
+      <p id="uc-feed-mentor-h" data-uc-feed-mentor-copy style="margin:0 0 20px;font-family:var(--uc-font-display);font-size:24px;line-height:1.3;">Learn from someone who has <em style="font-style:italic;">been there.</em></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="#mentoring" data-uc-feed-mentor-link class="uc-pill-paper" style="padding:11px 24px;font-size:13px;">Find a mentor</a>
+        <a href="#mentoring" class="uc-pill-outline-paper" style="padding:10px 20px;font-size:13px;">Offer to mentor</a>
+      </div>
+    </section>
+
+    <section class="uc-card" style="padding:26px 26px;" aria-labelledby="uc-feed-jobs-h">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:18px;">
+        <h2 id="uc-feed-jobs-h" class="uc-h2">Jobs for you <span class="uc-feed-sample">Sample</span></h2>
+        <a href="#jobs" class="uc-feed-more-link">Board →</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="uc-joblink">
+          <a href="#jobs?id=risk-strategy-analyst-intern" class="uc-feed-side-title">Risk Strategy Analyst Intern</a>
+          <div class="uc-feed-side-sub">Posted by an alum · <a href="#map?city=Munich" class="uc-feed-city" aria-label="Munich on the map">Munich</a> · Internship</div>
+        </div>
+        <div class="uc-joblink">
+          <a href="#jobs?id=corporate-m-a-senior-associate" class="uc-feed-side-title">Corporate M&amp;A Senior Associate</a>
+          <div class="uc-feed-side-sub">Posted by an alum · <a href="#map?city=Amsterdam" class="uc-feed-city" aria-label="Amsterdam on the map">Amsterdam</a> · Permanent</div>
+        </div>
+        <div class="uc-joblink">
+          <a href="#jobs?id=technology-investment-director" class="uc-feed-side-title">Technology Investment Director</a>
+          <div class="uc-feed-side-sub">Posted by an alum · <a href="#map?city=London" class="uc-feed-city" aria-label="London on the map">London</a> · Permanent</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="uc-card uc-feed-explore" style="padding:26px 26px;" aria-labelledby="uc-feed-explore-h">
+      <h2 id="uc-feed-explore-h" class="uc-h2" style="margin-bottom:16px;">Explore</h2>
+      <ul class="uc-feed-explore-list">
+        <li><a href="#map?layer=alumni"><span class="iconify" data-icon="ph:globe-hemisphere-west" aria-hidden="true"></span><span><b>Alumni map</b><small>See where your circle lives and works</small></span></a></li>
+        <li><a href="#map?layer=students"><span class="iconify" data-icon="ph:student" aria-hidden="true"></span><span><b>Student map</b><small>Find current students near you</small></span></a></li>
+        <li><a href="#pbl-hub"><span class="iconify" data-icon="ph:puzzle-piece" aria-hidden="true"></span><span><b>Case Hub</b><small>Work on real problems with students and alumni</small></span></a></li>
+        <li><a href="#mentoring"><span class="iconify" data-icon="ph:handshake" aria-hidden="true"></span><span><b>Mentoring</b><small>Give or get an hour of advice</small></span></a></li>
+      </ul>
     </section>
   </div>
 </div>

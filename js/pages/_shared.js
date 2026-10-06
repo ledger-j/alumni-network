@@ -72,6 +72,7 @@
     document.body.appendChild(d);
     d.showModal();
     if (window.Iconify) window.Iconify.scan(d);
+    close.el = d;   // the <dialog>, for modules that need to query inside it
     return close;
   };
 })();

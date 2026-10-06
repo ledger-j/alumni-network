@@ -484,7 +484,7 @@
       const empty = document.createElement('div');
       empty.className = 'uc-feed-empty sbe-card';
       empty.style.cssText = 'text-align:center;padding:var(--space-8);color:var(--color-text-secondary);';
-      empty.innerHTML = `<span class="iconify" data-icon="ph:pencil-line-duotone" style="font-size:48px;opacity:.4;"></span><p style="margin-top:var(--space-3);font-family:var(--font-heading);font-weight:600;">The live feed is quiet — be the first to post!</p><p style="font-size:var(--text-xs);margin-top:var(--space-2);">Sign in and click "What's on your mind?" to share with the UM network.</p>`;
+      empty.innerHTML = `<span class="iconify" data-icon="ph:pencil-line-duotone" style="font-size:48px;opacity:.4;"></span><p style="margin-top:var(--space-3);font-family:var(--font-heading);font-weight:600;">The live feed is quiet — be the first to post!</p><p style="font-size:var(--text-xs);margin-top:var(--space-2);">Sign in and click "What's on your mind?" to share with the network.</p>`;
       list.insertAdjacentElement('afterbegin', empty);
     }
     if (window.Iconify) window.Iconify.scan(list);

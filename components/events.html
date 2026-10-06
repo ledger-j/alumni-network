@@ -1,49 +1,147 @@
-<!-- EVENTS — content only; shell + rail supplied by the router. -->
-<div class="uc-page-main">
+<!-- EVENTS — content only; shell + rail supplied by the router.
+     Curated SAMPLE listings (no events collection in the backend yet).
+     Each event: data-uc-event, data-id = slug of its title, data-city,
+     data-start/data-end = ISO 8601 with offset, data-tz = IANA zone.
+     Behaviour lives in js/pages/events.js (RSVP + saved state are per-viewer only). -->
+<div class="uc-page-main uc-ev-page">
   <div class="uc-app-header">
     <h1 class="uc-app-title">The circle <em>keeps meeting.</em></h1>
-    <form data-uc-search class="uc-app-search">
-      <input type="search" placeholder="Search events…" aria-label="Search">
-      <button type="submit" aria-label="Search"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
+    <form data-uc-search class="uc-app-search" role="search">
+      <input type="search" placeholder="Search events…" aria-label="Search events">
+      <button type="submit" aria-label="Search events"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
     </form>
   </div>
 
-  <div style="display:flex;flex-direction:column;gap:24px;">
+  <div class="uc-ev-stack">
     <!-- Featured -->
-    <div style="position:relative;border-radius:28px;overflow:hidden;aspect-ratio:21/8;min-height:220px;">
-      <img src="assets/img/vrijthof.jpg" alt="Vrijthof, Maastricht" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(43,42,38,0.6),transparent 55%);"></div>
-      <div style="position:absolute;bottom:0;left:0;right:0;padding:32px 36px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;">
-        <div style="color:var(--uc-bg);">
-          <div style="display:inline-block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;margin-bottom:8px;background:rgba(43,42,38,0.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:5px 14px;border-radius:999px;">Featured · 18 July</div>
-          <div style="font-family:var(--uc-font-display);font-size:clamp(24px,3.5vw,34px);letter-spacing:-0.01em;">Summer Reunion at the <em style="font-style:italic;">Vrijthof.</em></div>
+    <article class="uc-ev-hero" data-uc-event
+      id="event-winter-reunion-in-amsterdam" data-id="winter-reunion-in-amsterdam"
+      data-city="Amsterdam" data-start="2026-12-12T17:00:00+01:00" data-end="2026-12-12T22:00:00+01:00"
+      data-tz="Europe/Amsterdam" data-host="Alumni Council" data-place="Amsterdam · venue to be confirmed">
+      <div class="uc-ev-hero-art" aria-hidden="true"></div>
+      <div class="uc-ev-hero-inner">
+        <div>
+          <div class="uc-ev-hero-badge">Featured · Sample event · 12 Dec</div>
+          <h2 class="uc-ev-title uc-ev-hero-title">Winter Reunion in <em>Amsterdam.</em></h2>
+          <div class="uc-ev-meta uc-ev-meta--paper">
+            <button type="button" class="uc-ej-link" data-ev-city>Amsterdam</button> · 17:00 · hosted by
+            <button type="button" class="uc-ej-link" data-ev-host>Alumni Council</button>
+          </div>
+          <p class="uc-ev-desc" hidden>An end-of-year evening for every graduating class: short talks from alumni who changed careers, a tutorial-group table plan, and plenty of time to catch up. Venue and running order are confirmed closer to the date.</p>
         </div>
-        <button type="button" class="uc-pill-paper">RSVP now</button>
+        <div class="uc-ev-actions">
+          <button type="button" class="uc-pill-outline-paper" data-ev-details>Details</button>
+          <button type="button" class="uc-pill-paper" data-ev-rsvp aria-pressed="false">RSVP</button>
+        </div>
       </div>
-    </div>
+    </article>
 
     <div class="uc-card">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;">
+      <div class="uc-ev-head">
         <h2 class="uc-h2">Coming up</h2>
-        <span style="font-size:13px;color:var(--uc-muted);">Chapters in 40 cities</span>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div class="uc-row" style="flex-wrap:wrap;">
-          <div class="uc-datecirc" style="background:oklch(0.95 0.03 305);"><span style="font-size:18px;font-weight:700;line-height:1;">02</span><span class="uc-eyebrow" style="font-size:10px;">Sep</span></div>
-          <div style="flex:1;min-width:180px;"><div style="font-size:15px;font-weight:600;">Amsterdam Chapter — Fintech evening</div><div style="font-size:13px;color:var(--uc-muted);">Amsterdam · 18:30 · 34 classmates going</div></div>
-          <button type="button" class="uc-pill-ink">RSVP</button>
-        </div>
-        <div class="uc-row" style="flex-wrap:wrap;">
-          <div class="uc-datecirc" style="background:oklch(0.95 0.03 185);"><span style="font-size:18px;font-weight:700;line-height:1;">14</span><span class="uc-eyebrow" style="font-size:10px;">Sep</span></div>
-          <div style="flex:1;min-width:180px;"><div style="font-size:15px;font-weight:600;">Faculty lecture — The future of European markets</div><div style="font-size:13px;color:var(--uc-muted);">Online · 12:00 CET · Prof. J. van der Berg</div></div>
-          <button type="button" class="uc-pill-ghost">Details</button>
-        </div>
-        <div class="uc-row" style="flex-wrap:wrap;">
-          <div class="uc-datecirc" style="background:oklch(0.95 0.03 235);"><span style="font-size:18px;font-weight:700;line-height:1;">26</span><span class="uc-eyebrow" style="font-size:10px;">Sep</span></div>
-          <div style="flex:1;min-width:180px;"><div style="font-size:15px;font-weight:600;">Tutorial reunion — 2024 Period 5 Finance T01</div><div style="font-size:13px;color:var(--uc-muted);">Maastricht · 19:00 · 9 of 12 classmates confirmed</div></div>
-          <button type="button" class="uc-pill-ghost">Details</button>
+        <div class="uc-ev-head-actions">
+          <span class="uc-ej-sample" title="These listings are curated examples, not live events.">Sample listings</span>
+          <button type="button" class="uc-pill-ghost uc-pill-sm" data-ev-suggest>
+            <span class="iconify" data-icon="ph:plus-bold" aria-hidden="true"></span>&nbsp;Suggest an event
+          </button>
         </div>
       </div>
+
+      <div class="uc-ej-chips" role="group" aria-label="Filter events" data-ev-chips></div>
+      <p class="uc-ej-status" role="status" aria-live="polite" data-ev-status></p>
+
+      <div class="uc-ev-list" data-ev-list>
+        <article class="uc-row uc-ev" data-uc-event
+          id="event-founders-circle-brussels-breakfast" data-id="founders-circle-brussels-breakfast"
+          data-city="Brussels" data-start="2026-10-16T08:30:00+02:00" data-end="2026-10-16T10:00:00+02:00"
+          data-tz="Europe/Brussels" data-host="Brussels Chapter" data-place="Brussels · venue to be confirmed">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 25);"><span class="uc-ev-day">16</span><span class="uc-eyebrow uc-ev-mon">Oct</span></div>
+          <div class="uc-ev-body">
+            <h3 class="uc-ev-title">Founders' circle — Brussels breakfast</h3>
+            <div class="uc-ev-meta"><button type="button" class="uc-ej-link" data-ev-city>Brussels</button> · 08:30 · hosted by <button type="button" class="uc-ej-link" data-ev-host>Brussels Chapter</button></div>
+            <p class="uc-ev-desc" hidden>An informal breakfast for alumni who started or joined an early-stage company. Bring one problem you are stuck on; leave with three people who have solved it before.</p>
+          </div>
+          <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
+            <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
+          </div>
+        </article>
+
+        <article class="uc-row uc-ev" data-uc-event
+          id="event-amsterdam-chapter-fintech-evening" data-id="amsterdam-chapter-fintech-evening"
+          data-city="Amsterdam" data-start="2026-10-22T18:30:00+02:00" data-end="2026-10-22T21:00:00+02:00"
+          data-tz="Europe/Amsterdam" data-host="Amsterdam Chapter" data-place="Amsterdam · venue to be confirmed">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 305);"><span class="uc-ev-day">22</span><span class="uc-eyebrow uc-ev-mon">Oct</span></div>
+          <div class="uc-ev-body">
+            <h3 class="uc-ev-title">Amsterdam Chapter — Fintech evening</h3>
+            <div class="uc-ev-meta"><button type="button" class="uc-ej-link" data-ev-city>Amsterdam</button> · 18:30 · hosted by <button type="button" class="uc-ej-link" data-ev-host>Amsterdam Chapter</button></div>
+            <p class="uc-ev-desc" hidden>Three short talks from alumni working in payments, risk and regulation, followed by drinks. Open to all graduating years and to current students.</p>
+          </div>
+          <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
+            <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
+          </div>
+        </article>
+
+        <article class="uc-row uc-ev" data-uc-event
+          id="event-guest-lecture-the-future-of-european-markets" data-id="guest-lecture-the-future-of-european-markets"
+          data-city="Online" data-start="2026-10-29T12:00:00+01:00" data-end="2026-10-29T13:00:00+01:00"
+          data-tz="Europe/Amsterdam" data-host="Dr. J. van der Berg" data-place="Online · link shared before the session">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 185);"><span class="uc-ev-day">29</span><span class="uc-eyebrow uc-ev-mon">Oct</span></div>
+          <div class="uc-ev-body">
+            <h3 class="uc-ev-title">Guest lecture — The future of European markets</h3>
+            <div class="uc-ev-meta"><span>Online</span> · 12:00 CET · hosted by <button type="button" class="uc-ej-link" data-ev-host>Dr. J. van der Berg</button></div>
+            <p class="uc-ev-desc" hidden>A one-hour lunchtime lecture on capital-markets integration in Europe, with 20 minutes of open questions at the end.</p>
+          </div>
+          <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
+            <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
+          </div>
+        </article>
+
+        <article class="uc-row uc-ev" data-uc-event
+          id="event-tutorial-reunion-finance-class-of-2024" data-id="tutorial-reunion-finance-class-of-2024"
+          data-city="Berlin" data-start="2026-11-07T19:00:00+01:00" data-end="2026-11-07T22:00:00+01:00"
+          data-tz="Europe/Berlin" data-host="Class of 2024" data-place="Berlin · venue to be confirmed">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 235);"><span class="uc-ev-day">07</span><span class="uc-eyebrow uc-ev-mon">Nov</span></div>
+          <div class="uc-ev-body">
+            <h3 class="uc-ev-title">Tutorial reunion — Finance class of 2024</h3>
+            <div class="uc-ev-meta"><button type="button" class="uc-ej-link" data-ev-city>Berlin</button> · 19:00 · hosted by <button type="button" class="uc-ej-link" data-ev-host>Class of 2024</button></div>
+            <p class="uc-ev-desc" hidden>Dinner for the 2024 finance tutorial groups, two years on. Tables are grouped by tutorial so you sit with the people you argued cases with.</p>
+          </div>
+          <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
+            <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
+          </div>
+        </article>
+
+        <article class="uc-row uc-ev" data-uc-event
+          id="event-london-chapter-careers-breakfast" data-id="london-chapter-careers-breakfast"
+          data-city="London" data-start="2026-11-19T08:00:00+00:00" data-end="2026-11-19T09:30:00+00:00"
+          data-tz="Europe/London" data-host="London Chapter" data-place="London · venue to be confirmed">
+          <div class="uc-datecirc" style="background:oklch(0.95 0.03 145);"><span class="uc-ev-day">19</span><span class="uc-eyebrow uc-ev-mon">Nov</span></div>
+          <div class="uc-ev-body">
+            <h3 class="uc-ev-title">London Chapter — Careers breakfast</h3>
+            <div class="uc-ev-meta"><button type="button" class="uc-ej-link" data-ev-city>London</button> · 08:00 GMT · hosted by <button type="button" class="uc-ej-link" data-ev-host>London Chapter</button></div>
+            <p class="uc-ev-desc" hidden>Early-career alumni meet people five to ten years ahead of them in consulting, banking and tech. Short round-table format; leave by 09:30.</p>
+          </div>
+          <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
+            <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="uc-ej-empty" data-ev-empty hidden>
+        <p>No events match this filter.</p>
+        <div class="uc-ej-empty-actions">
+          <button type="button" class="uc-pill-ghost uc-pill-sm" data-ev-clear>Show all events</button>
+          <button type="button" class="uc-pill-ghost uc-pill-sm" data-ev-empty-map hidden>See alumni there on the map</button>
+          <button type="button" class="uc-pill-ink uc-pill-sm" data-ev-suggest>Suggest an event</button>
+        </div>
+      </div>
+
+      <p class="uc-ej-footnote">RSVPs are saved on this device only until event registration goes live — hosts can't see them yet.</p>
     </div>
   </div>
 </div>

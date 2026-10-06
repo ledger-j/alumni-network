@@ -1,66 +1,105 @@
-<!-- MENTORING — content only; shell + rail supplied by the router. -->
-<div class="uc-page-main">
+<!-- MENTORING — content only; shell + rail supplied by the router.
+     Behaviour lives in js/pages/mentoring.js (live mentors, filters, request dialog). -->
+<div class="uc-page-main uc-mc">
   <div class="uc-app-header">
     <h1 class="uc-app-title">Pass it <em>forward.</em></h1>
     <form data-uc-search class="uc-app-search">
-      <input type="search" placeholder="Search the circle…" aria-label="Search">
+      <input type="search" placeholder="Search the circle…" aria-label="Search the circle">
       <button type="submit" aria-label="Search"><span class="iconify" data-icon="ph:magnifying-glass-bold"></span></button>
     </form>
   </div>
 
-  <div style="display:flex;flex-direction:column;gap:24px;">
-    <!-- Dark hero -->
-    <div class="uc-panel-dark" style="padding:30px 34px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
-      <div style="flex:1;min-width:280px;">
-        <div class="uc-eyebrow" style="color:rgba(250,249,246,0.5);margin-bottom:10px;">Student mentoring</div>
-        <p style="margin:0;font-family:var(--uc-font-display);font-size:28px;line-height:1.3;">Current UM students can reach you <em style="font-style:italic;">directly.</em></p>
-        <p style="margin:12px 0 0;font-size:14px;line-height:1.6;color:rgba(250,249,246,0.7);">You're matched by discipline, career path, and tutorial history. Accept a match to open a direct conversation.</p>
+  <div class="uc-mc-stack">
+    <!-- Two-sided explainer -->
+    <section class="uc-panel-dark uc-mc-hero" aria-labelledby="uc-mc-hero-title">
+      <div class="uc-eyebrow uc-mc-hero-eyebrow">Alumni mentoring students</div>
+      <h2 id="uc-mc-hero-title" class="uc-mc-hero-title">One conversation can save a student <em>a year of guessing.</em></h2>
+      <div class="uc-mc-sides">
+        <div class="uc-mc-side">
+          <div class="uc-mc-side-h"><span class="iconify" data-icon="ph:student-bold" aria-hidden="true"></span> For students</div>
+          <ol class="uc-mc-steps">
+            <li>Find an alumna or alumnus by programme, sector or city.</li>
+            <li>Send a short, structured ask — your goal and the format you'd like.</li>
+            <li>Continue the conversation in Messages.</li>
+          </ol>
+          <button type="button" class="uc-pill-paper" data-mc-find>Find a mentor</button>
+        </div>
+        <div class="uc-mc-side">
+          <div class="uc-mc-side-h"><span class="iconify" data-icon="ph:handshake-bold" aria-hidden="true"></span> For alumni</div>
+          <ol class="uc-mc-steps">
+            <li>Switch on “Offer mentorship” in your profile.</li>
+            <li>Say what you can offer — a call, a CV review, a coffee.</li>
+            <li>Students reach you directly; you decide what to accept.</li>
+          </ol>
+          <button type="button" class="uc-pill-outline-paper" data-mc-become>Become a mentor</button>
+        </div>
       </div>
-      <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
-        <span style="font-family:var(--uc-font-display);font-size:52px;line-height:1;">2</span>
-        <span style="font-size:12px;color:rgba(250,249,246,0.6);">new matches this week</span>
-      </div>
-    </div>
+    </section>
 
-    <!-- Match cards -->
-    <div data-cards-grid class="uc-cards-2">
-      <div class="uc-card" style="padding:26px 28px;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
-          <div class="uc-avatar-initials" style="width:54px;height:54px;font-size:21px;background:oklch(0.9 0.06 45);">SV</div>
-          <div><div style="font-size:15px;font-weight:600;">Sophie Vermeulen</div><div style="font-size:12px;color:var(--uc-muted);">B.Sc. International Business · 3rd year</div></div>
-        </div>
-        <div class="uc-tag">Match: Finance career track · 94%</div>
-        <p style="margin:0 0 18px;font-size:13px;line-height:1.6;color:var(--uc-ink-2);">"I'm choosing between an M.Sc. in Financial Economics and Econometrics — I'd love 30 minutes on how you decided and where it led you."</p>
-        <div style="display:flex;gap:8px;">
-          <button type="button" class="uc-pill-ink" style="flex:1;" data-uc-message>Accept match</button>
-          <button type="button" class="uc-pill-ghost" style="flex:1;">View profile</button>
-        </div>
+    <!-- Mentor directory -->
+    <section class="uc-card" id="uc-mc-mentors" aria-labelledby="uc-mc-mentors-title">
+      <div class="uc-mc-head">
+        <h2 class="uc-h2" id="uc-mc-mentors-title">Find a mentor</h2>
+        <span class="uc-mc-status" data-mc-status role="status" aria-live="polite"></span>
       </div>
-      <div class="uc-card" style="padding:26px 28px;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
-          <div class="uc-avatar-initials" style="width:54px;height:54px;font-size:21px;background:oklch(0.9 0.06 275);">OA</div>
-          <div><div style="font-size:15px;font-weight:600;">Omar Al-Rashid</div><div style="font-size:12px;color:var(--uc-muted);">M.Sc. Financial Economics · 1st year</div></div>
-        </div>
-        <div class="uc-tag">Match: Same programme · 89%</div>
-        <p style="margin:0 0 18px;font-size:13px;line-height:1.6;color:var(--uc-ink-2);">"Preparing for Period 5 — could you share how you approached the IFM case work and what the tutorial pace is really like?"</p>
-        <div style="display:flex;gap:8px;">
-          <button type="button" class="uc-pill-ink" style="flex:1;" data-uc-message>Accept match</button>
-          <button type="button" class="uc-pill-ghost" style="flex:1;">View profile</button>
-        </div>
-      </div>
-    </div>
+      <form class="uc-mc-filters" data-mc-filters role="search" aria-label="Filter mentors">
+        <label class="uc-mc-field uc-mc-field--grow">
+          <span class="uc-mc-label">Keyword or sector</span>
+          <input type="search" name="q" placeholder="e.g. finance, CV review, product…" autocomplete="off">
+        </label>
+        <label class="uc-mc-field">
+          <span class="uc-mc-label">Programme</span>
+          <select name="programme"><option value="">All programmes</option></select>
+        </label>
+        <label class="uc-mc-field">
+          <span class="uc-mc-label">Sector</span>
+          <select name="sector">
+            <option value="">All sectors</option>
+            <option value="finance">Finance</option>
+            <option value="consulting">Consulting</option>
+            <option value="technology">Technology</option>
+            <option value="marketing">Marketing</option>
+            <option value="public">Public sector &amp; NGOs</option>
+            <option value="health">Health</option>
+            <option value="sustainability">Sustainability</option>
+            <option value="entrepreneurship">Entrepreneurship</option>
+          </select>
+        </label>
+        <label class="uc-mc-field">
+          <span class="uc-mc-label">City</span>
+          <select name="city"><option value="">All cities</option></select>
+        </label>
+        <button type="reset" class="uc-pill-ghost uc-pill-sm uc-mc-reset">Clear</button>
+      </form>
+      <div class="uc-cards-2 uc-mc-grid" data-mc-grid></div>
+      <p class="uc-mc-empty" data-mc-empty hidden>No mentors match these filters yet. Try a broader keyword — or <button type="button" class="uc-mc-link" data-mc-become>become the first one</button>.</p>
+    </section>
 
-    <!-- Stats -->
-    <div class="uc-card">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;">
-        <h2 class="uc-h2">Your mentoring</h2>
-        <span style="font-size:13px;color:var(--uc-muted);">Since March 2026</span>
+    <!-- Mentee requests (alumni view) -->
+    <section class="uc-card" id="uc-mc-requests" aria-labelledby="uc-mc-requests-title">
+      <div class="uc-mc-head">
+        <h2 class="uc-h2" id="uc-mc-requests-title">Students asking for guidance</h2>
+        <span class="uc-mc-note">Sample requests — this is how incoming asks will look once you mentor.</span>
       </div>
-      <div data-filters class="uc-stats-3">
-        <div class="uc-stat"><div class="uc-stat-n">3</div><div class="uc-stat-l">Active mentees</div></div>
-        <div class="uc-stat"><div class="uc-stat-n">11</div><div class="uc-stat-l">Sessions completed</div></div>
-        <div class="uc-stat"><div class="uc-stat-n">4.9</div><div class="uc-stat-l">Average session rating</div></div>
+      <div class="uc-cards-2" data-mc-requests></div>
+    </section>
+
+    <!-- Your mentoring (honest, computed) -->
+    <section class="uc-card" aria-labelledby="uc-mc-you-title">
+      <div class="uc-mc-head">
+        <h2 class="uc-h2" id="uc-mc-you-title">Your mentoring</h2>
+        <button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-become>Mentoring settings</button>
       </div>
-    </div>
+      <div class="uc-stats-3" data-mc-stats></div>
+    </section>
+
+    <!-- Guest-lecture board -->
+    <section class="uc-card" id="uc-mc-lectures" aria-labelledby="uc-mc-lectures-title">
+      <div class="uc-mc-head">
+        <h2 class="uc-h2" id="uc-mc-lectures-title">Guest-lecture board</h2>
+        <span class="uc-mc-note">Sample calls from teaching staff — volunteer and we'll put you in touch.</span>
+      </div>
+      <div class="uc-mc-lectures" data-mc-lectures></div>
+    </section>
   </div>
 </div>
