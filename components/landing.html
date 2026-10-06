@@ -17,36 +17,46 @@
         </div>
         <div style="display:flex;align-items:center;gap:18px;">
           <a id="lp-signin-link" href="#" style="font-size:14px;font-weight:600;color:var(--uc-ink);">Sign in</a>
-          <a class="uc-btn-dark" href="waitlist.html" style="color:var(--uc-bg);">Join the waitlist</a>
+          <a class="uc-btn-dark" href="#lp-waitlist" id="lp-nav-join" style="color:var(--uc-bg);">Join the waitlist</a>
         </div>
       </div>
     </div>
 
     <h1 class="uc-hero-h1"><span>Your circle,</span> <em>for life.</em></h1>
-    <p class="uc-lead">The alumni network of lifelong connections — every point of light is one of us.</p>
+    <p class="uc-lead">Mentoring between alumni and students, and a map of where your people are — city and neighbourhood, never your street.</p>
 
-    <!-- Tabbed sign-in card -->
-    <div class="uc-login-card" id="lp-login">
-      <div class="uc-eyebrow" style="text-align:left;">Sign in</div>
-      <div class="uc-tabs" role="tablist">
-        <button type="button" class="uc-tab active" data-lp-tab="password">Password</button>
-        <button type="button" class="uc-tab" data-lp-tab="magic">Email link</button>
-        <button type="button" class="uc-tab" data-lp-tab="create">Create</button>
-      </div>
-      <form id="lp-auth" class="uc-form" style="gap:12px;margin-top:2px;">
-        <input name="name" type="text" placeholder="Full name" autocomplete="name" class="uc-input-pill" hidden>
-        <input name="email" id="lp-email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">
-        <div style="display:flex;align-items:center;gap:10px;" data-lp-pwrow>
-          <input name="password" type="password" placeholder="Password" autocomplete="current-password" minlength="8" class="uc-input-pill" style="flex:1;">
-          <button class="uc-arrow-btn" id="lp-auth-submit" type="submit" aria-label="Sign in" style="width:50px;height:50px;font-size:20px;">→</button>
+    <!-- Waitlist card (form logic: js/uc-waitlist-form.js, mounted in app.js) -->
+    <div class="uc-login-card uc-lp-wl" id="lp-waitlist">
+      <form id="lp-wl" class="uc-form" novalidate>
+        <div class="uc-eyebrow" style="text-align:left;">Join the waitlist · I am</div>
+        <div class="uc-tabs" role="radiogroup" aria-label="I am">
+          <button type="button" class="uc-tab active" data-role="alumnus" role="radio" aria-checked="true">Alumnus</button>
+          <button type="button" class="uc-tab" data-role="student" role="radio" aria-checked="false">Student</button>
+          <button type="button" class="uc-tab" data-role="university_staff" role="radio" aria-checked="false">University</button>
         </div>
-        <input name="code" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit code" class="uc-input-pill" hidden>
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--uc-muted);" data-lp-foot>
-          <a href="#" id="lp-forgot" style="color:var(--uc-muted);">Forgot password?</a>
-          <span id="lp-hint" style="color:var(--uc-ink-2);"></span>
+        <input name="email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">
+        <div class="uc-lp-wl-row">
+          <input name="city" type="text" placeholder="City" autocomplete="address-level2" required class="uc-input-pill" maxlength="80">
+          <input name="tutorial" type="text" placeholder="Course / tutorial" class="uc-input-pill" maxlength="80" data-for="student" hidden>
+          <input name="grad_year" type="text" inputmode="numeric" placeholder="Grad year" class="uc-input-pill" maxlength="4" data-for="alumnus">
         </div>
-        <p class="uc-err" hidden style="color:#b3261e;font-size:13px;margin:0;"></p>
+        <label class="uc-lp-wl-consent">
+          <input type="checkbox" name="consent" required>
+          <span>Email me when my spot opens. Unsubscribe any time. <a href="privacy.html">Privacy</a></span>
+        </label>
+        <button class="uc-btn-dark uc-wl-submit" type="submit">Join the waitlist →</button>
+        <p class="uc-err" role="alert" hidden style="color:#b3261e;font-size:13px;margin:0;"></p>
       </form>
+      <div class="uc-lp-wl-done" id="lp-wl-done" hidden tabindex="-1">
+        <div class="uc-lp-wl-mark" aria-hidden="true">✓</div>
+        <h2 class="uc-serif">You're in the circle.</h2>
+        <p data-done-msg>We'll email you as soon as your spot opens.</p>
+        <button type="button" class="uc-btn-ghost" data-share>Copy invite link</button>
+      </div>
+      <div class="uc-lp-wl-foot">
+        <a href="waitlist.html">See the map &amp; mentoring →</a>
+        <span>Already a member? <a href="#" id="lp-wl-signin">Sign in</a></span>
+      </div>
     </div>
 
     <div data-footer-strip style="margin-top:34px;display:flex;justify-content:center;gap:16px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--uc-muted);">
@@ -223,7 +233,7 @@
           <img src="assets/img/logo-circle.jpg" alt="UniCircle" style="width:44px;height:44px;border-radius:50%;object-fit:cover;">
           <span class="uc-serif" style="font-size:28px;">UniCircle</span>
         </div>
-        <button class="uc-btn-dark" id="lp-foot-join" style="background:var(--uc-bg);color:var(--uc-ink);">Join now</button>
+        <a class="uc-btn-dark" href="#lp-waitlist" id="lp-foot-join" style="background:var(--uc-bg);color:var(--uc-ink);">Join the waitlist</a>
       </div>
       <div style="width:100%;height:1px;background:rgba(250,249,246,.15);"></div>
       <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(250,249,246,.55);">

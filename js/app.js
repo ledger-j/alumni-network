@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageCache = {};
   async function fetchPage(name) {
     if (pageCache[name] != null) return pageCache[name];
-    const res = await fetch(routes[name] + '?v=5');
+    const res = await fetch(routes[name] + '?v=6');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const html = await res.text();
     pageCache[name] = html;
@@ -225,8 +225,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('lp-bottom-join')?.addEventListener('click', openSignup);
     document.getElementById('lp-signin-link')?.addEventListener('click', (e) => { e.preventDefault(); openSignin(); });
     document.getElementById('lp-foot-signin')?.addEventListener('click', (e) => { e.preventDefault(); openSignin(); });
-    document.getElementById('lp-foot-join')?.addEventListener('click', (e) => { e.preventDefault(); openSignup(); });
-    document.querySelectorAll('.uc-lp-cta').forEach(b => b.addEventListener('click', openSignup));
 
     // --- Tabbed inline sign-in card (Password / Email link / Create) ---
     const card = document.getElementById('lp-login');
@@ -286,6 +284,18 @@ document.addEventListener('DOMContentLoaded', () => {
         catch { errEl.textContent = 'Could not send a reset link.'; errEl.hidden = false; }
       });
     }
+
+    // --- Waitlist is the hero action; sign-in is a quiet link for members ---
+    window.UCWaitlist?.mount(document.getElementById('lp-wl'), document.getElementById('lp-wl-done'), { source: 'landing' });
+    document.getElementById('lp-wl-signin')?.addEventListener('click', (e) => { e.preventDefault(); openSignin(); });
+    const toWaitlist = (e) => {
+      e.preventDefault();
+      const card = document.getElementById('lp-waitlist');
+      card?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => card?.querySelector('input[name=email]')?.focus({ preventScroll: true }), 400);
+    };
+    document.getElementById('lp-nav-join')?.addEventListener('click', toWaitlist);
+    document.querySelectorAll('a[href="#lp-waitlist"], .uc-lp-cta').forEach((a) => a.addEventListener('click', toWaitlist));
 
     // Constellation particle field behind the hero
     mountConstellation(document.getElementById('lp-constellation'), 340);

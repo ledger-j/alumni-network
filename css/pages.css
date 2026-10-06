@@ -14,3 +14,27 @@
 .uc-dialog-body textarea, .uc-dialog-body input, .uc-dialog-body select { width: 100%; box-sizing: border-box;
   border: 1px solid var(--uc-border); border-radius: var(--uc-r-sm); padding: 12px 14px; font: inherit; color: var(--uc-ink); background: var(--uc-bg); }
 .uc-dialog-actions { display: flex; justify-content: flex-end; gap: 10px; padding: 18px 26px 24px; flex-wrap: wrap; }
+
+/* ---- landing hero: waitlist card (replaces the inline sign-in) ---- */
+.uc-lp-wl { text-align: left; }
+.uc-lp-wl .uc-form { display: flex; flex-direction: column; gap: 12px; }
+.uc-lp-wl .uc-input-pill { width: 100%; box-sizing: border-box; }
+.uc-lp-wl-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.uc-lp-wl-row [hidden] { display: none; }
+.uc-lp-wl .uc-tab { cursor: pointer; font-weight: 600; }
+.uc-lp-wl .uc-form .uc-lp-wl-consent { flex-direction: row; display: flex; gap: 10px; align-items: flex-start;
+  text-transform: none; letter-spacing: normal; font-weight: 400; font-size: 13px; line-height: 1.5; color: var(--uc-ink-2); cursor: pointer; }
+.uc-lp-wl-consent input { margin-top: 3px; width: 16px; height: 16px; flex: none; accent-color: var(--uc-ink); }
+.uc-lp-wl-consent a, .uc-lp-wl-foot a { text-decoration: underline; text-underline-offset: 3px; }
+.uc-lp-wl .uc-wl-submit { width: 100%; padding: 15px 20px; font-size: 15px; cursor: pointer; }
+.uc-lp-wl .uc-wl-submit:disabled { opacity: .6; cursor: wait; }
+.uc-lp-wl-foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 14px;
+  font-size: 13px; color: var(--uc-muted); }
+.uc-lp-wl-foot a { color: var(--uc-ink); font-weight: 600; }
+.uc-lp-wl-done { text-align: center; padding: 10px 4px 4px; outline: none; }
+.uc-lp-wl-mark { width: 52px; height: 52px; margin: 0 auto 12px; border-radius: 50%; background: var(--uc-ink); color: var(--uc-bg);
+  display: grid; place-items: center; font-size: 24px; }
+.uc-lp-wl-done h2 { margin: 0 0 8px; font-weight: 400; font-size: 32px; }
+.uc-lp-wl-done p { margin: 0 0 14px; color: var(--uc-ink-2); line-height: 1.6; }
+.uc-landing a.uc-btn-dark { display: inline-flex; align-items: center; justify-content: center; }
+@media (max-width: 480px) { .uc-lp-wl-row { grid-template-columns: 1fr; } }

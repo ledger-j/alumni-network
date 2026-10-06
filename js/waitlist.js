@@ -1,117 +1,16 @@
-/* UniCircle waitlist page — form → PocketBase `waitlist` collection, map preview.
-   API base: ?api=… (remembered) → localStorage uc_api_base → https://api.unicircle.eu
-   Channel tracking: ?ref=… or ?utm_source=… is stored as `source` on the row. */
+/* UniCircle waitlist page — map preview + constellation; the form itself is
+   js/uc-waitlist-form.js (shared with the landing hero). */
 (function () {
   'use strict';
-  const qs = new URLSearchParams(location.search);
-  let API = 'https://api.unicircle.eu';
-  try {
-    if (qs.get('api')) localStorage.setItem('uc_api_base', qs.get('api'));
-    API = (localStorage.getItem('uc_api_base') || API).replace(/\/$/, '');
-  } catch (e) { /* storage blocked: use default */ }
-  const SOURCE = (qs.get('ref') || qs.get('utm_source') || 'waitlist-page').slice(0, 60);
-
-  const form = document.getElementById('wl');
-  const done = document.getElementById('wl-done');
-  const err = form.querySelector('.uc-err');
-  let role = 'alumnus';
-
-  // ---- role tabs: show the fields + interests that fit the role ----
-  function setRole(r) {
-    role = r;
-    form.querySelectorAll('[data-role]').forEach((b) => {
-      const on = b.dataset.role === r;
-      b.classList.toggle('active', on); b.setAttribute('aria-checked', on);
-    });
-    form.querySelectorAll('[data-for]').forEach((el) => {
-      const show = el.dataset.for === r;
-      el.hidden = !show;
-      if (!show) el.querySelectorAll('input[type=checkbox]').forEach((c) => { c.checked = false; });
-    });
-    if (r === 'student') {
-      form.querySelector('input[value=find_a_mentor]').checked = true;
-      form.querySelector('input[value=student_exchange]').checked = true;
-    } else if (r === 'alumnus') {
-      form.querySelector('input[value=mentor_others]').checked = true;
-    }
-  }
-  form.querySelectorAll('[data-role]').forEach((b) => b.addEventListener('click', () => setRole(b.dataset.role)));
-  // Arrow-key support for the radiogroup
-  form.querySelector('[role=radiogroup]').addEventListener('keydown', (e) => {
-    if (!['ArrowLeft', 'ArrowRight'].includes(e.key)) return;
-    const tabs = [...form.querySelectorAll('[data-role]')];
-    const i = tabs.findIndex((t) => t.dataset.role === role);
-    const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
-    setRole(next.dataset.role); next.focus();
-  });
-
-  function showErr(msg) { err.textContent = msg; err.hidden = false; }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    err.hidden = true;
-    const f = form.elements;
-    const email = f.email.value.trim();
-    const city = f.city.value.trim();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { f.email.focus(); return showErr('Please enter a valid email address.'); }
-    if (!city) { f.city.focus(); return showErr('Which city are you in? City is enough — no street needed.'); }
-    if (!f.consent.checked) { f.consent.focus(); return showErr('Please tick the box so we can email you when your spot opens.'); }
-
-    const body = {
-      email, role, city,
-      name: f.name.value.trim(),
-      institution: f.institution.value.trim(),
-      neighbourhood: f.neighbourhood.value.trim(),
-      programme: (role === 'student' ? f.programme_s.value : f.programme.value).trim(),
-      grad_year: role === 'alumnus' ? f.grad_year.value.trim() : '',
-      tutorial: role === 'student' ? f.tutorial.value.trim() : '',
-      interests: [...form.querySelectorAll('input[name=interests]:checked')].map((c) => c.value),
-      consent: true,
-      source: SOURCE,
-    };
-    if (body.grad_year && !/^\d{4}$/.test(body.grad_year)) { f.grad_year.focus(); return showErr('Graduation year should look like 2018.'); }
-
-    const btn = form.querySelector('.uc-wl-submit');
-    btn.disabled = true; btn.textContent = 'Joining…';
-    try {
-      const res = await fetch(API + '/api/collections/waitlist/records', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
-      });
-      const data = await res.json().catch(() => ({}));
-      const dup = res.status === 400 && data.data && data.data.email && /unique/i.test(data.data.email.code || '');
-      if (res.ok || dup) {
-        finish(body, dup);
-      } else if (res.status === 404) {
-        showErr('The waitlist opens in a moment — please try again shortly, or email hello@unicircle.eu.');
-      } else {
-        showErr((data && data.message) || 'Something went wrong. Please try again.');
+  // Form logic is shared with the landing hero (js/uc-waitlist-form.js).
+  window.UCWaitlist.mount(document.getElementById('wl'), document.getElementById('wl-done'), {
+    source: 'waitlist-page',
+    onDone(body) {
+      // Put the new signup on the preview map as their own (local-only) dot.
+      if (preview) {
+        preview.addPoints([{ layer: body.role === 'student' ? 'students' : 'alumni', city: body.city, area: body.neighbourhood, tutorial: body.tutorial || 'Your tutorial', you: true }]);
       }
-    } catch (x) {
-      showErr('Could not reach UniCircle — check your connection and try again.');
-    } finally {
-      btn.disabled = false; btn.textContent = 'Join the waitlist →';
-    }
-  });
-
-  function finish(body, dup) {
-    form.hidden = true; done.hidden = false;
-    const first = (body.name || '').split(/\s+/)[0];
-    document.getElementById('wl-done-msg').textContent = dup
-      ? 'You were already on the list — we’ll email you as soon as your spot opens.'
-      : (first ? first + ', w' : 'W') + 'e’ll email you as soon as your spot opens in ' + body.city + '.';
-    done.focus();
-    // Put the new signup on the preview map as their own (local-only) dot.
-    if (preview) {
-      preview.addPoints([{ layer: body.role === 'student' ? 'students' : 'alumni', city: body.city, area: body.neighbourhood, tutorial: body.tutorial || 'Your tutorial', you: true }]);
-    }
-  }
-
-  document.getElementById('wl-share').addEventListener('click', async () => {
-    const url = location.origin + location.pathname + '?ref=friend';
-    try {
-      if (navigator.share) await navigator.share({ title: 'UniCircle', text: 'Join me on the UniCircle waitlist', url });
-      else { await navigator.clipboard.writeText(url); document.getElementById('wl-share').textContent = 'Link copied ✓'; }
-    } catch (e) { /* user cancelled share */ }
+    },
   });
 
   // ---- map preview ----
@@ -178,7 +77,6 @@
     requestAnimationFrame(step);
   }
 
-  setRole('alumnus');
   constellation(document.getElementById('wl-constellation'), 220);
   if (window.L) initMap(); else window.addEventListener('load', initMap);
 })();
