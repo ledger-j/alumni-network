@@ -114,7 +114,8 @@
         const msg = done.querySelector('[data-done-msg]');
         if (msg) msg.textContent = dup
           ? 'You were already on the list — we’ll email you as soon as your spot opens.'
-          : (first ? first + ', w' : 'W') + 'e’ll email you as soon as your spot opens in ' + body.city + '.';
+          : 'We’ve sent a confirmation to ' + body.email + ' (check spam if it’s not there in a minute). '
+            + (first ? first + ', w' : 'W') + 'e’ll email you again as soon as your spot opens in ' + body.city + '.';
         done.focus();
         const share = done.querySelector('[data-share]');
         if (share) share.addEventListener('click', async () => {

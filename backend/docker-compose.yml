@@ -14,6 +14,8 @@ services:
       - "127.0.0.1:8090:8090"
     volumes:
       - pb-data:/pb/pb_data
+      # JS hooks (waitlist confirmation mail + unsubscribe) — hot-reloaded by PocketBase
+      - ./pb_hooks:/pb/pb_hooks:ro
     networks: [caddy, default]
     mem_limit: 256m
     healthcheck:
