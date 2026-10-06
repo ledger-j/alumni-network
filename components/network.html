@@ -1,5 +1,8 @@
-<!-- NETWORK — content only; shell + rail supplied by the router. -->
-<div class="uc-page-main">
+<!-- NETWORK — content only; shell + rail supplied by the router.
+     Behaviour lives in js/pages/network.js. Real members are loaded from the
+     backend when signed in; the cards inside [data-net-samples] are SAMPLE
+     profiles (fictional, clearly labelled) used as a fallback / illustration. -->
+<div class="uc-page-main uc-net-page">
   <div class="uc-app-header">
     <h1 class="uc-app-title">Find <em>your people.</em></h1>
     <form data-uc-search class="uc-app-search">
@@ -9,64 +12,125 @@
   </div>
 
   <div style="display:flex;flex-direction:column;gap:24px;">
-    <div class="uc-card">
-      <div class="uc-eyebrow" style="margin-bottom:14px;">Conversational search</div>
-      <div style="display:flex;align-items:center;gap:10px;padding:6px 6px 6px 22px;border-radius:999px;background:#fff;border:1px solid rgba(43,42,38,0.12);">
-        <input type="text" placeholder="e.g. 'Alumni in Consulting from IFM Period 5 Tutorial 01'…" style="flex:1;min-width:0;border:none;background:transparent;font-family:var(--uc-font-body);font-size:14px;color:var(--uc-ink);outline:none;">
-        <button type="button" class="uc-pill-ink" style="padding:11px 26px;">Search</button>
+    <section class="uc-card" aria-labelledby="uc-net-search-title">
+      <div id="uc-net-search-title" class="uc-eyebrow" style="margin-bottom:14px;">Conversational search</div>
+      <form data-net-form class="uc-net-askbar" role="search">
+        <label for="uc-net-q" class="uc-net-sr">Describe who you are looking for</label>
+        <input id="uc-net-q" data-net-q type="text" autocomplete="off"
+               placeholder="e.g. 'finance alumni in Berlin who mentor'…">
+        <button type="submit" class="uc-pill-ink" style="padding:11px 26px;">Search</button>
+      </form>
+      <div class="uc-net-try">
+        <span class="uc-net-try-l">Try:</span>
+        <button type="button" class="uc-chip" data-net-chip>Finance alumni in Berlin who mentor</button>
+        <button type="button" class="uc-chip" data-net-chip>Consultants in Amsterdam</button>
+        <button type="button" class="uc-chip" data-net-chip>Data people in Berlin</button>
+        <button type="button" class="uc-chip" data-net-chip>Mentors in London</button>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;">
-        <span style="font-size:11px;color:var(--uc-muted);align-self:center;font-weight:600;">Try:</span>
-        <button type="button" class="uc-chip">"Finance peers from Period 5"</button>
-        <button type="button" class="uc-chip">"Consultants at McKinsey"</button>
-        <button type="button" class="uc-chip">"IFM Tutorial 01"</button>
+      <div data-filters class="uc-filters uc-net-filters">
+        <label class="uc-net-sr" for="uc-net-sector">Sector</label>
+        <select id="uc-net-sector" data-net-f="sector">
+          <option value="">All sectors</option>
+          <option value="finance">Finance</option>
+          <option value="consulting">Consulting</option>
+          <option value="technology">Technology &amp; data</option>
+          <option value="marketing">Marketing &amp; sales</option>
+          <option value="research">Research &amp; academia</option>
+          <option value="public">Public sector &amp; policy</option>
+        </select>
+        <label class="uc-net-sr" for="uc-net-city">City</label>
+        <select id="uc-net-city" data-net-f="city"><option value="">All cities</option></select>
+        <label class="uc-net-sr" for="uc-net-programme">Programme</label>
+        <select id="uc-net-programme" data-net-f="programme"><option value="">All programmes</option></select>
+        <label class="uc-net-sr" for="uc-net-mentor">Mentoring</label>
+        <select id="uc-net-mentor" data-net-f="mentor">
+          <option value="">Anyone</option>
+          <option value="1">Open to mentoring</option>
+        </select>
       </div>
-      <div data-filters class="uc-filters">
-        <select><option>All sectors</option><option>Finance</option><option>Consulting</option><option>Technology</option></select>
-        <select><option>All courses</option><option>International Financial Management</option><option>PBL in Finance</option><option>Quantitative Modeling</option></select>
-        <select><option>All periods</option><option>Period 1</option><option>Period 4</option><option>Period 5</option></select>
-        <select><option>All tutorials</option><option>Tutorial 01</option><option>Tutorial 02</option><option>Tutorial 03</option></select>
-        <select><option>All years</option><option>Class of 2025</option><option>Class of 2024</option><option>Class of 2023</option></select>
-      </div>
-    </div>
+      <p data-net-understood class="uc-net-understood" hidden></p>
+    </section>
 
-    <div data-cards-grid class="uc-cards-3">
-      <div class="uc-card" style="padding:24px;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
-          <div class="uc-avatar-initials" style="width:54px;height:54px;font-size:21px;background:oklch(0.9 0.06 275);">LB</div>
-          <div><div style="font-size:15px;font-weight:600;">Linas Beliūnas</div><div style="font-size:12px;color:var(--uc-muted);">M.Sc. Econometrics '24</div></div>
-        </div>
-        <p style="margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--uc-ink-2);">Risk Strategy Architect at Binance · Amsterdam</p>
-        <div class="uc-tag">Classmate overlap: IFM Tutorial 01</div>
-        <div style="display:flex;gap:8px;">
-          <button type="button" class="uc-pill-ink" style="flex:1;" data-uc-connect>Connect</button>
-          <button type="button" class="uc-pill-ghost" style="flex:1;" data-uc-message>Message</button>
-        </div>
+    <section class="uc-card" aria-labelledby="uc-net-cities-title">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+        <h2 id="uc-net-cities-title" class="uc-h2">City chapters</h2>
+        <span data-net-cities-note style="font-size:12px;color:var(--uc-muted);"></span>
       </div>
-      <div class="uc-card" style="padding:24px;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
-          <div class="uc-avatar-initials" style="width:54px;height:54px;font-size:21px;background:oklch(0.9 0.06 185);">MB</div>
-          <div><div style="font-size:15px;font-weight:600;">Marta Bakker</div><div style="font-size:12px;color:var(--uc-muted);">B.Sc. International Business '22</div></div>
-        </div>
-        <p style="margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--uc-ink-2);">Strategy Consultant at McKinsey · Amsterdam</p>
-        <div class="uc-tag">Same city chapter: Amsterdam</div>
-        <div style="display:flex;gap:8px;">
-          <button type="button" class="uc-pill-ink" style="flex:1;" data-uc-connect>Connect</button>
-          <button type="button" class="uc-pill-ghost" style="flex:1;" data-uc-message>Message</button>
-        </div>
+      <div data-net-cities class="uc-net-cities"></div>
+    </section>
+
+    <section aria-labelledby="uc-net-dir-title">
+      <div class="uc-net-resultbar">
+        <h2 id="uc-net-dir-title" class="uc-h2">Directory</h2>
+        <p data-net-count class="uc-net-count" aria-live="polite"></p>
+        <button type="button" data-net-clear class="uc-pill-ghost uc-pill-sm" hidden>Clear filters</button>
       </div>
-      <div class="uc-card" style="padding:24px;">
-        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
-          <div class="uc-avatar-initials" style="width:54px;height:54px;font-size:21px;background:oklch(0.9 0.06 235);">TN</div>
-          <div><div style="font-size:15px;font-weight:600;">Thomas Nguyen</div><div style="font-size:12px;color:var(--uc-muted);">M.Sc. Financial Economics '23</div></div>
-        </div>
-        <p style="margin:0 0 12px;font-size:13px;line-height:1.55;color:var(--uc-ink-2);">Quant Researcher at Optiver · Amsterdam</p>
-        <div class="uc-tag">Shared course: Quantitative Modeling</div>
-        <div style="display:flex;gap:8px;">
-          <button type="button" class="uc-pill-ink" style="flex:1;" data-uc-connect>Connect</button>
-          <button type="button" class="uc-pill-ghost" style="flex:1;" data-uc-message>Message</button>
-        </div>
+      <p data-net-notice class="uc-net-notice" hidden></p>
+
+      <div data-cards-grid class="uc-cards-3" data-net-grid></div>
+
+      <div data-net-empty class="uc-card uc-net-empty" hidden>
+        <span class="iconify" data-icon="ph:users-three-duotone" aria-hidden="true" style="font-size:44px;opacity:.4;"></span>
+        <p class="uc-net-empty-t">No one matches those filters yet.</p>
+        <p style="margin:0 0 14px;font-size:13px;color:var(--uc-muted);">Try a broader description, another city, or clear the filters.</p>
+        <button type="button" data-net-clear class="uc-pill-ink uc-pill-sm">Clear filters</button>
       </div>
-    </div>
+
+      <div data-net-sample-head class="uc-net-samplehead" hidden>
+        <h3 class="uc-h2" style="font-size:16px;">Sample profiles</h3>
+        <p>Illustrative, fictional people — not members. They show how the directory works until more of your circle joins.</p>
+      </div>
+      <div data-net-sample-grid class="uc-cards-3"></div>
+
+      <!-- Sample data source (fictional). network.js reads these and re-renders them
+           with the live card template; without JS they still read as labelled samples. -->
+      <div data-net-samples class="uc-cards-3" style="margin-top:20px;">
+        <article class="uc-card uc-net-card" data-sample="1" data-id="sample-lb" data-name="Lina Berger"
+                 data-degree="M.Sc. Econometrics '24" data-location="Amsterdam" data-mentor="1"
+                 data-offer="Quant interview prep, risk-modelling questions"
+                 data-headline="Risk strategy lead at a digital-asset exchange" data-hue="275">
+          <span class="uc-net-badge">Sample</span>
+          <div style="font-size:15px;font-weight:600;">Lina Berger</div>
+          <p style="margin:4px 0 0;font-size:13px;color:var(--uc-ink-2);">Risk strategy lead at a digital-asset exchange · Amsterdam</p>
+        </article>
+        <article class="uc-card uc-net-card" data-sample="1" data-id="sample-mb" data-name="Marta Bakker"
+                 data-degree="B.Sc. International Business '22" data-location="Amsterdam" data-mentor="0"
+                 data-headline="Strategy consultant at a global consultancy" data-hue="185">
+          <span class="uc-net-badge">Sample</span>
+          <div style="font-size:15px;font-weight:600;">Marta Bakker</div>
+          <p style="margin:4px 0 0;font-size:13px;color:var(--uc-ink-2);">Strategy consultant at a global consultancy · Amsterdam</p>
+        </article>
+        <article class="uc-card uc-net-card" data-sample="1" data-id="sample-tn" data-name="Thomas Nguyen"
+                 data-degree="M.Sc. Financial Economics '23" data-location="Amsterdam" data-mentor="0"
+                 data-headline="Quant researcher at a trading firm" data-hue="235">
+          <span class="uc-net-badge">Sample</span>
+          <div style="font-size:15px;font-weight:600;">Thomas Nguyen</div>
+          <p style="margin:4px 0 0;font-size:13px;color:var(--uc-ink-2);">Quant researcher at a trading firm · Amsterdam</p>
+        </article>
+        <article class="uc-card uc-net-card" data-sample="1" data-id="sample-sr" data-name="Sofia Romano"
+                 data-degree="M.Sc. Finance '19" data-location="Berlin" data-mentor="1"
+                 data-offer="CV review, private-equity case prep"
+                 data-headline="Private equity associate, growth investments" data-hue="25">
+          <span class="uc-net-badge">Sample</span>
+          <div style="font-size:15px;font-weight:600;">Sofia Romano</div>
+          <p style="margin:4px 0 0;font-size:13px;color:var(--uc-ink-2);">Private equity associate, growth investments · Berlin</p>
+        </article>
+        <article class="uc-card uc-net-card" data-sample="1" data-id="sample-jw" data-name="Jonas Weber"
+                 data-degree="B.Sc. Data Science '21" data-location="Berlin" data-mentor="0"
+                 data-headline="Product data scientist at a fintech startup" data-hue="145">
+          <span class="uc-net-badge">Sample</span>
+          <div style="font-size:15px;font-weight:600;">Jonas Weber</div>
+          <p style="margin:4px 0 0;font-size:13px;color:var(--uc-ink-2);">Product data scientist at a fintech startup · Berlin</p>
+        </article>
+        <article class="uc-card uc-net-card" data-sample="1" data-id="sample-ao" data-name="Amara Okafor"
+                 data-degree="M.Sc. Marketing '20" data-location="London" data-mentor="1"
+                 data-offer="Career-switch advice, brand portfolio reviews"
+                 data-headline="Brand strategy manager, consumer goods" data-hue="305">
+          <span class="uc-net-badge">Sample</span>
+          <div style="font-size:15px;font-weight:600;">Amara Okafor</div>
+          <p style="margin:4px 0 0;font-size:13px;color:var(--uc-ink-2);">Brand strategy manager, consumer goods · London</p>
+        </article>
+      </div>
+    </section>
   </div>
 </div>

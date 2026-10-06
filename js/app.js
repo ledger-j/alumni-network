@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Common wiring for every shell page: profile, sign-out, header search.
   function initShell() {
-    document.querySelector('[data-uc-profile]')?.addEventListener('click', () => window.UC && window.UC.openProfile());
     document.getElementById('uc-dash-signout')?.addEventListener('click', () => {
       try { localStorage.removeItem('uc_auth'); } catch (e) { /* ignore */ }
       window.location.hash = '';
@@ -187,7 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const animate = document.startViewTransition && !document.hidden && pageName !== _lastPage;
     _lastPage = pageName;
     if (animate) {
-      try { document.startViewTransition(render).finished.catch(() => {}); } catch (e) { render(); }
+      // If the browser skips the transition without running the callback,
+      // render anyway — never leave the "Recalling…" placeholder on screen.
+      let done = false;
+      const once = () => { if (!done) { done = true; render(); } };
+      try { document.startViewTransition(once).finished.catch(() => {}); } catch (e) { once(); }
+      setTimeout(once, 600);
     } else {
       render();
     }

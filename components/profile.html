@@ -1,5 +1,7 @@
-<!-- MY PROFILE — content only; shell + rail supplied by the router. -->
-<div class="uc-page-main">
+<!-- MY PROFILE — content only; shell + rail supplied by the router.
+     Filled from the signed-in user by js/pages/profile.js. Every number on this
+     page is a real count from the account (or "—" when it can't be loaded). -->
+<div class="uc-page-main uc-pf-page">
   <div class="uc-app-header">
     <h1 class="uc-app-title">This is <em>you.</em></h1>
     <form data-uc-search class="uc-app-search">
@@ -13,49 +15,52 @@
     <!-- Identity card -->
     <div style="border-radius:28px;background:var(--uc-card);border:1px solid var(--uc-border);box-shadow:var(--uc-shadow);overflow:hidden;">
       <div style="position:relative;height:160px;">
-        <img src="assets/img/servaasbrug.jpg" alt="Cover — Maastricht" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+        <img src="assets/img/servaasbrug.jpg" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
         <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(250,249,246,0.9),transparent 55%);"></div>
-        <button type="button" data-uc-profile aria-label="Edit cover" style="position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,0.7);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:var(--uc-ink);font-size:14px;cursor:pointer;">✎</button>
       </div>
       <div style="padding:0 clamp(20px,3vw,32px) 30px;margin-top:-52px;position:relative;">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px;">
-          <div id="uc-profile-initials" class="uc-avatar-initials" style="width:104px;height:104px;font-size:38px;border:4px solid var(--uc-bg);box-shadow:0 8px 24px rgba(43,42,38,0.15);background:oklch(0.9 0.06 235);">JM</div>
+          <div id="uc-profile-initials" data-pf="avatar" class="uc-avatar-initials uc-pf-avatar" style="width:104px;height:104px;font-size:38px;border:4px solid var(--uc-bg);box-shadow:0 8px 24px rgba(43,42,38,0.15);background:oklch(0.9 0.06 235);">?</div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <button type="button" data-uc-profile class="uc-pill-ink">Edit profile</button>
-            <button type="button" data-uc-profile class="uc-pill-ghost">Open to</button>
-            <button type="button" data-uc-profile class="uc-pill-ghost">Enhance</button>
+            <button type="button" data-pf-edit class="uc-pill-ink">Edit profile</button>
+            <button type="button" data-pf-edit="mentor" class="uc-pill-ghost">Open to mentoring</button>
+            <button type="button" data-pf-enhance class="uc-pill-ghost">Import from LinkedIn</button>
           </div>
         </div>
-        <h2 id="uc-profile-name" style="margin:0 0 6px;font-family:var(--uc-font-display);font-weight:400;font-size:34px;letter-spacing:-0.01em;">Jean Maurice Henkel</h2>
-        <p id="uc-profile-headline" style="margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--uc-ink-2);max-width:620px;">M.Sc. Financial Economics · B.Sc. International Marketing · UniCircle member.</p>
-        <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--uc-muted);">
-          <span id="uc-profile-location">Maastricht, Limburg</span>
-          <span style="font-weight:700;color:var(--uc-ink);">500+ connections</span>
-          <a href="#" style="font-weight:600;color:var(--uc-ink-2);">Contact info</a>
+        <h2 id="uc-profile-name" data-pf="name" style="margin:0 0 6px;font-family:var(--uc-font-display);font-weight:400;font-size:34px;letter-spacing:-0.01em;">Your name</h2>
+        <p id="uc-profile-headline" data-pf="headline" style="margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--uc-ink-2);max-width:620px;">Add a headline so classmates can find you.</p>
+        <p data-pf="degree" style="margin:0 0 10px;font-size:13px;color:var(--uc-ink-2);" hidden></p>
+        <div class="uc-pf-meta">
+          <span id="uc-profile-location" data-pf="location">Location not set</span>
+          <a data-pf="mentor" href="#mentoring" class="uc-tag" style="margin:0;text-decoration:none;">Mentoring: not offered</a>
+          <span data-pf-count-line style="font-weight:700;color:var(--uc-ink);">—</span>
+          <button type="button" data-pf-contact class="uc-pf-linkbtn">Contact info</button>
         </div>
       </div>
     </div>
 
-    <!-- Analytics -->
+    <!-- Your activity in numbers (real counts only) -->
     <div class="uc-card">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:20px;">
-        <h2 class="uc-h2">Analytics</h2>
-        <span style="font-size:12px;color:var(--uc-muted);">Private to you · past 7 days</span>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+        <h2 class="uc-h2">Your activity</h2>
+        <span data-pf-stats-note style="font-size:12px;color:var(--uc-muted);">Private to you · counted from your account</span>
       </div>
       <div class="uc-stats-3">
-        <div class="uc-stat"><div class="uc-stat-n">133</div><div class="uc-stat-l">Profile views</div></div>
-        <div class="uc-stat"><div class="uc-stat-n">1,522</div><div class="uc-stat-l">Post impressions</div></div>
-        <div class="uc-stat"><div class="uc-stat-n">76</div><div class="uc-stat-l">Search appearances</div></div>
+        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="posts">—</div><div class="uc-stat-l">Posts published</div></div>
+        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="peers">—</div><div class="uc-stat-l">People you’ve messaged</div></div>
+        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="connects">—</div><div class="uc-stat-l">Saved to connect (this device)</div></div>
       </div>
     </div>
 
-    <!-- About -->
+    <!-- About (built from your profile fields) -->
     <div class="uc-card">
       <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px;">
         <h2 class="uc-h2">About</h2>
-        <button type="button" data-uc-profile aria-label="Edit about" style="width:32px;height:32px;border-radius:50%;border:1px solid var(--uc-border);background:transparent;color:var(--uc-ink-2);font-size:13px;cursor:pointer;">✎</button>
+        <button type="button" data-pf-edit aria-label="Edit about" style="width:32px;height:32px;border-radius:50%;border:1px solid var(--uc-border);background:transparent;color:var(--uc-ink-2);font-size:13px;cursor:pointer;">✎</button>
       </div>
-      <p style="margin:0;font-size:14px;line-height:1.7;color:var(--uc-ink-2);"><strong style="color:var(--uc-ink);">Shaping and reshaping a new world.</strong> Every day, everyone has the choice to build something. I want to help shape ours so that each person recognises what truly fulfils them — and to build the connections that carry that forward.</p>
+      <div data-pf="about" style="font-size:14px;line-height:1.7;color:var(--uc-ink-2);">
+        <p style="margin:0;">Tell your circle what you do and what you can help with — add a headline, programme and mentoring offer.</p>
+      </div>
     </div>
 
     <!-- Activity -->
@@ -63,26 +68,25 @@
       <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;">
         <div>
           <h2 class="uc-h2" style="margin:0 0 4px;">Activity</h2>
-          <span style="font-size:12px;color:var(--uc-muted);">1,295 followers</span>
+          <span data-pf-activity-note style="font-size:12px;color:var(--uc-muted);">Your posts on the UniCircle feed</span>
         </div>
-        <button type="button" class="uc-pill-ink" data-uc-message>Create a post</button>
+        <button type="button" class="uc-pill-ink" data-pf-compose>Create a post</button>
       </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
-        <button type="button" class="uc-pill-ink" style="padding:7px 18px;font-size:12px;">Posts</button>
-        <button type="button" class="uc-pill-ghost" style="padding:7px 18px;font-size:12px;">Comments</button>
-        <button type="button" class="uc-pill-ghost" style="padding:7px 18px;font-size:12px;">Documents</button>
+      <div role="tablist" aria-label="Activity" class="uc-pf-tabs">
+        <button type="button" role="tab" id="uc-pf-tab-posts" aria-controls="uc-pf-panel-posts" aria-selected="true" data-pf-tab="posts" class="uc-pill-ink uc-pill-sm">Posts</button>
+        <button type="button" role="tab" id="uc-pf-tab-comments" aria-controls="uc-pf-panel-comments" aria-selected="false" tabindex="-1" data-pf-tab="comments" class="uc-pill-ghost uc-pill-sm">Comments</button>
+        <button type="button" role="tab" id="uc-pf-tab-documents" aria-controls="uc-pf-panel-documents" aria-selected="false" tabindex="-1" data-pf-tab="documents" class="uc-pill-ghost uc-pill-sm">Documents</button>
       </div>
-      <div class="uc-cards-2">
-        <div class="uc-stat" style="padding:20px 22px;">
-          <div style="font-size:12px;color:var(--uc-muted);margin-bottom:8px;">4h · edited</div>
-          <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--uc-ink);">Your sales conversation now happens before anyone reaches your site — it happens inside an AI answer. The zero-click shortlist.</p>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--uc-muted);"><span>3 reactions</span><span style="font-weight:600;color:var(--uc-ink-2);">189 impressions</span></div>
+      <div role="tabpanel" id="uc-pf-panel-posts" aria-labelledby="uc-pf-tab-posts" data-pf-panel="posts">
+        <div data-pf-posts class="uc-cards-2">
+          <p class="uc-pf-empty">Loading your posts…</p>
         </div>
-        <div class="uc-stat" style="padding:20px 22px;">
-          <div style="font-size:12px;color:var(--uc-muted);margin-bottom:8px;">3d · document</div>
-          <p style="margin:0 0 14px;font-size:13px;line-height:1.6;color:var(--uc-ink);">Ex-ante analysis on frontier LLMs for alumni research workflows — a 6-page brief for the network.</p>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--uc-muted);"><span>3 reactions</span><span style="font-weight:600;color:var(--uc-ink-2);">408 impressions</span></div>
-        </div>
+      </div>
+      <div role="tabpanel" id="uc-pf-panel-comments" aria-labelledby="uc-pf-tab-comments" data-pf-panel="comments" hidden>
+        <p class="uc-pf-empty">Comments aren’t part of UniCircle yet, so there’s nothing to show here.</p>
+      </div>
+      <div role="tabpanel" id="uc-pf-panel-documents" aria-labelledby="uc-pf-tab-documents" data-pf-panel="documents" hidden>
+        <p class="uc-pf-empty">Document sharing isn’t available yet. Share a link in a post for now.</p>
       </div>
     </div>
   </div>
