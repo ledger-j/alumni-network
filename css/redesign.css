@@ -317,6 +317,12 @@ body.uc-hide-header .skip-link { display: none; }
 }
 .uc-hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
 .uc-hero > *:not(.uc-hero-canvas) { position: relative; z-index: 1; }
+/* Landing hero: keep the constellation at the sides, clear of the headline and form */
+#lp-constellation {
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 14%, transparent 26%, transparent 74%, #000 86%, #000 100%);
+          mask-image: linear-gradient(to right, #000 0%, #000 14%, transparent 26%, transparent 74%, #000 86%, #000 100%);
+}
+@media (max-width: 900px) { #lp-constellation { display: none; } }
 .uc-lead { font-size: 17px; line-height: 1.6; color: var(--uc-ink-2); max-width: 520px; margin: 0 0 32px; }
 .uc-join-row {
   width: 100%; max-width: 480px; display: flex; align-items: center; gap: 10px;
