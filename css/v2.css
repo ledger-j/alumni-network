@@ -1,0 +1,213 @@
+/* ==========================================================================
+   UniCircle — V2 proposal (landing-v2.html, waitlist-v2.html)
+   Additions only. Everything else comes from redesign.css, site.css and
+   waitlist.css, which these pages load unchanged. Built on the --uc-* tokens.
+   ========================================================================== */
+html.uc-v2-doc { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html.uc-v2-doc { scroll-behavior: auto; } }
+/* clip (not hidden) so the nav can stay sticky on a long page */
+.uc-site.uc-v2 { overflow-x: clip; }
+.uc-v2 [id] { scroll-margin-top: 96px; }
+/* chapters carry their own top padding, so they can tuck under the nav pill */
+.uc-v2 .uc-v2-chapter, .uc-v2 .uc-s-cta { scroll-margin-top: 56px; }
+
+/* ---- hero dots: the same field as the main page (V1 landing, commit fb66a11): the swarm
+   stays at the sides, fading out before the middle of the screen where the headline is,
+   and is off on small screens. Same numbers as #lp-constellation in redesign.css. ---- */
+.uc-v2-sides {
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 14%, transparent 26%, transparent 74%, #000 86%, #000 100%);
+          mask-image: linear-gradient(to right, #000 0%, #000 14%, transparent 26%, transparent 74%, #000 86%, #000 100%);
+}
+@media (max-width: 900px) { .uc-v2-sides { display: none; } }
+/* waitlist-v2: the headline sits in the LEFT column, so the swarm lives on the right, behind
+   and beside the (blurred) form card, and never under the text. */
+.uc-v2-pitch .uc-v2-sides {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 58%, #000 70%, #000 100%);
+          mask-image: linear-gradient(to right, transparent 0%, transparent 58%, #000 70%, #000 100%);
+}
+
+/* ---- one-page landing: hero ---- */
+.uc-v2-hero { min-height: auto; margin-top: -72px; padding: 170px 16px 72px; }
+.uc-v2-hero .uc-lead { max-width: 600px; }
+.uc-v2-hero .uc-s-wl { max-width: 420px; margin: 0 auto; }
+.uc-v2-herofoot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--uc-ink-2); }
+.uc-v2-herofoot a { color: var(--uc-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.uc-v2-credit { margin-top: 34px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--uc-muted); }
+
+/* ---- nav: highlight the chapter you are reading ---- */
+.uc-v2 .uc-s-links a[aria-current="location"] { color: var(--uc-ink); font-weight: 700; }
+@media (max-width: 1020px) { .uc-v2 .uc-s-links a[aria-current="location"] { background: var(--uc-frost, #f1efe9); } }
+
+/* ---- chapters (one per topic) and the blocks inside them ---- */
+.uc-v2-chapter { padding: 110px 16px; display: flex; justify-content: center; }
+.uc-v2-head { max-width: 880px; }
+.uc-v2-head .uc-s-h2 { font-size: clamp(38px, 5.4vw, 72px); line-height: 1.04; }
+.uc-v2-head .uc-s-p { font-size: clamp(17px, 2vw, 20px); max-width: 720px; }
+.uc-v2-head .uc-s-hero-actions { justify-content: flex-start; margin-top: 26px; }
+.uc-v2-block { margin-top: 72px; }
+.uc-v2-h3 { font-family: var(--uc-font-display); font-weight: 400; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.12; letter-spacing: -.01em; margin: 12px 0 14px; }
+.uc-v2-h3 em { font-style: italic; color: var(--uc-muted); }
+.uc-v2-block > .uc-s-steps, .uc-v2-block > .uc-s-grid-2, .uc-v2-block > .uc-s-grid-3 { margin-top: 24px; }
+.uc-v2-center { text-align: center; margin-left: auto; margin-right: auto; }
+.uc-v2-center .uc-s-p { margin-left: auto; margin-right: auto; }
+.uc-v2-link { display: inline-block; margin-top: 6px; font-size: 15px; font-weight: 600; color: var(--uc-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---- map ---- */
+.uc-v2-maphead { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+.uc-v2-maphead .uc-v2-h3 { margin-bottom: 0; }
+.uc-v2-layers { display: inline-flex; min-width: 300px; }
+.uc-v2-layers .uc-tab { display: inline-flex; align-items: center; justify-content: center; padding: 10px 14px; }
+.uc-v2-mapgrid { display: grid; grid-template-columns: 1fr 320px; gap: 20px; align-items: stretch; }
+.uc-v2-mappanel { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
+.uc-v2-mappanel h3.uc-serif { font-weight: 400; font-size: 28px; margin: 10px 0 6px; }
+.uc-v2-mappanel a { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 860px) {
+  .uc-v2-mapgrid { grid-template-columns: 1fr; }
+  .uc-v2-layers { min-width: 0; width: 100%; }
+  .uc-v2-chapter { padding: 72px 16px; }
+  .uc-v2-block { margin-top: 52px; }
+  .uc-v2-hero { padding: 140px 16px 56px; }
+}
+
+/* ---- waitlist-v2.html: card at its intended width; nav pill pinned to the top of
+   the hero (redesign.css `.uc-hero > *` otherwise drops it back into the flow,
+   leaving a gap above it and the eyebrow jammed underneath) ---- */
+.uc-v2 .uc-wl-card { max-width: 520px; }
+.uc-v2 .uc-wl-hero > .uc-wl-navwrap { position: absolute; }
+.uc-v2 .uc-wl-hero { padding-top: 150px; }
+
+/* ==========================================================================
+   Waitlist as a pitch (plan: active/plans/2026-10-06-waitlist-priestley-version.md)
+   hook · value · proof · incentive · form, then questions after sign-up.
+   ========================================================================== */
+
+/* ---- shared by both V2 pages: value bullets, waitlist-only perks, proof line ---- */
+.uc-v2-value { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; text-align: left; }
+.uc-v2-value li { position: relative; padding-left: 28px; font-size: 15.5px; line-height: 1.6; color: var(--uc-ink-2); }
+.uc-v2-value li::before { content: '✓'; position: absolute; left: 0; top: 0; font-weight: 700; color: var(--uc-ink); }
+.uc-v2-value b { color: var(--uc-ink); }
+.uc-v2-perks { margin-top: 26px; padding: 20px 22px; border-radius: 20px; background: var(--uc-card); border: 1px solid var(--uc-border); box-shadow: var(--uc-shadow); text-align: left; }
+.uc-v2-perks ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.uc-v2-perks li { font-size: 14.5px; line-height: 1.55; color: var(--uc-ink-2); }
+.uc-v2-perks b { color: var(--uc-ink); }
+/* .uc-v2 prefix: site.css `.uc-s-cta p` would otherwise restyle these inside the closing section */
+.uc-v2 .uc-v2-proof { margin: 20px 0 0; font-size: 14px; line-height: 1.6; color: var(--uc-ink-2); text-align: left; }
+.uc-v2 .uc-s-cta .uc-wl-done p { font-size: 15px; max-width: none; }
+.uc-v2 .uc-s-cta .uc-wl-done .uc-wl-share { font-size: 14px; }
+/* site.css centres the copy next to the form; with the five questions on, the form is ~1600px tall and the
+   heading landed ~840px below the section top. Start both columns at the top; the copy follows while you scroll. */
+.uc-v2 .uc-s-cta-inner { align-items: start; }
+@media (min-width: 861px) { .uc-v2 .uc-s-cta-copy { position: sticky; top: 104px; } }
+.uc-v2 .uc-form .uc-v2-cta-note, .uc-v2-cta-note { margin: 0; text-align: center; font-size: 12.5px; line-height: 1.5; color: var(--uc-muted); }
+
+/* ---- shared: Priestley's five questions before the spot + what happens next after it (js/uc-survey-v2.js) ---- */
+.uc-v2-next { margin: 18px 0 0; padding: 16px 18px; border-radius: 16px; background: var(--uc-frost, #f1efe9); text-align: left; }
+.uc-v2 .uc-v2-next p { margin: 6px 0 0; font-size: 14px; line-height: 1.6; color: var(--uc-ink-2); max-width: none; }
+.uc-v2-video { margin: 18px 0 0; }
+.uc-v2-video video { display: block; width: 100%; border-radius: 16px; background: #000; }
+.uc-v2-survey { margin: 18px 0 0; padding: 20px 0 4px; border-top: 1px solid var(--uc-border); text-align: left; }
+.uc-v2 .uc-v2-survey-sub { margin: 4px 0 12px; font-size: 13px; line-height: 1.5; color: var(--uc-muted); }
+.uc-v2-survey-bar { height: 4px; border-radius: 4px; background: var(--uc-frost, #f1efe9); overflow: hidden; }
+.uc-v2-survey-bar i { display: block; height: 100%; border-radius: 4px; background: var(--uc-ink); transition: width .25s ease; }
+.uc-v2 .uc-v2-survey-q { margin: 16px 0 12px; font-family: var(--uc-font-body); font-size: 17px; font-weight: 600; line-height: 1.35; letter-spacing: 0; outline: none; }
+.uc-v2 .uc-v2-survey-hint { margin: -6px 0 12px; font-size: 13px; color: var(--uc-muted); }
+.uc-v2-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.uc-v2-chip { padding: 9px 14px; border-radius: var(--uc-r-pill); border: 1px solid var(--uc-border); background: rgba(255,255,255,.7);
+  font: 500 14px/1.3 var(--uc-font-body); color: var(--uc-ink-2); cursor: pointer; text-align: left; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.uc-v2-chip:hover { border-color: var(--uc-ink-2); color: var(--uc-ink); }
+.uc-v2-chip[aria-pressed="true"] { background: var(--uc-ink); color: var(--uc-bg); border-color: var(--uc-ink); }
+.uc-v2-survey textarea { width: 100%; box-sizing: border-box; border-radius: 16px; padding: 12px 16px; border: 1px solid var(--uc-border); background: #fff;
+  font: 15px/1.5 var(--uc-font-body); color: var(--uc-ink); resize: vertical; outline: none; }
+.uc-v2-survey textarea:focus { border-color: var(--uc-focus); box-shadow: 0 0 0 2px color-mix(in srgb, var(--uc-focus) 20%, transparent); }
+.uc-v2-survey-extra { margin-top: 12px; }
+.uc-v2-survey-nav { display: flex; align-items: center; gap: 16px; margin-top: 16px; min-height: 40px; }
+.uc-v2-survey-nav .uc-btn-dark { margin-left: auto; padding: 10px 20px; font-size: 14px; }
+.uc-v2-survey-nav .uc-btn-dark:disabled { opacity: .6; cursor: wait; }
+/* waitlist-v2: the note shown when a hero form handed the visitor over (js/uc-survey-v2.js → prefill) */
+.uc-v2 .uc-v2-handoff { margin: 6px 0 0; padding: 12px 16px; border-radius: 14px; background: var(--uc-frost, #f1efe9);
+  font-size: 14px; line-height: 1.55; color: var(--uc-ink-2); scroll-margin-top: 110px; }
+/* the questions written straight into the closing form (landing pages) */
+.uc-v2-inline-q { display: flex; flex-direction: column; gap: 4px; margin: 6px 0 4px; padding-top: 14px; border-top: 1px solid var(--uc-border); }
+.uc-v2-inline-q[hidden], [data-survey-off][hidden], [data-survey-only][hidden] { display: none !important; }   /* beat .uc-wl-chips { display:flex } */
+.uc-v2 .uc-v2-inline-q .uc-v2-survey-q { margin: 14px 0 10px; font-size: 15.5px; }
+.uc-v2 .uc-v2-inline-q .uc-v2-iq:first-child .uc-v2-survey-q { margin-top: 0; }
+.uc-v2-inline-q textarea { width: 100%; box-sizing: border-box; border-radius: 16px; padding: 12px 16px; border: 1px solid var(--uc-border); background: #fff;
+  font: 15px/1.5 var(--uc-font-body); color: var(--uc-ink); resize: vertical; outline: none; }
+.uc-v2-inline-q textarea:focus { border-color: var(--uc-focus); box-shadow: 0 0 0 2px color-mix(in srgb, var(--uc-focus) 20%, transparent); }
+.uc-v2-opt { font-weight: 500; font-size: 12.5px; color: var(--uc-muted); margin-left: 4px; }
+.uc-v2 .uc-v2-iq--missing .uc-v2-survey-q { color: #b3261e; }
+.uc-v2-iq--missing .uc-v2-chips, .uc-v2-iq--missing textarea { outline: 1px dashed #b3261e; outline-offset: 6px; border-radius: 12px; }
+.uc-v2-textbtn { border: 0; background: none; padding: 6px 0; font: 600 13px var(--uc-font-body); color: var(--uc-ink-2); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.uc-v2-textbtn:hover { color: var(--uc-ink); }
+.uc-v2 .uc-v2-survey-note { margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--uc-muted); }
+.uc-v2 .uc-v2-survey .uc-err { margin: 10px 0 0; font-size: 13px; color: #b3261e; }
+.uc-v2 .uc-v2-survey-thanks { margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--uc-ink-2); outline: none; }
+
+/* ---- waitlist-v2.html: two-column pitch hero (copy left, form right; form second on phones) ---- */
+.uc-v2 .uc-v2-pitch { align-items: stretch; text-align: left; padding-bottom: 64px; }
+.uc-v2-pitch-grid { width: 100%; max-width: 1152px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 480px);
+  grid-template-areas: "head form" "more form"; grid-template-rows: auto 1fr; column-gap: 56px; row-gap: 30px; align-items: start; }
+.uc-v2-pitch-head { grid-area: head; }
+.uc-v2-pitch-more { grid-area: more; }
+.uc-v2-pitch-grid > .uc-wl-card { grid-area: form; margin: 0; width: 100%; }
+.uc-v2-hook { font-size: clamp(36px, 4.6vw, 62px); line-height: 1.05; margin: 14px 0 18px; }
+.uc-v2-pitch .uc-lead { max-width: 560px; margin: 0; font-size: clamp(17px, 1.6vw, 19px); }
+.uc-v2-pitch-credit { margin-top: 44px; text-align: center; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--uc-muted); }
+@media (max-width: 960px) {
+  .uc-v2-pitch-grid { grid-template-columns: 1fr; grid-template-areas: "head" "form" "more"; grid-template-rows: none; }
+  .uc-v2-pitch-grid > .uc-wl-card { justify-self: center; }
+}
+
+/* keyboard focus ring follows the pill shape of the role tabs */
+.uc-v2 .uc-tab:focus-visible { border-radius: var(--uc-r-pill); }
+
+/* ==========================================================================
+   landing-v2.html, value-first order (plan: active/plans/2026-10-08-landing-v2-value-first-order.md)
+   Only used by landing-v2.html.
+   ========================================================================== */
+/* hero: the quick form on the right, the value bullets + proof on the left; form first on phones */
+.uc-v2-hero .uc-lead { margin-bottom: 30px; }
+.uc-v2-herogrid { width: 100%; max-width: 980px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) 420px;
+  grid-template-areas: "more form"; column-gap: 56px; align-items: center; text-align: left; }
+.uc-v2-herogrid > .uc-s-wl { grid-area: form; }
+.uc-v2-heromore { grid-area: more; }
+.uc-v2 .uc-form .uc-v2-perkline { margin: 2px 0 0; padding-top: 12px; border-top: 1px solid var(--uc-border); text-align: center;
+  font-size: 13px; line-height: 1.5; color: var(--uc-ink-2); }
+.uc-v2 .uc-form .uc-v2-perkline b { color: var(--uc-ink); }
+@media (max-width: 960px) {
+  .uc-v2-herogrid { max-width: 480px; grid-template-columns: minmax(0, 1fr); grid-template-areas: "form" "more"; row-gap: 36px; }
+}
+
+/* proof variant (?quote=1 only): small serif quote next to the proof line */
+.uc-v2-quote { margin: 22px 0 0; padding: 2px 0 2px 18px; border-left: 2px solid var(--uc-border); text-align: left; }
+.uc-v2-quote[hidden] { display: none; }
+.uc-v2-quote blockquote { margin: 0; font-family: var(--uc-font-display); font-style: italic; font-weight: 400; font-size: 26px; line-height: 1.2; color: var(--uc-ink); }
+.uc-v2-quote figcaption { margin-top: 6px; font-size: 12.5px; line-height: 1.5; color: var(--uc-muted); }
+
+/* mentoring: the four steps as one line each */
+.uc-v2-steps-line li { padding: 18px 20px; }
+.uc-v2-steps-line li::before { font-size: 26px; margin-bottom: 8px; }
+.uc-v2-steps-line b { font-size: 16px; }
+
+/* map → link down to the privacy rules */
+.uc-v2-mapgrid + .uc-v2-link { margin-top: 18px; }
+
+/* private by design: one merged list, three columns on wide screens */
+.uc-v2-privacy { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 36px; }
+@media (max-width: 960px) { .uc-v2-privacy { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .uc-v2-privacy { grid-template-columns: minmax(0, 1fr); } }
+
+/* the offer: the waitlist-only stack, centred, with its own button to #join */
+.uc-v2-offer .uc-v2-perks { max-width: 560px; margin: 26px auto 0; padding: 22px 26px; }
+.uc-v2-offer .uc-v2-perks ul { margin-top: 0; gap: 12px; }
+.uc-v2-offer .uc-v2-perks li { font-size: 15.5px; }
+
+/* ---- landing-brunson-v2: cold vs warm comparison in #warm ---- */
+.uc-v2-cold { background: transparent; box-shadow: none; border-style: dashed; }
+.uc-v2-cold h3, .uc-v2-cold .uc-s-list { color: var(--uc-muted); }
+.uc-v2-cold .uc-s-icon { opacity: .55; }
+.uc-v2-cold .uc-s-list li::before { content: '✕'; color: var(--uc-muted); font-weight: 600; }
+.uc-v2-cold .uc-s-list li, .uc-v2-cold .uc-s-list b { color: var(--uc-muted); }
+.uc-v2-survey-other { margin-top: 10px; }
+.uc-v2-survey-other[hidden] { display: none !important; }

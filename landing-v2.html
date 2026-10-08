@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <!-- V2 proposal: the whole public site as one long page. Not indexed while it sits next to V1.
+       Order (plan: active/plans/2026-10-08-landing-v2-value-first-order.md): hook, value, proof and form ·
+       mentoring · map · moments it helps · why we built this · private by design · the offer ·
+       for universities · questions · the closing form. -->
+  <meta name="robots" content="noindex">
+  <title>UniCircle — Your circle, for life</title>
+  <meta name="description" content="UniCircle: mentoring between alumni and students, a privacy-first alumni map, and a student-exchange map to find the people in your tutorial. Join the waitlist.">
+  <link rel="icon" type="image/png" href="unicircle-logo.png">
+  <link rel="apple-touch-icon" href="unicircle-logo.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="UniCircle — Your circle, for life">
+  <meta property="og:description" content="Mentoring between alumni and students, an alumni map and a student-exchange map. Be first in the circle.">
+  <meta property="og:image" content="https://unicircle.eu/assets/img/vrijthof.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+
+  <link rel="stylesheet" href="css/main.css?v=1.0.5">
+  <link rel="stylesheet" href="css/unicircle.css?v=1.0.3">
+  <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
+  <link rel="stylesheet" href="css/site.css?v=1.0.0">
+  <link rel="stylesheet" href="css/waitlist.css?v=1.1.1">
+  <link rel="stylesheet" href="css/v2.css?v=1.6.1">
+</head>
+<body>
+<div class="uc-page uc-site uc-wl uc-v2" id="top">
+
+  <!-- ===== NAV — every link scrolls to a chapter on this page ===== -->
+  <header class="uc-s-navwrap">
+    <nav class="uc-navpill uc-s-nav" aria-label="Main">
+      <a class="uc-s-brand" href="#top"><img src="assets/img/logo-circle.jpg" alt=""><span>UniCircle</span></a>
+      <button type="button" class="uc-s-burger" aria-expanded="false" aria-controls="uc-s-links" aria-label="Menu"><span></span><span></span></button>
+      <div class="uc-s-links" id="uc-s-links">
+        <a href="#mentoring">Mentoring</a>
+        <a href="#map">The map</a>
+        <a href="#universities">For universities</a>
+        <a href="#about">About</a>
+      </div>
+      <div class="uc-s-actions">
+        <a class="uc-s-signin" href="index.html">Sign in</a>
+        <a class="uc-btn-dark" href="#join">Join the waitlist</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== HERO: hook · value · proof · incentive · quick form ===== -->
+    <section class="uc-hero uc-v2-hero">
+      <canvas class="uc-hero-canvas uc-v2-sides" id="v2-constellation" aria-hidden="true"></canvas>
+
+      <div class="uc-eyebrow" style="margin-bottom:18px;">The circle is opening · waitlist</div>
+      <h1 class="uc-hero-h1"><span>Your circle,</span> <em>for life.</em></h1>
+      <p class="uc-lead">Messaging alumni on LinkedIn and never hearing back? We're launching a warmer way in: alumni who chose to help, matched to where you're going.</p>
+
+      <div class="uc-v2-herogrid">
+        <div class="uc-login-card uc-s-wl">
+          <form id="v2-wl-hero" class="uc-form" novalidate>
+            <div class="uc-eyebrow" style="text-align:left;">Join the waitlist · I am</div>
+            <div class="uc-tabs" role="radiogroup" aria-label="I am">
+              <button type="button" class="uc-tab active" data-role="student" role="radio" aria-checked="true">Student</button>
+              <button type="button" class="uc-tab" data-role="alumnus" role="radio" aria-checked="false">Alumni</button>
+              <button type="button" class="uc-tab" data-role="university_staff" role="radio" aria-checked="false">University</button>
+            </div>
+            <input name="email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">
+            <input name="city" type="text" placeholder="City (for the map)" autocomplete="address-level2" required class="uc-input-pill" maxlength="80">
+            <label class="uc-s-consent">
+              <input type="checkbox" name="consent" required>
+              <span>Email me when my spot opens. Unsubscribe any time. <a href="privacy.html">Privacy</a></span>
+            </label>
+            <button class="uc-btn-dark uc-wl-submit" type="submit">Join the waitlist →</button>
+            <p class="uc-v2-cta-note"><span data-survey-off>Takes 20 seconds.</span><span data-survey-only hidden>Next: five quick questions on the waitlist page, about a minute.</span></p>
+            <!-- Incentive (D2): one line here, the full stack further down (#offer) -->
+            <p class="uc-v2-perkline"><b>Founding circle:</b> the first wave in each city gets in first.</p>
+            <p class="uc-err" role="alert" hidden></p>
+          </form>
+          <div class="uc-s-done" id="v2-wl-hero-done" hidden tabindex="-1">
+            <div class="uc-s-done-mark" aria-hidden="true">✓</div>
+            <h3 class="uc-serif">You're in the circle.</h3>
+            <p data-done-msg>We'll email you as soon as your spot opens.</p>
+            <div class="uc-v2-next">
+              <div class="uc-eyebrow">What happens next</div>
+              <!-- D1 decided 8 Oct: waves capped -->
+              <p>We open UniCircle city by city, in small waves. You'll hear from us before your wave opens.</p>
+       <!-- D7 (update rhythm): the "behind-the-scenes updates, one email a month" line comes back only once
+            the consent box and privacy.html cover update emails; today they cover the spot-opens email only. -->
+            </div>
+            <div class="uc-v2-survey" data-survey="off" hidden></div>
+            <p class="uc-wl-share" style="margin-top:18px;">Bring your people: the circle is only as good as who's in it.
+              <button type="button" class="uc-btn-ghost" data-share-v2>Copy invite link</button></p>
+          </div>
+          <div class="uc-v2-herofoot">
+            <a href="#mentoring">See how it works ↓</a>
+            <span>Already a member? <a href="index.html">Sign in</a></span>
+          </div>
+        </div>
+
+        <div class="uc-v2-heromore">
+          <!-- Value: only what the team intends to ship (same four lines as waitlist-v2.html) -->
+          <ul class="uc-v2-value">
+            <li><b>Warm introductions, not cold messages.</b> Alumni switch on “open to help” with one small, scoped offer: a 20-minute call, a CV review, a city tip. Saying yes is easy.</li>
+            <li><b>Matched by path.</b> Same programme, same sector, or the city you're moving to.</li>
+            <!-- D1 decided 8 Oct: waves capped -->
+            <li><b>Opened in small waves, on purpose.</b> Fewer people, real conversations, and alumni who never get flooded.</li>
+            <li><b>Free for students.</b> Nobody pays to message an alumnus.</li>
+          </ul>
+          <!-- Proof (D4, neutral). Real proof only: nothing invented in the meantime. -->
+          <p class="uc-v2-proof">Built by students and alumni who wanted this for themselves.</p>
+          <!-- [NEEDS] before public: Maxime confirms it was Yoeri Dassen and gets his OK to use his name. Source: Maxime's LinkedIn post about the MAIN hackathon (active/context/sources/linkedin-post-hackathon-yc.txt). -->
+          <figure class="uc-v2-quote" data-variant="quote" hidden>
+            <blockquote>“This should exist!”</blockquote>
+            <figcaption>Yoeri Dassen, co-founder of Psylaris (Y Combinator W18), when we pitched the idea at a student hackathon</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="uc-v2-credit">A Beyond Borders Marketing Consultancy project</div>
+    </section>
+
+    <!-- ===== 01 · MENTORING (the thing the hook promises) ===== -->
+    <section class="uc-v2-chapter uc-s-section--tint" id="mentoring">
+      <div class="uc-s-inner">
+        <header class="uc-v2-head uc-s-reveal">
+          <div class="uc-eyebrow">01 · Mentoring</div>
+          <h2 class="uc-s-h2">Good advice usually starts with <em>a small, easy yes.</em></h2>
+          <p class="uc-s-p">"Will you be my mentor?" is a big question. It implies months of commitment, and many busy people say no — or say nothing. "Could you look at my CV for the consulting application?" has an obvious shape and an obvious end.</p>
+          <p class="uc-s-p">So alumni offer one specific thing — a short call, a CV read, a coffee in their city — and students ask for exactly that. No cold messages, and students never pay.</p>
+        </header>
+
+        <div class="uc-v2-block">
+          <div class="uc-s-grid-2">
+            <div class="uc-s-card uc-s-reveal">
+              <div class="uc-s-icon" aria-hidden="true">→</div>
+              <h3>For students</h3>
+              <p>Find people who sat in the same lecture halls and now work where you want to go. Filter by the programme you're in, the sector you're curious about, or the city you're moving to — then ask for one concrete thing.</p>
+              <ul class="uc-s-list" style="margin-top:18px;">
+                <li><b>Mentors who said yes in advance.</b> Everyone you see has switched mentoring on.</li>
+                <li><b>A request that's easy to write.</b> Pick a goal and a format; we shape the message.</li>
+                <li><b>Free, always.</b> Students never pay to reach a mentor.</li>
+              </ul>
+            </div>
+            <div class="uc-s-card uc-s-reveal">
+              <div class="uc-s-icon" aria-hidden="true">←</div>
+              <h3>For alumni</h3>
+              <p>Somebody once answered your questions. Mentoring lets you do the same without signing up for a programme or a monthly commitment. Flip one switch, write a single line about what you can offer, and decide each request on its own merits.</p>
+              <ul class="uc-s-list" style="margin-top:18px;">
+                <li><b>You set the scope.</b> Your one-line offer tells students exactly what to ask for.</li>
+                <li><b>Requests, not cold pitches.</b> Each one arrives as a message with a clear goal.</li>
+                <li><b>Pause any time.</b> Busy quarter? Switch it off; switch it back on later.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="uc-v2-block uc-s-split" style="align-items:start;">
+          <div class="uc-s-reveal">
+            <div class="uc-eyebrow">The "small asks" principle</div>
+            <h3 class="uc-v2-h3">A scoped offer is <em>easier to say yes to.</em></h3>
+            <p class="uc-s-p">Alumni say what they can give; students ask for that. Longer relationships can still grow from there — they just don't have to be promised on day one.</p>
+          </div>
+          <div class="uc-wl-mentor-demo uc-s-reveal" aria-label="Sample mentor offers">
+            <div class="uc-wl-offer"><span class="uc-avatar-initials">AM</span><div><b>Alumna · Finance, '14</b><span>Amsterdam · Zuid</span><em>“30-min call on breaking into asset management.”</em></div></div>
+            <div class="uc-wl-offer"><span class="uc-avatar-initials">TK</span><div><b>Alumnus · Data Science, '19</b><span>Berlin · Kreuzberg</span><em>“I review CVs for analytics roles — send yours.”</em></div></div>
+            <div class="uc-wl-offer"><span class="uc-avatar-initials">LS</span><div><b>Alumna · Law, '09</b><span>Brussels · Ixelles</span><em>“Coffee for anyone moving to Brussels.”</em></div></div>
+            <p class="uc-wl-note">Sample · illustrative examples — not real members.</p>
+          </div>
+        </div>
+
+        <div class="uc-v2-block">
+          <div class="uc-eyebrow">How it works</div>
+          <h3 class="uc-v2-h3">Four steps, <em>no programme to enrol in.</em></h3>
+          <ol class="uc-s-steps uc-v2-steps-line">
+            <li class="uc-s-reveal"><b>An alumnus opts in</b><span>Flips "open to mentor" and writes a one-line offer.</span></li>
+            <li class="uc-s-reveal"><b>A student browses</b><span>Mentors filtered by programme, sector and city.</span></li>
+            <li class="uc-s-reveal"><b>The student asks</b><span>A goal, a format and a short note, sent as a message.</span></li>
+            <li class="uc-s-reveal"><b>The alumnus decides</b><span>Yes, a different format, or a polite no.</span></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 02 · THE MAP (the value-first demo; its privacy rules live in #privacy) ===== -->
+    <section class="uc-v2-chapter" id="map">
+      <div class="uc-s-inner">
+        <header class="uc-v2-head uc-s-reveal">
+          <div class="uc-eyebrow">02 · The map</div>
+          <h2 class="uc-s-h2">See where your people are. <em>Not where they live.</em></h2>
+          <p class="uc-s-p">Red dots are alumni, blue dots are students. Each dot is a neighbourhood — never a street — so you can find the people you studied with in any city without anyone giving away their address.</p>
+        </header>
+
+        <div class="uc-v2-block">
+          <div class="uc-v2-maphead">
+            <div>
+              <div class="uc-eyebrow">Try it</div>
+              <h3 class="uc-v2-h3">Tap a dot.</h3>
+            </div>
+            <div class="uc-tabs uc-v2-layers" id="v2-map-layers" role="group" aria-label="Map layers">
+              <button type="button" class="uc-tab active" data-layer="alumni" aria-pressed="true"><span class="uc-s-dot red"></span>Alumni</button>
+              <button type="button" class="uc-tab" data-layer="students" aria-pressed="false"><span class="uc-s-dot blue"></span>Students</button>
+              <button type="button" class="uc-tab" data-layer="both" aria-pressed="false">Both</button>
+            </div>
+          </div>
+          <div class="uc-v2-mapgrid">
+            <div class="uc-s-figure"><div id="v2-map" class="uc-s-map" role="region" aria-label="Map preview: red dots are alumni, blue dots are students, placed by neighbourhood"></div></div>
+            <div class="uc-s-card uc-v2-mappanel" aria-live="polite">
+              <div id="v2-map-panel">
+                <div class="uc-eyebrow">Each dot is a neighbourhood</div>
+                <p style="margin-top:10px;">Bigger dot, more people. Tap one to see who's there — in the app you'd see names, programmes and who's open to mentoring.</p>
+              </div>
+              <p class="uc-s-note">Sample · illustrative preview with sample positions — not real members.</p>
+            </div>
+          </div>
+          <a class="uc-v2-link" href="#privacy">How a dot is made, and who can see it ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 03 · MOMENTS IT HELPS (was: Student exchange; id kept so old links still land) ===== -->
+    <section class="uc-v2-chapter uc-s-section--tint" id="exchange">
+      <div class="uc-s-inner">
+        <header class="uc-v2-head uc-s-reveal">
+          <div class="uc-eyebrow">03 · Moments it helps</div>
+          <h2 class="uc-s-h2">Going abroad? <em>Your course is already there.</em></h2>
+          <p class="uc-s-p">You land in a new city knowing nobody — while half your tutorial is a tram ride away. UniCircle shows who from your course and tutorial group is in the same city, or one district over, plus the alumni who already call it home.</p>
+          <div class="uc-s-hero-actions">
+            <a class="uc-btn-ghost" href="#map" data-show-layer="students"><span class="uc-s-dot blue" aria-hidden="true"></span>See the students on the map ↑</a>
+          </div>
+        </header>
+
+        <div class="uc-v2-block">
+          <div class="uc-s-grid-3">
+            <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">◐</div><h3>Exchange semester</h3><p>See which classmates chose the same partner city, form a study group for the courses you still have back home, and split the cost of the first weekend trip.</p></div>
+            <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">⌂</div><h3>Internship abroad</h3><p>Interning on your own in a big city? Find the students from your programme doing the same, and alumni there who know which neighbourhoods are worth the commute.</p></div>
+            <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">↺</div><h3>Coming home</h3><p>Exchange ends; the connection doesn't. The people you met abroad stay in your circle, and one day you'll be the red dot a new student asks for advice.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 04 · WHY WE BUILT THIS (was: About, trimmed; origin story first) =====
+         [NEEDS] the team's own real moment; real names or photos only with the team's OK. -->
+    <section class="uc-v2-chapter" id="about">
+      <div class="uc-s-inner">
+        <header class="uc-v2-head uc-s-reveal">
+          <div class="uc-eyebrow">04 · Why we built this</div>
+          <h2 class="uc-s-h2">It started in an alumni office. <em>It outgrew one faculty.</em></h2>
+        </header>
+
+        <div class="uc-v2-block uc-s-split" style="align-items:start;">
+          <div class="uc-s-reveal">
+            <p class="uc-s-p">UniCircle began as a simple idea inside a European business school's alumni office: richer alumni data, and genuinely more value for alumni, through a platform built for them rather than rented from a feed.</p>
+            <p class="uc-s-p">As we explored it, the idea outgrew a single faculty. It called for a broader scale — an independent platform that interconnects universities across Europe, and strengthens the network in two directions: <b>between alumni</b>, and <b>between alumni and the students coming up behind them</b>.</p>
+            <p class="uc-s-p">The name says the same thing: <em>Uni</em>versity and <em>Uni</em>ted, drawn into one Circle. A circle has no start and no end — and neither does your relationship with the people you studied with.</p>
+          </div>
+          <figure class="uc-s-figure uc-s-reveal" style="margin:0;">
+            <img src="assets/img/campus-tapijn.jpg" alt="A university campus" loading="lazy">
+          </figure>
+        </div>
+
+        <div class="uc-v2-block uc-s-narrow uc-v2-center uc-s-reveal">
+          <div class="uc-eyebrow">Who's behind it</div>
+          <h3 class="uc-v2-h3">A small team, building in the open.</h3>
+          <p class="uc-s-p">UniCircle is a Beyond Borders Marketing Consultancy project, built together with students and alumni who wanted a better way to stay in touch. We're early — deliberately so. No bought followers, no invented numbers: example content is always labelled as a sample.</p>
+          <p class="uc-s-p">Questions, ideas or want to bring UniCircle to your university? Write to <a href="mailto:hello@unicircle.eu" style="text-decoration:underline;">hello@unicircle.eu</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 05 · PRIVATE BY DESIGN (one list: replaces the map's two privacy blocks, the universities
+         compliance list, "What we promise" and the FAQ items that repeated them) ===== -->
+    <section class="uc-v2-chapter uc-s-section--tint" id="privacy">
+      <div class="uc-s-inner">
+        <header class="uc-v2-head uc-s-reveal">
+          <div class="uc-eyebrow">05 · Private by design</div>
+          <h2 class="uc-s-h2">Privacy isn't a setting here. <em>It's how it's built.</em></h2>
+          <p class="uc-s-p">UniCircle only works if people trust it. So every choice is yours, and every default is the private one. Read our <a href="privacy.html" style="text-decoration:underline;">privacy policy</a>.</p>
+        </header>
+        <div class="uc-v2-block">
+          <ul class="uc-s-list uc-v2-privacy uc-s-reveal">
+            <li><b>City or neighbourhood, never a street.</b> You type a city and, if you like, a neighbourhood. No street, no postcode, no coordinates, no GPS, no live location or movement history — ever.</li>
+            <li><b>Your dot sits on the area, not on you.</b> It's placed on the neighbourhood (or city) centre, and everyone in the same area merges into one dot with a count. The more people, the less any single person stands out.</li>
+            <li><b>Zoom stops at district.</b> The map can't zoom to street level. There's nothing finer to see, because nothing finer is stored.</li>
+            <li><b>Opt-in everything.</b> Mentoring, the map and messages are things you switch on. You appear on the map only once you add a city; leave it empty and you can still use mentoring and everything else.</li>
+            <li><b>Leave any time.</b> Remove your city and your dot disappears. You can ask us to export or delete your data at any time.</li>
+            <li><b>Members only.</b> Names behind a dot are visible to signed-in members of your circle — never to the public or search engines. Tutorial groups stay private: only members of a group can see who in it is where.</li>
+            <li><b>Only what's needed.</b> We ask only for what the network needs to work.</li>
+            <li><b>EU-hosted, never sold.</b> Data stays on servers in the European Union. No ads, no trackers.</li>
+            <li><b>Institutions keep control.</b> A university keeps control of the data it brings and can export it at any time.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== THE OFFER: the waitlist-only stack, then a mid-page ask ===== -->
+    <section class="uc-v2-chapter uc-v2-offer" id="offer">
+      <div class="uc-s-inner uc-s-narrow uc-v2-center uc-s-reveal">
+        <div class="uc-eyebrow">Only for the waitlist</div>
+        <h2 class="uc-s-h2">Be first <em>in the circle.</em></h2>
+        <p class="uc-s-p">We open UniCircle city by city, in small waves. Joining now gets you this:</p>
+        <!-- Incentive (D2) -->
+        <div class="uc-v2-perks">
+          <ul>
+            <li><b>Founding circle.</b> The first wave in each city gets in first, with a permanent founding-member mark on their profile.</li>
+            <li><b>Founding mentors.</b> Alumni who join now show up first on the map and in the directory.</li>
+            <li data-survey-only hidden><b>Shape it with us.</b> Waitlist members are asked which features come first.</li>
+          </ul>
+        </div>
+        <div class="uc-s-hero-actions" style="margin-top:28px;">
+          <a class="uc-btn-dark" href="#join">Join the waitlist →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 06 · FOR UNIVERSITIES (a different audience: moved down, shortened) ===== -->
+    <section class="uc-v2-chapter uc-s-section--tint" id="universities">
+      <div class="uc-s-inner">
+        <header class="uc-v2-head uc-s-reveal">
+          <div class="uc-eyebrow">06 · For universities</div>
+          <h2 class="uc-s-h2">Own your alumni relationship. <em>Don't rent it.</em></h2>
+          <p class="uc-s-p">UniCircle gives alumni offices, careers services and faculties a European, university-owned network — where alumni keep their own details current, mentor the students behind them and actually turn up when you organise something.</p>
+          <div class="uc-s-hero-actions">
+            <a class="uc-btn-dark" href="mailto:hello@unicircle.eu?subject=UniCircle%20pilot">Talk to us about a pilot</a>
+          </div>
+        </header>
+
+        <div class="uc-v2-block uc-s-split" style="align-items:start;">
+          <div class="uc-s-reveal">
+            <div class="uc-eyebrow">The problem with rented networks</div>
+            <h3 class="uc-v2-h3">Your alumni are online. <em>Your relationship with them isn't yours.</em></h3>
+            <p class="uc-s-p">Most institutions reach their graduates through a third-party feed: a group page here, a mailing list there, a spreadsheet that was accurate the year someone graduated. The platform decides who sees your posts, and the data about your own community sits with someone else.</p>
+          </div>
+          <ul class="uc-s-list uc-s-reveal">
+            <li><b>Records go stale.</b> Graduates move cities and change jobs; the alumni database rarely hears about it.</li>
+            <li><b>Reach is rented.</b> An algorithm you don't control decides how many alumni see your announcements.</li>
+            <li><b>Data sits elsewhere.</b> Insight into your own community depends on another company's terms and export options.</li>
+            <li><b>Events miss their audience.</b> Without current city information, reunions and chapters can't reliably reconnect a cohort.</li>
+            <li><b>Students and alumni stay apart.</b> Mentoring runs on personal contacts and goodwill, so it's hard to scale beyond a few enthusiasts.</li>
+          </ul>
+        </div>
+
+        <div class="uc-v2-block">
+          <div class="uc-eyebrow">What you get</div>
+          <h3 class="uc-v2-h3">One platform for the whole <em>alumni life cycle.</em></h3>
+          <div class="uc-s-grid-3">
+            <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">◎</div><h3>Data ownership &amp; GDPR</h3><p>Hosted on EU servers. The institution controls the relationship instead of renting it from a third-party feed — and can export its data at any time.</p></div>
+            <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">↺</div><h3>The event problem, solved</h3><p>Alumni keep their own details current, so city chapters, reunions and "who's attending" can reliably bring a cohort back together.</p></div>
+            <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">⇄</div><h3>Mentoring at scale</h3><p>Opt-in mentoring between alumni and students, with structured, small requests — so programmes grow beyond the people you already know.</p></div>
+          </div>
+        </div>
+
+        <div class="uc-v2-block">
+          <div class="uc-eyebrow">How a pilot works</div>
+          <h3 class="uc-v2-h3">Start small, <em>learn together, then decide.</em></h3>
+          <p class="uc-s-p">We're pre-launch and piloting with interested institutions. A pilot is shaped around your goals — one faculty, one cohort or one city is enough to begin. Your data protection officer can start with <a href="#privacy" style="text-decoration:underline;">Private by design</a>.</p>
+          <ol class="uc-s-steps">
+            <li class="uc-s-reveal"><b>Scope &amp; data import</b><span>We agree goals, the audience and the data-processing terms, then import only the alumni data you choose to bring.</span></li>
+            <li class="uc-s-reveal"><b>Branded launch</b><span>We open UniCircle to one cohort or one city, with an invitation sent in your institution's name.</span></li>
+            <li class="uc-s-reveal"><b>Mentoring &amp; events run</b><span>Alumni and students opt in to mentoring; you run chapter meetups or a reunion with live "who's attending".</span></li>
+            <li class="uc-s-reveal"><b>Review &amp; decide</b><span>We review what worked together, in aggregate, and you decide whether and how to continue.</span></li>
+          </ol>
+          <div class="uc-s-hero-actions" style="justify-content:flex-start;margin-top:28px;">
+            <a class="uc-btn-dark" href="mailto:hello@unicircle.eu?subject=UniCircle%20pilot">Talk to us about a pilot</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== QUESTIONS (privacy questions now live in #privacy) ===== -->
+    <section class="uc-v2-chapter" id="faq">
+      <div class="uc-s-inner uc-s-narrow" style="margin:0 auto;">
+        <div class="uc-eyebrow">Questions</div>
+        <h2 class="uc-s-h2">UniCircle, <em>answered.</em></h2>
+        <div class="uc-s-faq">
+          <details><summary>How much time does mentoring take?</summary><p>As much as you offer. Most offers are a single call, one CV read or one coffee. You decide on each request, there's no minimum, and you can pause mentoring whenever you like.</p></details>
+          <details><summary>Who can be a mentor?</summary><p>Any alumnus with a UniCircle profile can switch mentoring on. You don't need a senior title — what students value most is someone who did the same programme or works in the field they're considering.</p></details>
+          <details><summary>Does it cost anything?</summary><p>UniCircle is free for students — including the map, your tutorial groups and reaching alumni for advice. Students never pay to reach a mentor, and alumni are never paid to mentor — it's people giving back to their own community.</p></details>
+          <details><summary>What counts as a tutorial group?</summary><p>The small group you meet with each week for a course — some programmes call it a seminar, workgroup or section. On UniCircle it is the course code plus the group, so classmates find each other without sharing anything else.</p></details>
+          <details><summary>My city isn't on the map yet. What now?</summary><p>We open city by city. Join the waitlist with the city you're in or heading to — that tells us where to open next, and you'll be on the map as soon as it does.</p></details>
+          <details><summary>Does UniCircle integrate with our existing CRM?</summary><p>UniCircle is designed to sit alongside your existing alumni database, not replace it. For a pilot we start with an import of the records you choose, and we'll discuss how updates should flow back to your CRM as part of scoping.</p></details>
+          <details><summary>Can anyone see where I live?</summary><p>No. We never ask for or store a street address. Where your dot sits, who can see it and what happens to your data are all in one place: <a href="#privacy" style="text-decoration:underline;">Private by design</a>.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== JOIN — full waitlist form ===== -->
+    <section class="uc-s-cta uc-s-section--tint" id="join">
+      <div class="uc-s-cta-inner">
+        <div class="uc-s-cta-copy">
+          <div class="uc-eyebrow">Waitlist · opening in waves</div>
+          <h2 class="uc-serif">Put yourself <em>on the map.</em></h2>
+          <p>We open city by city. Tell us who you are and where you are — that's all we need to put you on the map when your city opens.</p>
+          <p class="uc-v2-proof"><b>Founding circle.</b> The first wave in each city gets in first, with a permanent founding-member mark on their profile.</p>
+        </div>
+        <div class="uc-login-card uc-wl-card">
+          <form id="v2-wl-join" class="uc-form" novalidate>
+            <div class="uc-eyebrow" style="text-align:left;">I am</div>
+            <div class="uc-tabs" role="radiogroup" aria-label="I am">
+              <button type="button" class="uc-tab active" data-role="student" role="radio" aria-checked="true">Student</button>
+              <button type="button" class="uc-tab" data-role="alumnus" role="radio" aria-checked="false">Alumni</button>
+              <button type="button" class="uc-tab" data-role="university_staff" role="radio" aria-checked="false">University</button>
+            </div>
+
+            <input name="email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">
+            <input name="city" type="text" placeholder="City (for the map)" autocomplete="address-level2" required class="uc-input-pill" maxlength="80">
+
+            <!-- Priestley's five questions (+ optional sixth), answered right here and saved with the spot
+                 (js/uc-survey-v2.js → inline). Empty and hidden while the questions are switched off. -->
+            <div class="uc-v2-inline-q" hidden></div>
+
+            <!-- Interest chips only while the questions are off; with them on, the questions say more. -->
+            <fieldset class="uc-wl-chips" data-survey-off>
+              <legend class="uc-eyebrow">I'm most interested in</legend>
+              <label data-for="alumnus" hidden><input type="checkbox" name="interests" value="mentor_others"><span>Mentoring students</span></label>
+              <label data-for="student"><input type="checkbox" name="interests" value="find_a_mentor" checked><span>Finding a mentor</span></label>
+              <label><input type="checkbox" name="interests" value="alumni_map" checked><span>The alumni map</span></label>
+              <label data-for="student"><input type="checkbox" name="interests" value="student_exchange" checked><span>Student exchange</span></label>
+              <label><input type="checkbox" name="interests" value="events"><span>Events &amp; chapters</span></label>
+              <label><input type="checkbox" name="interests" value="jobs"><span>Jobs</span></label>
+            </fieldset>
+
+            <label class="uc-wl-consent">
+              <input type="checkbox" name="consent" required>
+              <span>Email me when my spot opens. I can unsubscribe any time; my details are only used for UniCircle. <a href="privacy.html">Privacy</a></span>
+            </label>
+
+            <button class="uc-btn-dark uc-wl-submit" type="submit">Join the waitlist →</button>
+            <p class="uc-v2-cta-note"><span data-survey-off>Takes 20 seconds.</span><span data-survey-only hidden>About a minute. Your answers help us open the right circles first.</span></p>
+            <p class="uc-err" role="alert" hidden></p>
+          </form>
+
+          <div class="uc-wl-done" id="v2-wl-join-done" hidden tabindex="-1">
+            <div class="uc-wl-done-mark" aria-hidden="true">✓</div>
+            <h2 class="uc-serif">You're in the circle.</h2>
+            <p data-done-msg>We'll email you as soon as your spot opens.</p>
+            <div class="uc-v2-next">
+              <div class="uc-eyebrow">What happens next</div>
+              <!-- D1 decided 8 Oct: waves capped -->
+              <p>We open UniCircle city by city, in small waves. You'll hear from us before your wave opens.</p>
+     <!-- D7 (update rhythm): the "behind-the-scenes updates, one email a month" line comes back only once
+          the consent box and privacy.html cover update emails; today they cover the spot-opens email only. -->
+            </div>
+            <div class="uc-v2-survey" data-survey="off" hidden></div>
+            <p class="uc-wl-share" style="margin-top:18px;">Bring your people: the circle is only as good as who's in it.
+              <button type="button" class="uc-btn-ghost" data-share-v2>Copy invite link</button></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="uc-footer-dark uc-s-footer">
+    <div class="uc-s-footer-inner">
+      <div class="uc-s-footer-top">
+        <a class="uc-s-brand uc-s-brand--light" href="#top"><img src="assets/img/logo-circle.jpg" alt=""><span class="uc-serif">UniCircle</span></a>
+        <nav class="uc-s-footer-links" aria-label="Footer">
+          <a href="#mentoring">Mentoring</a>
+          <a href="#map">The map</a>
+          <a href="#universities">For universities</a>
+          <a href="#about">About</a>
+          <a href="#faq">Questions</a>
+          <a href="#join">Waitlist</a>
+        </nav>
+      </div>
+      <div class="uc-s-rule"></div>
+      <div class="uc-s-footer-bottom">
+        <span>© 2026 UniCircle · unicircle.eu · a Beyond Borders Marketing Consultancy project</span>
+        <span><a href="privacy.html">Privacy</a> · <a href="mailto:hello@unicircle.eu">Contact</a> · <a href="index.html">Sign in</a></span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script src="js/uc-map.js?v=1.0.1" defer></script>
+<script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
+<script src="js/uc-survey-v2.js?v=2.3.0" defer></script>
+<script src="js/landing-v2.js?v=1.5.0" defer></script>
+</body>
+</html>
