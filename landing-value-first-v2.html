@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
   <link rel="stylesheet" href="css/site.css?v=1.0.0">
   <link rel="stylesheet" href="css/waitlist.css?v=1.1.1">
-  <link rel="stylesheet" href="css/v2.css?v=1.6.1">
+  <link rel="stylesheet" href="css/v2.css?v=1.6.3">
 </head>
 <body>
 <div class="uc-page uc-site uc-wl uc-v2" id="top">
@@ -40,11 +40,10 @@
       <a class="uc-s-brand" href="#top"><img src="assets/img/logo-circle.jpg" alt=""><span>UniCircle</span></a>
       <button type="button" class="uc-s-burger" aria-expanded="false" aria-controls="uc-s-links" aria-label="Menu"><span></span><span></span></button>
       <div class="uc-s-links" id="uc-s-links">
-        <a href="#warm">Warm intros</a>
         <a href="#mentoring">Mentoring</a>
-        <a href="#about">Our story</a>
         <a href="#map">The map</a>
         <a href="#universities">For universities</a>
+        <a href="#about">About</a>
       </div>
       <div class="uc-s-actions">
         <a class="uc-s-signin" href="index.html">Sign in</a>
@@ -54,8 +53,6 @@
   </header>
 
   <main>
-    <!-- Russell Brunson order (Maxime, 8 Oct; revised): Hook (hero) → Value: warm intros (#warm) → Mentoring → Story (#about) → Offer (#offer) → the rest as support.
-         Shares the hero, forms and most chapters with landing-v2.html (keep both in step); #warm and the #about text are this version only. -->
     <!-- ===== HERO: hook · value · proof · incentive · quick form ===== -->
     <section class="uc-hero uc-v2-hero">
       <canvas class="uc-hero-canvas uc-v2-sides" id="v2-constellation" aria-hidden="true"></canvas>
@@ -101,7 +98,7 @@
               <button type="button" class="uc-btn-ghost" data-share-v2>Copy invite link</button></p>
           </div>
           <div class="uc-v2-herofoot">
-            <a href="#warm">See how it works ↓</a>
+            <a href="#mentoring">See how it works ↓</a>
             <span>Already a member? <a href="index.html">Sign in</a></span>
           </div>
         </div>
@@ -110,7 +107,7 @@
           <!-- Value: only what the team intends to ship (same four lines as waitlist-v2.html) -->
           <ul class="uc-v2-value">
             <li><b>Warm introductions, not cold messages.</b> Alumni switch on “open to help” with one small, scoped offer: a 20-minute call, a CV review, a city tip. Saying yes is easy.</li>
-            <li><b>Matched by path.</b> Same programme, same sector, or the city you're moving to.</li>
+            <li><b>Matched by need.</b> Looking for an internship, career advice, or tips on the city you go on exchange to? You get the alumni who can help with exactly that.</li>
             <!-- D1 decided 8 Oct: waves capped -->
             <li><b>Opened in small waves, on purpose.</b> Fewer people, real conversations, and alumni who never get flooded.</li>
             <li><b>Free for students.</b> Nobody pays to message an alumnus.</li>
@@ -128,61 +125,11 @@
       <div class="uc-v2-credit">A Beyond Borders Marketing Consultancy project</div>
     </section>
 
-    <!-- ===== 01 · WARM INTRODUCTIONS — the value proposition first (Maxime, 8 Oct). Copy from the proposal:
-         hook + 1.2 value bullets + the mentoring chapter's own lines. No new claims. ===== -->
-    <section class="uc-v2-chapter" id="warm">
-      <div class="uc-s-inner">
-        <header class="uc-v2-head uc-s-reveal">
-          <div class="uc-eyebrow">01 · Warm introductions</div>
-          <h2 class="uc-s-h2">Stop sending cold messages. <em>Start with a warm yes.</em></h2>
-          <p class="uc-s-p">The people who studied where you study are the most valuable network you'll ever have. Right now, reaching them means cold LinkedIn messages that nobody answers. UniCircle is a warmer way in: alumni who chose to help, matched to where you're going.</p>
-        </header>
-
-        <div class="uc-v2-block">
-          <div class="uc-s-grid-2">
-            <div class="uc-s-card uc-v2-cold uc-s-reveal">
-              <div class="uc-s-icon" aria-hidden="true">✕</div>
-              <h3>Cold outreach today</h3>
-              <ul class="uc-s-list" style="margin-top:14px;">
-                <li><b>You guess who to ask.</b> A search result, a stranger, no sign they want to help.</li>
-                <li><b>You ask for too much.</b> "Will you be my mentor?" sounds like months of commitment.</li>
-                <li><b>You wait.</b> Busy people say no, or say nothing.</li>
-              </ul>
-            </div>
-            <div class="uc-s-card uc-s-reveal">
-              <div class="uc-s-icon" aria-hidden="true">✓</div>
-              <h3>The warm way in</h3>
-              <ul class="uc-s-list" style="margin-top:14px;">
-                <li><b>They already said yes.</b> Every alumnus you see has switched on "open to help".</li>
-                <li><b>You ask for one small thing.</b> A 20-minute call, a CV review, a city tip: the offer they wrote themselves.</li>
-                <li><b>Matched by path.</b> Same programme, same sector, or the city you're moving to.</li>
-                <li><b>Free for students.</b> Nobody pays to message an alumnus.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="uc-v2-block">
-          <div class="uc-eyebrow">How a warm introduction happens</div>
-          <h3 class="uc-v2-h3">Three steps, <em>and the yes comes first.</em></h3>
-          <ol class="uc-s-steps uc-v2-steps-line">
-            <li class="uc-s-reveal"><b>An alumnus opts in</b><span>Flips "open to help" and writes a one-line offer.</span></li>
-            <li class="uc-s-reveal"><b>You find your match</b><span>Alumni filtered by programme, sector and city.</span></li>
-            <li class="uc-s-reveal"><b>You ask for exactly that</b><span>A goal, a format and a short note. They decide: yes, another format, or a polite no.</span></li>
-          </ol>
-        </div>
-
-        <div class="uc-s-hero-actions uc-v2-center" style="margin-top:32px;">
-          <a class="uc-btn-dark" href="#join">Join the waitlist →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== 02 · MENTORING (the thing the hook promises) ===== -->
+    <!-- ===== 01 · MENTORING (the thing the hook promises) ===== -->
     <section class="uc-v2-chapter uc-s-section--tint" id="mentoring">
       <div class="uc-s-inner">
         <header class="uc-v2-head uc-s-reveal">
-          <div class="uc-eyebrow">02 · Mentoring</div>
+          <div class="uc-eyebrow">01 · Mentoring</div>
           <h2 class="uc-s-h2">Good advice usually starts with <em>a small, easy yes.</em></h2>
           <p class="uc-s-p">"Will you be my mentor?" is a big question. It implies months of commitment, and many busy people say no — or say nothing. "Could you look at my CV for the consulting application?" has an obvious shape and an obvious end.</p>
           <p class="uc-s-p">So alumni offer one specific thing — a short call, a CV read, a coffee in their city — and students ask for exactly that. No cold messages, and students never pay.</p>
@@ -227,64 +174,24 @@
           </div>
         </div>
 
-      </div>
-    </section>
-
-    <!-- ===== 03 · WHY WE BUILT THIS — the story keeps selling the value (copy: proposal §3 video script,
-         the proof line, and the former About text). [NEEDS] the team's own real moment (the hackathon);
-         real names or photos only with the team's OK. ===== -->
-    <section class="uc-v2-chapter" id="about">
-      <div class="uc-s-inner">
-        <header class="uc-v2-head uc-s-reveal">
-          <div class="uc-eyebrow">03 · Why we built this</div>
-          <h2 class="uc-s-h2">The best network you'll ever have <em>shouldn't start with a cold message.</em></h2>
-        </header>
-
-        <div class="uc-v2-block uc-s-split" style="align-items:start;">
-          <div class="uc-s-reveal">
-            <p class="uc-s-p">We're students and alumni who wanted this for ourselves. The most valuable network you'll ever have is the people who studied where you study, and today reaching them means cold LinkedIn messages that nobody answers.</p>
-            <p class="uc-s-p">UniCircle began as a simple idea inside a European business school's alumni office: more value for alumni, through a platform built for them rather than rented from a feed. It soon outgrew a single faculty: an independent platform that connects universities across Europe and strengthens the network in two directions, <b>between alumni</b>, and <b>between alumni and the students coming up behind them</b>.</p>
-            <p class="uc-s-p">So we built the warm way in: <b>alumni who choose to help</b>, <b>small, easy asks</b>, and a network <b>opened in small waves</b>, so every conversation is a real one.</p>
-            <p class="uc-s-p">The name says the same thing: <em>Uni</em>versity and <em>Uni</em>ted, drawn into one Circle. A circle has no end, and neither does your relationship with the people you studied with.</p>
-          </div>
-          <figure class="uc-s-figure uc-s-reveal" style="margin:0;">
-            <img src="assets/img/campus-tapijn.jpg" alt="A university campus" loading="lazy">
-          </figure>
-        </div>
-        <div class="uc-v2-block uc-s-narrow uc-v2-center uc-s-reveal">
-          <div class="uc-eyebrow">Who's behind it</div>
-          <h3 class="uc-v2-h3">A small team, building in the open.</h3>
-          <p class="uc-s-p">UniCircle is a Beyond Borders Marketing Consultancy project, built together with students and alumni who wanted a better way to stay in touch. We're early — deliberately so. No bought followers, no invented numbers: example content is always labelled as a sample.</p>
-          <p class="uc-s-p">Questions, ideas or want to bring UniCircle to your university? Write to <a href="mailto:hello@unicircle.eu" style="text-decoration:underline;">hello@unicircle.eu</a>.</p>
+        <div class="uc-v2-block">
+          <div class="uc-eyebrow">How it works</div>
+          <h3 class="uc-v2-h3">Four steps, <em>no programme to enrol in.</em></h3>
+          <ol class="uc-s-steps uc-v2-steps-line">
+            <li class="uc-s-reveal"><b>An alumnus opts in</b><span>Flips "open to mentor" and writes a one-line offer.</span></li>
+            <li class="uc-s-reveal"><b>A student browses</b><span>Mentors filtered by programme, sector and city.</span></li>
+            <li class="uc-s-reveal"><b>The student asks</b><span>A goal, a format and a short note, sent as a message.</span></li>
+            <li class="uc-s-reveal"><b>The alumnus decides</b><span>Yes, a different format, or a polite no.</span></li>
+          </ol>
         </div>
       </div>
     </section>
 
-    <!-- ===== THE OFFER: the waitlist-only stack, then a mid-page ask ===== -->
-    <section class="uc-v2-chapter uc-v2-offer uc-s-section--tint" id="offer">
-      <div class="uc-s-inner uc-s-narrow uc-v2-center uc-s-reveal">
-        <div class="uc-eyebrow">Only for the waitlist</div>
-        <h2 class="uc-s-h2">Be first <em>in the circle.</em></h2>
-        <p class="uc-s-p">We open UniCircle city by city, in small waves. Joining now gets you this:</p>
-        <!-- Incentive (D2) -->
-        <div class="uc-v2-perks">
-          <ul>
-            <li><b>Founding circle.</b> The first wave in each city gets in first, with a permanent founding-member mark on their profile.</li>
-            <li><b>Founding mentors.</b> Alumni who join now show up first on the map and in the directory.</li>
-            <li data-survey-only hidden><b>Shape it with us.</b> Waitlist members are asked which features come first.</li>
-          </ul>
-        </div>
-        <div class="uc-s-hero-actions" style="margin-top:28px;">
-          <a class="uc-btn-dark" href="#join">Join the waitlist →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== 04 · THE MAP (the value-first demo; its privacy rules live in #privacy) ===== -->
+    <!-- ===== 02 · THE MAP (the value-first demo; its privacy rules live in #privacy) ===== -->
     <section class="uc-v2-chapter" id="map">
       <div class="uc-s-inner">
         <header class="uc-v2-head uc-s-reveal">
-          <div class="uc-eyebrow">04 · The map</div>
+          <div class="uc-eyebrow">02 · The map</div>
           <h2 class="uc-s-h2">See where your people are. <em>Not where they live.</em></h2>
           <p class="uc-s-p">Red dots are alumni, blue dots are students. Each dot is a neighbourhood — never a street — so you can find the people you studied with in any city without anyone giving away their address.</p>
         </header>
@@ -316,11 +223,11 @@
       </div>
     </section>
 
-    <!-- ===== 05 · MOMENTS IT HELPS (was: Student exchange; id kept so old links still land) ===== -->
+    <!-- ===== 03 · MOMENTS IT HELPS (was: Student exchange; id kept so old links still land) ===== -->
     <section class="uc-v2-chapter uc-s-section--tint" id="exchange">
       <div class="uc-s-inner">
         <header class="uc-v2-head uc-s-reveal">
-          <div class="uc-eyebrow">05 · Moments it helps</div>
+          <div class="uc-eyebrow">03 · Moments it helps</div>
           <h2 class="uc-s-h2">Going abroad? <em>Your course is already there.</em></h2>
           <p class="uc-s-p">You land in a new city knowing nobody — while half your tutorial is a tram ride away. UniCircle shows who from your course and tutorial group is in the same city, or one district over, plus the alumni who already call it home.</p>
           <div class="uc-s-hero-actions">
@@ -338,12 +245,41 @@
       </div>
     </section>
 
-    <!-- ===== 06 · PRIVATE BY DESIGN (one list: replaces the map's two privacy blocks, the universities
-         compliance list, "What we promise" and the FAQ items that repeated them) ===== -->
-    <section class="uc-v2-chapter" id="privacy">
+    <!-- ===== 04 · WHY WE BUILT THIS (was: About, trimmed; origin story first) =====
+         [NEEDS] the team's own real moment; real names or photos only with the team's OK. -->
+    <section class="uc-v2-chapter" id="about">
       <div class="uc-s-inner">
         <header class="uc-v2-head uc-s-reveal">
-          <div class="uc-eyebrow">06 · Private by design</div>
+          <div class="uc-eyebrow">04 · Why we built this</div>
+          <h2 class="uc-s-h2">It started in an alumni office. <em>It outgrew one faculty.</em></h2>
+        </header>
+
+        <div class="uc-v2-block uc-s-split" style="align-items:start;">
+          <div class="uc-s-reveal">
+            <p class="uc-s-p">UniCircle began as a simple idea inside a European business school's alumni office: richer alumni data, and genuinely more value for alumni, through a platform built for them rather than rented from a feed.</p>
+            <p class="uc-s-p">As we explored it, the idea outgrew a single faculty. It called for a broader scale — an independent platform that interconnects universities across Europe, and strengthens the network in two directions: <b>between alumni</b>, and <b>between alumni and the students coming up behind them</b>.</p>
+            <p class="uc-s-p">The name says the same thing: <em>Uni</em>versity and <em>Uni</em>ted, drawn into one Circle. A circle has no start and no end — and neither does your relationship with the people you studied with.</p>
+          </div>
+          <figure class="uc-s-figure uc-s-reveal" style="margin:0;">
+            <img src="assets/img/campus-tapijn.jpg" alt="A university campus" loading="lazy">
+          </figure>
+        </div>
+
+        <div class="uc-v2-block uc-s-narrow uc-v2-center uc-s-reveal">
+          <div class="uc-eyebrow">Who's behind it</div>
+          <h3 class="uc-v2-h3">A small team, building in the open.</h3>
+          <p class="uc-s-p">UniCircle is a Beyond Borders Marketing Consultancy project, built together with students and alumni who wanted a better way to stay in touch. We're early — deliberately so. No bought followers, no invented numbers: example content is always labelled as a sample.</p>
+          <p class="uc-s-p">Questions, ideas or want to bring UniCircle to your university? Write to <a href="mailto:hello@unicircle.eu" style="text-decoration:underline;">hello@unicircle.eu</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 05 · PRIVATE BY DESIGN (one list: replaces the map's two privacy blocks, the universities
+         compliance list, "What we promise" and the FAQ items that repeated them) ===== -->
+    <section class="uc-v2-chapter uc-s-section--tint" id="privacy">
+      <div class="uc-s-inner">
+        <header class="uc-v2-head uc-s-reveal">
+          <div class="uc-eyebrow">05 · Private by design</div>
           <h2 class="uc-s-h2">Privacy isn't a setting here. <em>It's how it's built.</em></h2>
           <p class="uc-s-p">UniCircle only works if people trust it. So every choice is yours, and every default is the private one. Read our <a href="privacy.html" style="text-decoration:underline;">privacy policy</a>.</p>
         </header>
@@ -363,11 +299,31 @@
       </div>
     </section>
 
-    <!-- ===== 07 · FOR UNIVERSITIES (a different audience: moved down, shortened) ===== -->
+    <!-- ===== THE OFFER: the waitlist-only stack, then a mid-page ask ===== -->
+    <section class="uc-v2-chapter uc-v2-offer" id="offer">
+      <div class="uc-s-inner uc-s-narrow uc-v2-center uc-s-reveal">
+        <div class="uc-eyebrow">Only for the waitlist</div>
+        <h2 class="uc-s-h2">Be first <em>in the circle.</em></h2>
+        <p class="uc-s-p">We open UniCircle city by city, in small waves. Joining now gets you this:</p>
+        <!-- Incentive (D2) -->
+        <div class="uc-v2-perks">
+          <ul>
+            <li><b>Founding circle.</b> The first wave in each city gets in first, with a permanent founding-member mark on their profile.</li>
+            <li><b>Founding mentors.</b> Alumni who join now show up first on the map and in the directory.</li>
+            <li data-survey-only hidden><b>Shape it with us.</b> Waitlist members are asked which features come first.</li>
+          </ul>
+        </div>
+        <div class="uc-s-hero-actions" style="margin-top:28px;">
+          <a class="uc-btn-dark" href="#join">Join the waitlist →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 06 · FOR UNIVERSITIES (a different audience: moved down, shortened) ===== -->
     <section class="uc-v2-chapter uc-s-section--tint" id="universities">
       <div class="uc-s-inner">
         <header class="uc-v2-head uc-s-reveal">
-          <div class="uc-eyebrow">07 · For universities</div>
+          <div class="uc-eyebrow">06 · For universities</div>
           <h2 class="uc-s-h2">Own your alumni relationship. <em>Don't rent it.</em></h2>
           <p class="uc-s-p">UniCircle gives alumni offices, careers services and faculties a European, university-owned network — where alumni keep their own details current, mentor the students behind them and actually turn up when you organise something.</p>
           <div class="uc-s-hero-actions">
@@ -506,11 +462,10 @@
       <div class="uc-s-footer-top">
         <a class="uc-s-brand uc-s-brand--light" href="#top"><img src="assets/img/logo-circle.jpg" alt=""><span class="uc-serif">UniCircle</span></a>
         <nav class="uc-s-footer-links" aria-label="Footer">
-          <a href="#warm">Warm intros</a>
           <a href="#mentoring">Mentoring</a>
-          <a href="#about">Our story</a>
           <a href="#map">The map</a>
           <a href="#universities">For universities</a>
+          <a href="#about">About</a>
           <a href="#faq">Questions</a>
           <a href="#join">Waitlist</a>
         </nav>

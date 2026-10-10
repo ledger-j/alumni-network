@@ -1,5 +1,5 @@
 /* UniCircle — V2 waitlist questions (window.UCSurveyV2), shared by waitlist-v2.html,
-   landing-v2.html and landing-brunson-v2.html. Daniel Priestley's five qualification
+   landing-v2.html (Brunson order) and landing-value-first-v2.html. Daniel Priestley's five qualification
    questions (each with "Other", plus an optional sixth) are answered BEFORE the spot is
    saved: the shared form (js/uc-waitlist-form.js, unchanged) saves the sign-up only once
    they are, then the answers go in one POST to the PocketBase `waitlist_survey`

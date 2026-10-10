@@ -29,6 +29,8 @@ html.uc-v2-doc { scroll-behavior: smooth; }
 /* ---- one-page landing: hero ---- */
 .uc-v2-hero { min-height: auto; margin-top: -72px; padding: 170px 16px 72px; }
 .uc-v2-hero .uc-lead { max-width: 600px; }
+/* the plain "what it is" line under the hook, so the first screen says what UniCircle is */
+.uc-v2-hero .uc-v2-what { display: block; margin-top: 10px; color: var(--uc-ink); font-weight: 600; }
 .uc-v2-hero .uc-s-wl { max-width: 420px; margin: 0 auto; }
 .uc-v2-herofoot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--uc-ink-2); }
 .uc-v2-herofoot a { color: var(--uc-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
