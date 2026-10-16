@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
   <link rel="stylesheet" href="css/site.css?v=1.0.0">
   <link rel="stylesheet" href="css/waitlist.css?v=1.1.1">
-  <link rel="stylesheet" href="css/v2.css?v=1.6.3">
+  <link rel="stylesheet" href="css/v2.css?v=1.7.5">
 </head>
 <body>
 <div class="uc-page uc-site uc-wl uc-v2" id="top">
@@ -47,7 +47,7 @@
       </div>
       <div class="uc-s-actions">
         <a class="uc-s-signin" href="index.html">Sign in</a>
-        <a class="uc-btn-dark" href="#join">Join the waitlist</a>
+        <a class="uc-btn-dark" href="waitlist-v2.html">Join the waitlist</a>
       </div>
     </nav>
   </header>
@@ -58,19 +58,18 @@
       <canvas class="uc-hero-canvas uc-v2-sides" id="v2-constellation" aria-hidden="true"></canvas>
 
       <div class="uc-eyebrow" style="margin-bottom:18px;">The circle is opening · waitlist</div>
-      <h1 class="uc-hero-h1"><span>Your circle,</span> <em>for life.</em></h1>
+      <h1 class="uc-hero-h1">UniCircle</h1>
       <p class="uc-lead">Messaging alumni on LinkedIn and never hearing back? UniCircle connects you with alumni who already agreed to help.
         <span class="uc-v2-what">For an internship, career advice, or the city you go on exchange in.</span></p>
 
       <div class="uc-v2-herogrid">
-        <!-- Hero CTA (Maxime, 10 Oct): no form up here. Signing up from this page always happens in the
-             closing form (#join); waitlist-v2.html is the separate page for people sent straight to the waitlist. -->
+        <!-- Hero CTA (Maxime, 10 Oct): no form up here. 16 Oct: the button opens the waitlist page
+             (waitlist-v2.html, the step-by-step sign-up), like the nav button. -->
         <div class="uc-login-card uc-s-wl">
           <div class="uc-eyebrow" style="text-align:left;">Join the waitlist</div>
-          <p style="margin:12px 0 18px;">Be first in the circle when your city opens.</p>
-          <a class="uc-btn-dark uc-wl-submit" href="#join" style="display:flex;justify-content:center;">Join the waitlist →</a>
-          <!-- Incentive (D2): said next to each sign-up, nowhere else -->
-          <p class="uc-v2-perkline"><b>Founding circle:</b> the first wave in each city gets in first.</p>
+          <p style="margin:12px 0 18px;">Be in the first wave when the circle opens.</p>
+          <a class="uc-btn-dark uc-wl-submit" href="waitlist-v2.html" style="display:flex;justify-content:center;">Join the waitlist →</a>
+          <!-- 16 Oct (Maxime): no "Founding circle" line here or in the waitlist page's sign-up card. -->
           <div class="uc-v2-herofoot">
             <a href="#mentoring">See how it works ↓</a>
             <span>Already a member? <a href="index.html">Sign in</a></span>
@@ -78,14 +77,14 @@
         </div>
 
         <div class="uc-v2-heromore">
-          <!-- AI matching (Maxime, 9 Oct): promises the hackathon team's matching. Open thread: fold that logic into unicircle.eu or park it (active/context/open-threads.md). Confirm with the team before this goes public. -->
+          <!-- 16 Oct (Maxime): the same three bullets as waitlist-v2.html; change both together. -->
           <ul class="uc-v2-value">
-            <li><b>They already said yes.</b> Every alumnus you can message chose to help, and says exactly what they offer.</li>
-            <li><b>The right person, found for you.</b> Tell us what you need and an AI suggests the alumni best placed to help: same programme, same sector, or the same city.</li>
-            <li><b>Free for students.</b> Nobody pays to message an alumnus.</li>
+            <li><b>Warm introductions, not cold messages.</b> Alumni who chose to help, so you don't appear as another LinkedIn request.</li>
+            <li><b>Matched by need.</b> Looking for an internship, career advice, or tips on the city you go on exchange to? You get the alumni who can help with exactly that.</li>
+            <li><b>Opened in small waves, on purpose.</b> Fewer people, real conversations, and quality kept high.</li>
           </ul>
           <!-- Proof (D4, neutral). Real proof only: nothing invented in the meantime. -->
-          <p class="uc-v2-proof">Built by students and alumni who wanted this for themselves.</p>
+          <p class="uc-v2-proof">Built by students and alumni.</p>
           <!-- [NEEDS] before public: Maxime confirms it was Yoeri Dassen and gets his OK to use his name. Source: Maxime's LinkedIn post about the MAIN hackathon (active/context/sources/linkedin-post-hackathon-yc.txt). -->
           <figure class="uc-v2-quote" data-variant="quote" hidden>
             <blockquote>“This should exist!”</blockquote>
@@ -105,17 +104,18 @@
 
         <div class="uc-v2-block">
           <ol class="uc-s-steps uc-v2-steps-line">
-            <li class="uc-s-reveal"><b>Say what you need</b><span>One line is enough.</span></li>
-            <li class="uc-s-reveal"><b>Get your match</b><span>We pick the alumni who can help.</span></li>
-            <li class="uc-s-reveal"><b>Ask for their offer</b><span>Like one of these.</span></li>
+            <li class="uc-s-reveal"><b>Say what you need</b><span>A little context helps us match you.</span></li>
+            <li class="uc-s-reveal"><b>Get your match</b><span>We help you find the alumni who can help you.</span></li>
+            <li class="uc-s-reveal"><b>Ask the best alumni for your need</b><span>Like one of these.</span></li>
           </ol>
         </div>
 
         <div class="uc-v2-block uc-s-narrow" style="margin-left:auto;margin-right:auto;">
           <div class="uc-wl-mentor-demo uc-s-reveal" aria-label="Sample mentor offers">
-            <div class="uc-wl-offer"><span class="uc-avatar-initials">AM</span><div><b>Alumna · Finance, '14</b><span>Amsterdam · Zuid</span><em>“30-min call on breaking into asset management.”</em></div></div>
-            <div class="uc-wl-offer"><span class="uc-avatar-initials">TK</span><div><b>Alumnus · Data Science, '19</b><span>Berlin · Kreuzberg</span><em>“I review CVs for analytics roles. Send yours.”</em></div></div>
-            <div class="uc-wl-offer"><span class="uc-avatar-initials">LS</span><div><b>Alumna · Law, '09</b><span>Brussels · Ixelles</span><em>“Coffee for anyone moving to Brussels.”</em></div></div>
+            <!-- 16 Oct (Maxime): each sample shows the alumnus's path, not a quoted offer. Invented, labelled Sample below. -->
+            <div class="uc-wl-offer"><span class="uc-avatar-initials">AM</span><div><b>Alumna · Finance, '14</b><span>Amsterdam · Zuid</span><em>Started in audit, now a portfolio manager in asset management.</em></div></div>
+            <div class="uc-wl-offer"><span class="uc-avatar-initials">TK</span><div><b>Alumnus · Data Science, '19</b><span>Berlin · Kreuzberg</span><em>From data analyst to analytics lead at a start-up.</em></div></div>
+            <div class="uc-wl-offer"><span class="uc-avatar-initials">LS</span><div><b>Alumna · Law, '09</b><span>Brussels · Ixelles</span><em>Trainee at an EU institution, now a competition lawyer.</em></div></div>
             <p class="uc-wl-note">Sample · illustrative examples, not real members.</p>
           </div>
         </div>
@@ -132,7 +132,7 @@
         </header>
         <div class="uc-v2-block">
           <div class="uc-s-grid-3">
-            <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">✎</div><h3>You set the scope</h3><p>Your one-line offer tells students exactly what to ask for, and nothing more.</p></div>
+            <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">✎</div><h3>You set the scope</h3><p>Your description matches you with students looking for insight from people like you.</p></div>
             <!-- D1 decided 8 Oct: waves capped -->
             <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">◌</div><h3>Never flooded</h3><p>We open in small waves, so you get a few real requests, not an inbox full of strangers.</p></div>
             <div class="uc-s-card uc-s-reveal"><div class="uc-s-icon" aria-hidden="true">Ⅱ</div><h3>Pause any time</h3><p>Busy quarter? Switch it off, and back on when you have time.</p></div>
@@ -205,39 +205,66 @@
           <p class="uc-v2-proof"><b>Founding circle.</b> The first wave in each city gets in first, with a permanent founding-member mark on their profile.</p>
         </div>
         <div class="uc-login-card uc-wl-card">
+          <!-- 16 Oct (Maxime): the same three steps as waitlist-v2.html, each asking a little more:
+               1. who you are → 2. the questions, one per screen → 3. consent + "Join the waitlist", which saves
+               the spot and then the answers. Nothing is saved before step 3. Steps: js/uc-survey-v2.js → steps
+               (without it, one form). With the questions switched off, step 2 is skipped. -->
           <form id="v2-wl-join" class="uc-form" novalidate>
-            <div class="uc-eyebrow" style="text-align:left;">I am</div>
-            <div class="uc-tabs" role="radiogroup" aria-label="I am">
-              <button type="button" class="uc-tab active" data-role="student" role="radio" aria-checked="true">Student</button>
-              <button type="button" class="uc-tab" data-role="alumnus" role="radio" aria-checked="false">Alumni</button>
-              <button type="button" class="uc-tab" data-role="university_staff" role="radio" aria-checked="false">University</button>
+            <!-- Step 1: about you -->
+            <div class="uc-v2-step" data-step="details">
+              <div class="uc-eyebrow" style="text-align:left;">I am</div>
+              <div class="uc-tabs" role="radiogroup" aria-label="I am">
+                <button type="button" class="uc-tab active" data-role="student" role="radio" aria-checked="true">Student</button>
+                <button type="button" class="uc-tab" data-role="alumnus" role="radio" aria-checked="false">Alumni</button>
+                <button type="button" class="uc-tab" data-role="university_staff" role="radio" aria-checked="false">University</button>
+              </div>
+
+              <input name="name" type="text" placeholder="Full name" autocomplete="name" required class="uc-input-pill" maxlength="120">
+              <input name="email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">
+
+              <div class="uc-wl-row">
+                <input name="city" type="text" placeholder="City (for the map)" autocomplete="address-level2" required class="uc-input-pill" maxlength="80">
+                <input name="neighbourhood" type="text" placeholder="Neighbourhood (optional)" class="uc-input-pill" maxlength="80">
+              </div>
+
+              <button type="button" class="uc-btn-dark uc-v2-continue" data-next hidden>Continue →</button>
+              <p class="uc-v2-cta-note"><span data-survey-off>Takes 20 seconds.</span><span data-survey-only hidden>Next: a few quick taps that help us open the right circles first.</span></p>
             </div>
 
-            <input name="email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">
-            <input name="city" type="text" placeholder="City you're in or moving to" autocomplete="address-level2" required class="uc-input-pill" maxlength="80">
+            <!-- Step 2: Priestley's five questions (+ optional sixth), one per screen
+                 (js/uc-survey-v2.js → inline renders them, → steps pages through them). -->
+            <div class="uc-v2-step" data-step="questions">
+              <div class="uc-v2-inline-q" hidden></div>
+              <div class="uc-v2-survey-nav">
+                <button type="button" class="uc-v2-textbtn" data-back hidden>← Back</button>
+                <button type="button" class="uc-btn-dark" data-next hidden>Next →</button>
+              </div>
+            </div>
 
-            <!-- Priestley's five questions (+ optional sixth), answered right here and saved with the spot
-                 (js/uc-survey-v2.js → inline). Empty and hidden while the questions are switched off. -->
-            <div class="uc-v2-inline-q" hidden></div>
+            <!-- Step 3: save the spot -->
+            <div class="uc-v2-step" data-step="join">
+              <p class="uc-v2-recap" data-recap></p>
 
-            <!-- Interest chips only while the questions are off; with them on, the questions say more. -->
-            <fieldset class="uc-wl-chips" data-survey-off>
-              <legend class="uc-eyebrow">I'm most interested in</legend>
-              <label data-for="alumnus" hidden><input type="checkbox" name="interests" value="mentor_others"><span>Mentoring students</span></label>
-              <label data-for="student"><input type="checkbox" name="interests" value="find_a_mentor" checked><span>Finding a mentor</span></label>
-              <label><input type="checkbox" name="interests" value="alumni_map" checked><span>The alumni map</span></label>
-              <label data-for="student"><input type="checkbox" name="interests" value="student_exchange" checked><span>Student exchange</span></label>
-              <label><input type="checkbox" name="interests" value="events"><span>Events &amp; chapters</span></label>
-              <label><input type="checkbox" name="interests" value="jobs"><span>Jobs</span></label>
-            </fieldset>
+              <!-- Interest chips only while the questions are off; with them on, the questions say more. -->
+              <fieldset class="uc-wl-chips" data-survey-off>
+                <legend class="uc-eyebrow">I'm most interested in</legend>
+                <label data-for="alumnus" hidden><input type="checkbox" name="interests" value="mentor_others"><span>Mentoring students</span></label>
+                <label data-for="student"><input type="checkbox" name="interests" value="find_a_mentor" checked><span>Finding a mentor</span></label>
+                <label><input type="checkbox" name="interests" value="alumni_map" checked><span>The alumni map</span></label>
+                <label data-for="student"><input type="checkbox" name="interests" value="student_exchange" checked><span>Student exchange</span></label>
+                <label><input type="checkbox" name="interests" value="events"><span>Events &amp; chapters</span></label>
+                <label><input type="checkbox" name="interests" value="jobs"><span>Jobs</span></label>
+              </fieldset>
 
-            <label class="uc-wl-consent">
-              <input type="checkbox" name="consent" required>
-              <span>Email me when my spot opens. I can unsubscribe any time; my details are only used for UniCircle. <a href="privacy.html">Privacy</a></span>
-            </label>
+              <label class="uc-wl-consent">
+                <input type="checkbox" name="consent" required>
+                <span>Email me when my spot opens. I can unsubscribe any time; my details are only used for UniCircle. <a href="privacy.html">Privacy</a></span>
+              </label>
 
-            <button class="uc-btn-dark uc-wl-submit" type="submit">Join the waitlist →</button>
-            <p class="uc-v2-cta-note"><span data-survey-off>Takes 20 seconds.</span><span data-survey-only hidden>About a minute. Your answers help us open the right circles first.</span></p>
+              <button class="uc-btn-dark uc-wl-submit" type="submit">Join the waitlist →</button>
+              <button type="button" class="uc-v2-textbtn" data-back hidden>← Back</button>
+            </div>
+
             <p class="uc-err" role="alert" hidden></p>
           </form>
 
@@ -271,7 +298,7 @@
           <a href="#alumni">For alumni</a>
           <a href="#map">The map</a>
           <a href="#faq">Questions</a>
-          <a href="#join">Waitlist</a>
+          <a href="waitlist-v2.html">Waitlist</a>
         </nav>
       </div>
       <div class="uc-s-rule"></div>
@@ -286,7 +313,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 <script src="js/uc-map.js?v=1.0.1" defer></script>
 <script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
-<script src="js/uc-survey-v2.js?v=2.3.0" defer></script>
-<script src="js/landing-v2.js?v=1.5.0" defer></script>
+<script src="js/uc-survey-v2.js?v=2.6.0" defer></script>
+<script src="js/landing-v2.js?v=1.7.0" defer></script>
 </body>
 </html>
