@@ -7,6 +7,7 @@
 
      <div class="uc-v2-survey" data-survey="off" hidden></div>   (inside the success card)
      <div class="uc-v2-inline-q" hidden></div>                    (inside a form with the questions)
+     UCSurveyV2.steps(form, done);                               // first: the form in three steps
      const joined = UCSurveyV2.inline(form, done, { source });   // BEFORE UCWaitlist.mount
      UCWaitlist.mount(form, done, { onDone(body, dup) { joined(body, dup); } });
      UCSurveyV2.handoff(heroForm, heroDone, { source })          // hero form → waitlist-v2.html
@@ -16,7 +17,7 @@
    Off on the public site until the backend collection exists (the form then works
    exactly like V1): set data-survey="on" on the element. Always on for local previews
    and with ?survey=1. Answers are sent as short codes (e.g. obstacle: "no_reply") so
-   they can be counted; `tried` is a ", " list.
+   they can be counted; pick-several answers (`obstacle` and `tried`, 16 Oct) are a ", " list.
    API base: same rule as js/uc-waitlist-form.js (?api=… → localStorage → live). */
 (function () {
   'use strict';
@@ -27,16 +28,16 @@
   // willingness-to-pay). Budget is follow-through (students), time (alumni), money (universities).
   const QUESTIONS = {
     student: [
-      { key: 'situation', q: 'Which best describes you right now?', options: [['bachelor_first', 'First-year bachelor'], ['bachelor_later', 'Later-year bachelor'], ['master', 'Master'], ['exchange', 'On exchange'], ['graduating', 'Graduating this year']] },
-      { key: 'goal', q: 'What do you most want from alumni?', options: [['sector', 'Get into a specific sector or company'], ['path', 'Choose my master or career path'], ['city', 'Settle into a new city'], ['mentor', 'Find a long-term mentor'], ['network_abroad', 'Build a network in another country']] },
-      { key: 'obstacle', q: 'What stops you today?', options: [['dont_know_who', 'I don’t know who to ask'], ['no_reply', 'My messages get no reply'], ['dont_know_what', 'I don’t know what to ask'], ['out_of_reach', 'Senior alumni feel out of reach'], ['no_time', 'No time to network']] },
+      { key: 'situation', q: 'Which best describes you right now?', options: [['bachelor_first', 'First-year bachelor'], ['bachelor_second', 'Second-year bachelor'], ['bachelor_third', 'Third-year bachelor'], ['master', 'Master'], ['exchange', 'On exchange']] },
+      { key: 'goal', q: 'What do you most want from alumni?', options: [['internship', 'Find an internship'], ['sector', 'Get into a specific sector or company'], ['path', 'Choose my master or career path'], ['city', 'Insight on a new city'], ['mentor', 'Find a long-term mentor'], ['network_abroad', 'Build a network in another country']] },
+      { key: 'obstacle', many: true, q: 'What stops you today?', options: [['dont_know_who', 'I don’t know who to ask'], ['no_reply', 'My messages get no reply'], ['dont_know_what', 'I don’t know what to ask'], ['out_of_reach', 'Senior alumni feel out of reach'], ['no_time', 'No time to network']] },
       { key: 'tried', many: true, q: 'What have you already tried?', options: [['linkedin', 'LinkedIn search and messages'], ['career_services', 'Career services'], ['association_events', 'Study-association events'], ['professors_friends', 'Asking professors or friends'], ['nothing', 'Nothing yet']] },
       { key: 'commitment', q: 'What would you do in return for a 20-minute call with the right alumnus?', options: [['prepare', 'Prepare 3 sharp questions'], ['follow_up', 'Send a thank-you and an update later'], ['pay_forward', 'Help a younger student the same way'], ['nothing', 'Nothing, I’d just want the call']] },
     ],
     alumnus: [
       { key: 'situation', q: 'When did you graduate?', options: [['under_5', 'Under 5 years ago'], ['5_15', '5–15 years ago'], ['over_15', '15+ years ago']], extra: { key: 'sector', placeholder: 'Your sector (optional)' } },
       { key: 'goal', q: 'Why would you join?', options: [['give_back', 'Give back to students'], ['recruit', 'Spot and recruit talent'], ['reconnect', 'Reconnect with my year'], ['city_network', 'Grow my network in my city'], ['cofounders', 'Find partners or co-founders']] },
-      { key: 'obstacle', q: 'What stops you from helping students today?', options: [['cold_requests', 'Too many cold requests'], ['no_small_doses', 'No easy way to help in small doses'], ['lost_touch', 'Lost touch with the university'], ['linkedin_noisy', 'LinkedIn is too noisy']] },
+      { key: 'obstacle', many: true, q: 'What stops you from helping students today?', options: [['cold_requests', 'Too many cold requests'], ['no_small_doses', 'No easy way to help in small doses'], ['lost_touch', 'Lost touch with the university'], ['linkedin_noisy', 'LinkedIn is too noisy']] },
       { key: 'tried', many: true, q: 'What have you already tried?', options: [['association_events', 'Alumni-association events'], ['linkedin_groups', 'LinkedIn groups'], ['faculty_mentoring', 'A faculty mentoring programme'], ['nothing', 'Nothing yet']] },
       { key: 'commitment', q: 'How much time could you give?', options: [['quarterly', 'One call a quarter'], ['monthly', 'One a month'], ['2_3_monthly', 'Two or three a month'], ['more', 'More']] },
     ],
@@ -243,6 +244,116 @@
     };
   }
 
+  // The form in steps, each asking a little more (Maxime, 16 Oct): 1. about you → 2. the questions,
+  // one per screen → 3. consent + "Join the waitlist". Nothing is saved before step 3: until then
+  // "Continue", "Next" and Enter only move forward. Used by waitlist-v2.html and the closing form of
+  // landing-v2.html. Needs [data-step="details|questions|join"] panes, [data-next] / [data-back]
+  // buttons (hidden in the HTML, shown here) and an optional [data-recap] line. Without this script the
+  // panes all show, as one form. With the questions off, step 2 is skipped. Call BEFORE inline() and
+  // UCWaitlist.mount, so this submit check runs first.
+  function steps(form, done) {
+    const panes = {};
+    (form ? [...form.querySelectorAll('[data-step]')] : []).forEach((p) => { panes[p.dataset.step] = p; });
+    if (!panes.details || !panes.join) return;
+    const withQuestions = !!panes.questions && enabled(done && done.querySelector('.uc-v2-survey'));
+    const order = withQuestions ? ['details', 'questions', 'join'] : ['details', 'join'];
+    const card = form.closest('.uc-login-card') || form;
+    const err = form.querySelector('.uc-err');
+    const recap = form.querySelector('[data-recap]');
+    const f = form.elements;
+    const val = (n) => (f[n] && f[n].value ? f[n].value.trim() : '');
+    const questions = () => [...form.querySelectorAll('.uc-v2-inline-q .uc-v2-iq')];
+    let step = 'details';
+    let qi = 0;
+    // Progress on the question screens only, "Question 2 of 6" + a bar (Maxime, 16 Oct): none on the
+    // details step. It lives inside the questions pane, so it hides with it.
+    const progress = document.createElement('div');
+    progress.className = 'uc-v2-qprogress';
+    progress.innerHTML = '<span aria-live="polite"></span><div class="uc-v2-survey-bar" aria-hidden="true"><i></i></div>';
+    if (withQuestions) panes.questions.prepend(progress);
+
+    function fail(msg, input) {
+      if (err) { err.textContent = msg; err.hidden = false; }
+      if (input) input.focus();
+      return false;
+    }
+    // Step 1's own check; the shared form checks email, city and consent again when it saves.
+    function detailsOk() {
+      if (f.name && !val('name')) return fail('What’s your name?', f.name);
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val('email'))) return fail('Please enter a valid email address.', f.email);
+      if (f.city && !val('city')) return fail('Which city are you in? City is enough, no street needed.', f.city);
+      return true;
+    }
+    // Answered: a chip is picked or the text box has words. "Anything else" (no data-key) is optional.
+    const answered = (q) => !q.dataset.key || !!q.querySelector('.uc-v2-chip[aria-pressed="true"]')
+      || [...q.querySelectorAll('textarea')].some((t) => t.value.trim());
+
+    function show(name, index, quiet) {
+      if (err) err.hidden = true;
+      step = name;
+      Object.keys(panes).forEach((k) => { panes[k].hidden = k !== name; });
+      let target = panes[name];
+      if (name === 'questions') {
+        const all = questions();
+        qi = Math.max(0, Math.min(index || 0, all.length - 1));
+        all.forEach((q, i) => { q.hidden = i !== qi; });
+        target = all[qi];
+        progress.firstChild.textContent = 'Question ' + (qi + 1) + ' of ' + all.length;
+        progress.querySelector('i').style.width = Math.round((qi + 1) / all.length * 100) + '%';
+      }
+      if (name === 'join' && recap) {
+        const first = val('name').split(/\s+/)[0];
+        const where = [val('neighbourhood'), val('city')].filter(Boolean).join(', ');
+        recap.textContent = 'Last step' + (first ? ', ' + first : '') + ': save your spot in ' + where + '.';
+      }
+      if (quiet) return;
+      card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      (target.querySelector('input:not([type=checkbox]), .uc-v2-chip, textarea, button') || target).focus({ preventScroll: true });
+    }
+    function next() {
+      if (step === 'details') { if (detailsOk()) show(order[1]); return; }
+      if (step !== 'questions') return;
+      const all = questions();
+      if (!answered(all[qi])) {
+        all[qi].classList.add('uc-v2-iq--missing');
+        return fail(all[qi].querySelector('textarea') ? 'A sentence is enough to continue.' : 'Pick an answer to continue.');
+      }
+      if (qi < all.length - 1) show('questions', qi + 1); else show('join');
+    }
+    function back() {
+      if (step === 'questions' && qi > 0) show('questions', qi - 1);
+      else if (step === 'join' && withQuestions) show('questions', questions().length - 1);
+      else show('details');
+    }
+
+    form.addEventListener('click', (e) => {
+      if (e.target.closest('[data-next]')) return next();
+      if (e.target.closest('[data-back]')) return back();
+      // One tap is enough on a single-choice question: move on just after the pick.
+      // Not for "Other" (they type next), pick-several, or the alumni sector box.
+      const chip = e.target.closest('.uc-v2-chip');
+      const q = chip && chip.closest('.uc-v2-iq');
+      if (!q || step !== 'questions') return;
+      if (err) err.hidden = true;
+      if (chip.dataset.v === OTHER[0] || q.querySelector('.uc-v2-survey-hint, .uc-v2-survey-extra')) return;
+      setTimeout(() => { if (step === 'questions' && questions()[qi] === q && answered(q)) next(); }, 280);
+    });
+    // Enter in a text box moves forward instead of saving. On the last step the save goes ahead,
+    // unless a question was left open (then back to it).
+    form.addEventListener('submit', (e) => {
+      const open = step === 'join' && withQuestions ? questions().findIndex((q) => !answered(q)) : -1;
+      if (step === 'join' && open < 0) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (step !== 'join') return next();
+      show('questions', open);
+      fail('Please answer this one to secure your spot.');
+    }, true);
+
+    form.querySelectorAll('[data-next], [data-back]').forEach((b) => { b.hidden = false; });
+    show('details', 0, true);
+  }
+
   async function save(el, payload) {
     const show = (html) => { el.innerHTML = html; el.hidden = false; };
     try {
@@ -274,5 +385,5 @@
     });
   }
 
-  window.UCSurveyV2 = { enabled, inline, handoff, prefill, bindShare };
+  window.UCSurveyV2 = { enabled, inline, steps, handoff, prefill, bindShare };
 })();

@@ -34,7 +34,9 @@
     // Priestley's questions before the spot is saved (no-op while switched off): shown right
     // in the form when it has a .uc-v2-inline-q box (closing form); the short hero form
     // instead takes the visitor to waitlist-v2.html, details filled in, to answer them there.
-    // Must be set up before the shared form below.
+    // Must be set up before the shared form below. A form with [data-step] panes (the closing form,
+    // 16 Oct) first gets the same three steps as waitlist-v2.html; other forms are left as they are.
+    if (survey) survey.steps(form, done);
     let joined = () => {};
     if (survey && $('.uc-v2-inline-q', form)) joined = survey.inline(form, done, { source });
     else if (survey) survey.handoff(form, done, { source });
@@ -54,6 +56,13 @@
   mountForm($('#v2-wl-join'), $('#v2-wl-join-done'), page + '-join');
   // Invite link → this page (the shared form's own share button points at waitlist.html).
   if (survey) $$('[data-share-v2]').forEach((b) => survey.bindShare(b));
+  // Links to the waitlist page (nav, hero, footer) keep this visit's channel tag and test settings,
+  // the same ones the hero form's hand-off forwards (js/uc-survey-v2.js → handoff).
+  $$('a[href^="waitlist-v2.html"]').forEach((a) => {
+    const to = new URL(a.getAttribute('href'), location.href);
+    ['ref', 'utm_source', 'api', 'survey'].forEach((k) => { if (qs.get(k)) to.searchParams.set(k, qs.get(k)); });
+    a.href = to.href;
+  });
 
   // ---- nav: burger, close on tap, highlight the chapter in view ----
   const burger = $('.uc-s-burger');

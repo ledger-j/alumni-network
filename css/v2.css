@@ -11,20 +11,17 @@ html.uc-v2-doc { scroll-behavior: smooth; }
 /* chapters carry their own top padding, so they can tuck under the nav pill */
 .uc-v2 .uc-v2-chapter, .uc-v2 .uc-s-cta { scroll-margin-top: 56px; }
 
-/* ---- hero dots: the same field as the main page (V1 landing, commit fb66a11): the swarm
-   stays at the sides, fading out before the middle of the screen where the headline is,
-   and is off on small screens. Same numbers as #lp-constellation in redesign.css. ---- */
+/* ---- hero dots (Maxime, 16 Oct): the swarm moves in the left and right margins only. The middle,
+   where the text and the form are, stays clear at every screen width: --clear is half the width of
+   the content column (+ a little air), and the dots fade in over 80px beyond it. Off on small screens,
+   where there are no margins. ---- */
 .uc-v2-sides {
-  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 14%, transparent 26%, transparent 74%, #000 86%, #000 100%);
-          mask-image: linear-gradient(to right, #000 0%, #000 14%, transparent 26%, transparent 74%, #000 86%, #000 100%);
+  --clear: 540px;   /* landing hero: nav pill 1024px, content 980px */
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(50% - var(--clear) - 80px), transparent calc(50% - var(--clear)), transparent calc(50% + var(--clear)), #000 calc(50% + var(--clear) + 80px), #000 100%);
+          mask-image: linear-gradient(to right, #000 0, #000 calc(50% - var(--clear) - 80px), transparent calc(50% - var(--clear)), transparent calc(50% + var(--clear)), #000 calc(50% + var(--clear) + 80px), #000 100%);
 }
 @media (max-width: 900px) { .uc-v2-sides { display: none; } }
-/* waitlist-v2: the headline sits in the LEFT column, so the swarm lives on the right, behind
-   and beside the (blurred) form card, and never under the text. */
-.uc-v2-pitch .uc-v2-sides {
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 58%, #000 70%, #000 100%);
-          mask-image: linear-gradient(to right, transparent 0%, transparent 58%, #000 70%, #000 100%);
-}
+.uc-v2-pitch .uc-v2-sides { --clear: 590px; }   /* waitlist-v2: pitch grid 1152px */
 
 /* ---- one-page landing: hero ---- */
 .uc-v2-hero { min-height: auto; margin-top: -72px; padding: 170px 16px 72px; }
@@ -43,6 +40,9 @@ html.uc-v2-doc { scroll-behavior: smooth; }
 /* ---- chapters (one per topic) and the blocks inside them ---- */
 .uc-v2-chapter { padding: 110px 16px; display: flex; justify-content: center; }
 .uc-v2-head { max-width: 880px; }
+/* Section labels ("How it works", "For alumni", "The map"): big enough to notice which section you are in (Maxime, 16 Oct) */
+.uc-v2 .uc-v2-head > .uc-eyebrow { font-size: 14px; color: var(--uc-ink); letter-spacing: .14em; margin-bottom: 6px; }
+@media (min-width: 600px) { .uc-v2 .uc-v2-head > .uc-eyebrow { font-size: 17px; } }
 .uc-v2-head .uc-s-h2 { font-size: clamp(38px, 5.4vw, 72px); line-height: 1.04; }
 .uc-v2-head .uc-s-p { font-size: clamp(17px, 2vw, 20px); max-width: 720px; }
 .uc-v2-head .uc-s-hero-actions { justify-content: flex-start; margin-top: 26px; }
@@ -77,6 +77,8 @@ html.uc-v2-doc { scroll-behavior: smooth; }
    leaving a gap above it and the eyebrow jammed underneath) ---- */
 .uc-v2 .uc-wl-card { max-width: 520px; }
 .uc-v2 .uc-wl-hero > .uc-wl-navwrap { position: absolute; }
+/* No join button in this nav (the page is the waitlist): logo left, "What is UniCircle?" centred */
+.uc-v2 .uc-wl-navwrap .uc-navpill { display: grid; grid-template-columns: 1fr auto 1fr; }
 .uc-v2 .uc-wl-hero { padding-top: 150px; }
 
 /* ==========================================================================
@@ -142,6 +144,18 @@ html.uc-v2-doc { scroll-behavior: smooth; }
 .uc-v2-iq--missing .uc-v2-chips, .uc-v2-iq--missing textarea { outline: 1px dashed #b3261e; outline-offset: 6px; border-radius: 12px; }
 .uc-v2-textbtn { border: 0; background: none; padding: 6px 0; font: 600 13px var(--uc-font-body); color: var(--uc-ink-2); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .uc-v2-textbtn:hover { color: var(--uc-ink); }
+/* the form in steps, one question per screen (js/uc-survey-v2.js → steps): waitlist-v2 + landing-v2 #join.
+   Next/Back stay hidden until the script runs; without it the steps show as one form. */
+.uc-v2-step { display: flex; flex-direction: column; gap: 12px; }
+.uc-v2-step[hidden], .uc-v2-iq[hidden], .uc-v2-step [data-next][hidden], .uc-v2-step [data-back][hidden] { display: none !important; }
+.uc-v2-step .uc-v2-inline-q { margin: 0; padding-top: 0; border-top: 0; }
+.uc-v2-qprogress { display: flex; flex-direction: column; gap: 8px; margin-bottom: 2px; }
+.uc-v2-qprogress span { font-size: 12.5px; font-weight: 600; color: var(--uc-muted); }
+.uc-v2 .uc-v2-step .uc-v2-iq .uc-v2-survey-q { margin-top: 4px; }
+.uc-v2-step .uc-v2-survey-nav { margin-top: 4px; }
+.uc-v2-continue { width: 100%; padding: 15px 20px; font-size: 15px; margin-top: 4px; cursor: pointer; }
+.uc-v2 .uc-form .uc-v2-recap { margin: 0; font-size: 15px; line-height: 1.5; color: var(--uc-ink); }
+.uc-v2-step > .uc-v2-textbtn { align-self: center; }
 .uc-v2 .uc-v2-survey-note { margin: 10px 0 0; font-size: 12px; line-height: 1.5; color: var(--uc-muted); }
 .uc-v2 .uc-v2-survey .uc-err { margin: 10px 0 0; font-size: 13px; color: #b3261e; }
 .uc-v2 .uc-v2-survey-thanks { margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--uc-ink-2); outline: none; }

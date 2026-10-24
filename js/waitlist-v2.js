@@ -2,7 +2,7 @@
    preview + constellation unchanged) with the pitch additions: a channel tag per
    visit, the invited-mentor line, and the after-sign-up step (what happens next,
    optional founder video) and Priestley's five questions before the spot is saved
-   (js/uc-survey-v2.js). */
+   (js/uc-survey-v2.js). Since 16 Oct the form runs in steps (js/uc-survey-v2.js → steps). */
 (function () {
   'use strict';
   const qs = new URLSearchParams(location.search);
@@ -30,15 +30,20 @@
   }
   if (S) S.bindShare(document.querySelector('[data-share-v2]'));
 
-  // Priestley's five questions, shown right in the form and answered before the spot is
+  // The form runs in steps (about you → the questions → save your spot; js/uc-survey-v2.js → steps,
+  // shared with the landing page's closing form). Set up first, so its submit check runs before the
+  // questions' check and the shared form's save below.
+  if (S) S.steps(form, done);
+
+  // Priestley's five questions, rendered into step 2 and answered before the spot is
   // saved (no-op while switched off). Must be set up before the shared form below.
   const joined = S ? S.inline(form, done, { source: SOURCE }) : function () {};
 
-  // Came from a hero form: say what's left and bring the first question into view.
+  // Came from a hero form: say what's left (their name) and bring the form into view.
   const handoffNote = document.getElementById('wl-handoff');
   if (handed && handoffNote && S && S.enabled(survey)) {
     handoffNote.hidden = false;
-    requestAnimationFrame(() => handoffNote.scrollIntoView({ block: 'start' }));
+    requestAnimationFrame(() => handoffNote.scrollIntoView({ block: 'center' }));
   }
 
   // Form logic is shared with the landing hero (js/uc-waitlist-form.js).
