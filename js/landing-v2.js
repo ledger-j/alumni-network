@@ -42,10 +42,11 @@
     else if (survey) survey.handoff(form, done, { source });
     window.UCWaitlist.mount(form, done, {
       source: fallback,
+      extra: joined.answers,   // the answers ride along in the same sign-up request
       onDone(body, dup) {
         // Put the new signup on the preview map as their own (local-only) dot.
         if (preview) preview.addPoints([{ layer: body.role === 'student' ? 'students' : 'alumni', city: body.city, area: body.neighbourhood, tutorial: 'Your tutorial', you: true }]);
-        // The spot is saved: store the answers given before it next to it.
+        // The spot and the answers are saved: say thank you for the answers.
         joined(body, dup);
       },
     });
