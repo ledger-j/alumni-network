@@ -66,8 +66,8 @@
       <!-- Waitlist card -->
       <div class="uc-login-card uc-wl-card" id="wl-form">
         <!-- 16 Oct (Maxime): three steps, each asking a little more (foot in the door). 1. who you are →
-             2. the questions, one per screen → 3. consent + "Join the waitlist", which saves the spot and
-             then the answers. Nothing is saved before step 3. Steps: js/uc-survey-v2.js → steps (without it, one form). With the questions
+             2. the questions, one per screen → 3. consent + "Join the waitlist", which saves the spot with
+             the answers, in one request. Nothing is saved before step 3. Steps: js/uc-survey-v2.js → steps (without it, one form). With the questions
              switched off, step 2 is skipped and the interest chips show on the last step. -->
         <form id="wl" class="uc-form" novalidate>
           <!-- Step 1: about you -->
@@ -147,8 +147,8 @@
           </div>
           <!-- Founder video: stays hidden until a real clip exists; then set data-src to its URL -->
           <div class="uc-v2-video" id="wl-video" data-src="" hidden></div>
-          <!-- Questions switch + where the answers' save status shows (js/uc-survey-v2.js). Switch to data-survey="on" once the
-               waitlist_survey collection exists on the backend (backend/waitlist_survey_schema.py). -->
+          <!-- Questions switch + where the answers' thank-you shows (js/uc-survey-v2.js). Switch to data-survey="on" once the
+               answer fields exist on the backend's waitlist collection (backend/waitlist_answers_schema.py). -->
           <div class="uc-v2-survey" id="wl-survey" data-survey="off" hidden></div>
           <p class="uc-wl-share">Bring your people: the circle is only as good as who's in it.
             <button type="button" class="uc-btn-ghost" id="wl-share" data-share-v2>Copy invite link</button></p>
@@ -195,8 +195,8 @@
   </footer>
 </div>
 
-<script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
-<script src="js/uc-survey-v2.js?v=2.6.0" defer></script>
-<script src="js/waitlist-v2.js?v=1.5.0" defer></script>
+<script src="js/uc-waitlist-form-v2.js?v=1.0.0" defer></script>
+<script src="js/uc-survey-v2.js?v=2.7.0" defer></script>
+<script src="js/waitlist-v2.js?v=1.6.0" defer></script>
 </body>
 </html>

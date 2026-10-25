@@ -1,24 +1,24 @@
 /* UniCircle — V2 waitlist questions (window.UCSurveyV2), shared by waitlist-v2.html,
    landing-v2.html (Brunson order) and landing-value-first-v2.html. Daniel Priestley's five qualification
    questions (each with "Other", plus an optional sixth) are answered BEFORE the spot is
-   saved: the shared form (js/uc-waitlist-form.js, unchanged) saves the sign-up only once
-   they are, then the answers go in one POST to the PocketBase `waitlist_survey`
-   collection (schema: backend/waitlist_survey_schema.py).
+   saved, and travel IN the same sign-up request: the V2 form (js/uc-waitlist-form-v2.js)
+   adds them through its `extra` option, so they land on the same PocketBase `waitlist` row
+   as the spot (fields: backend/waitlist_answers_schema.py). One request, one row: the
+   unsubscribe link, which deletes the row, erases the answers with it.
 
      <div class="uc-v2-survey" data-survey="off" hidden></div>   (inside the success card)
      <div class="uc-v2-inline-q" hidden></div>                    (inside a form with the questions)
      UCSurveyV2.steps(form, done);                               // first: the form in three steps
      const joined = UCSurveyV2.inline(form, done, { source });   // BEFORE UCWaitlist.mount
-     UCWaitlist.mount(form, done, { onDone(body, dup) { joined(body, dup); } });
+     UCWaitlist.mount(form, done, { extra: joined.answers, onDone(body, dup) { joined(body, dup); } });
      UCSurveyV2.handoff(heroForm, heroDone, { source })          // hero form → waitlist-v2.html
      UCSurveyV2.prefill(form)       // on waitlist-v2.html, before inline(): details from the hero
      UCSurveyV2.bindShare(button)   // "Copy invite link" → the page you are on
 
-   Off on the public site until the backend collection exists (the form then works
-   exactly like V1): set data-survey="on" on the element. Always on for local previews
-   and with ?survey=1. Answers are sent as short codes (e.g. obstacle: "no_reply") so
-   they can be counted; pick-several answers (`obstacle` and `tried`, 16 Oct) are a ", " list.
-   API base: same rule as js/uc-waitlist-form.js (?api=… → localStorage → live). */
+   Off on the public site until the answer fields exist on the backend (the form then works
+   exactly like V1 and sends no answers): set data-survey="on" on the element. Always on for
+   local previews and with ?survey=1. Answers are sent as short codes (e.g. obstacle: "no_reply")
+   so they can be counted; pick-several answers (`obstacle` and `tried`, 16 Oct) are a ", " list. */
 (function () {
   'use strict';
 
@@ -51,16 +51,6 @@
   };
 
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-
-  function apiBase() {
-    let api = 'https://api.unicircle.eu';
-    try {
-      const q = new URLSearchParams(location.search).get('api');
-      if (q) localStorage.setItem('uc_api_base', q);
-      api = localStorage.getItem('uc_api_base') || api;
-    } catch (e) { /* storage blocked */ }
-    return api.replace(/\/$/, '');
-  }
 
   // On: data-survey="on", or ?survey=1, or a local preview (localhost / 127.0.0.1), so the
   // team sees the questions when reviewing locally while the public page keeps them off
@@ -123,9 +113,10 @@
     }
   }
 
+  // The answer fields added to the sign-up request (backend/waitlist_answers_schema.py).
   // "other" goes out as "other: <their words>" when they typed something.
-  function payloadFor(body, steps, a, source) {
-    const p = { email: body.email, role: body.role, city: body.city || '', source: (source || '').slice(0, 60), sector: a.sector || '', note: a.note || '' };
+  function answersFor(steps, a) {
+    const p = { sector: a.sector || '', note: a.note || '' };
     steps.forEach((s) => {
       const own = (a[s.key + '_other'] || '').trim();
       const v = [].concat(a[s.key] || []).map((x) => (x === OTHER[0] && own ? OTHER[0] + ': ' + own : x));
@@ -188,7 +179,6 @@
     const flag = done && done.querySelector('.uc-v2-survey');
     const box = form && form.querySelector('.uc-v2-inline-q');
     if (!box || !enabled(flag)) return function () {};
-    opts = opts || {};
     const byRole = {};      // answers kept per role, so switching tabs back and forth loses nothing
     let role = '';
     const roleNow = () => (form.querySelector('[data-role].active') || {}).dataset?.role;
@@ -239,9 +229,11 @@
     }, true);
 
     render();
-    return function joined(body) {
-      save(flag, payloadFor(body, QUESTIONS[body.role] || [], byRole[body.role] || {}, opts.source));
-    };
+    // The V2 form asks for the answers while it builds the sign-up request (its `extra` option);
+    // this submit handler has already run keep() by then. After the save, only a thank-you is left.
+    function joined(body, dup) { thanks(flag, dup); }
+    joined.answers = (r) => answersFor(QUESTIONS[r] || [], byRole[r] || {});
+    return joined;
   }
 
   // The form in steps, each asking a little more (Maxime, 16 Oct): 1. about you → 2. the questions,
@@ -354,23 +346,14 @@
     show('details', 0, true);
   }
 
-  async function save(el, payload) {
-    const show = (html) => { el.innerHTML = html; el.hidden = false; };
-    try {
-      const res = await fetch(apiBase() + '/api/collections/waitlist_survey/records', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(() => ({}));
-      const dup = res.status === 400 && data.data && data.data.email && /unique/i.test(data.data.email.code || '');
-      if (res.ok || dup) {
-        return show('<div class="uc-eyebrow">Your answers</div><p class="uc-v2-survey-thanks">'
-          + (dup ? 'We already had your answers from before. Thank you.' : 'Saved with your spot. Thank you: they help us decide which circles open first.') + '</p>');
-      }
-      if (res.status === 404) return show('<p class="uc-v2-survey-thanks">Your spot is saved. Your answers couldn’t be yet: the questions aren’t open on our side.</p>');
-    } catch (x) { /* offline: offer a retry below */ }
-    show('<p class="uc-err">Your spot is saved, but your answers didn’t reach us.</p>'
-      + '<div class="uc-v2-survey-nav"><button type="button" class="uc-btn-dark" data-retry>Send my answers again</button></div>');
-    el.querySelector('[data-retry]').addEventListener('click', () => save(el, payload), { once: true });
+  // The answers were saved with the spot, in the same request. A repeat sign-up (same email)
+  // saves nothing new: the row from the first time stays as it was, answers included.
+  function thanks(el, dup) {
+    if (!el) return;
+    el.innerHTML = '<div class="uc-eyebrow">Your answers</div><p class="uc-v2-survey-thanks">'
+      + (dup ? 'You were already on the list, so we kept your first sign-up as it was. Thank you.'
+        : 'Saved with your spot. Thank you: they help us decide which circles open first.') + '</p>';
+    el.hidden = false;
   }
 
   function bindShare(btn) {

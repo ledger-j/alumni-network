@@ -46,9 +46,11 @@
     requestAnimationFrame(() => handoffNote.scrollIntoView({ block: 'center' }));
   }
 
-  // Form logic is shared with the landing hero (js/uc-waitlist-form.js).
+  // Form logic is shared with the landing hero (V2 copy: js/uc-waitlist-form-v2.js). The answers
+  // ride along in the same sign-up request (`extra`; nothing while the questions are off).
   window.UCWaitlist.mount(form, done, {
     source: SOURCE,
+    extra: joined.answers,
     onDone(body, dup) {
       // Put the new signup on the preview map as their own (local-only) dot.
       if (preview) {
@@ -61,7 +63,7 @@
         v.controls = true; v.playsInline = true; v.preload = 'metadata'; v.src = video.dataset.src;
         video.appendChild(v); video.hidden = false;
       }
-      // The spot is saved: store the answers given before it next to it.
+      // The spot and the answers are saved: say thank you for the answers.
       joined(body, dup);
     },
   });
