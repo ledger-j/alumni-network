@@ -48,7 +48,7 @@ git ls-tree -r --name-only "$REF" \
   | grep -v -E '^(backend|tools|deploy|docs|um-crm|HTML_front_end_MVP_new|\.github|\.claude)/' \
   > "$WORK/all"
 if [ -f deploy/.deployignore ]; then
-  grep -v -E '^\s*(#|$)' deploy/.deployignore > "$WORK/ignore" || true
+  tr -d '\r' < deploy/.deployignore | grep -v -E '^\s*(#|$)' > "$WORK/ignore" || true
   grep -v -x -F -f "$WORK/ignore" "$WORK/all" > "$WORK/files" || true
 else
   cp "$WORK/all" "$WORK/files"
