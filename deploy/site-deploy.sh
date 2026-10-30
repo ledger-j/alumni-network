@@ -115,15 +115,17 @@ if [ "$TRANSPORT" = ftp ]; then
   grep -q "machine $FTP_HOST" ~/.netrc 2>/dev/null || { echo "no ~/.netrc entry for $FTP_HOST" >&2; exit 2; }
   LFTP_SET="set ftp:ssl-force true; set ftp:ssl-protect-data true; set ssl:verify-certificate yes; set net:max-retries 2; set net:timeout 20"
   mkdir -p "$BACKUP_DIR"
-  lftp -e "$LFTP_SET; mirror --delete --parallel=4 / '$BACKUP_DIR'; bye" "ftp://$FTP_HOST" >/dev/null
+  # "open <host>" (not an ftp:// URL) so lftp takes the login from ~/.netrc instead of trying anonymous.
+  lftp -c "$LFTP_SET; open $FTP_HOST; mirror --delete --parallel=4 / '$BACKUP_DIR'" >/dev/null
   echo "backup: overwrote mirror $BACKUP_DIR ($(find "$BACKUP_DIR" -type f | wc -l) files)"
   {
     echo "$LFTP_SET"
+    echo "open $FTP_HOST"
     sed 's|/[^/]*$||;t;d' "$WORK/changed" | sort -u | while IFS= read -r d; do echo "mkdir -p -f \"/$d\""; done
     while IFS= read -r f; do echo "put \"$WORK/src/$f\" -o \"/$f\""; done < "$WORK/changed"
     echo "bye"
   } > "$WORK/lftp.cmds"
-  lftp -f "$WORK/lftp.cmds" "ftp://$FTP_HOST"
+  lftp -f "$WORK/lftp.cmds"
 else
   DOCROOT="$KAS_ROOT/unicircle.eu"
   ssh -n "$KAS_SSH" "cd '$KAS_ROOT' && tar czf _backups/unicircle.eu-latest.tgz unicircle.eu"
