@@ -1,0 +1,17 @@
+# Files in the repo that deploy/site-deploy.sh never uploads (exact paths, one per line).
+# Source/mood images and screenshots: no page references them.
+Image_ressources/Mood_images/Buentipo_Global_Wide_European_street_scene_shot_at_eye_level_in_bffa8377-fe2c-471e-83b2-b6a059273ae7.png
+Image_ressources/Mood_images/Vrijthof in Maastricht.jpg
+Image_ressources/Mood_images/l13309273198_The_campus_street_environment_of_a_prestigious_uni_79ce65c5-97a5-42f2-bda4-950d9a3dd5f6.png
+Image_ressources/Mood_images/maas-sint-servaasbrug-2-maastricht-marketing-hugo-thomassen-2.jpg
+Image_ressources/Mood_images/maastricht-rechtstraat-maastricht-marketing-mei-2022-eighty8things_1_2048x2048.webp
+Image_ressources/Picture1.jpg
+Image_ressources/University_images/Maastricht-University.jpg
+Image_ressources/University_images/Universiteit-Maastricht-rechtenvrij-resized-scaled.jpg
+Image_ressources/University_images/shutterstock_1500800459.webp
+Image_ressources/University_images/wide_fullhd_maastricht-university-background.jpg
+Image_ressources/Webiste_look_MVP.jpg
+SBE_logo.png
+Website_front_end.png
+# Old prototype, not part of the live site.
+alumni-network-mvp.html
