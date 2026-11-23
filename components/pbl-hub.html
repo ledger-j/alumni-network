@@ -9,7 +9,7 @@
     </form>
   </div>
 
-  <div class="uc-mc-stack">
+  <div class="uc-mc-stack uc-stagger">
     <section class="uc-panel-dark uc-ch-hero" aria-labelledby="uc-ch-hero-title">
       <div class="uc-ch-hero-text">
         <div class="uc-eyebrow uc-mc-hero-eyebrow">Case Hub</div>
@@ -40,7 +40,11 @@
       </div>
       <div class="uc-ch-topics" data-case-topics role="group" aria-label="Filter by topic"></div>
       <div class="uc-ch-list" data-case-list></div>
-      <p class="uc-mc-empty" data-case-empty hidden>No cases match. <button type="button" class="uc-mc-link" data-case-new>Post the first one</button>.</p>
+      <div class="uc-empty-orbit" style="--uc-node-h:145" data-case-empty hidden>
+        <div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div>
+        <p>No cases match these filters yet.</p>
+        <button type="button" class="uc-pill-ink uc-pill-sm" data-case-new>Post the first one</button>
+      </div>
     </section>
   </div>
 </div>

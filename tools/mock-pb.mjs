@@ -24,12 +24,17 @@ const users = [
   id, collectionId: '_pb_users_auth_', collectionName: 'users', email: id + '@example.test',
   name, headline, location, mentor, mentor_offer: mentor ? 'CV review, interview prep' : '',
   degree: 'M.Sc.', verified: true, created: now(), updated: now(),
+  role: id === 'u3' || id === 'u6' ? 'student' : 'alumnus',
+  tutor: id === 'u3', tutor_subjects: id === 'u3' ? 'Statistics, Microeconomics' : '',
 }));
 const posts = [
   { id: 'p1', author: 'u2', text: 'Welcome to UniCircle. This is demo data from the mock server.', image: '', degree: 'MSc', likes: 3, created: now(), updated: now(), collectionName: 'posts' },
 ];
 const messages = [
   { id: rid(), collectionName: 'messages', sender: 'u2', recipient: 'u1', text: 'Hi Alex, happy to look at your CV this week.', read: false, created: now(), updated: now() },
+];
+const mentorships = [
+  { id: 'ms000001', collectionName: 'mentorships', mentor: 'u2', mentee: 'u1', kind: 'mentoring', topic: 'CV review', status: 'requested', created: now(), updated: now() },
 ];
 const clients = new Map();   // clientId -> {res, subs:Set, user}
 
@@ -50,6 +55,7 @@ function applyFilter(items, f) {                 // supports: id != "x", id="x" 
   if (/^id\s*=/.test(f)) return items.filter((i) => ids.includes(i.id));
   if (/^\(sender=/.test(f)) return items.filter((m) => (m.sender === ids[0] && m.recipient === ids[1]) || (m.sender === ids[2] && m.recipient === ids[3]));
   if (/^\(mentor=true\)|^mentor\s*=\s*true/.test(f)) return items.filter((u) => u.mentor);
+  if (/^\(?tutor\s*=\s*true/.test(f)) return items.filter((u) => u.tutor);
   return items;
 }
 function broadcast(topic, action, record) {
@@ -87,7 +93,7 @@ http.createServer(async (req, res) => {
   let m;
   if ((m = p.match(/^\/api\/collections\/(\w+)\/records(?:\/(\w+))?$/))) {
     const [, col, id] = m;
-    const store = { users, posts, messages }[col];
+    const store = { users, posts, messages, mentorships }[col];
     if (!store) return send(res, 404, { message: 'no collection' });
     if (col === 'messages') {
       if (!me) return send(res, 200, list([]));
@@ -109,6 +115,28 @@ http.createServer(async (req, res) => {
         if (!rec || rec.recipient !== me.id) return send(res, 404, { message: 'not found' });
         const b = await body(req); if ('read' in b) rec.read = !!b.read;   // only `read` is writable (mirrors the planned rule)
         return send(res, 200, rec);
+      }
+    }
+    if (col === 'mentorships') {                   // participants only, status-only updates (mirrors the real rules)
+      if (!me) return send(res, 200, list([]));
+      const mine = (x) => x.mentor === me.id || x.mentee === me.id;
+      if (req.method === 'GET' && !id) {
+        const exp = (url.searchParams.get('expand') || '').split(',').filter(Boolean);
+        const items = mentorships.filter(mine).map((x) => exp.length ? { ...x, expand: Object.fromEntries(exp.map((k) => [k, users.find((u) => u.id === x[k])])) } : x);
+        return send(res, 200, list(items));
+      }
+      if (req.method === 'POST') {
+        const b = await body(req);
+        if (b.mentee !== me.id || b.mentor === me.id || b.status !== 'requested' || !['mentoring', 'tutoring'].includes(b.kind)) return send(res, 400, { message: 'rule' });
+        const rec = { id: rid(), collectionName: 'mentorships', mentor: b.mentor, mentee: b.mentee, kind: b.kind, topic: String(b.topic || '').slice(0, 160), status: 'requested', created: now(), updated: now() };
+        mentorships.push(rec); return send(res, 200, rec);
+      }
+      if (req.method === 'PATCH' && id) {
+        const rec = mentorships.find((x) => x.id === id && mine(x)); if (!rec) return send(res, 404, { message: 'not found' });
+        const b = await body(req);
+        const ok = (rec.mentor === me.id && ['active', 'closed'].includes(b.status)) || (rec.mentee === me.id && b.status === 'closed');
+        if (!ok || ['mentor', 'mentee', 'kind', 'topic'].some((k) => k in b)) return send(res, 400, { message: 'rule' });
+        rec.status = b.status; rec.updated = now(); return send(res, 200, rec);
       }
     }
     if (req.method === 'GET' && !id) {

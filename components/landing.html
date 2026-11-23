@@ -1,4 +1,12 @@
 <div class="uc-page uc-landing">
+  <style>
+    /* tutoring joined the grid: 7 tiles, so the last one spans the row on desktop */
+    @media (min-width: 621px) {
+      .uc-lp-tile--full { grid-column: 1 / -1; flex-direction: row; }
+      .uc-lp-tile--full img { width: 40%; aspect-ratio: auto; min-height: 200px; }
+      .uc-lp-tile--full .body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    }
+  </style>
 
   <!-- ===== HERO (constellation) ===== -->
   <section class="uc-hero" data-uc-hero>
@@ -12,6 +20,7 @@
           <div data-nav-links style="display:flex;gap:24px;margin-left:28px;">
             <a href="map.html" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">The map</a>
             <a href="mentoring.html" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">Mentoring</a>
+            <a href="tutoring.html" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">Tutoring</a>
             <a href="student-exchange.html" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">Student exchange</a>
             <a href="universities.html" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">For universities</a>
             <a href="about.html" style="font-size:14px;font-weight:500;color:var(--uc-ink-2);">About</a>
@@ -67,7 +76,7 @@
     <div style="width:100%;max-width:1152px;">
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:40px;">
         <h2 class="uc-serif" style="margin:0;font-weight:400;font-size:clamp(36px,4.5vw,56px);letter-spacing:-.01em;">What the circle <em style="font-style:italic;color:var(--uc-muted);">offers</em></h2>
-        <a href="about.html" style="font-size:14px;color:var(--uc-ink-2);text-decoration:underline;text-underline-offset:3px;">Why we built it →</a>
+        <a class="uc-tap" href="about.html" style="font-size:14px;color:var(--uc-ink-2);text-decoration:underline;text-underline-offset:3px;">Why we built it →</a>
       </div>
       <div class="uc-lp-explore">
         <a class="uc-lp-tile uc-lp-tile--wide" href="map.html">
@@ -85,6 +94,14 @@
           <img src="assets/img/community.jpg" alt="" loading="lazy">
           <div class="body"><span class="uc-eyebrow">Mentoring</span><h3>Pass it forward</h3><p>Alumni and students matched by path, with small, easy asks.</p></div>
         </a>
+        <a class="uc-lp-tile" href="tutoring.html">
+          <div class="uc-lp-tile-map" aria-hidden="true" style="aspect-ratio:16/10;">
+            <span style="left:24%;top:38%;width:18px;height:18px;background:#d9892b;"></span>
+            <span style="left:46%;top:56%;width:14px;height:14px;background:#2f6fdb;"></span>
+            <span style="left:68%;top:34%;width:16px;height:16px;background:#2f6fdb;"></span>
+          </div>
+          <div class="body"><span class="uc-eyebrow">Student tutoring</span><h3>Help with the course itself</h3><p>Advanced students and alumni helping students in their tutorial groups.</p></div>
+        </a>
         <a class="uc-lp-tile" href="student-exchange.html">
           <img src="assets/img/servaasbrug.jpg" alt="" loading="lazy">
           <div class="body"><span class="uc-eyebrow">Student exchange</span><h3>Find your people abroad</h3><p>Who from your course or tutorial is in your exchange city.</p></div>
@@ -93,7 +110,7 @@
           <img src="assets/img/campus-tapijn.jpg" alt="" loading="lazy">
           <div class="body"><span class="uc-eyebrow">For universities</span><h3>Own the relationship</h3><p>Your alumni data, chapters and events — not rented from a feed.</p></div>
         </a>
-        <a class="uc-lp-tile" href="about.html">
+        <a class="uc-lp-tile uc-lp-tile--full" href="about.html">
           <img src="assets/img/vrijthof.jpg" alt="" loading="lazy">
           <div class="body"><span class="uc-eyebrow">About</span><h3>Your circle, for life</h3><p>University &amp; united, drawn into one circle — and why it matters.</p></div>
         </a>
@@ -114,14 +131,15 @@
       <div style="width:100%;height:1px;background:rgba(250,249,246,.15);"></div>
       <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(250,249,246,.55);">
         <span>© 2026 UniCircle · unicircle.eu · a Beyond Borders Marketing Consultancy project</span>
-        <div style="display:flex;gap:24px;">
-          <a id="lp-foot-signin" href="#" style="color:rgba(250,249,246,.7);">Sign in</a>
-          <a href="waitlist.html?ref=landing-footer" style="color:rgba(250,249,246,.7);">Waitlist</a>
-          <a href="map.html" style="color:rgba(250,249,246,.7);">The map</a>
-          <a href="mentoring.html" style="color:rgba(250,249,246,.7);">Mentoring</a>
-          <a href="about.html" style="color:rgba(250,249,246,.7);">About</a>
-          <a href="privacy.html" style="color:rgba(250,249,246,.7);">Privacy</a>
-          <a href="mailto:hello@unicircle.eu" style="color:rgba(250,249,246,.7);">Contact</a>
+        <div style="display:flex;flex-wrap:wrap;gap:0 24px;">
+          <a id="lp-foot-signin" href="#" style="color:rgba(250,249,246,.7);display:inline-block;padding:7px 0;">Sign in</a>
+          <a href="waitlist.html?ref=landing-footer" style="color:rgba(250,249,246,.7);display:inline-block;padding:7px 0;">Waitlist</a>
+          <a href="map.html" style="color:rgba(250,249,246,.7);display:inline-block;padding:7px 0;">The map</a>
+          <a href="mentoring.html" style="color:rgba(250,249,246,.7);display:inline-block;padding:7px 0;">Mentoring</a>
+          <a href="tutoring.html" style="color:rgba(250,249,246,.7);display:inline-block;padding:7px 0;">Tutoring</a>
+          <a href="about.html" style="color:rgba(250,249,246,.7);display:inline-block;padding:7px 0;">About</a>
+          <a href="privacy.html" style="color:rgba(250,249,246,.7);display:inline-block;padding:7px 0;">Privacy</a>
+          <a href="mailto:hello@unicircle.eu" style="color:rgba(250,249,246,.7);display:inline-block;padding:7px 0;">Contact</a>
         </div>
       </div>
     </div>

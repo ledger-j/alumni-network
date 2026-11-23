@@ -227,3 +227,8 @@ html.uc-v2-doc { scroll-behavior: smooth; }
 .uc-v2-cold .uc-s-list li, .uc-v2-cold .uc-s-list b { color: var(--uc-muted); }
 .uc-v2-survey-other { margin-top: 10px; }
 .uc-v2-survey-other[hidden] { display: none !important; }
+
+/* ---- orbit pass: ghost nav CTA sizing (primary stays the hero button), footer tap targets >= 32px ---- */
+.uc-s-actions .uc-btn-ghost { white-space: nowrap; }
+@media (max-width: 1020px) { .uc-s-actions .uc-btn-ghost { padding: 9px 14px; font-size: 13px; } }
+.uc-s-footer a, .uc-footer-dark a { display: inline-flex; align-items: center; min-height: 32px; }

@@ -1,0 +1,28 @@
+{
+  "item": "pwa-android",
+  "files_written": [
+    "manifest.webmanifest",
+    "sw.js",
+    "offline.html",
+    "assets/icons/icon-192.png",
+    "assets/icons/icon-512.png",
+    "assets/icons/icon-maskable-512.png",
+    ".well-known/assetlinks.json",
+    "android/README.md",
+    "docs/android-roadmap.md",
+    "docs/redesign/findings-pwa-android.json"
+  ],
+  "index_requests": {
+    "head": "<link rel=\"manifest\" href=\"/manifest.webmanifest\">\n<meta name=\"theme-color\" content=\"#3a3934\">\n<link rel=\"apple-touch-icon\" href=\"/assets/icons/icon-192.png\">",
+    "body": "<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});}</script>"
+  },
+  "open_points": [
+    "index.html already has apple-touch-icon pointing to unicircle-logo.png (line 11); replace it with the icons/icon-192.png one or keep it.",
+    "assetlinks.json holds the placeholder REPLACE_WITH_SHA256_FROM_PLAY_CONSOLE; human fills it after the Bubblewrap/Play signing step.",
+    "Messages shortcut points to /#feed as instructed (no separate messages route yet).",
+    "sw.js precache list mirrors current index.html assets; update it and bump VERSION when index.html adds or removes files. Cache-busting ?v= query strings are ignored on lookup (ignoreSearch), so a changed ?v= alone will serve the stale copy until revalidated in the background.",
+    "Must be served from the site root over HTTPS; .well-known/ and sw.js must be deployed on KAS (live site), and /.well-known/assetlinks.json must not redirect.",
+    "manifest.webmanifest should be served as application/manifest+json (or at least a JSON type); check KAS .htaccess if Lighthouse complains."
+  ],
+  "selfcheck": "manifest.webmanifest and assetlinks.json parse as JSON; node --check sw.js passed; Pillow 12.1.1 present, icons generated from the 2048x2048 unicircle-logo.png (192, 512, maskable 512 with 60% safe zone); sw.js under 120 lines."
+}

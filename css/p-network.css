@@ -22,6 +22,8 @@
 .uc-net-count { margin: 0; font-size: 12px; color: var(--uc-muted); flex: 1; }
 .uc-net-notice { margin: 0 0 16px; padding: 12px 18px; border-radius: var(--uc-r-sm); background: var(--uc-frost, #f1efe9); font-size: 13px; color: var(--uc-ink-2); }
 .uc-net-empty { text-align: center; padding: 36px 24px; }
+.uc-net-empty.uc-empty-orbit { display: flex; }
+.uc-net-empty[hidden] { display: none !important; }
 .uc-net-empty-t { margin: 10px 0 6px; font-family: var(--uc-font-display); font-size: 22px; color: var(--uc-ink); }
 .uc-net-samplehead { margin: 28px 0 14px; }
 .uc-net-samplehead p { margin: 4px 0 0; font-size: 12px; color: var(--uc-muted); }
@@ -81,4 +83,24 @@
   .uc-net-cities, .uc-net-filters { grid-template-columns: 1fr; }
   .uc-net-askbar { padding-left: 16px; }
   .uc-net-dl-r { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* ---- 390px: tap targets and containment ---- */
+.uc-net-page { min-width: 0; }
+.uc-net-card { min-width: 0; }
+.uc-net-name, .uc-net-headline { overflow-wrap: anywhere; }
+@media (max-width: 860px) {
+  .uc-net-link, .uc-net-name { min-height: 32px; align-items: center; }
+  .uc-net-name { display: flex; }
+  .uc-net-actions > *, .uc-net-city-a > * { min-height: 36px; }
+  .uc-net-try .uc-chip { min-height: 32px; }
+  .uc-net-filters select { min-height: 40px; }
+  .uc-net-askbar button { min-height: 36px; }
+  .uc-net-more { flex-wrap: wrap; }
+}
+@media (max-width: 600px) {
+  .uc-net-card { padding: 20px 16px; }
+  .uc-net-city-n { padding-right: 56px; }
+  .uc-net-askbar { gap: 6px; }
+  .uc-net-askbar button { padding-left: 18px !important; padding-right: 18px !important; }
 }

@@ -63,6 +63,39 @@
       </div>
     </div>
 
+    <!-- Mentoring & tutoring settings -->
+    <div class="uc-card" id="uc-pf-mentoring" aria-labelledby="uc-pf-mt-title">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+        <h2 class="uc-h2" id="uc-pf-mt-title">Mentoring &amp; tutoring</h2>
+        <a href="#mentoring" class="uc-pf-inline" style="min-height:32px;display:inline-flex;align-items:center;">See Mentor &amp; Tutor <span class="uc-nudge" aria-hidden="true">→</span></a>
+      </div>
+      <form class="uc-pf-mt" data-pf-mt-form novalidate>
+        <label>
+          <span class="uc-mc-label">I am a</span>
+          <select name="role" data-pf-mt-role>
+            <option value="">Not set</option>
+            <option value="alumnus">Alumnus / alumna</option>
+            <option value="student">Student</option>
+            <option value="staff">Staff</option>
+          </select>
+        </label>
+        <div class="uc-pf-mt-row">
+          <label class="uc-pf-mt-check"><input type="checkbox" name="mentor" data-pf-mt-mentor> Offer mentoring</label>
+          <label><span class="uc-mc-label">What you offer</span>
+            <input type="text" name="mentor_offer" maxlength="200" placeholder="CV review, interview prep, a coffee chat…"></label>
+        </div>
+        <div class="uc-pf-mt-row">
+          <label class="uc-pf-mt-check"><input type="checkbox" name="tutor" data-pf-mt-tutor> Offer tutoring</label>
+          <label><span class="uc-mc-label">Subjects you tutor</span>
+            <input type="text" name="tutor_subjects" maxlength="200" placeholder="Statistics, Python basics, econometrics…"></label>
+        </div>
+        <div class="uc-pf-mt-actions">
+          <button type="submit" class="uc-pill-ink" data-pf-mt-save>Save</button>
+          <span class="uc-pf-mt-fine" role="status" aria-live="polite" data-pf-mt-note>Shown to signed-in members on the Mentor &amp; Tutor page.</span>
+        </div>
+      </form>
+    </div>
+
     <!-- Activity -->
     <div class="uc-card">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;">

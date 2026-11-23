@@ -164,6 +164,18 @@
       btn.setAttribute('aria-label', (on ? 'Going to ' : 'RSVP to ') + ev.title);
       if (window.Iconify && on) window.Iconify.scan(btn);
     }
+    function pulse(el) {          // node-pulse: class toggle, CSS keyframe in p-events-jobs.css
+      if (!el) return;
+      el.classList.remove('uc-pulse'); void el.offsetWidth; el.classList.add('uc-pulse');
+      setTimeout(() => el.classList.remove('uc-pulse'), 300);
+    }
+    function sayHello(card) {
+      const ev = evOf(card);
+      pulse(card.querySelector('[data-ev-hello]'));
+      if (window.UC && window.UC.toast) window.UC.toast('Pick someone to invite to <b>' + esc(ev.title) + '</b> (sample event).');
+      else toast('Pick someone to invite to <b>' + esc(ev.title) + '</b> (sample event).');
+      if (window.UC && window.UC.openChat) window.UC.openChat();
+    }
     function toggleRsvp(card, force) {
       const ev = evOf(card);
       if (isPast(card)) return;
@@ -173,6 +185,7 @@
       rsvps = next ? rsvps.concat(ev.id) : rsvps.filter((x) => x !== ev.id);
       UCP().store && UCP().store(RSVP_KEY, rsvps);
       paintRsvp(card);
+      pulse(card.querySelector('[data-ev-rsvp]'));
       toast(next
         ? 'You’re going to <b>' + esc(ev.title) + '</b> — saved on this device only; hosts can’t see RSVPs yet.'
         : 'RSVP removed for <b>' + esc(ev.title) + '</b>.');
@@ -316,6 +329,8 @@
       if (isPast(card)) card.classList.add('is-past');
       const r = card.querySelector('[data-ev-rsvp]');
       if (r) r.addEventListener('click', () => toggleRsvp(card));
+      const h = card.querySelector('[data-ev-hello]');
+      if (h) { h.addEventListener('click', () => sayHello(card)); h.setAttribute('aria-label', 'Invite someone to ' + ev.title); }
       const d = card.querySelector('[data-ev-details]');
       if (d) { d.addEventListener('click', () => openDetails(card)); d.setAttribute('aria-label', 'Details: ' + ev.title); }
       card.querySelectorAll('[data-ev-city]').forEach((b) => {

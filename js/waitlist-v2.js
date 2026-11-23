@@ -100,38 +100,11 @@
   }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
-  // ---- constellation (same field as the landing hero, lighter) ----
-  function constellation(canvas, count) {
-    if (!canvas || !canvas.getContext) return;
-    const ctx = canvas.getContext('2d');
-    const pal = ['oklch(0.62 0.14 235)', 'oklch(0.62 0.14 275)', 'oklch(0.62 0.14 305)', 'oklch(0.62 0.14 25)'];
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let W = 0, H = 0;
-    let ps = [];
-    const size = () => {
-      const was = W;
-      W = canvas.clientWidth; H = canvas.clientHeight; canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // First real layout after a hidden/zero-size start: spread the swarm over the new area.
-      if (was < 200 && W >= 200) ps.forEach((p) => { p.x = Math.random() * W; p.y = Math.random() * H; });
-    };
-    size(); window.addEventListener('resize', size);
-    ps = Array.from({ length: count }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: Math.random() - .5, vy: Math.random() - .5, s: Math.random() * 3 + 1.2, c: pal[(Math.random() * pal.length) | 0], a: Math.random() * .35 + .3, o: Math.random() * 6.28 }));
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const step = (t) => {
-      ctx.globalAlpha = 1; ctx.fillStyle = 'rgba(250,249,246,0.28)'; ctx.fillRect(0, 0, W, H);
-      for (const p of ps) {
-        const a = Math.sin(p.y * .004 + t * .0004 + p.o) + Math.cos(p.x * .003 - t * .0003);
-        p.vx += Math.cos(a) * .03; p.vy += Math.sin(a) * .03;
-        const dx = W / 2 - p.x, dy = H * .5 - p.y, d = Math.hypot(dx, dy) || 1;
-        p.vx += dx / d * .006; p.vy += dy / d * .006; p.vx *= .96; p.vy *= .96; p.x += p.vx; p.y += p.vy;
-        ctx.globalAlpha = p.a; ctx.fillStyle = p.c; ctx.beginPath(); ctx.roundRect(p.x - p.s, p.y - p.s, p.s * 2, p.s * 2, p.s * .7); ctx.fill();
-      }
-      if (!reduced) requestAnimationFrame(step);
-    };
-    ctx.fillStyle = '#faf9f6'; ctx.fillRect(0, 0, W, H);
-    requestAnimationFrame(step);
+  // ---- constellation: shared engine (js/uc-constellation.js), default blue/violet palette ----
+  if (window.UCConstellation) {
+    window.UCConstellation.mount(document.getElementById('wl-constellation'), {
+      count: 160, pointer: false, pull: { x: 0.5, y: 0.5 }, wash: 'rgba(250,249,246,0.28)', bg: '#faf9f6',
+    });
   }
-
-  constellation(document.getElementById('wl-constellation'), 220);
   if (window.L) initMap(); else window.addEventListener('load', initMap);
 })();

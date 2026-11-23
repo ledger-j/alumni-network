@@ -80,4 +80,4 @@
 /* five page links in the landing nav: give the hero room at every width,
    and collapse the links before they crowd the pill */
 .uc-landing .uc-hero { padding-top: 130px; }
-@media (max-width: 1100px) { .uc-landing [data-nav-links] { display: none !important; } }
+@media (max-width: 1180px) { .uc-landing [data-nav-links] { display: none !important; } }

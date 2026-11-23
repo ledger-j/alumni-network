@@ -177,6 +177,8 @@
     const $ = (s) => root.querySelector(s);
     const grid = $('[data-net-grid]');
     if (!grid) return;
+    const bandCanvas = $('[data-net-band]');
+    if (bandCanvas && window.UCConstellation) window.UCConstellation.mount(bandCanvas, { count: 60 });
     const sampleGrid = $('[data-net-sample-grid]');
     const form = $('[data-net-form]');
     const qInput = $('[data-net-q]');
@@ -316,7 +318,7 @@
       src.forEach((p) => { if (p.city) counts[p.city] = (counts[p.city] || 0) + 1; });
       const top = Object.keys(counts).sort((a, b) => counts[b] - counts[a] || a.localeCompare(b)).slice(0, 6);
       note.textContent = fromReal ? 'From members’ profile locations' : 'Sample — from the illustrative profiles below';
-      if (!top.length) { box.innerHTML = '<p style="margin:0;font-size:13px;color:var(--uc-muted);">No locations yet — add yours in your profile.</p>'; return; }
+      if (!top.length) { box.innerHTML = '<div class="uc-empty-orbit" style="--uc-node-h:275;grid-column:1/-1;padding:18px 8px;"><div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div><p style="margin:0;font-size:13px;">No locations yet — add yours in your profile.</p><a class="uc-pill-ink uc-pill-sm" href="#profile">Add my city <span class="uc-nudge" aria-hidden="true">→</span></a></div>'; return; }
       const active = norm(sel.city.value);
       box.innerHTML = top.map((c) => {
         const n = counts[c];

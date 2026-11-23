@@ -19,7 +19,8 @@
   <link rel="stylesheet" href="css/main.css?v=1.0.5">
   <link rel="stylesheet" href="css/unicircle.css?v=1.0.3">
   <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
-  <link rel="stylesheet" href="css/site.css?v=1.0.0">
+  <link rel="stylesheet" href="css/site.css?v=1.1.0">
+  <link rel="stylesheet" href="css/uc-orbit.css">
 </head>
 <body data-page="map" data-source="page-map">
 <div class="uc-page uc-site">
@@ -27,12 +28,12 @@
 
   <main>
     <section class="uc-s-hero">
-      <div class="uc-s-hero-inner">
+      <div class="uc-s-hero-inner uc-stagger">
         <div class="uc-eyebrow">The map</div>
         <h1>See where your people are. <em>Not where they live.</em></h1>
         <p class="uc-s-lead">Red dots are alumni, blue dots are students. Each dot is a neighbourhood — never a street — so you can find the people you studied with in any city without anyone giving away their address.</p>
         <div class="uc-s-hero-actions">
-          <a class="uc-btn-dark" href="waitlist.html?ref=map-hero">Join the waitlist</a>
+          <a class="uc-btn-dark" href="waitlist.html?ref=map-hero">Join the waitlist <span class="uc-nudge" aria-hidden="true">→</span></a>
           <a class="uc-btn-ghost" href="#explore">Explore the map</a>
         </div>
       </div>
@@ -155,6 +156,7 @@
         <div class="uc-s-next">
           <a href="student-exchange.html"><b>Student exchange</b><span>The blue layer: find your tutorial group abroad.</span></a>
           <a href="mentoring.html"><b>Mentoring</b><span>Ask an alumnus near you — with a small, easy ask.</span></a>
+          <a href="tutoring.html"><b>Student tutoring</b><span>Peer help with a course, from advanced students and alumni in your tutorial groups.</span></a>
           <a href="universities.html"><b>For universities</b><span>Chapters and events planned on where alumni really are.</span></a>
           <a href="about.html"><b>About UniCircle</b><span>Why a university-owned network matters.</span></a>
         </div>
@@ -169,7 +171,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 <script src="js/uc-map.js?v=1.0.1" defer></script>
 <script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
-<script src="js/site.js?v=1.1.0" defer></script>
+<script src="js/uc-constellation.js" defer></script>
+<script src="js/site.js?v=1.2.0" defer></script>
 <script src="js/page-map.js?v=1.0.0" defer></script>
 </body>
 </html>

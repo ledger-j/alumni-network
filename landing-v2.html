@@ -29,7 +29,8 @@
   <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
   <link rel="stylesheet" href="css/site.css?v=1.0.0">
   <link rel="stylesheet" href="css/waitlist.css?v=1.1.1">
-  <link rel="stylesheet" href="css/v2.css?v=1.7.5">
+  <link rel="stylesheet" href="css/v2.css?v=1.8.0">
+  <link rel="stylesheet" href="css/uc-orbit.css">
 </head>
 <body>
 <div class="uc-page uc-site uc-wl uc-v2" id="top">
@@ -41,13 +42,14 @@
       <button type="button" class="uc-s-burger" aria-expanded="false" aria-controls="uc-s-links" aria-label="Menu"><span></span><span></span></button>
       <div class="uc-s-links" id="uc-s-links">
         <a href="#mentoring">How it works</a>
+        <a href="tutoring.html">Tutoring</a>
         <a href="#alumni">For alumni</a>
         <a href="#map">The map</a>
         <a href="#faq">Questions</a>
       </div>
       <div class="uc-s-actions">
         <a class="uc-s-signin" href="index.html">Sign in</a>
-        <a class="uc-btn-dark" href="waitlist-v2.html">Join the waitlist</a>
+        <a class="uc-btn-ghost" href="waitlist-v2.html">Join the waitlist</a>
       </div>
     </nav>
   </header>
@@ -62,13 +64,13 @@
       <p class="uc-lead">Messaging alumni on LinkedIn and never hearing back? UniCircle connects you with alumni who already agreed to help.
         <span class="uc-v2-what">For an internship, career advice, or the city you go on exchange in.</span></p>
 
-      <div class="uc-v2-herogrid">
+      <div class="uc-v2-herogrid uc-stagger">
         <!-- Hero CTA (Maxime, 10 Oct): no form up here. 16 Oct: the button opens the waitlist page
              (waitlist-v2.html, the step-by-step sign-up), like the nav button. -->
         <div class="uc-login-card uc-s-wl">
           <div class="uc-eyebrow" style="text-align:left;">Join the waitlist</div>
           <p style="margin:12px 0 18px;">Be in the first wave when the circle opens.</p>
-          <a class="uc-btn-dark uc-wl-submit" href="waitlist-v2.html" style="display:flex;justify-content:center;">Join the waitlist →</a>
+          <a class="uc-btn-dark uc-wl-submit" href="waitlist-v2.html" style="display:flex;justify-content:center;">Join the waitlist <span class="uc-nudge" aria-hidden="true">→</span></a>
           <!-- 16 Oct (Maxime): no "Founding circle" line here or in the waitlist page's sign-up card. -->
           <div class="uc-v2-herofoot">
             <a href="#mentoring">See how it works ↓</a>
@@ -295,6 +297,7 @@
         <a class="uc-s-brand uc-s-brand--light" href="#top"><img src="assets/img/logo-circle.jpg" alt=""><span class="uc-serif">UniCircle</span></a>
         <nav class="uc-s-footer-links" aria-label="Footer">
           <a href="#mentoring">How it works</a>
+          <a href="tutoring.html">Tutoring</a>
           <a href="#alumni">For alumni</a>
           <a href="#map">The map</a>
           <a href="#faq">Questions</a>
@@ -314,6 +317,7 @@
 <script src="js/uc-map.js?v=1.0.1" defer></script>
 <script src="js/uc-waitlist-form-v2.js?v=1.0.0" defer></script>
 <script src="js/uc-survey-v2.js?v=2.7.0" defer></script>
-<script src="js/landing-v2.js?v=1.8.0" defer></script>
+<script src="js/uc-constellation.js" defer></script>
+<script src="js/landing-v2.js?v=1.9.0" defer></script>
 </body>
 </html>

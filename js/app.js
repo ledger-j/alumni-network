@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageCache = {};
   async function fetchPage(name) {
     if (pageCache[name] != null) return pageCache[name];
-    const res = await fetch(routes[name] + '?v=9');
+    const res = await fetch(routes[name] + '?v=10');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const html = await res.text();
     pageCache[name] = html;
@@ -244,7 +244,14 @@ document.addEventListener('DOMContentLoaded', () => {
       // render anyway — never leave the "Recalling…" placeholder on screen.
       let done = false;
       const once = () => { if (!done) { done = true; render(); } };
-      try { document.startViewTransition(once).finished.catch(() => {}); } catch (e) { once(); }
+      try {
+        // A transition that is skipped (fast route changes, hidden tab, resize) rejects ready,
+        // updateCallbackDone and finished; swallow all three so nothing surfaces as an
+        // "Uncaught (in promise)" console error. The render still runs via `once`.
+        const vt = document.startViewTransition(once);
+        const quiet = () => {};
+        vt.ready.catch(quiet); vt.updateCallbackDone.catch(quiet); vt.finished.catch(quiet);
+      } catch (e) { once(); }
       setTimeout(once, 600);
     } else {
       render();

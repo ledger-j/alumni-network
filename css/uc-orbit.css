@@ -202,6 +202,16 @@ a:hover > .uc-nudge, button:hover > .uc-nudge { transform: translateX(3px); }
 .uc-stagger > *:nth-child(n+5) { animation-delay: 160ms; }
 @keyframes uc-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
+/* ---- dark surfaces: secondary text must be light, headings must not inherit paper-side ink ----
+   (headings on the dark panel were ink-on-dark, 1.2:1; muted/ink-2 are lighter here).
+   --uc-ink is deliberately NOT flipped: paper buttons inside dark panels use it for their label. */
+.uc-panel-dark, .uc-ev-hero {
+  --uc-ink-2: #dedbd1;
+  --uc-muted: #c2bfb4;
+}
+.uc-panel-dark :is(h1, h2, h3, h4), .uc-ev-hero :is(h1, h2, h3, h4) { color: var(--uc-bg); }
+.uc-panel-dark em, .uc-ev-hero em { color: inherit; }
+
 /* ---- narrower desktop: keep two columns, slimmer rail --------------------- */
 @media (max-width: 1100px) {
   :root { --uc-rail-w: 224px; }
@@ -232,6 +242,24 @@ a:hover > .uc-nudge, button:hover > .uc-nudge { transform: translateX(3px); }
   .uc-rail-badge { position: absolute; top: 2px; right: 8px; margin: 0; }
   body.uc-has-rail #uc-chat { right: 8px; left: 8px; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); width: auto; height: min(70vh, 520px); }
 }
+
+/* ---- touch targets on small screens: inputs and text links reach 32px (WCAG 2.5.8 asks 24px) ---- */
+@media (max-width: 860px) {
+  .uc-page-main :is(input:not([type=checkbox]):not([type=radio]), select, textarea), .uc-app-search input { min-height: 32px; }
+  .uc-pf-inline, .uc-pf-linkbtn { display: inline-flex; align-items: center; min-height: 32px; }
+  .leaflet-control-attribution a { display: inline-block; padding: 6px 2px; }
+  .uc-page-main input[type=checkbox], .uc-page-main input[type=radio] { width: 24px; height: 24px; }
+  /* every page (landing, topic pages, waitlist, app): consent checkboxes and inline text links */
+  input[type=checkbox], input[type=radio] { width: 24px; height: 24px; flex: none; }
+  p a:not([class*="btn"]), li a:not([class*="btn"]), label a, span > a:not([class*="btn"]), .uc-form a { display: inline-block; padding: 5px 0; }
+  footer a:not([class*="btn"]), .uc-lp-wl-foot a, a.uc-v2-link, a.uc-tap { display: inline-block; padding: 6px 0; }
+  label input[type=checkbox], label input[type=radio] { width: 24px; height: 24px; }
+}
+
+/* initials on the pastel avatar: ink, not the (now darker but still mid-grey) muted token: 4.15:1 -> AA */
+.uc-avatar-initials, .uc-wl-offer span.uc-avatar-initials { color: var(--uc-ink); }
+/* Leaflet's disabled zoom control (#bbb on #f4f4f4 = 1.75:1) */
+.leaflet-bar a.leaflet-disabled { color: #6b6b6b; }
 
 /* ---- reduced motion: one rule for the whole app ---------------------------- */
 @media (prefers-reduced-motion: reduce) {

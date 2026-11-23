@@ -8,7 +8,9 @@
     </form>
   </div>
 
-  <div class="uc-map-bar">
+  <div class="uc-band" style="margin-bottom:18px;"><canvas data-map-band aria-hidden="true"></canvas></div>
+
+  <div class="uc-map-bar uc-stagger">
     <div class="uc-map-toggle" role="group" aria-label="Map layers">
       <button type="button" class="active" data-layer="alumni" aria-pressed="true"><i class="uc-map-dot red"></i>Alumni</button>
       <button type="button" data-layer="students" aria-pressed="false"><i class="uc-map-dot blue"></i>Student exchange</button>
@@ -23,7 +25,7 @@
     </form>
   </div>
 
-  <div class="uc-map-grid">
+  <div class="uc-map-grid uc-stagger">
     <div class="uc-map-canvas" id="uc-map" role="region" aria-label="Map of members by neighbourhood"></div>
     <aside class="uc-card uc-map-side" aria-live="polite">
       <div data-map-panel>

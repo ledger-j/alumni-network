@@ -23,7 +23,8 @@
   <link rel="stylesheet" href="css/main.css?v=1.0.5">
   <link rel="stylesheet" href="css/unicircle.css?v=1.0.3">
   <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
-  <link rel="stylesheet" href="css/waitlist.css?v=1.1.1">
+  <link rel="stylesheet" href="css/waitlist.css?v=1.2.0">
+  <link rel="stylesheet" href="css/uc-orbit.css">
 </head>
 <body class="uc-hide-header">
 <div class="uc-page uc-landing uc-wl">
@@ -41,11 +42,12 @@
         <div class="uc-wl-navlinks">
           <a href="map.html">The map</a>
           <a href="mentoring.html">Mentoring</a>
+          <a href="tutoring.html">Tutoring</a>
           <a href="student-exchange.html">Student exchange</a>
           <a href="universities.html">For universities</a>
           <a href="about.html">About</a>
         </div>
-        <a class="uc-btn-dark" href="#wl-form">Join the waitlist</a>
+        <a class="uc-btn-ghost" href="#wl-form">Join the waitlist</a>
       </div>
     </div>
 
@@ -116,7 +118,8 @@
           <li><b>Small asks</b> — every offer is scoped, so saying yes is easy.</li>
           <li><b>Give back</b> — mentors show up first on the map and in the directory.</li>
         </ul>
-        <a class="uc-wl-more" href="mentoring.html">How mentoring works →</a>
+        <a class="uc-wl-more" href="mentoring.html">How mentoring works <span class="uc-nudge" aria-hidden="true">→</span></a>
+        <a class="uc-wl-more" href="tutoring.html" style="margin-left:20px;">Tutoring <span class="uc-nudge" aria-hidden="true">→</span></a>
       </div>
       <div class="uc-wl-mentor-demo" aria-label="Example mentor offers">
         <div class="uc-wl-offer"><span class="uc-avatar-initials">AM</span><div><b>Alumna · Finance, '14</b><span>Amsterdam · Zuid</span><em>“30-min call on breaking into asset management.”</em></div></div>
@@ -152,7 +155,7 @@
         </div>
       </div>
 
-      <div class="uc-wl-three">
+      <div class="uc-wl-three uc-stagger">
         <div><b><i class="dot red"></i>Red — alumni</b><p>Which city, which neighbourhood. Moving to Lisbon? See who from your university is already there, and who's open to a coffee.</p></div>
         <div id="wl-exchange"><b><i class="dot blue"></i>Blue — student exchange</b><p>03 · For students: find the others from your course or tutorial group — on exchange, in the same city, or one district over. Study groups form themselves.</p><a class="uc-wl-more" href="student-exchange.html">About student exchange →</a></div>
         <div><b>Privacy by design</b><p>You choose city and, optionally, neighbourhood. No street, no GPS, no live location. Remove your city any time and your dot is gone.</p><a class="uc-wl-more" href="map.html">How the map works →</a></div>
@@ -173,6 +176,7 @@
       <div style="display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:rgba(250,249,246,.55);">
         <span>© 2026 UniCircle · unicircle.eu · a Beyond Borders Marketing Consultancy project</span>
         <div style="display:flex;gap:24px;">
+          <a href="tutoring.html" style="color:rgba(250,249,246,.7);">Tutoring</a>
           <a href="about.html" style="color:rgba(250,249,246,.7);">About</a>
           <a href="index.html" style="color:rgba(250,249,246,.7);">Sign in</a>
           <a href="privacy.html" style="color:rgba(250,249,246,.7);">Privacy</a>
@@ -186,6 +190,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 <script src="js/uc-map.js?v=1.0.1" defer></script>
 <script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
-<script src="js/waitlist.js?v=1.2.1" defer></script>
+<script src="js/uc-constellation.js" defer></script>
+<script src="js/waitlist.js?v=1.3.0" defer></script>
 </body>
 </html>

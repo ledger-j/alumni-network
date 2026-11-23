@@ -12,7 +12,7 @@
     </form>
   </div>
 
-  <div class="uc-ev-stack">
+  <div class="uc-ev-stack uc-stagger">
     <!-- Featured -->
     <article class="uc-ev-hero" data-uc-event
       id="event-winter-reunion-in-amsterdam" data-id="winter-reunion-in-amsterdam"
@@ -30,6 +30,7 @@
           <p class="uc-ev-desc" hidden>An end-of-year evening for every graduating class: short talks from alumni who changed careers, a tutorial-group table plan, and plenty of time to catch up. Venue and running order are confirmed closer to the date.</p>
         </div>
         <div class="uc-ev-actions">
+          <button type="button" class="uc-pill-outline-paper uc-pill-sm uc-ev-hello" data-ev-hello>Invite someone <span class="uc-nudge" aria-hidden="true">→</span></button>
           <button type="button" class="uc-pill-outline-paper" data-ev-details>Details</button>
           <button type="button" class="uc-pill-paper" data-ev-rsvp aria-pressed="false">RSVP</button>
         </div>
@@ -50,7 +51,7 @@
       <div class="uc-ej-chips" role="group" aria-label="Filter events" data-ev-chips></div>
       <p class="uc-ej-status" role="status" aria-live="polite" data-ev-status></p>
 
-      <div class="uc-ev-list" data-ev-list>
+      <div class="uc-ev-list uc-stagger" data-ev-list>
         <article class="uc-row uc-ev" data-uc-event
           id="event-founders-circle-brussels-breakfast" data-id="founders-circle-brussels-breakfast"
           data-city="Brussels" data-start="2026-10-16T08:30:00+02:00" data-end="2026-10-16T10:00:00+02:00"
@@ -62,6 +63,7 @@
             <p class="uc-ev-desc" hidden>An informal breakfast for alumni who started or joined an early-stage company. Bring one problem you are stuck on; leave with three people who have solved it before.</p>
           </div>
           <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-ev-hello" data-ev-hello>Invite someone <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
             <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
           </div>
@@ -78,6 +80,7 @@
             <p class="uc-ev-desc" hidden>Three short talks from alumni working in payments, risk and regulation, followed by drinks. Open to all graduating years and to current students.</p>
           </div>
           <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-ev-hello" data-ev-hello>Invite someone <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
             <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
           </div>
@@ -94,6 +97,7 @@
             <p class="uc-ev-desc" hidden>A one-hour lunchtime lecture on capital-markets integration in Europe, with 20 minutes of open questions at the end.</p>
           </div>
           <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-ev-hello" data-ev-hello>Invite someone <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
             <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
           </div>
@@ -110,6 +114,7 @@
             <p class="uc-ev-desc" hidden>Dinner for the 2024 finance tutorial groups, two years on. Tables are grouped by tutorial so you sit with the people you argued cases with.</p>
           </div>
           <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-ev-hello" data-ev-hello>Invite someone <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
             <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
           </div>
@@ -126,13 +131,15 @@
             <p class="uc-ev-desc" hidden>Early-career alumni meet people five to ten years ahead of them in consulting, banking and tech. Short round-table format; leave by 09:30.</p>
           </div>
           <div class="uc-ev-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-ev-hello" data-ev-hello>Invite someone <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-pill-ghost" data-ev-details>Details</button>
             <button type="button" class="uc-pill-ink" data-ev-rsvp aria-pressed="false">RSVP</button>
           </div>
         </article>
       </div>
 
-      <div class="uc-ej-empty" data-ev-empty hidden>
+      <div class="uc-ej-empty uc-empty-orbit" data-ev-empty hidden style="--uc-node-h:305;">
+        <div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div>
         <p>No events match this filter.</p>
         <div class="uc-ej-empty-actions">
           <button type="button" class="uc-pill-ghost uc-pill-sm" data-ev-clear>Show all events</button>

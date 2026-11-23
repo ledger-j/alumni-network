@@ -17,6 +17,7 @@
   const PAGES = [
     ['map', 'The map', 'map.html'],
     ['mentoring', 'Mentoring', 'mentoring.html'],
+    ['tutoring', 'Tutoring', 'tutoring.html'],
     ['exchange', 'Student exchange', 'student-exchange.html'],
     ['universities', 'For universities', 'universities.html'],
     ['about', 'About', 'about.html'],
@@ -45,6 +46,19 @@
     });
   }
 
+  // ---- constellation band: the brand's one moving idea, in every page hero ----
+  // One aria-hidden canvas above the hero text (never behind it, so text contrast is untouched).
+  const heroInner = document.querySelector('.uc-s-hero-inner');
+  if (heroInner && window.UCConstellation && !heroInner.querySelector('.uc-band')) {
+    const band = document.createElement('div');
+    band.className = 'uc-band uc-s-band';
+    band.setAttribute('aria-hidden', 'true');
+    const cv = document.createElement('canvas');
+    band.appendChild(cv);
+    heroInner.insertBefore(band, heroInner.firstChild);
+    window.UCConstellation.mount(cv, { count: 70, wash: null, pull: null, linkEvery: 2, linkAlpha: 0.1, linkDist: 80, anchorRange: 0 });
+  }
+
   // ---- closing waitlist card ----
   const cta = document.querySelector('[data-site-cta]');
   if (cta) {
@@ -63,7 +77,7 @@
       + '<input name="email" type="email" placeholder="Email address" autocomplete="email" required class="uc-input-pill">'
       + '<input name="city" type="text" placeholder="City (for the map)" autocomplete="address-level2" required class="uc-input-pill" maxlength="80">'
       + '<label class="uc-s-consent"><input type="checkbox" name="consent" required><span>Email me when my spot opens. Unsubscribe any time. <a href="privacy.html">Privacy</a></span></label>'
-      + '<button class="uc-btn-dark uc-wl-submit" type="submit">Join the waitlist →</button>'
+      + '<button class="uc-btn-dark uc-wl-submit" type="submit">Join the waitlist <span class="uc-nudge" aria-hidden="true">→</span></button>'
       + '<p class="uc-err" role="alert" hidden></p></form>'
       + '<div class="uc-s-done" id="site-wl-done" hidden tabindex="-1"><div class="uc-s-done-mark" aria-hidden="true">✓</div>'
       + '<h3 class="uc-serif">You’re in the circle.</h3><p data-done-msg></p>'

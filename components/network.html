@@ -11,7 +11,9 @@
     </form>
   </div>
 
-  <div style="display:flex;flex-direction:column;gap:24px;">
+  <div class="uc-band" style="margin-bottom:24px;"><canvas data-net-band aria-hidden="true"></canvas></div>
+
+  <div class="uc-stagger" style="display:flex;flex-direction:column;gap:24px;">
     <section class="uc-card" aria-labelledby="uc-net-search-title">
       <div id="uc-net-search-title" class="uc-eyebrow" style="margin-bottom:14px;">Conversational search</div>
       <form data-net-form class="uc-net-askbar" role="search">
@@ -69,10 +71,10 @@
 
       <div data-cards-grid class="uc-cards-3" data-net-grid></div>
 
-      <div data-net-empty class="uc-card uc-net-empty" hidden>
-        <span class="iconify" data-icon="ph:users-three-duotone" aria-hidden="true" style="font-size:44px;opacity:.4;"></span>
+      <div data-net-empty class="uc-card uc-net-empty uc-empty-orbit" style="--uc-node-h:275;" hidden>
+        <div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div>
         <p class="uc-net-empty-t">No one matches those filters yet.</p>
-        <p style="margin:0 0 14px;font-size:13px;color:var(--uc-muted);">Try a broader description, another city, or clear the filters.</p>
+        <p style="margin:0 0 14px;font-size:13px;color:var(--uc-muted);">Try a broader description or another city, or invite someone from your programme to join.</p>
         <button type="button" data-net-clear class="uc-pill-ink uc-pill-sm">Clear filters</button>
       </div>
 

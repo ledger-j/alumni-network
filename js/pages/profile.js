@@ -69,8 +69,11 @@
         : '<button type="button" class="uc-pf-linkbtn" data-pf-edit>Add your city</button>';
 
       const m = $('[data-pf="mentor"]');
-      m.textContent = u.mentor ? 'Mentoring: open' + (u.mentor_offer ? ' · ' + u.mentor_offer : '') : 'Mentoring: not offered';
-      m.setAttribute('title', u.mentor ? 'See the mentoring page' : 'See how mentoring works');
+      const mt = [];
+      if (u.mentor) mt.push('mentoring' + (u.mentor_offer ? ' · ' + u.mentor_offer : ''));
+      if (u.tutor) mt.push('tutoring' + (u.tutor_subjects ? ' · ' + u.tutor_subjects : ''));
+      m.textContent = mt.length ? 'Open to ' + mt.join(' and ') : 'Mentoring & tutoring: not offered';
+      m.setAttribute('title', mt.length ? 'See the Mentor & Tutor page' : 'See how mentoring and tutoring work');
 
       const about = $('[data-pf="about"]');
       const parts = [];
@@ -85,9 +88,50 @@
       about.innerHTML = u.headline || u.degree || u.location || u.mentor ? parts.join('')
         : '<p style="margin:0;">Tell your circle what you do and what you can help with — <button type="button" class="uc-pf-linkbtn" data-pf-edit>add a headline, programme and mentoring offer</button>.</p>';
 
+      fillMentoring();
       renderCounts();
       if (window.Iconify) window.Iconify.scan(page);
     }
+
+    // ------------------------------------------------ mentoring & tutoring
+    const mtForm = $('[data-pf-mt-form]');
+    function fillMentoring() {
+      const u = UCP.user();
+      if (!mtForm) return;
+      const f = mtForm.elements;
+      f.role.value = u && /^(alumnus|student|staff)$/.test(String(u.role || '')) ? u.role : '';
+      f.mentor.checked = !!(u && u.mentor);
+      f.mentor_offer.value = (u && u.mentor_offer) || '';
+      f.tutor.checked = !!(u && u.tutor);
+      f.tutor_subjects.value = (u && u.tutor_subjects) || '';
+      Array.from(f).forEach((el) => { if (el.tagName !== 'BUTTON') el.disabled = !u; });
+    }
+    if (mtForm) mtForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const u = UCP.user();
+      if (!u) { if (window.UC) window.UC.openAuth('signin'); return; }
+      if (!/^[a-z0-9]{1,32}$/i.test(String(u.id || ''))) { UCP.toast('Could not save your settings.', 'warn'); return; }
+      const f = mtForm.elements;
+      const btn = $('[data-pf-mt-save]');
+      const body = {
+        role: f.role.value,
+        mentor: f.mentor.checked,
+        mentor_offer: f.mentor_offer.value.trim().slice(0, 200),
+        tutor: f.tutor.checked,
+        tutor_subjects: f.tutor_subjects.value.trim().slice(0, 200)
+      };
+      if (btn) btn.disabled = true;
+      try {
+        const r = await window.UC.api('PATCH', '/api/collections/users/records/' + u.id, body);
+        window.UC.state.user = Object.assign({}, window.UC.state.user, body, r && typeof r === 'object' ? r : {});
+        UCP.toast('Mentoring & tutoring settings saved.');
+        if (page.isConnected) fill();
+      } catch (err) {
+        UCP.toast('Could not save your settings — please try again.', 'warn');
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    });
 
     function renderCounts() {
       const local = Object.keys(UCP.store('net_connect') || {}).length;
@@ -227,6 +271,11 @@
     });
 
     fill();
+    const sec = UCP.params ? UCP.params().get('section') : null;
+    if (sec === 'mentoring') {
+      const card = $('#uc-pf-mentoring');
+      if (card) setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+    }
     loadData().catch(() => renderPosts([], 'Couldn’t load your posts right now.'));
   };
 })();

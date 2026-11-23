@@ -33,6 +33,17 @@ body { margin: 0; background: var(--uc-bg); }
 .uc-s-hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .uc-s-hero-actions a { padding: 14px 22px; }
 
+/* constellation band (js/site.js) sits above the hero text, never behind it */
+.uc-s-band { max-width: 640px; margin: 0 auto 6px; }
+
+/* tap targets >= 32px */
+.uc-s-links a, .uc-s-signin, .uc-s-footer a { display: inline-flex; align-items: center; min-height: 32px; }
+.uc-s-note a, .uc-s-p a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* two-block compare (mentoring vs tutoring) */
+.uc-s-compare .uc-s-card h3 { margin-top: 14px; }
+.uc-s-tag { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--uc-ink); background: var(--uc-frost, #f1efe9); border: 1px solid var(--uc-border); }
+
 /* ---- sections ---- */
 .uc-s-section { padding: 90px 16px; display: flex; justify-content: center; }
 .uc-s-section--tint { background: rgba(43,42,38,.025); border-top: 1px solid var(--uc-border-2); border-bottom: 1px solid var(--uc-border-2); }
@@ -78,17 +89,18 @@ body { margin: 0; background: var(--uc-bg); }
 .uc-s-faq details { border-bottom: 1px solid var(--uc-border); }
 .uc-s-faq summary { cursor: pointer; list-style: none; padding: 22px 40px 22px 0; position: relative; font-size: 18px; font-weight: 600; }
 .uc-s-faq summary::-webkit-details-marker { display: none; }
-.uc-s-faq summary::after { content: '+'; position: absolute; right: 6px; top: 18px; font-size: 26px; font-weight: 400; color: var(--uc-muted); transition: transform .2s; }
+.uc-s-faq summary::after { content: '+'; position: absolute; right: 6px; top: 18px; font-size: 26px; font-weight: 400; color: var(--uc-muted); transition: transform var(--uc-d-base, 200ms) var(--uc-ease-out, ease); }
 .uc-s-faq details[open] summary::after { transform: rotate(45deg); }
 .uc-s-faq details p { margin: 0 0 22px; font-size: 16px; line-height: 1.75; color: var(--uc-ink-2); max-width: 760px; }
 
 /* "keep exploring" cross-links between pages */
 .uc-s-next { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 30px; }
-.uc-s-next a { display: block; padding: 24px 26px; border-radius: 20px; border: 1px solid var(--uc-border); background: var(--uc-card-solid); text-decoration: none; color: var(--uc-ink); transition: transform .15s ease, box-shadow .15s ease; }
+.uc-s-next a { display: block; padding: 24px 26px; border-radius: 20px; border: 1px solid var(--uc-border); background: var(--uc-card-solid); text-decoration: none; color: var(--uc-ink); transition: transform var(--uc-d-base, 200ms) var(--uc-ease-out, ease), box-shadow var(--uc-d-base, 200ms) var(--uc-ease-out, ease); }
 .uc-s-next a:hover { transform: translateY(-2px); box-shadow: var(--uc-shadow); }
 .uc-s-next b { display: block; font-size: 18px; margin-bottom: 6px; }
 .uc-s-next span { font-size: 14px; line-height: 1.6; color: var(--uc-ink-2); }
-.uc-s-next b::after { content: ' →'; }
+.uc-s-next b::after { content: ' →'; display: inline-block; transition: transform var(--uc-d-base, 200ms) var(--uc-ease-out, ease); }
+.uc-s-next a:hover b::after, .uc-s-next a:focus-visible b::after { transform: translateX(3px); }
 
 /* figures / maps */
 .uc-s-figure { border-radius: 28px; overflow: hidden; border: 1px solid var(--uc-border); box-shadow: var(--uc-shadow); background: #f2f0ea; }
@@ -100,7 +112,7 @@ body { margin: 0; background: var(--uc-bg); }
 .uc-site .leaflet-container { font-family: var(--uc-font-body); }
 
 /* reveal on scroll */
-.uc-s-reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+.uc-s-reveal { opacity: 0; transform: translateY(14px); transition: opacity var(--uc-d-slow, 280ms) var(--uc-ease-out, ease), transform var(--uc-d-slow, 280ms) var(--uc-ease-out, ease); }
 .uc-s-reveal.in { opacity: 1; transform: none; }
 
 /* ---- closing waitlist card (rendered by site.js) ---- */
