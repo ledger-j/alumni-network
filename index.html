@@ -41,11 +41,13 @@
   <!-- Living-network layer styles (auth, chat, modals) -->
   <link rel="stylesheet" href="css/unicircle.css?v=1.0.3">
   <!-- 2026 redesign brand layer (Manrope + Instrument Serif · paper + dark nuance) -->
-  <link rel="stylesheet" href="css/redesign.css?v=2.3.0">
+  <link rel="stylesheet" href="css/redesign.css?v=2.4.1">
+  <!-- Orbit shell (right rail) + motion contract -->
+  <link rel="stylesheet" href="css/uc-orbit.css?v=1.0.1">
   <!-- Page-module layer (dialogs, live cards, map) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
   <link rel="stylesheet" href="css/pages.css?v=1.2.1">
-  <link rel="stylesheet" href="css/p-feed.css?v=1.0.0">
+  <link rel="stylesheet" href="css/p-feed.css?v=1.0.1">
   <link rel="stylesheet" href="css/p-network.css?v=1.0.0">
   <link rel="stylesheet" href="css/p-events-jobs.css?v=1.0.0">
   <link rel="stylesheet" href="css/p-mentoring-cases.css?v=1.0.0">
@@ -56,50 +58,8 @@
   <!-- Accessible Skip Navigation Link -->
   <a href="#app-viewport" class="skip-link">Skip to main content</a>
 
-  <!-- UniCircle Navigation Header -->
-  <header class="global-header" role="banner">
-    <div class="logo-area">
-      <!-- UniCircle brand mark -->
-      <img src="unicircle-logo.png" alt="UniCircle logo" class="um-logo">
-
-      <div class="divider"></div>
-      <div class="app-title">Uni<span>Circle</span> <span style="font-size: 12px; margin-left: 6px; font-weight: 500; color: var(--color-text-secondary);">unicircle.eu</span></div>
-    </div>
-
-    <!-- Navigation Menu representing a mini LinkedIn -->
-    <nav class="nav-menu" aria-label="Primary Navigation">
-      <div class="nav-item active" data-page="feed" role="button" tabindex="0" aria-label="Home Feed">
-        <span class="iconify" data-icon="ph:house-duotone"></span>
-        Home
-      </div>
-      <div class="nav-item" data-page="network" role="button" tabindex="0" aria-label="AI Connections Network">
-        <span class="iconify" data-icon="ph:users-three-duotone"></span>
-        My Network
-        <span class="badge">AI</span>
-      </div>
-      <div class="nav-item" data-page="pbl-hub" role="button" tabindex="0" aria-label="PBL Solving Hub">
-        <span class="iconify" data-icon="ph:lightbulb-filament-duotone"></span>
-        PBL Hub
-      </div>
-      <div class="nav-item" data-page="events" role="button" tabindex="0" aria-label="Events and Classmates Overlap">
-        <span class="iconify" data-icon="ph:calendar-blank-duotone"></span>
-        Events
-        <span class="badge" id="events-overlap-badge">3</span>
-      </div>
-      <div class="nav-item" data-page="jobs" role="button" tabindex="0" aria-label="Career Portal">
-        <span class="iconify" data-icon="ph:briefcase-duotone"></span>
-        Jobs & Premium
-      </div>
-      
-      <div class="divider" style="height: 20px;"></div>
-
-      <!-- User Profile Dropdown Pill -->
-      <div class="nav-item" id="profile-pill" role="button" tabindex="0" aria-label="User Profile menu">
-        <img src="Image_ressources/Mood_images/nikhil1256_A_man_walking_dressed_in_professional_business_attir_8fa44d19-f313-4ba2-aba1-72254228f5eb.png" alt="Jean Maurice profile picture" style="width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1.5px solid var(--um-light-blue);">
-        Me
-      </div>
-    </nav>
-  </header>
+  <!-- The old top header is gone: signed-in pages render the right-hand orbit rail
+       (js/app.js railHtml), guests get the landing page's own nav pill. -->
 
   <!-- Dynamic Content Viewport (SPA Mount Point) -->
   <div id="app-viewport" role="main" aria-live="polite">
@@ -111,9 +71,12 @@
   </div>
 
   <!-- SPA Router & Page Loader Script -->
-  <script src="js/app.js?v=1.7.3" defer></script>
+  <script src="js/uc-constellation.js?v=1.0.0" defer></script>
+  <script src="js/app.js?v=1.8.1" defer></script>
   <!-- Living-network layer: accounts · posting · chat · LinkedIn import -->
-  <script src="js/unicircle.js?v=1.5.0" defer></script>
+  <script src="js/unicircle.js?v=1.6.0" defer></script>
+  <!-- Live chat: realtime 1:1 messages, unread nodes, rail dock -->
+  <script src="js/uc-chat.js?v=1.0.1" defer></script>
   <!-- Page modules: one init per route (contract in js/pages/_shared.js) -->
   <script src="js/pages/_shared.js?v=1.0.0" defer></script>
   <script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>

@@ -513,74 +513,14 @@
     .observe(vp, { childList: true, subtree: true });
 
   // ------------------------------------------------------------------- chat
-  let chatUsers = [];
-  async function openChat(peerId) {
+  // The live 1:1 chat (realtime, unread, dock) lives in js/uc-chat.js, which loads after
+  // this file and replaces window.UC.openChat. This stub keeps early callers working.
+  function openChat(peerId) {
+    if (window.UCChat) return window.UCChat.open(peerId);
     if (!state.user) { openAuth('signin'); return; }
-    if (!requireBackend()) return;
-    let drawer = document.getElementById('uc-chat');
-    if (!drawer) {
-      drawer = document.createElement('div'); drawer.id = 'uc-chat';
-      drawer.innerHTML = `
-        <div class="uc-chat-head"><b>Messages</b><button class="uc-x" aria-label="Close">✕</button></div>
-        <div class="uc-chat-cols">
-          <div class="uc-chat-peers" id="uc-peers"></div>
-          <div class="uc-chat-thread">
-            <div class="uc-thread-msgs" id="uc-msgs"><p class="uc-hint" style="padding:16px">Pick someone to start chatting.</p></div>
-            <form class="uc-thread-form" id="uc-msg-form" hidden>
-              <input id="uc-msg-input" placeholder="Write a message…" autocomplete="off">
-              <button class="uc-primary" type="submit">Send</button>
-            </form>
-          </div>
-        </div>`;
-      document.body.appendChild(drawer);
-      drawer.querySelector('.uc-x').onclick = closeChat;
-      drawer.querySelector('#uc-msg-form').onsubmit = sendMessage;
-    }
-    drawer.classList.add('open');
-    try {
-      const r = await api('GET', `/api/collections/users/records?perPage=50&filter=${encodeURIComponent('id != "' + state.user.id + '"')}`);
-      chatUsers = r.items || [];
-    } catch { chatUsers = []; }
-    const peers = drawer.querySelector('#uc-peers');
-    peers.innerHTML = chatUsers.map((u) => `
-      <button class="uc-peer" data-id="${u.id}">
-        <img src="${avatarOf(u)}" alt=""><span>${esc(u.name || u.email.split('@')[0])}</span></button>`).join('')
-      || '<p class="uc-hint" style="padding:12px">No other members yet — invite some!</p>';
-    peers.querySelectorAll('.uc-peer').forEach((b) => b.onclick = () => selectPeer(b.dataset.id));
-    if (peerId) selectPeer(peerId);
+    toast('Messages are loading — try again in a second.', 'warn');
   }
-  function closeChat() {
-    document.getElementById('uc-chat')?.classList.remove('open');
-    if (state.chatTimer) { clearInterval(state.chatTimer); state.chatTimer = null; }
-  }
-  async function selectPeer(id) {
-    state.chatPeer = chatUsers.find((u) => u.id === id) || { id };
-    document.querySelectorAll('.uc-peer').forEach((b) => b.classList.toggle('active', b.dataset.id === id));
-    document.getElementById('uc-msg-form').hidden = false;
-    await loadThread();
-    if (state.chatTimer) clearInterval(state.chatTimer);
-    state.chatTimer = setInterval(loadThread, 4000);
-  }
-  async function loadThread() {
-    if (!state.chatPeer) return;
-    const me = state.user.id, peer = state.chatPeer.id;
-    const flt = `(sender="${me}" && recipient="${peer}") || (sender="${peer}" && recipient="${me}")`;
-    let items = [];
-    try { const r = await api('GET', `/api/collections/messages/records?perPage=100&sort=created&filter=${encodeURIComponent(flt)}`); items = r.items || []; }
-    catch { return; }
-    const box = document.getElementById('uc-msgs');
-    box.innerHTML = items.map((m) => `<div class="uc-msg ${m.sender === me ? 'mine' : ''}">${esc(m.text)}</div>`).join('')
-      || '<p class="uc-hint" style="padding:16px">Say hello.</p>';
-    box.scrollTop = box.scrollHeight;
-  }
-  async function sendMessage(e) {
-    e.preventDefault();
-    const inp = document.getElementById('uc-msg-input');
-    const text = inp.value.trim(); if (!text || !state.chatPeer) return;
-    inp.value = '';
-    try { await api('POST', '/api/collections/messages/records', { sender: state.user.id, recipient: state.chatPeer.id, text, read: false }); loadThread(); }
-    catch { toast('Could not send.', 'warn'); }
-  }
+  function closeChat() { if (window.UCChat) window.UCChat.close(); }
 
   // ------------------------------------------------------------- my profile
   function openProfile() {

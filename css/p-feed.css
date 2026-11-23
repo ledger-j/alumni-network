@@ -112,3 +112,10 @@ a.uc-feed-chip:hover { border-color: var(--uc-border); color: var(--uc-ink); }
   .uc-feed-post, .uc-feed-composer { padding: 18px 16px 12px; }
   .uc-feed-act { padding: 8px 10px; }
 }
+
+/* touch targets: links and chips reach 32px height on small screens (WCAG 2.5.8 min 24px) */
+@media (max-width: 860px) {
+  a.uc-feed-chip, .uc-feed-more-link, .uc-feed-city { display: inline-flex; align-items: center; min-height: 32px; }
+  .uc-feed-side-title { display: flex; align-items: center; min-height: 32px; }
+  #uc-dash-search { min-height: 32px; }
+}

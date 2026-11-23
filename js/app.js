@@ -38,32 +38,85 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // The one authenticated app shell: a dark-nuance side rail (Design System §5).
   // Every signed-in page is rendered inside it; only the main column swaps.
+  // The menu is on the RIGHT (content left, navigation + messages right) and its
+  // dots are real nodes of the constellation behind it (see js/uc-constellation.js).
+  const RAIL_ITEMS = [
+    ['feed', 'Feed', '235'], ['network', 'Network', '275'],
+    ['map', 'Map', '25'], ['mentoring', 'Mentor & Tutor', '45'],
+    ['events', 'Events', '305'], ['pbl-hub', 'Case Hub', '145'],
+    ['jobs', 'Jobs', '185'], ['profile', 'My profile', '260']
+  ];
   function railHtml(active) {
-    const items = [
-      ['feed', 'Feed', '235'], ['network', 'Network', '275'],
-      ['map', 'Map', '25'], ['mentoring', 'Mentoring', '45'],
-      ['events', 'Events', '305'], ['pbl-hub', 'Case Hub', '145'],
-      ['jobs', 'Jobs', '185']
-    ];
-    const links = items.map(function (it) {
+    const links = RAIL_ITEMS.map(function (it) {
       const on = active === it[0];
-      return '<a href="#' + it[0] + '" class="uc-rail-link' + (on ? ' active' : '') + '"'
-        + (on ? ' aria-current="page"' : '') + '>'
-        + '<span class="uc-rail-dot" style="background:oklch(0.72 0.14 ' + it[2] + ');"></span>' + it[1] + '</a>';
+      return '<a href="#' + it[0] + '" class="uc-rail-link' + (on ? ' active' : '') + '" data-route="' + it[0] + '"'
+        + ' style="--h:' + it[2] + '"' + (on ? ' aria-current="page"' : '') + '>'
+        + '<span class="uc-rail-dot" aria-hidden="true"></span>' + it[1] + '</a>';
     }).join('');
     return '<nav class="uc-rail" aria-label="Primary">'
-      + '<div class="uc-rail-brand"><img src="unicircle-logo.png" alt="UniCircle"><span class="uc-serif">UniCircle</span></div>'
+      + '<canvas class="uc-rail-canvas" aria-hidden="true"></canvas>'
+      + '<div class="uc-rail-inner">'
+      + '<a class="uc-rail-brand" href="#feed" aria-label="UniCircle home"><img src="unicircle-logo.png" alt=""><span class="uc-serif">UniCircle</span></a>'
       + links
-      + '<a href="#profile" class="uc-rail-link' + (active === 'profile' ? ' active' : '') + '"'
-      + (active === 'profile' ? ' aria-current="page"' : '')
-      + '><span class="uc-rail-dot" style="background:rgba(250,249,246,0.4);"></span>My profile</a>'
-      + '<div style="flex:1"></div>'
+      + '<button type="button" class="uc-rail-link" id="uc-rail-msgs" data-route="messages" style="--h:25">'
+      + '<span class="uc-rail-dot" aria-hidden="true"></span>Messages<span class="uc-rail-badge" id="uc-rail-badge" hidden>0</span></button>'
+      + '<div class="uc-rail-spacer"></div>'
+      + '<div class="uc-rail-dock" id="uc-dock" aria-label="Recent conversations"></div>'
       + '<button type="button" class="uc-rail-link" id="uc-dash-signout">← Sign out</button>'
-      + '</nav>';
+      + '</div></nav>';
+  }
+
+  // Mount the rail constellation: anchors = the menu dots, hover draws a line to the
+  // active dot, click sends a pulse along it. Anchor positions are re-measured on resize.
+  let _railFx = null, _railRO = null;
+  function mountRailFx(active) {
+    if (_railFx) { _railFx.destroy(); _railFx = null; }
+    if (_railRO) { _railRO.disconnect(); _railRO = null; }
+    const rail = document.querySelector('.uc-rail');
+    const canvas = rail && rail.querySelector('.uc-rail-canvas');
+    if (!rail || !canvas || !window.UCConstellation) return;
+    if (window.matchMedia('(max-width: 860px)').matches) return; // bottom bar: no canvas
+    _railFx = window.UCConstellation.mount(canvas, {
+      count: 46, wash: null, ink: '250,249,246', linkAlpha: 0.10, linkDist: 76, linkEvery: 2,
+      pull: null, pointerRadius: 150, speed: 0.7, thread: true, anchorAlpha: 0.30,
+      palette: ['oklch(0.74 0.14 235)', 'oklch(0.74 0.14 275)', 'oklch(0.74 0.14 305)', 'oklch(0.74 0.14 185)'],
+      alpha: [0.35, 0.7]
+    });
+    if (!_railFx) return;
+    const measure = () => {
+      const box = canvas.getBoundingClientRect();
+      const list = [];
+      rail.querySelectorAll('.uc-rail-link[data-route]').forEach((a) => {
+        const d = a.querySelector('.uc-rail-dot'); if (!d) return;
+        const r = d.getBoundingClientRect();
+        list.push({ id: a.dataset.route, hue: parseInt(a.style.getPropertyValue('--h'), 10) || 275,
+          x: r.left - box.left + r.width / 2, y: r.top - box.top + r.height / 2 });
+      });
+      _railFx.setAnchors(list);
+    };
+    measure();
+    _railFx.setActive(active);
+    if (window.ResizeObserver) { _railRO = new ResizeObserver(measure); _railRO.observe(rail); }
+    rail.querySelector('.uc-rail-inner').addEventListener('scroll', measure, { passive: true });
+    rail.querySelectorAll('.uc-rail-link[data-route]').forEach((a) => {
+      a.addEventListener('pointerenter', () => _railFx && _railFx.hover(a.dataset.route));
+      a.addEventListener('focus', () => _railFx && _railFx.hover(a.dataset.route));
+      a.addEventListener('pointerleave', () => _railFx && _railFx.hover(null));
+      a.addEventListener('blur', () => _railFx && _railFx.hover(null));
+      a.addEventListener('click', () => { if (_railFx && a.dataset.route !== active) _railFx.pulse(active, a.dataset.route, 280); });
+    });
   }
 
   // Common wiring for every shell page: profile, sign-out, header search.
-  function initShell() {
+  function initShell(pageName) {
+    document.body.classList.add('uc-has-rail');
+    mountRailFx(pageName);
+    // "Messages" is not a route: it opens the chat panel.
+    document.getElementById('uc-rail-msgs')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.UC) window.UC.openChat();
+    });
+    if (window.UCChat && window.UCChat.mountDock) window.UCChat.mountDock(document.getElementById('uc-dock'));
     document.getElementById('uc-dash-signout')?.addEventListener('click', () => {
       try { localStorage.removeItem('uc_auth'); } catch (e) { /* ignore */ }
       window.location.hash = '';
@@ -174,9 +227,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (pageName === 'landing') {
         appViewport.innerHTML = html;
       } else {
-        appViewport.innerHTML = '<div class="uc-dashboard-shell">' + railHtml(pageName)
-          + '<div class="uc-main-col">' + html + '</div></div>';
+        appViewport.innerHTML = '<div class="uc-dashboard-shell">'
+          + '<div class="uc-main-col">' + html + '</div>' + railHtml(pageName) + '</div>';
       }
+      document.body.classList.toggle('uc-has-rail', pageName !== 'landing');
       initializePageInteractivity(pageName);
     };
 
@@ -199,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize specific interactive scripts per component page
   function initializePageInteractivity(pageName) {
-    if (pageName !== 'landing') initShell();
+    if (pageName !== 'landing') initShell(pageName);
     if (pageName === 'landing') {
       initLandingInteractivity();
     } else if (pageName === 'feed') {
@@ -301,68 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
     mountConstellation(document.getElementById('lp-constellation'), 340);
   }
 
-  /* Lightweight constellation swarm (ported from the redesign hero canvas).
-     Respects prefers-reduced-motion; cleans itself up on next page render. */
-  let _ucRaf = null;
+  /* Paper-side constellation (landing hero, feed ribbon) = the shared engine with
+     its defaults. Several can run at once; each cleans up when its canvas leaves the DOM. */
   function mountConstellation(canvas, count) {
-    if (_ucRaf) { cancelAnimationFrame(_ucRaf); _ucRaf = null; }
-    if (!canvas || !canvas.getContext) return;
-    const ctx = canvas.getContext('2d');
-    const palette = ['oklch(0.62 0.14 235)', 'oklch(0.62 0.14 275)', 'oklch(0.62 0.14 305)', 'oklch(0.62 0.14 185)'];
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let W = 0, H = 0, particles = [];
-    const resize = () => {
-      W = canvas.clientWidth; H = canvas.clientHeight;
-      canvas.width = W * dpr; canvas.height = H * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    window.addEventListener('resize', resize);
-    const mouse = { x: null, y: null };
-    canvas.parentElement.addEventListener('pointermove', (e) => {
-      const r = canvas.getBoundingClientRect();
-      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
-    });
-    function P() {
-      this.x = Math.random() * W; this.y = Math.random() * H;
-      this.vx = Math.random() - 0.5; this.vy = Math.random() - 0.5;
-      this.size = Math.random() * 3 + 1.2;
-      this.color = palette[Math.floor(Math.random() * palette.length)];
-      this.alpha = Math.random() * 0.35 + 0.3; this.off = Math.random() * Math.PI * 2;
-    }
-    P.prototype.update = function (t) {
-      const a = Math.sin(this.y * 0.004 + t * 0.0004 + this.off) + Math.cos(this.x * 0.003 - t * 0.0003);
-      this.vx += Math.cos(a) * 0.03; this.vy += Math.sin(a) * 0.03;
-      const cx = W / 2, cy = H * 0.55, dx = cx - this.x, dy = cy - this.y, d = Math.hypot(dx, dy) || 1;
-      this.vx += (dx / d) * 0.007; this.vy += (dy / d) * 0.007;
-      if (mouse.x !== null) {
-        const mx = mouse.x - this.x, my = mouse.y - this.y, md = Math.hypot(mx, my);
-        if (md < 180) { this.vx += (mx / md) * 0.05; this.vy += (my / md) * 0.05; }
-      }
-      this.vx *= 0.96; this.vy *= 0.96; this.x += this.vx; this.y += this.vy;
-      if (this.x < -20) this.x = W + 20; if (this.x > W + 20) this.x = -20;
-      if (this.y < -20) this.y = H + 20; if (this.y > H + 20) this.y = -20;
-    };
-    P.prototype.draw = function () {
-      ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; const s = this.size;
-      ctx.beginPath(); ctx.roundRect(this.x - s, this.y - s, s * 2, s * 2, s * 0.7); ctx.fill();
-    };
-    for (let i = 0; i < count; i++) particles.push(new P());
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const step = (t) => {
-      ctx.globalAlpha = 1; ctx.fillStyle = 'rgba(250,249,246,0.28)'; ctx.fillRect(0, 0, W, H);
-      for (const p of particles) { p.update(t); p.draw(); }
-      ctx.globalAlpha = 1; ctx.strokeStyle = 'rgba(43,42,38,0.06)'; ctx.lineWidth = 1;
-      for (let i = 0; i < particles.length; i += 3) {
-        for (let j = i + 3; j < particles.length; j += 3) {
-          const a = particles[i], b = particles[j], dx = a.x - b.x, dy = a.y - b.y;
-          if (dx * dx + dy * dy < 4900) { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
-        }
-      }
-      if (!reduced && canvas.isConnected) _ucRaf = requestAnimationFrame(step);
-    };
-    ctx.fillStyle = '#faf9f6'; ctx.fillRect(0, 0, W, H);
-    _ucRaf = requestAnimationFrame(step);
+    if (!canvas || !window.UCConstellation) return null;
+    return window.UCConstellation.mount(canvas, { count: count });
   }
 
   /* ==========================================
