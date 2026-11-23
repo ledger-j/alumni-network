@@ -7,13 +7,35 @@ tutoring requests) with API rules. Re-running it also tightens the rules on coll
 that already exist (rules are patched, fields are only added, never removed).
 Reads the live collection format first so it stays correct across PB versions.
 
-Run on the box:  PB_TOKEN=$(cat /opt/unicircle/.admin_token) python3 init_schema.py
+Run on the box:  PB_TOKEN=<superuser token> python3 init_schema.py
+   or:            PB_IDENTITY=<superuser email> PB_PASSWORD=<password> python3 init_schema.py
 """
 import json, os, urllib.request, urllib.error
 
 BASE = os.environ.get("PB_BASE", "http://127.0.0.1:8090")
-TOKEN = os.environ["PB_TOKEN"]
 USERS_ID = "_pb_users_auth_"
+
+
+def _superuser_token():
+    """PB_TOKEN if set; otherwise log in with PB_IDENTITY + PB_PASSWORD (superuser).
+    Stored admin tokens expire, so the login route avoids a stale-token 401."""
+    tok = os.environ.get("PB_TOKEN")
+    if tok:
+        return tok
+    ident, pw = os.environ.get("PB_IDENTITY"), os.environ.get("PB_PASSWORD")
+    if not (ident and pw):
+        raise SystemExit("set PB_TOKEN, or PB_IDENTITY + PB_PASSWORD (superuser login)")
+    r = urllib.request.Request(BASE + "/api/collections/_superusers/auth-with-password",
+                               data=json.dumps({"identity": ident, "password": pw}).encode(),
+                               method="POST", headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(r, timeout=20) as resp:
+            return json.loads(resp.read())["token"]
+    except urllib.error.HTTPError as e:
+        raise SystemExit(f"superuser login failed: HTTP {e.code}")
+
+
+TOKEN = _superuser_token()
 
 
 def req(method, path, body=None):
