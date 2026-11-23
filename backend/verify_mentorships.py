@@ -87,6 +87,32 @@ st, _ = call("PATCH", U, {"supporter": True}, S_USER["token"])
 g.rejected("member cannot set their own supporter flag", st)
 st, _ = call("PATCH", U, {"tutor": True, "tutor_subjects": "Statistics"}, S_USER["token"])
 g.check("member can set own tutor + tutor_subjects", st == 200, st)
+st, _ = call("PATCH", U, {"role": "admin"}, S_USER["token"])
+g.rejected("member cannot set role to an unknown value (admin)", st)
+st, _ = call("PATCH", U, {"role": "alumnus"}, S_USER["token"])
+g.check("member can set role to a known value", st == 200, st)
+st, cur = call("GET", U, token=S_USER["token"])
+g.check("supporter still false and role unchanged by the attacks", not cur.get("supporter") and cur.get("role") == "alumnus", cur.get("supporter"))
+# modifier-style keys must not slip past the :isset guards (DeepSeek review: untested assumption)
+st, _ = call("PATCH", U, {"supporter+": True}, S_USER["token"])
+st2, cur = call("GET", U, token=S_USER["token"])
+g.check("'supporter+' modifier key does not grant the flag", not cur.get("supporter"), f"{st}")
+
+# --- signup is open: it must not be a way in either ---
+import time
+def signup(extra):
+    e = f"vt_su_{int(time.time()*1000)}_{len(extra)}@example.test"
+    return call("POST", "/api/collections/users/records",
+                {"email": e, "password": "Test123456!", "passwordConfirm": "Test123456!", "name": "VT signup", **extra})
+st, rec = signup({"supporter": True})
+g.rejected("cannot sign up as supporter", st)
+if st == 200: users.made.append(rec["id"])
+st, rec = signup({"role": "admin"})
+g.rejected("cannot sign up with role=admin", st)
+if st == 200: users.made.append(rec["id"])
+st, rec = signup({"role": "student", "tutor": True})
+g.check("a normal signup with role=student + tutor works", st == 200, st)
+if st == 200: users.made.append(rec["id"])
 
 users.cleanup(made)
 g.done()

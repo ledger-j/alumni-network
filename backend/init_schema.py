@@ -75,9 +75,17 @@ merged = users["fields"] + [f for f in extra if f["name"] not in existing]
 AUTHED = '@request.auth.id != ""'
 # Members may edit their own profile but not grant themselves premium (`supporter`);
 # only the server/admin sets that flag.
-SELF_UPDATE = 'id = @request.auth.id && @request.body.supporter:isset = false'
+# The same guard applies at signup (createRule is open): nobody can sign up as a supporter.
+# `role` is self-declared and trusted by nothing server-side, but only the known values are
+# accepted so it can never be used to smuggle in e.g. "admin".
+NO_SUPPORTER = '@request.body.supporter:isset = false'
+ROLE_OK = ('(@request.body.role:isset = false || @request.body.role = "" || @request.body.role = "alumnus"'
+           ' || @request.body.role = "student" || @request.body.role = "staff")')
+SELF_UPDATE = f'id = @request.auth.id && {NO_SUPPORTER} && {ROLE_OK}'
+SELF_CREATE = f'{NO_SUPPORTER} && {ROLE_OK}'
 st, r = req("PATCH", f"/api/collections/{USERS_ID}",
-            {"fields": merged, "listRule": AUTHED, "viewRule": AUTHED, "updateRule": SELF_UPDATE})
+            {"fields": merged, "listRule": AUTHED, "viewRule": AUTHED,
+             "createRule": SELF_CREATE, "updateRule": SELF_UPDATE})
 print("users extend:", st, r.get("name") or r)
 
 

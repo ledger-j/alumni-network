@@ -62,8 +62,12 @@
     const rnd = (a, b) => a + Math.random() * (b - a);
 
     function resize() {
+      const pw = W, ph = H;
       W = canvas.clientWidth; H = canvas.clientHeight;
-      if (!W || !H) return;
+      if (!W || !H) { W = pw; H = ph; return; }
+      // Keep the swarm spread across the new size (a canvas is often measured before its
+      // CSS has applied; without this, dots stay clustered in the first, smaller box).
+      if (pw && ph && (pw !== W || ph !== H)) for (const p of particles) { p.x *= W / pw; p.y *= H / ph; }
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (o.wash) { ctx.fillStyle = o.bg; ctx.fillRect(0, 0, W, H); }
@@ -106,7 +110,11 @@
     function draw(t, animate) {
       if (!W || !H) return;
       ctx.globalAlpha = 1;
-      if (o.wash) { ctx.fillStyle = o.wash; ctx.fillRect(0, 0, W, H); }
+      // Trails (translucent wash) only while animating. A static redraw (reduced motion,
+      // off-screen, hover/resize) paints an opaque background, otherwise every redraw would
+      // wash the previous frame a little more and the dots would fade away.
+      if (o.wash && animate) { ctx.fillStyle = o.wash; ctx.fillRect(0, 0, W, H); }
+      else if (o.wash) { ctx.fillStyle = o.bg; ctx.fillRect(0, 0, W, H); }
       else ctx.clearRect(0, 0, W, H);
 
       for (const p of particles) {

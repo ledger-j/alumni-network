@@ -24,7 +24,7 @@
     peers: [],                 // directory (for "say hello")
     open: false, peerId: null, thread: [],
     es: null, clientId: null, poll: null, started: false, live: false,
-    docks: new Set(),
+    docks: new Set(), refreshing: false, queue: [],
   };
 
   // ------------------------------------------------------------- helpers
@@ -53,20 +53,26 @@
   // ------------------------------------------------------ conversations
   async function refreshConvos() {
     if (!me()) return;
+    S.refreshing = true; S.queue = [];            // SSE messages that land while we fetch are replayed below
     let items = [];
     try {
       const r = await UC.api('GET', '/api/collections/messages/records?perPage=200&sort=-created');
       items = r.items || [];
-    } catch (e) { return; }
-    const map = new Map();
+    } catch (e) { S.refreshing = false; return; }
+    const map = new Map(), serverIds = new Set();
     for (const m of items) {                       // newest first
       const pid = peerOf(m); if (!pid) continue;
-      const c = map.get(pid) || { peerId: pid, last: m, unread: 0 };
+      serverIds.add(m.id);
+      const c = map.get(pid) || { peerId: pid, last: m, unread: 0, seenIds: new Set() };
+      c.seenIds.add(m.id);                         // already counted: a late duplicate must not count again
       if (m.recipient === me().id && !m.read) c.unread++;
       map.set(pid, c);
     }
     await loadUsers([...map.keys()]);
     S.convos = new Map([...map].map(([k, v]) => [k, Object.assign(v, { peer: S.users.get(k) || { id: k } })]));
+    S.refreshing = false;
+    const late = S.queue; S.queue = [];
+    late.forEach((m) => { if (!serverIds.has(m.id)) addMessage(m); });   // arrived after the snapshot
     renderAll();
   }
 
@@ -232,6 +238,7 @@
   // --------------------------------------------- incoming (realtime/poll)
   function addMessage(m) {
     if (!m || !me()) return;
+    if (S.refreshing) S.queue.push(m);
     const my = me().id;
     if (m.sender !== my && m.recipient !== my) return;
     const pid = peerOf(m);
@@ -309,7 +316,7 @@
     if (!me()) { el.hidden = true; return; }
     S.docks.forEach((d) => { if (!d.isConnected) S.docks.delete(d); });
     S.docks.add(el);
-    wireDock(el);
+    if (!el.dataset.wired) { el.dataset.wired = '1'; wireDock(el); }
     renderDock(el);
     start();
     loadDirectory().then(() => renderDock(el));

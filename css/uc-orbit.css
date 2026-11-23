@@ -124,6 +124,9 @@
 .uc-dock-cta:hover { transform: translateY(-1px); }
 .uc-dock-cta:active { transform: scale(0.98); }
 
+/* keyboard focus on the dark rail: paper ring (the global ink outline is invisible on #3a3934) */
+.uc-rail-dock :is(button):focus-visible, .uc-rail-inner > button:focus-visible { outline: 2px solid var(--uc-bg); outline-offset: 2px; }
+
 /* unread node: a dot that rings once */
 .uc-node {
   position: relative; display: inline-block; width: 9px; height: 9px; border-radius: 50%;

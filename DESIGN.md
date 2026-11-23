@@ -47,11 +47,16 @@ Engine: `UCConstellation.mount(canvas, opts)` in `js/uc-constellation.js` (sever
 ## Chat
 1:1 only. PocketBase realtime over SSE (`/api/realtime`), 6 s polling as fallback. Unread =
 recipient's `read=false`; opening a thread sets `read` on incoming messages. Panel + dock in
-`js/uc-chat.js`. Planned backend hardening: recipient may change only `read`
-(see `backend/init_schema.py` once updated; verify with `backend/verify_chat.py`).
+`js/uc-chat.js`. Backend rules (in `backend/init_schema.py`, verified by `backend/verify_chat.py`):
+only the two participants see a thread, the recipient may change only `read`, nobody deletes.
+The schema script must be run on the production PocketBase before the new chat/mentorship
+features can store data; until then they degrade to message-only.
 
-## Verified so far (Phase 0 gate, feed page, mock API)
-`tools/verify.js` green at 1432 and 390 px · 0 console errors · `tools/qa-crawler.mjs`: 0 broken
-links · realtime message → badge, dock, toast, tab title without reload · thread open marks read.
-Probe fixes (project copy `tools/verify.js`): colours converted via canvas (oklch was misread),
-1 px sr-only text not "clipped", elements inside a scrolling bar are "contained".
+## Verified (final gate, 2026-11-23)
+- `tools/verify.js` green on all 8 app routes at 1432 and 382/390 px (real Chromium), the guest landing and 11 static pages at 390 and 1440 (embedded pane), with the chat panel open; 0 unhandled rejections after rapid route changes; `tools/qa-crawler.mjs`: 0 broken same-origin links.
+- Realtime: message -> badge, dock, toast, tab title without reload; opening a thread marks read; SSE de-duplicated; refresh race fixed after the Qwen review.
+- Rules (real PocketBase 0.39.4, throwaway): 19 chat + 32 mentorship checks incl. executed attacks (forged sender, text tampering, stranger reads, self-grant `supporter` on update and on signup, `role=admin`, modifier keys).
+- Reduced motion: canvases stop, static frames identical across reads, all transitions ~0 ms. Service worker registers, caches same-origin files only. Keyboard: content first, rail last, visible focus ring on every rail control.
+- Known gate limits: contrast on text over photos/gradients is eye-checked; an 8 px scroll-width reading appears for ~200 ms during the route View Transition (and persists only in the throttled embedded pane); no skip-to-menu link yet (the app hides the global skip link).
+- Probe fixes (project copy `tools/verify.js`): colours via canvas (oklch was misread), 1 px sr-only text not "clipped", scroll-contained items not page overflow.
+- Defects found by the gate and fixed: muted text 3.4:1 (token), dark-panel headings ink-on-dark, small tap targets, landing footer overflow, Enter in dialog forms reloading the page, View Transition rejections, constellation dots clustered in a late-measured canvas, static redraws washing the canvas, dock focus ring invisible on the dark rail.
