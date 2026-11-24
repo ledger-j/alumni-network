@@ -217,7 +217,7 @@
         <p class="uc-row-between"><a href="#" data-act="forgot" class="uc-link-muted">Forgot password?</a></p>
         <p class="uc-err" hidden></p>
       </form>`;
-    const { host, close } = modal('<img src="unicircle-logo.png" alt="">Welcome to <em>the circle.</em>', body);
+    const { host, close } = modal('<img src="assets/img/logo-u-64.png" alt="">Welcome to <em>the circle.</em>', body);
     const magicForm = host.querySelector('#uc-magic-form');
     const pwForm = host.querySelector('#uc-auth-form');
     let mode = initial;      // 'magic' | 'signin' | 'signup'

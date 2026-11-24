@@ -1,11 +1,11 @@
 /* UniCircle service worker: app-shell precache + offline fallback.
    Bump VERSION on every deploy that changes a precached file. */
-const VERSION = 'uc-v4';
+const VERSION = 'uc-v5';
 const CACHE = 'unicircle-' + VERSION;
 
 // App shell: plain paths; cache-busting ?v= query strings are ignored on lookup.
 const SHELL = [
-  '/index.html', '/offline.html', '/unicircle-logo.png',
+  '/index.html', '/offline.html', '/assets/img/logo-u-badge-128.png', '/assets/img/logo-u-128.png', '/assets/img/favicon-32.png',
   '/css/main.css', '/css/components.css', '/css/unicircle.css', '/css/redesign.css',
   '/css/uc-orbit.css', '/css/pages.css', '/css/p-feed.css', '/css/p-network.css',
   '/css/p-events-jobs.css', '/css/p-mentoring-cases.css', '/css/p-map.css',

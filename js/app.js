@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageCache = {};
   async function fetchPage(name) {
     if (pageCache[name] != null) return pageCache[name];
-    const res = await fetch(routes[name] + '?v=10');
+    const res = await fetch(routes[name] + '?v=11');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const html = await res.text();
     pageCache[name] = html;
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return '<nav class="uc-rail" aria-label="Primary">'
       + '<canvas class="uc-rail-canvas" aria-hidden="true"></canvas>'
       + '<div class="uc-rail-inner">'
-      + '<a class="uc-rail-brand" href="#feed" aria-label="UniCircle home"><img src="unicircle-logo.png" alt=""><span class="uc-serif">UniCircle</span></a>'
+      + '<a class="uc-rail-brand" href="#feed" aria-label="UniCircle home"><img src="assets/img/logo-u-badge-128.png" alt=""><span class="uc-serif">UniCircle</span></a>'
       + links
       + '<button type="button" class="uc-rail-link" id="uc-rail-msgs" data-route="messages" style="--h:25">'
       + '<span class="uc-rail-dot" aria-hidden="true"></span>Messages<span class="uc-rail-badge" id="uc-rail-badge" hidden>0</span></button>'

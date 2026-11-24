@@ -29,7 +29,7 @@
   const nav = document.querySelector('[data-site-nav]');
   if (nav) {
     nav.outerHTML = '<header class="uc-s-navwrap"><nav class="uc-navpill uc-s-nav" aria-label="Main">'
-      + '<a class="uc-s-brand" href="index.html"><img src="assets/img/logo-circle.jpg" alt=""><span>UniCircle</span></a>'
+      + '<a class="uc-s-brand" href="index.html"><img src="assets/img/logo-u-badge-128.png" alt=""><span>UniCircle</span></a>'
       + '<button type="button" class="uc-s-burger" aria-expanded="false" aria-controls="uc-s-links" aria-label="Menu"><span></span><span></span></button>'
       + '<div class="uc-s-links" id="uc-s-links">'
       + PAGES.map((p) => '<a href="' + p[2] + '"' + (p[0] === page ? ' aria-current="page"' : '') + '>' + p[1] + '</a>').join('')
@@ -92,7 +92,7 @@
   const foot = document.querySelector('[data-site-footer]');
   if (foot) {
     foot.outerHTML = '<footer class="uc-footer-dark uc-s-footer"><div class="uc-s-footer-inner">'
-      + '<div class="uc-s-footer-top"><a class="uc-s-brand uc-s-brand--light" href="index.html"><img src="assets/img/logo-circle.jpg" alt=""><span class="uc-serif">UniCircle</span></a>'
+      + '<div class="uc-s-footer-top"><a class="uc-s-brand uc-s-brand--light" href="index.html"><img src="assets/img/logo-u-badge-128.png" alt=""><span class="uc-serif">UniCircle</span></a>'
       + '<nav class="uc-s-footer-links" aria-label="Footer">' + PAGES.map((p) => '<a href="' + p[2] + '">' + p[1] + '</a>').join('')
       + '<a href="waitlist.html">Waitlist</a></nav></div>'
       + '<div class="uc-s-rule"></div>'
