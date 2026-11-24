@@ -1,6 +1,6 @@
 /* UniCircle service worker: app-shell precache + offline fallback.
    Bump VERSION on every deploy that changes a precached file. */
-const VERSION = 'uc-v6';
+const VERSION = 'uc-v7';
 const CACHE = 'unicircle-' + VERSION;
 
 // App shell: plain paths; cache-busting ?v= query strings are ignored on lookup.

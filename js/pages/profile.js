@@ -11,7 +11,7 @@
   const safeUrl = (u) => (window.UC && window.UC.safeUrl ? window.UC.safeUrl(u) : (/^https:\/\/[^\s"'<>]+$/i.test(String(u || '')) ? String(u) : ''));
   const cityOf = (loc) => String(loc || '').split(/[,/·|(]/)[0].trim();
   const initials = (n) => String(n || '?').trim().split(/\s+/).map((s) => s[0]).slice(0, 2).join('').toUpperCase();
-  const validId = (id) => /^[a-z0-9]{5,30}$/i.test(String(id || ''));
+  const validId = (id) => /^[a-z0-9]{1,32}$/i.test(String(id || ''));
 
   function ago(iso) {
     const t = Date.parse(String(iso || '').replace(' ', 'T'));

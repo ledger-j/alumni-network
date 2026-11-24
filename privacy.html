@@ -24,7 +24,23 @@
     .uc-legal table { width: 100%; border-collapse: collapse; font-size: 14px; margin-top: 10px; }
     .uc-legal th, .uc-legal td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--uc-border); vertical-align: top; color: var(--uc-ink-2); }
     .uc-legal th { color: var(--uc-ink); font-weight: 600; }
-    .uc-legal-back { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
+    .uc-legal-back { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; min-height: 32px; }
+    .uc-legal h3 { font-size: 17px; font-weight: 600; margin: 28px 0 6px; color: var(--uc-ink); }
+    .uc-legal .uc-tablewrap { overflow-wrap: anywhere; }
+    .uc-legal .uc-links { display: flex; flex-wrap: wrap; gap: 4px 6px; padding: 0; list-style: none; }
+    .uc-legal .uc-links a { display: inline-flex; align-items: center; min-height: 32px; padding: 0 6px; }
+    .uc-legal .uc-note { border-left: 3px solid var(--uc-border); padding: 2px 0 2px 14px; }
+    .uc-legal #delete-account .uc-btnlike { display: inline-flex; align-items: center; min-height: 32px; font-weight: 600; color: var(--uc-ink); }
+    @media (min-width: 641px) { .uc-legal { max-width: 960px; } .uc-legal > p, .uc-legal > ul, .uc-legal > h1, .uc-legal > h2, .uc-legal > h3 { max-width: 760px; } }
+    @media (max-width: 640px) {
+      .uc-legal table.uc-cards, .uc-legal table.uc-cards tbody, .uc-legal table.uc-cards tr, .uc-legal table.uc-cards td { display: block; width: 100%; box-sizing: border-box; }
+      .uc-legal table.uc-cards thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+      .uc-legal table.uc-cards tr { border: 1px solid var(--uc-border); border-radius: 12px; padding: 6px 12px; margin: 0 0 14px; }
+      .uc-legal table.uc-cards td { border-bottom: 0; padding: 6px 0; }
+      .uc-legal table.uc-cards td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--uc-ink); }
+      .uc-legal table.uc-cards td:first-child { font-weight: 600; color: var(--uc-ink); }
+      .uc-legal table.uc-cards td:first-child::before { content: none; }
+    }
   </style>
 </head>
 <body>
@@ -34,7 +50,7 @@
   <a class="uc-legal-back" href="index.html"><img src="assets/img/logo-u-badge-128.png" alt="" style="width:30px;height:30px;border-radius:50%;"> UniCircle</a>
   <div class="uc-eyebrow" style="margin-top:36px;">Privacy</div>
   <h1>Your data, <em style="color:var(--uc-muted);">your circle.</em></h1>
-  <p>Last updated: 6 October 2026. UniCircle is a project of Beyond Borders Marketing Consultancy (the data controller). Questions or requests: <a href="mailto:hello@unicircle.eu">hello@unicircle.eu</a>.</p>
+  <p>Updated: 2026-11-24. UniCircle is a project of Beyond Borders Marketing Consultancy (the data controller). Questions or requests: <a href="mailto:hello@unicircle.eu">hello@unicircle.eu</a>.</p>
 
   <h2>What we store and why</h2>
   <table>
@@ -44,8 +60,34 @@
     <tr><td>Posts and messages you write</td><td>To show them to the people you share them with</td><td>Contract</td></tr>
   </table>
 
-  <h2>Location: city and neighbourhood only</h2>
+  <h2>What we store for members, in detail</h2>
+  <p>This is what the member features store once you have an account. Core features run on contract (we cannot give you a profile, messages or mentoring without them) or, where noted, on our legitimate interest in running a safe, working network. Map location and the AI helper run only on your consent.</p>
+  <div class="uc-tablewrap">
+  <table class="uc-cards">
+    <thead><tr><th>Category</th><th>What is stored</th><th>Why</th><th>Legal basis</th><th>Who sees it</th><th>How long</th></tr></thead>
+    <tbody>
+    <tr><td>Profile and photos</td><td data-label="What is stored">Avatar and cover image, plus the profile fields you fill in.</td><td data-label="Why">To show who you are in the directory and to the people you contact.</td><td data-label="Legal basis">Contract</td><td data-label="Who sees it">Signed-in members, as your profile settings allow.</td><td data-label="How long">Until you change or delete it, or delete your account.</td></tr>
+    <tr><td>My UI colour</td><td data-label="What is stored">Your chosen accent colour. It is kept on your device and in an owner-only setting.</td><td data-label="Why">So the site looks the way you set it on every device.</td><td data-label="Legal basis">Contract</td><td data-label="Who sees it">Only you.</td><td data-label="How long">Until you change it or delete your account.</td></tr>
+    <tr><td>Contact settings and block list</td><td data-label="What is stored">Who may contact you (open, points, request first, or closed), the points you require, the types of requests you accept, and the members you block.</td><td data-label="Why">To apply your rules when someone tries to write to you, and to show senders the rule before they type. These settings are part of your profile so the buttons show correctly.</td><td data-label="Legal basis">Contract</td><td data-label="Who sees it">The contact rules are visible to signed-in members. The block list is visible only to you.</td><td data-label="How long">Until you change them or delete your account.</td></tr>
+    <tr><td>Status points and points ledger</td><td data-label="What is stored">Your points balance, and a ledger of entries: the reason (from a fixed list) and one reference to the item concerned.</td><td data-label="Why">To apply the contact rules and as proof of work done in the network.</td><td data-label="Legal basis">Contract; legitimate interest (fair use of contact rules)</td><td data-label="Who sees it">The ledger: only you. Other members see only your balance.</td><td data-label="How long">Until you delete your account.</td></tr>
+    <tr><td>Map location</td><td data-label="What is stored">A position you choose to show, snapped on our server to a grid of about 5 km, and the city. Off by default. One move per day.</td><td data-label="Why">To show where members are, in the map of the network.</td><td data-label="Legal basis">Your consent</td><td data-label="Who sees it">Only signed-in members with a verified email, and only while it is switched on.</td><td data-label="How long">Until you hide or remove it, or delete your account.</td></tr>
+    <tr><td>In-depth profile</td><td data-label="What is stored">Longer answers you write yourself about your background, interests and what you offer. Visibility: members or private. It is never pre-filled with data about you from other sources, and we ask for no sensitive data.</td><td data-label="Why">To help members find good matches for collaboration and mentoring.</td><td data-label="Legal basis">Contract</td><td data-label="Who sees it">Members, or only you, as you choose.</td><td data-label="How long">Until you change or delete it, or delete your account.</td></tr>
+    <tr><td>Collaboration requests</td><td data-label="What is stored">The request, its text, sender, recipient and status.</td><td data-label="Why">To let members propose working together before opening a conversation.</td><td data-label="Legal basis">Contract</td><td data-label="Who sees it">Sender and recipient.</td><td data-label="How long">Until a member deletes it. The sender can withdraw a pending request.</td></tr>
+    <tr><td>Direct and group messages</td><td data-label="What is stored">The messages, who wrote them and when, and group membership.</td><td data-label="Why">To let you talk to other members.</td><td data-label="Legal basis">Contract</td><td data-label="Who sees it">Only the members of that conversation. New members of a group can read earlier messages in it.</td><td data-label="How long">Until deleted, or until the account of the sender is deleted.</td></tr>
+    <tr><td>Events and RSVPs</td><td data-label="What is stored">Events you create (host, dates, place) and your RSVP to an event.</td><td data-label="Why">To organise meet-ups and show how many people plan to come.</td><td data-label="Legal basis">Contract</td><td data-label="Who sees it">Events: signed-in members. RSVP lists are never shown to others, only a count.</td><td data-label="How long">Until you delete the event or your RSVP, or delete your account.</td></tr>
+    <tr><td>Mentoring plans and documents</td><td data-label="What is stored">Goals, stage, next session, and files you upload to a mentorship (protected files).</td><td data-label="Why">To run a mentorship between its participants.</td><td data-label="Legal basis">Contract</td><td data-label="Who sees it">Only the participants of that mentorship.</td><td data-label="How long">Deleted 90 days after the mentorship closes, or earlier if you delete them or your account.</td></tr>
+    <tr><td>Optional AI helper</td><td data-label="What is stored">Text you paste in to be structured into profile fields. UniCircle stores only what you then save.</td><td data-label="Why">To save you typing: it proposes fields and you confirm each one.</td><td data-label="Legal basis">Your consent</td><td data-label="Who sees it">Google (Gemini model) as our processor, while it processes the text. The fields you save are shown as any other profile field.</td><td data-label="How long">The pasted text is not kept by UniCircle. Saved fields stay as long as the rest of your profile.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="uc-note"><strong>Please do not upload</strong> ID documents, health data, or other people's grades to mentoring documents or messages.</p>
+
+  <h3>The AI helper in plain words</h3>
+  <p>The helper is optional and off until you use it. When you paste text and press the button, names, email addresses, phone numbers and web links are removed from the text first, and the rest is sent to Google's Gemini model, which acts as our processor and returns suggested fields. Nothing is saved until you confirm every field yourself. UniCircle does not keep the pasted text beyond the fields you save. You can withdraw consent at any time by not using the helper, or by switching it off or deleting what it filled in.</p>
+
+  <h3>Location: city and neighbourhood only</h3>
   <p>The alumni map and the student-exchange map use only the city (and, if you choose, the neighbourhood) you type in yourself. We never ask for a street address, never use GPS or live location, and people in the same area are merged into one dot. The map cannot zoom to street level.</p>
+  <p>If you switch on your own pin on the member map, it is placed on a grid of about 5 km by our server, so we never store or show your exact position. It is off by default, only signed-in members with a verified email can see it, and you can hide or remove it at any time. You can move it once a day.</p>
 
   <h2>Where it lives</h2>
   <p>The website is hosted by ALL-INKL.COM and the database by Hetzner Online, both in Germany (EU). We do not sell your data, and we do not use advertising trackers. The pages load fonts from Google Fonts and map tiles from OpenStreetMap, which see your IP address when your browser requests them.</p>
@@ -54,12 +96,24 @@
   <ul>
     <li>Waitlist entries: until you join, unsubscribe, or 24 months after sign-up, whichever comes first.</li>
     <li>Accounts: until you delete your account; posts and messages are deleted with it.</li>
+    <li>Member data: see the last column of the table above for each category.</li>
   </ul>
 
+  <h2 id="delete-account">Deleting your account</h2>
+  <p>Open your profile page and press <strong>Delete my account</strong>. This removes your profile and everything you own: photos, settings, points ledger, map pin, requests, events, RSVPs, mentoring plans and documents. Messages you sent disappear with the account, including in conversations other members are still in.</p>
+
   <h2>Your rights</h2>
-  <p>You can ask to see, correct, export or delete your data, withdraw consent, or object to processing — email <a href="mailto:hello@unicircle.eu">hello@unicircle.eu</a> and we will act within one month. You can also complain to your national data-protection authority.</p>
+  <p>You can ask to access, correct, erase, export (portability) or restrict your data, object to processing, or withdraw consent at any time (for location and the AI helper, switching them off or deleting the data is enough). Much of this you can do yourself in the product. For the rest, email <a href="mailto:hello@unicircle.eu">hello@unicircle.eu</a> and we will act within one month. You can also complain to your national data-protection authority.</p>
   <h2>Explore UniCircle</h2>
-  <p><a href="map.html">The map</a> · <a href="mentoring.html">Mentoring</a> · <a href="tutoring.html">Tutoring</a> · <a href="student-exchange.html">Student exchange</a> · <a href="universities.html">For universities</a> · <a href="about.html">About</a> · <a href="waitlist.html?ref=privacy-footer">Join the waitlist</a></p>
+  <ul class="uc-links">
+    <li><a href="map.html">The map</a></li>
+    <li><a href="mentoring.html">Mentoring</a></li>
+    <li><a href="tutoring.html">Tutoring</a></li>
+    <li><a href="student-exchange.html">Student exchange</a></li>
+    <li><a href="universities.html">For universities</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="waitlist.html?ref=privacy-footer">Join the waitlist</a></li>
+  </ul>
 </main>
 </body>
 </html>

@@ -124,7 +124,7 @@
   UC.uploadMedia = function (path, method, fields, fileField, blob, filename) {
     const fd = new FormData();
     Object.keys(fields || {}).forEach((k) => { if (fields[k] != null) fd.append(k, fields[k]); });
-    if (fileField && blob) fd.append(fileField, blob, filename || 'image.jpg');
+    if (fileField && blob) fd.append(fileField, blob, filename || ('image' + (blob.type === 'image/png' ? '.png' : '.jpg')));
     return UC.api(method, path, fd);
   };
 })();
