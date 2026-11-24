@@ -1,0 +1,3292 @@
+{
+ "meta": {
+  "title": "UniCircle target-group map",
+  "built": "2026-11-24",
+  "retrieval": "2026-11-24",
+  "lanes": [
+   {
+    "name": "Claude web research (round 1)",
+    "state": "done"
+   },
+   {
+    "name": "Gemini cross-examination",
+    "state": "pending"
+   }
+  ],
+  "note": "Copied from docs/icp-dossier/10-harvest/claude-r1-A-universities.md and claude-r1-B-alumni-students.md and the fact cards; no facts added. Statuses: verified = page opened; sourced = search snippet or cited secondary source; inference = reasoning, no source; UNVERIFIED = could not be confirmed.",
+  "removed_notice": "Maastricht SBE removed from the outreach list: existing relationship"
+ },
+ "criteria": [
+  {
+   "id": "MA1",
+   "label": "Large alumni base relative to team size (> 20k alumni, < 6 FTE)",
+   "weight": 5
+  },
+  {
+   "id": "MA2",
+   "label": "No integrated alumni platform",
+   "weight": 5
+  },
+  {
+   "id": "MA3",
+   "label": "Cohort or problem-based teaching",
+   "weight": 4
+  },
+  {
+   "id": "MA4",
+   "label": "Business school / faculty with own alumni activity",
+   "weight": 3
+  },
+  {
+   "id": "MA5",
+   "label": "Public alumni or lifelong-learning ambition",
+   "weight": 4
+  },
+  {
+   "id": "MA6",
+   "label": "International alumni share / diaspora cities",
+   "weight": 3
+  },
+  {
+   "id": "MA7",
+   "label": "Membership, premium or fundraising interest",
+   "weight": 3
+  },
+  {
+   "id": "MA8",
+   "label": "Student-side programme mentoring or tutoring could plug into",
+   "weight": 3
+  }
+ ],
+ "universities": [
+  {
+   "id": "nyenrode",
+   "name": "Nyenrode Business Universiteit",
+   "city": "Breukelen / Amsterdam / Den Haag",
+   "group": "ten",
+   "research_rank": 1,
+   "alumni_base": {
+    "value": "30,000 alumni",
+    "source": "https://www.nyenrode.nl/en/about-us/alumni",
+    "year": "2026-11",
+    "status": "verified"
+   },
+   "platform": {
+    "name": "VCV-Platform at nyenrodealumni.nl, run by alumni association VCV (founded 1957); vendor and login not stated; 33 country LinkedIn groups",
+    "kind": "named",
+    "status": "verified"
+   },
+   "programmes": [
+    "Alumni Peer Group Coaching (page exists, content not read)",
+    "Alumni return as peer group coaches, scholarship mentors, guest lecturers",
+    "Nyenrode Fund (scholarships, facilities, 27 monuments)"
+   ],
+   "triggers": [
+    {
+     "text": "Institution founded 1946 (footer \"1946 - 2026\"); 80-year mark in 2026 is inference, no alumni event found",
+     "date": "2026",
+     "source": "https://www.nyenrode.nl/en/about-us/alumni"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Nyenrode Alumni Office (team page) and association Nyenrode Alumni VCV",
+    "url": "https://www.nyenrode.nl/en/about-us/alumni"
+   },
+   "sources": [
+    "https://www.nyenrode.nl/en/about-us/alumni",
+    "https://www.nyenrode.nl/en/about-us/alumni/alumni-connection/alumni-association-vcv",
+    "https://www.nyenrode.nl/en/about-us/alumni/international-alumni-network"
+   ],
+   "status": "verified",
+   "notes": "Team size not public. MA3 cohort teaching UNVERIFIED. 10 of 26 points on inference.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "short": "Nyenrode",
+   "score": 26,
+   "inference_points": 10
+  },
+  {
+   "id": "uu",
+   "name": "Universiteit Utrecht",
+   "city": "Utrecht",
+   "group": "ten",
+   "research_rank": 2,
+   "alumni_base": {
+    "value": "More than 233,000 registered alumni",
+    "source": "https://www.uu.nl/organisatie/alumni",
+    "year": "2025",
+    "status": "verified"
+   },
+   "platform": {
+    "name": "None named on the alumni page (Instagram, Facebook, LinkedIn, address-check form); CRM or portal behind it UNVERIFIED",
+    "kind": "none_found",
+    "status": "inference"
+   },
+   "programmes": [
+    "University College Utrecht \"Pathways\" one-to-one student-alumni mentoring",
+    "9 faculty networks, 11 international alumni networks plus International Alumni Network NL",
+    "Utrechts Universiteitsfonds: 12,500+ Friends, about EUR 2.8m raised in 2025"
+   ],
+   "triggers": [
+    {
+     "text": "Lustrum 2026 with alumni programme (lustrum number UNVERIFIED)",
+     "date": "2026",
+     "source": "https://www.uu.nl/organisatie/lustrum-2026-maak-kennis-maak-verschil/programma/alumniactiviteiten"
+    },
+    {
+     "text": "No alumni platform on the 2026 procurement calendar",
+     "date": "2026",
+     "source": "https://www.uu.nl/organisatie/praktische-zaken/informatie-voor-leveranciers/aanbestedingskalender"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Alumni office contact page on uu.nl/organisatie/alumni; University College Utrecht alumni (Pathways) as small pilot",
+    "url": "https://www.uu.nl/organisatie/alumni"
+   },
+   "sources": [
+    "https://www.uu.nl/organisatie/alumni",
+    "https://www.uu.nl/en/organisation/university-college-utrecht/alumni"
+   ],
+   "status": "verified",
+   "notes": "Weakest-evidence entry in the table: MA1 and MA2 are inference; a base of 233,000 with per-faculty networks probably means more than 6 FTE.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "short": "Utrecht University",
+   "score": 26,
+   "inference_points": 10
+  },
+  {
+   "id": "rsm",
+   "name": "Rotterdam School of Management (RSM), Erasmus University",
+   "city": "Rotterdam",
+   "group": "ten",
+   "research_rank": 3,
+   "alumni_base": {
+    "value": "More than 55,000 alumni worldwide",
+    "source": "https://www.rsm.nl/alumni/",
+    "year": "2026-11",
+    "status": "verified"
+   },
+   "platform": {
+    "name": "None named on the alumni page; chapters run on LinkedIn groups and mostly WhatsApp, plus WeChat/Line. Wider EUR community \"EUR Connect\": whether RSM alumni use it is UNVERIFIED",
+    "kind": "none_found",
+    "status": "inference"
+   },
+   "programmes": [
+    "63 chapter entries in about 40 countries, volunteer leaders (Germany: Berlin, Frankfurt, Hamburg, Munich, NRW; China; USA)",
+    "100+ chapter events by end Sept 2025; 35 events in Q1 2026",
+    "\"55 for 55\" giving campaign (EUR 55 gifts, goal EUR 55,000)"
+   ],
+   "triggers": [
+    {
+     "text": "55th anniversary of RSM with \"55 for 55\" campaign running Nov 2026",
+     "date": "2026-11",
+     "source": "https://www.rsm.nl/alumni/"
+    }
+   ],
+   "first_contact_route": {
+    "text": "RSM Alumni \"Contact us\" page (/alumni/contact/)",
+    "url": "https://www.rsm.nl/alumni/"
+   },
+   "sources": [
+    "https://www.rsm.nl/alumni/",
+    "https://www.rsm.nl/localchapters"
+   ],
+   "status": "verified",
+   "notes": "Closest match to the reference pattern after Nyenrode (volunteer chapters on WhatsApp/LinkedIn = missing platform). Mentoring not found, UNVERIFIED.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "short": "RSM (Erasmus)",
+   "score": 23,
+   "inference_points": 10
+  },
+  {
+   "id": "vu-sbe",
+   "name": "VU Amsterdam School of Business and Economics (SBE)",
+   "city": "Amsterdam",
+   "group": "ten",
+   "research_rank": 4,
+   "alumni_base": {
+    "value": "VU total 154,769 alumni; SBE-specific number not found",
+    "source": "https://vu.nl/en/alumni",
+    "year": "2026-11",
+    "status": "sourced"
+   },
+   "platform": {
+    "name": "None named; alumni page points to LinkedIn groups. VU CRM is Microsoft Dynamics 365 plus Selligent (sourced). Tools on SBE page: VUurwerk magazine, CareerSet CV tool",
+    "kind": "none_found",
+    "status": "inference"
+   },
+   "programmes": [
+    "Career Services and Alumni Relations team (size not given)",
+    "\"Knowledge partner for life\" lifelong-learning positioning",
+    "Career coaching"
+   ],
+   "triggers": [
+    {
+     "text": "No dated trigger found. Stale signal (inference): latest linked VUurwerk edition July 2023",
+     "date": "2023-07",
+     "source": "https://vu.nl/en/about-vu/faculties/school-of-business-and-economics/more-about/sbe-alumni-netwerk"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Career Services and Alumni Relations, SBE (contact on SBE alumni page)",
+    "url": "https://vu.nl/en/about-vu/faculties/school-of-business-and-economics/more-about/sbe-alumni-netwerk"
+   },
+   "sources": [
+    "https://vu.nl/en/about-vu/faculties/school-of-business-and-economics/more-about/sbe-alumni-netwerk",
+    "https://vu.nl/nl/medewerker/database-en-crm/relatiebeheer-vu"
+   ],
+   "status": "sourced",
+   "notes": "Document name for the lifelong-learning ambition not given.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "short": "VU Amsterdam SBE",
+   "score": 23,
+   "inference_points": 10
+  },
+  {
+   "id": "leiden",
+   "name": "Universiteit Leiden",
+   "city": "Leiden",
+   "group": "ten",
+   "research_rank": 5,
+   "alumni_base": {
+    "value": "About 109,000 alumni, 5,000 abroad",
+    "source": "https://www.universiteitleiden.nl/over-ons/onze-alumni",
+    "year": "2026-11",
+    "status": "verified"
+   },
+   "platform": {
+    "name": "Mentor Network online platform (2,200 mentors online in 2021); no community portal found; monthly newsletter, Leidraad magazine 3x a year",
+    "kind": "named",
+    "status": "sourced"
+   },
+   "programmes": [
+    "Mentor Network for students and young alumni",
+    "Jonge Alumni Netwerk (to age 35)",
+    "Leids Universiteits Fonds"
+   ],
+   "triggers": [
+    {
+     "text": "Alumni meeting Brussels 20 Apr 2026 (not strategic)",
+     "date": "2026-04",
+     "source": "https://www.universiteitleiden.nl/over-ons/onze-alumni"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Alumni relations contact on over-ons/onze-alumni",
+    "url": "https://www.universiteitleiden.nl/over-ons/onze-alumni"
+   },
+   "sources": [
+    "https://www.universiteitleiden.nl/over-ons/onze-alumni",
+    "https://www.universiteitleiden.nl/nieuws/2021/01/juist-in-deze-tijd-kun-je-alle-hulp-en-elke-ingang-gebruiken"
+   ],
+   "status": "verified",
+   "notes": "MA6 0 (about 4.6% abroad).",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "short": "Leiden University",
+   "score": 23,
+   "inference_points": 10
+  },
+  {
+   "id": "um-sbe",
+   "name": "Maastricht University, School of Business and Economics (SBE)",
+   "city": "Maastricht",
+   "group": "removed",
+   "research_rank": 6,
+   "alumni_base": {
+    "value": "UM about 100,000 (100,000th alumna 2024) in 131 countries; SBE over 35,000",
+    "source": "https://www.maastrichtuniversity.nl/about-um/faculties/school-business-and-economics/welcome-sbe-alumni-community",
+    "year": "2024",
+    "status": "sourced"
+   },
+   "platform": {
+    "name": "Not found, UNVERIFIED. UM CRM tender 2025 (GAC Business Solutions with BusinessBase) is student-journey focused, not alumni",
+    "kind": "unverified",
+    "status": "UNVERIFIED"
+   },
+   "programmes": [
+    "Alumni Circles run by volunteer committees (Amsterdam 4,233 members, Vienna 158)",
+    "Expertise centre Alumni, Fundraising and UM Academy for Lifelong Development (size unknown)",
+    "Problem-Based Learning in the UM education model"
+   ],
+   "triggers": [
+    {
+     "text": "UM alumni policy 2021-2026 expires in 2026; a successor is due (inference)",
+     "date": "2026",
+     "source": "https://www.maastrichtuniversity.nl/node/49161"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Alumni, Fundraising and UM Academy expertise centre / SBE alumni community page",
+    "url": "https://www.maastrichtuniversity.nl/about-um/faculties/school-business-and-economics/welcome-sbe-alumni-community"
+   },
+   "sources": [
+    "https://www.maastrichtuniversity.nl/about-um/faculties/school-business-and-economics/welcome-sbe-alumni-community",
+    "https://www.maastrichtuniversity.nl/news/globally-connected-power-active-alumni-community",
+    "https://www.maastrichtuniversity.nl/alumni-circle-communities"
+   ],
+   "status": "sourced",
+   "notes": "Removed from the outreach list: existing relationship. Body pages (alumni policy PDF, networking page) not read.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    }
+   },
+   "short": "Maastricht SBE",
+   "score": 22,
+   "inference_points": 5
+  },
+  {
+   "id": "ucu",
+   "name": "University College Utrecht (UCU)",
+   "city": "Utrecht",
+   "group": "ten",
+   "research_rank": 7,
+   "alumni_base": {
+    "value": "Base size not found",
+    "source": "https://www.uu.nl/en/organisation/university-college-utrecht/alumni",
+    "year": "2026-11",
+    "status": "UNVERIFIED"
+   },
+   "platform": {
+    "name": "LinkedIn group and update form; no platform named",
+    "kind": "none_found",
+    "status": "inference"
+   },
+   "programmes": [
+    "Pathways student-alumni mentoring: opt-in 20-27 Oct, matching 2 Nov, sessions 5-10 Nov (year not on page); funded to continue"
+   ],
+   "triggers": [
+    {
+     "text": "Pathways mentoring programme funded to continue",
+     "date": "year not on page",
+     "source": "https://www.uu.nl/en/organisation/university-college-utrecht/alumni"
+    }
+   ],
+   "first_contact_route": {
+    "text": "UCU alumni page",
+    "url": "https://www.uu.nl/en/organisation/university-college-utrecht/alumni"
+   },
+   "sources": [
+    "https://www.uu.nl/en/organisation/university-college-utrecht/alumni"
+   ],
+   "status": "UNVERIFIED",
+   "notes": "Small base likely; weak on MA1. 9 of 19 points on inference (MA3 from the residential college model).",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 4,
+     "status": "inference"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "short": "University College Utrecht",
+   "score": 19,
+   "inference_points": 9
+  },
+  {
+   "id": "radboud",
+   "name": "Radboud Universiteit",
+   "city": "Nijmegen",
+   "group": "ten",
+   "research_rank": 8,
+   "alumni_base": {
+    "value": "Not found",
+    "source": "https://www.ru.nl/en/alumni",
+    "year": "2026-11",
+    "status": "UNVERIFIED"
+   },
+   "platform": {
+    "name": "No portal named; Radboud Career Platform powered by JobTeaser (jobs, not community)",
+    "kind": "none_found",
+    "status": "inference"
+   },
+   "programmes": [
+    "Faculty alumni offices plus central Alumni Office Management",
+    "\"Mentoring a student or alumnus\" listed as a contribution, no named programme",
+    "Radboud Fund"
+   ],
+   "triggers": [
+    {
+     "text": "National Alumni Survey 2025; Radboud Alumni of the Year 2026",
+     "date": "2025-2026",
+     "source": "https://www.ru.nl/en/about-us/news/national-alumni-survey-2025-kicks-off-your-opinion-matters"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Alumni Office Management page",
+    "url": "https://www.ru.nl/en/alumni"
+   },
+   "sources": [
+    "https://www.ru.nl/en/alumni",
+    "https://www.ru.nl/over-ons/contact/alumni-afdelingen"
+   ],
+   "status": "UNVERIFIED",
+   "notes": "Base UNVERIFIED so MA1 scored 0.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "short": "Radboud University",
+   "score": 18,
+   "inference_points": 5
+  },
+  {
+   "id": "tilburg",
+   "name": "Tilburg University / TiSEM",
+   "city": "Tilburg",
+   "group": "ten",
+   "research_rank": 9,
+   "alumni_base": {
+    "value": "Over 87,000 (University Fund annual report 2022); site claims 90,000 and elsewhere 60,000, undated",
+    "source": "https://annualreports.tilburguniversity.edu/university-fund-annual-report-2022/the-year-2022-in-figures",
+    "year": "2022",
+    "status": "sourced"
+   },
+   "platform": {
+    "name": "UNVERIFIED (alumni pages returned HTTP 403)",
+    "kind": "unverified",
+    "status": "UNVERIFIED"
+   },
+   "programmes": [
+    "Alumni Mentor Program",
+    "Friends of Cobbenhagen alumni association (25+ years)",
+    "University Fund: EUR 358,778 donated in 2022",
+    "Automatic membership at graduation"
+   ],
+   "triggers": [
+    {
+     "text": "87,000 alumni; mentor programme; page access failed so no dated trigger",
+     "date": "2022",
+     "source": "https://annualreports.tilburguniversity.edu/university-fund-annual-report-2022/the-year-2022-in-figures"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Alumni and External Relations (public privacy page names the office)",
+    "url": "https://tilburguniversity.edu/alumni/services/privacystatement"
+   },
+   "sources": [
+    "https://www.tilburguniversity.edu/alumni",
+    "https://Tilburguniversity.edu/students/career/your-career-path/alumni-mentor-program"
+   ],
+   "status": "sourced",
+   "notes": "Re-check needed in a browser lane (403). 9 of 15 points on inference.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "inference"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "short": "Tilburg / TiSEM",
+   "score": 15,
+   "inference_points": 9
+  },
+  {
+   "id": "eur",
+   "name": "Erasmus University Rotterdam (central)",
+   "city": "Rotterdam",
+   "group": "ten",
+   "research_rank": 10,
+   "alumni_base": {
+    "value": "Over 175,000 alumni; automatic membership, no fee",
+    "source": "https://www.eur.nl/en/education/alumni",
+    "year": "2026-11",
+    "status": "sourced"
+   },
+   "platform": {
+    "name": "\"EUR Connect\" online community, LinkedIn group, international chapters; vendor and status UNVERIFIED",
+    "kind": "named",
+    "status": "sourced"
+   },
+   "programmes": [
+    "International chapters (e.g. Brussels, New York City)"
+   ],
+   "triggers": [
+    {
+     "text": "No dated strategic trigger found. The research table also lists \"100+ chapter events 2025\", a figure stated on the RSM chapters page; its attribution to central EUR is UNVERIFIED",
+     "date": "2025",
+     "source": "https://www.eur.nl/en/education/alumni"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Erasmus Alumni Relations Team page (404 on fetch; team size UNVERIFIED)",
+    "url": "https://www.eur.nl/en/education/alumni"
+   },
+   "sources": [
+    "https://www.eur.nl/en/education/alumni"
+   ],
+   "status": "sourced",
+   "notes": "RSM is covered separately.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "short": "Erasmus University (central)",
+   "score": 15,
+   "inference_points": 5
+  },
+  {
+   "id": "twente",
+   "name": "University of Twente",
+   "city": "Enschede",
+   "group": "ten",
+   "research_rank": "R1",
+   "replaces": "um-sbe",
+   "alumni_base": {
+    "value": "Over 66,000 alumni",
+    "source": "https://www.utwente.nl/en/alumni",
+    "year": "2026-08-31",
+    "status": "verified"
+   },
+   "platform": {
+    "name": "Alumni portal plus LinkedIn group; vendor and login not stated",
+    "kind": "named",
+    "status": "verified"
+   },
+   "programmes": [
+    "Alumni chapters",
+    "Twente University Fund",
+    "4TU international-alumni-in-NL network (with TU Delft, TU/e, WUR), about 20,000 international graduates in NL"
+   ],
+   "triggers": [
+    {
+     "text": "New 4TU network for international alumni in the Netherlands launched as a LinkedIn group",
+     "date": "2025-05-27",
+     "source": "https://www.utwente.nl/en/alumni/news/2025/5/327289/new-network-for-international-alumni-in-the-netherlands-launched-by-the-ut-tud-tue-wur"
+    }
+   ],
+   "first_contact_route": {
+    "text": "UT alumni page",
+    "url": "https://www.utwente.nl/en/alumni"
+   },
+   "sources": [
+    "https://www.utwente.nl/en/alumni",
+    "https://www.utwente.nl/en/alumni/news/2025/5/327289/new-network-for-international-alumni-in-the-netherlands-launched-by-the-ut-tud-tue-wur"
+   ],
+   "status": "verified",
+   "notes": "First reserve (R1); moved into the outreach ten when Maastricht SBE was removed.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "short": "University of Twente",
+   "score": 15,
+   "inference_points": 5
+  },
+  {
+   "id": "uva",
+   "name": "Universiteit van Amsterdam / Amsterdam Business School (ABS)",
+   "city": "Amsterdam",
+   "group": "reserve",
+   "research_rank": "R2",
+   "alumni_base": {
+    "value": "Not found",
+    "source": "https://abs.uva.nl/about/alumni/alumni.html",
+    "year": "2026-11",
+    "status": "UNVERIFIED"
+   },
+   "platform": {
+    "name": "ABS points to the UvA Economics and Business alumni network and website; no platform, no number. A search summary said LinkedIn is the main network, page 404 on fetch (UNVERIFIED)",
+    "kind": "none_found",
+    "status": "inference"
+   },
+   "programmes": [
+    "Alumni Hubs abroad",
+    "Amsterdam University Fund",
+    "Alumni Week 3-9 Oct 2026"
+   ],
+   "triggers": [
+    {
+     "text": "Alumni Week 3-9 Oct 2026",
+     "date": "2026-10",
+     "source": "https://www.uva.nl/en/about-the-uva/alumni/alumni.html"
+    }
+   ],
+   "first_contact_route": {
+    "text": "UvA E&B alumni website via the ABS alumni page",
+    "url": "https://abs.uva.nl/about/alumni/alumni.html"
+   },
+   "sources": [
+    "https://abs.uva.nl/about/alumni/alumni.html",
+    "https://www.uva.nl/en/about-the-uva/alumni/alumni.html"
+   ],
+   "status": "UNVERIFIED",
+   "notes": "",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 0,
+     "status": "UNVERIFIED"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "score": 14,
+   "inference_points": 5
+  },
+  {
+   "id": "tias",
+   "name": "TIAS School for Business and Society",
+   "city": "Tilburg / Eindhoven",
+   "group": "reserve",
+   "research_rank": "R3",
+   "watch": true,
+   "alumni_base": {
+    "value": "About 25,000 alumni (older pages: 20,000+)",
+    "source": "https://www.tias.edu/en/experience-tias/after-your-program/powerful-network",
+    "year": "2026-11",
+    "status": "sourced"
+   },
+   "platform": {
+    "name": "TIAS Connect (tiasconnect.com; LinkedIn/Facebook login); contract UNVERIFIED",
+    "kind": "named",
+    "status": "sourced"
+   },
+   "programmes": [
+    "Mentor Program with 2,400+ alumni",
+    "Free alumni membership"
+   ],
+   "triggers": [
+    {
+     "text": "2,400+ mentors in programme; platform contract UNVERIFIED",
+     "date": "2026-11",
+     "source": "https://www.tias.edu/en/experience-tias/after-your-program/powerful-network"
+    }
+   ],
+   "first_contact_route": {
+    "text": "TIAS alumni page",
+    "url": "https://www.tias.edu/en/alumni"
+   },
+   "sources": [
+    "https://www.tias.edu/en/experience-tias/after-your-program/powerful-network",
+    "https://prd.www.tias.edu/en/alumni/alumni-membership"
+   ],
+   "status": "sourced",
+   "notes": "Watch: platform exists; log as \"displace later\" unless the contract is known.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "score": 18,
+   "inference_points": 5
+  },
+  {
+   "id": "rug",
+   "name": "Rijksuniversiteit Groningen, FEB",
+   "city": "Groningen",
+   "group": "displace_later",
+   "research_rank": null,
+   "alumni_base": {
+    "value": "FEB online community: more than 5,000 FEB alumni and students; university-wide count not found",
+    "source": "https://www.rug.nl/feb/alumni-network/",
+    "year": "2026-11",
+    "status": "verified"
+   },
+   "platform": {
+    "name": "RUGconnect, live 2 May 2025 (vendor not named); FEB network with SSO login",
+    "kind": "named",
+    "status": "verified"
+   },
+   "programmes": [
+    "Alumni circles (Amsterdam; Jakarta events 24-25 Nov 2026)"
+   ],
+   "triggers": [
+    {
+     "text": "RUGconnect platform launched for students, alumni, staff, partners",
+     "date": "2025-05-02",
+     "source": "https://www.rug.nl/about-ug/latest-news/news/archief2025/nieuwsberichten/rugconnect-new-platform-bringing-together-students-alumni-and-organizations"
+    }
+   ],
+   "first_contact_route": {
+    "text": "RUG alumni page (low priority: platform live)",
+    "url": "https://www.rug.nl/alumni/"
+   },
+   "sources": [
+    "https://www.rug.nl/feb/alumni-network/",
+    "https://www.rug.nl/alumni/"
+   ],
+   "status": "verified",
+   "notes": "Displace later: platform live since May 2025.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "score": 13,
+   "inference_points": 0
+  },
+  {
+   "id": "wur",
+   "name": "Wageningen University & Research",
+   "city": "Wageningen",
+   "group": "displace_later",
+   "research_rank": null,
+   "alumni_base": {
+    "value": "About 30,000 (derived: 22,000 Dutch + 8,000 international from a snippet, year unclear)",
+    "source": "https://www.wur.nl/en/newsarticle/new-wur-connect-online-platform-now-available-to-all-wageningen-alumni.htm",
+    "year": "undated",
+    "status": "sourced"
+   },
+   "platform": {
+    "name": "WUR Connect online platform; chapters (Belgium, China about 2,000, Indonesia, Kenya, Singapore)",
+    "kind": "named",
+    "status": "sourced"
+   },
+   "programmes": [
+    "Alumni chapters"
+   ],
+   "triggers": [],
+   "first_contact_route": {
+    "text": "WUR alumni chapters page (platform live: skip for now)",
+    "url": "https://www.wur.nl/en/Alumni/Alumni-chapters.htm"
+   },
+   "sources": [
+    "https://www.wur.nl/en/newsarticle/new-wur-connect-online-platform-now-available-to-all-wageningen-alumni.htm",
+    "https://www.wur.nl/en/Alumni/Alumni-chapters.htm"
+   ],
+   "status": "sourced",
+   "notes": "Displace later: platform live.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "score": 12,
+   "inference_points": 5
+  },
+  {
+   "id": "tud",
+   "name": "TU Delft",
+   "city": "Delft",
+   "group": "displace_later",
+   "research_rank": null,
+   "alumni_base": {
+    "value": "Community over 110,000; platform over 8,000 members (undated)",
+    "source": "https://www.tudelft.nl/over-tu-delft/alumni/community/ask-an-alum",
+    "year": "undated",
+    "status": "sourced"
+   },
+   "platform": {
+    "name": "\"TU Delft for Life\" (tudelftforlife.nl)",
+    "kind": "named",
+    "status": "sourced"
+   },
+   "programmes": [
+    "Ask an Alum",
+    "DEAN network"
+   ],
+   "triggers": [],
+   "first_contact_route": {
+    "text": "TU Delft alumni community page (platform live: excluded from ranking)",
+    "url": "https://tudelft.nl/en/about-tu-delft/alumni/community"
+   },
+   "sources": [
+    "https://tudelft.nl/en/about-tu-delft/alumni/community",
+    "https://www.tudelft.nl/over-tu-delft/alumni/community/ask-an-alum"
+   ],
+   "status": "sourced",
+   "notes": "Displace later: platform live.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    }
+   },
+   "score": 15,
+   "inference_points": 5
+  },
+  {
+   "id": "tue",
+   "name": "TU Eindhoven",
+   "city": "Eindhoven",
+   "group": "displace_later",
+   "research_rank": null,
+   "alumni_base": {
+    "value": "Base not found",
+    "source": "https://www.tue.nl/universiteit/over-de-universiteit/tue-alumni-community/the-alumni-portal-of-the-tue-1",
+    "year": "2026-11",
+    "status": "UNVERIFIED"
+   },
+   "platform": {
+    "name": "TU/e Alumni Portal, operated by Aluminati Network Group (vendor public)",
+    "kind": "named",
+    "status": "sourced"
+   },
+   "programmes": [],
+   "triggers": [],
+   "first_contact_route": {
+    "text": "TU/e alumni portal page (vendor-run platform: skip)",
+    "url": "https://www.tue.nl/universiteit/over-de-universiteit/tue-alumni-community/the-alumni-portal-of-the-tue-1"
+   },
+   "sources": [
+    "https://www.tue.nl/universiteit/over-de-universiteit/tue-alumni-community/the-alumni-portal-of-the-tue-1"
+   ],
+   "status": "sourced",
+   "notes": "Displace later: vendor-run platform.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 4,
+     "status": "sourced"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "score": 7,
+   "inference_points": 0
+  },
+  {
+   "id": "ucr",
+   "name": "University College Roosevelt (UCR)",
+   "city": "Middelburg",
+   "group": "unscored",
+   "research_rank": null,
+   "alumni_base": {
+    "value": "Base size UNVERIFIED, likely small (inference)",
+    "source": "https://www.ucr.nl/about-ucr/friends-of-ucr",
+    "year": "2026-11",
+    "status": "UNVERIFIED"
+   },
+   "platform": {
+    "name": "Not found (alumni page returned HTTP 403)",
+    "kind": "unverified",
+    "status": "UNVERIFIED"
+   },
+   "programmes": [
+    "Friends of UCR foundation (alumni on board)"
+   ],
+   "triggers": [
+    {
+     "text": "Vacancy \"Events Community Engagement Officer\" dated 2026-03 (alumni link UNVERIFIED)",
+     "date": "2026-03",
+     "source": "https://ucr.nl/wp-content/uploads/2026/04/2026-03-UCR-Events-Community-Engagement-Officer.pdf"
+    }
+   ],
+   "first_contact_route": {
+    "text": "Friends of UCR page",
+    "url": "https://www.ucr.nl/about-ucr/friends-of-ucr"
+   },
+   "sources": [
+    "https://www.ucr.nl/about-ucr/friends-of-ucr"
+   ],
+   "status": "UNVERIFIED",
+   "notes": "Score 8, below the ranked list.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 5,
+     "status": "inference"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 3,
+     "status": "sourced"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "score": 8,
+   "inference_points": 5
+  },
+  {
+   "id": "ou",
+   "name": "Open Universiteit",
+   "city": "Heerlen",
+   "group": "unscored",
+   "research_rank": null,
+   "alumni_base": {
+    "value": "UNVERIFIED",
+    "source": "https://ou.nl/documents/40554/55499/Jaarverslag_2006.pdf",
+    "year": "2006",
+    "status": "UNVERIFIED"
+   },
+   "platform": {
+    "name": "UNVERIFIED (only hit: alumni association existed by 2006)",
+    "kind": "unverified",
+    "status": "UNVERIFIED"
+   },
+   "programmes": [],
+   "triggers": [],
+   "first_contact_route": {
+    "text": "Not determined",
+    "url": null
+   },
+   "sources": [
+    "https://ou.nl/documents/40554/55499/Jaarverslag_2006.pdf"
+   ],
+   "status": "UNVERIFIED",
+   "notes": "Not scored in the research.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "score": 0,
+   "inference_points": 0
+  },
+  {
+   "id": "amsib",
+   "name": "Amsterdam School of International Business (AMSIB), Amsterdam UAS",
+   "city": "Amsterdam",
+   "group": "unscored",
+   "research_rank": null,
+   "alumni_base": {
+    "value": "UNVERIFIED",
+    "source": "https://amsterdamuas.com/amsib/alumni",
+    "year": "2026-11",
+    "status": "UNVERIFIED"
+   },
+   "platform": {
+    "name": "Own alumni community and alumni advisory board appear in search results; page 404 on fetch",
+    "kind": "unverified",
+    "status": "UNVERIFIED"
+   },
+   "programmes": [],
+   "triggers": [],
+   "first_contact_route": {
+    "text": "AMSIB alumni page (404 on fetch)",
+    "url": "https://amsterdamuas.com/amsib/alumni"
+   },
+   "sources": [
+    "https://amsterdamuas.com/amsib/alumni"
+   ],
+   "status": "UNVERIFIED",
+   "notes": "Not scored in the research.",
+   "signals": {
+    "MA1": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA2": {
+     "w": 5,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA3": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA4": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA5": {
+     "w": 4,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA6": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA7": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    },
+    "MA8": {
+     "w": 3,
+     "pts": 0,
+     "status": "none"
+    }
+   },
+   "score": 0,
+   "inference_points": 0
+  }
+ ],
+ "ranking": {
+  "research_order": [
+   "nyenrode",
+   "uu",
+   "rsm",
+   "vu-sbe",
+   "leiden",
+   "um-sbe",
+   "ucu",
+   "radboud",
+   "tilburg",
+   "eur",
+   "twente",
+   "uva",
+   "tias"
+  ],
+  "outreach_ten": [
+   "nyenrode",
+   "uu",
+   "rsm",
+   "vu-sbe",
+   "leiden",
+   "ucu",
+   "radboud",
+   "tilburg",
+   "eur",
+   "twente"
+  ],
+  "removed": [
+   {
+    "id": "um-sbe",
+    "reason": "existing relationship",
+    "research_rank": 6,
+    "replaced_by": "twente"
+   }
+  ],
+  "reserves": [
+   "uva",
+   "tias"
+  ],
+  "displace_later": [
+   "rug",
+   "wur",
+   "tud",
+   "tue"
+  ],
+  "tie_break": "Equal scores: pattern fit (business school or faculty, small public team), then quality of evidence."
+ },
+ "alumni_types": [
+  {
+   "id": "B1",
+   "name": "Finance",
+   "sub": "banking, asset management, audit, fintech",
+   "evidence_strength": "low-med",
+   "who": [
+    {
+     "t": "5y: analyst-to-associate, junior auditor/senior associate, risk or fintech product roles. 10y: vice president, senior manager (audit), portfolio manager, fintech team lead. 20y: director or managing director, partner (audit), CFO/CRO-line roles. UNVERIFIED as a cohort fact.",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Hubs: Amsterdam (Zuidas), Utrecht, Rotterdam, Frankfurt, London, Luxembourg, Zurich, Brussels; Limburg and Aachen/Cologne area UNVERIFIED (no source).",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Most UM alumni work in a field-matching sector.",
+     "l": "E",
+     "s": [
+      "S13"
+     ]
+    }
+   ],
+   "wants": [
+    {
+     "t": "Vetted deal-flow of talent (interns, juniors) at low screening cost",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Peer network across firms and cities",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Status visible internally (e.g. \"mentor of the year\")",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Recognition for giving back",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "refuses": [
+    {
+     "t": "Open DM inbox, sales pitches from fintech peers, broadcasting views on markets",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "inbox": [
+    {
+     "t": "Reply to cold C-level outreach is about 7%.",
+     "l": "E",
+     "s": [
+      "S16"
+     ]
+    },
+    {
+     "t": "Yes-triggers: fixed 20-30 minute slot, pre-filled agenda, specific question, evidence of preparation. Time-box figures are a practitioner norm, UNVERIFIED as measured preferences.",
+     "l": "O",
+     "s": []
+    }
+   ],
+   "incentives": [
+    {
+     "t": "Mentor satisfaction and commitment gains",
+     "l": "E",
+     "s": [
+      "S8"
+     ]
+    },
+    {
+     "t": "Hiring pipeline for graduate programmes",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Employer CSR-hour rules by firm not retrieved (UNVERIFIED)",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "objections": [
+    {
+     "t": "All Dutch bank staff must take the banker's oath or affirmation; unlawful disclosure of inside information is prohibited (MAR art. 14).",
+     "l": "E",
+     "s": [
+      "S15"
+     ]
+    },
+    {
+     "t": "No market-sensitive talk in group chat; chat banner \"no client or deal information\"; declared-conflict field (employer, competitor). Time is the largest barrier.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "mechanics": [
+    {
+     "t": "Contact rules (strongest fit), status points as access ticket, small events (one slot), map by hub city. Open group chat: weak fit because of MAR risk.",
+     "l": "I",
+     "s": []
+    }
+   ]
+  },
+  {
+   "id": "B2",
+   "name": "Management",
+   "sub": "general management, operations, entrepreneurs, corporate leadership",
+   "evidence_strength": "low",
+   "who": [
+    {
+     "t": "5y: management trainee, operations/product manager, junior founder. 10y: head of function, business unit manager, founder/co-founder. 20y: managing director, COO/CEO of SME, board member, serial entrepreneur. UNVERIFIED.",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Cities: Randstad, Brabant (Eindhoven region), Limburg, Duesseldorf/Cologne, Brussels, London, Berlin, Singapore for internationals.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "wants": [
+    {
+     "t": "Access to talent; peers outside their own company; founder-to-founder introductions; recognition",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "refuses": [
+    {
+     "t": "Administrative requests, event fatigue, \"pick my brain\" asks",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "inbox": [
+    {
+     "t": "About 7% reply to cold C-level outreach.",
+     "l": "E",
+     "s": [
+      "S16"
+     ]
+    },
+    {
+     "t": "Entrepreneurs are fastest to reply when the ask is a hiring or customer opportunity; a student-only ask needs a very small box (15-20 min) and a stated outcome.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "incentives": [
+    {
+     "t": "Giving back and mentor satisfaction",
+     "l": "E",
+     "s": [
+      "S8",
+      "S9"
+     ]
+    },
+    {
+     "t": "Hiring juniors and interns; reputation inside the university network",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Employer CSR hours UNVERIFIED",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "objections": [
+    {
+     "t": "Time; fear of being asked for a job or investment; business confidentiality (low compared with B1/B3)",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "44% of interested US alumni would mentor, so willingness exists; format preference not reported by profession.",
+     "l": "E",
+     "s": [
+      "S10"
+     ]
+    }
+   ],
+   "mechanics": [
+    {
+     "t": "Map, events by city, mentor flag with capacity limit, project-based tutoring/challenge with a company case, status points converting to \"featured company\" visibility.",
+     "l": "I",
+     "s": []
+    }
+   ]
+  },
+  {
+   "id": "B3",
+   "name": "Law",
+   "sub": "corporate and tax lawyers, in-house counsel, legal advisers",
+   "evidence_strength": "regulatory high, behaviour low",
+   "who": [
+    {
+     "t": "5y: associate / junior in-house. 10y: senior associate, counsel, senior in-house counsel. 20y: partner, general counsel, judge/regulator roles. UNVERIFIED.",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Cities: Amsterdam, Rotterdam, The Hague, Brussels, Luxembourg, London, Frankfurt. UM has a law faculty; which faculty supplies this segment for UniCircle is UNVERIFIED.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "wants": [
+    {
+     "t": "Peers for referrals across jurisdictions; clean, prepared junior candidates; visibility",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "refuses": [
+    {
+     "t": "Any channel that could touch client information; unsolicited requests for legal advice (also a professional-liability issue)",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "inbox": [
+    {
+     "t": "High protection: confidentiality is a core value for lawyers.",
+     "l": "E",
+     "s": [
+      "S14"
+     ]
+    },
+    {
+     "t": "Yes-trigger: CV-first, scoped question (\"how did you choose tax vs corporate\"), 20-minute slot.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "incentives": [
+    {
+     "t": "Dutch firms publish pro bono volumes (one firm: 8,500+ hours, 75 matters, 211 lawyers in 2023); no mandatory pro bono hours and no CPD credit; some firms count pro bono toward billable targets (older survey).",
+     "l": "E",
+     "s": [
+      "S18"
+     ]
+    },
+    {
+     "t": "Student mentoring could be framed as a firm social-impact activity if the firm accepts it; UNVERIFIED that firms count mentoring.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "objections": [
+    {
+     "t": "Five core values incl. independence, integrity, confidentiality (Advocatenwet art. 10a).",
+     "l": "E",
+     "s": [
+      "S14"
+     ]
+    },
+    {
+     "t": "Conflict of interest is a live issue (a lawyer should not mentor a student who works for an opposing party): add a conflict-declaration field and a \"no legal advice\" disclaimer.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "mechanics": [
+    {
+     "t": "Contact rules and mentor opt-in with topic whitelist; events with an explicit no-client-talk rule; group chat only as moderated topic rooms; points as quiet status, not leaderboards.",
+     "l": "I",
+     "s": []
+    }
+   ]
+  },
+  {
+   "id": "B4",
+   "name": "Consultancy",
+   "sub": "strategy and management consulting, Big Four advisory",
+   "evidence_strength": "low",
+   "who": [
+    {
+     "t": "Career blogs describe analyst-to-partner timelines of about 7-12 years at top strategy firms with high attrition before partner (a former consultant estimates about 90% leave before partner).",
+     "l": "E",
+     "s": [
+      "S19"
+     ]
+    },
+    {
+     "t": "5y: consultant / senior consultant; 10y: manager / senior manager or industry exit; 20y: partner or C-suite in industry. Cities: Amsterdam, Utrecht, Duesseldorf, Frankfurt, London, Zurich, Brussels.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "wants": [
+    {
+     "t": "Recruitment pipeline, alumni-of-firm networks, client introductions after exit",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "refuses": [
+    {
+     "t": "Case-interview requests in bulk; free consulting for students' companies",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "inbox": [
+    {
+     "t": "About 7% C-level reply rate.",
+     "l": "E",
+     "s": [
+      "S16"
+     ]
+    },
+    {
+     "t": "Consultants are used to structured asks: short written brief, 30 minutes, specific deliverable (e.g. review a case answer).",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "incentives": [
+    {
+     "t": "Recruiting credit (referrals), personal brand, giving back; Big Four CSR hours UNVERIFIED (search returned nothing).",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "objections": [
+    {
+     "t": "Time (billable utilisation), client confidentiality and independence rules for audit-linked advisory, conflict when a client is the student's employer.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "mechanics": [
+    {
+     "t": "Case clinics / mock-case mentoring slots (tutoring format), event nights by city, points that unlock \"approach\" with a message template, contact rules with weekly cap.",
+     "l": "I",
+     "s": []
+    }
+   ]
+  }
+ ],
+ "student_types": [
+  {
+   "id": "C-red",
+   "name": "Red: action-oriented",
+   "colour": "red",
+   "evidence_strength": "low-med (gamification S4/S5 real, type link UNVERIFIED)",
+   "observable": [
+    {
+     "t": "First click: \"find a mentor / internship / who works at X\" or a direct message button; short outcome-first asks; skips profile completion; short sessions; high repeat if a result arrives within a day. Hypotheses to test.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "wants": [
+    {
+     "t": "Fast results, outcome intros; tutoring quick answers (risk of \"executive help-seeking\": gets the answer, learns less); mentoring: one concrete ask answered within 48h; project groups with a deadline; pitch nights, case competitions",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Executive help-seeking relates negatively to achievement.",
+     "l": "E",
+     "s": [
+      "S17"
+     ]
+    }
+   ],
+   "refuses": [
+    {
+     "t": "Long forms, slow replies",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "mechanics": [
+    {
+     "t": "Task-style progress toward \"right to approach\"; team (collaborative) leaderboards, not individual. Onboarding: \"What do you want to do in the next 4 weeks?\" with 3 outcome buttons; short tone.",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Gamification effects are small, stable for cognitive outcomes; competition plus collaboration worked best for behaviour. One course: leaderboard plus badges lowered intrinsic motivation, satisfaction and exam scores.",
+     "l": "E",
+     "s": [
+      "S4",
+      "S5"
+     ]
+    }
+   ],
+   "objections": [
+    {
+     "t": "Ranking can crowd out autonomy; risk of gaming points via low-quality tutoring (quantity over quality).",
+     "l": "I",
+     "s": [
+      "S6"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "C-blue",
+   "name": "Blue: thinker",
+   "colour": "blue",
+   "evidence_strength": "low-med (inference)",
+   "observable": [
+    {
+     "t": "First click: read how points and contact rules work, check mentor profile depth, filters; precise questions; long sessions with low message volume; drafts messages and abandons; reads FAQ before first request. Hypotheses to test.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "wants": [
+    {
+     "t": "Depth, accuracy, clear rules; tutoring explanations with sources and time to reflect; a mentor with matching field and a written agenda; small structured peer groups; seated events with a topic and Q&A",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Adaptive (instrumental) help-seeking helps.",
+     "l": "E",
+     "s": [
+      "S17"
+     ]
+    }
+   ],
+   "refuses": [
+    {
+     "t": "Public ranking, vague asks",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "mechanics": [
+    {
+     "t": "Message templates, \"preview what the mentor sees\", private progress not rank; show how contact rules protect alumni; precise tone with the reason for each field; no countdown timers.",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Narrative gamification beat points/badges/leaderboards in motivation (a 2026 meta-analysis seen only as a search summary, UNVERIFIED); SDT predicts controlling rewards weaken autonomy.",
+     "l": "E",
+     "s": [
+      "S6"
+     ]
+    }
+   ],
+   "objections": [
+    {
+     "t": "Public ranking most likely raises anxiety; perfectionism blocks first contact, so the first ask must be small.",
+     "l": "I",
+     "s": []
+    }
+   ]
+  },
+  {
+   "id": "C-social",
+   "name": "Social: connector",
+   "colour": "social",
+   "evidence_strength": "low-med (inference)",
+   "observable": [
+    {
+     "t": "First click: tutorial-group or city group, people tab, chat; asks \"who else is going / who from my group\"; high message volume; low conversion to formal requests unless introduced; shares the event with friends. Hypotheses to test.",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "wants": [
+    {
+     "t": "Belonging, groups; group tutoring and peer-buddy; group mentoring and alumni \"office hours\" with 5-8 students; tutorial-group channels; referrals via friends; social repeat events",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Students prefer informal help from friends over formal sources.",
+     "l": "E",
+     "s": [
+      "S17"
+     ]
+    }
+   ],
+   "refuses": [
+    {
+     "t": "Solitary flows, public rank",
+     "l": "I",
+     "s": []
+    }
+   ],
+   "mechanics": [
+    {
+     "t": "Tutorial-group channels, group mentoring, team/group points and thank-you signals; onboarding \"Which tutorial group / city / society are you in?\"; warm tone; invite-a-friend; group streaks.",
+     "l": "I",
+     "s": []
+    },
+    {
+     "t": "Relatedness is a basic need; competition combined with collaboration was effective for behavioural outcomes.",
+     "l": "E",
+     "s": [
+      "S6",
+      "S4"
+     ]
+    }
+   ],
+   "objections": [
+    {
+     "t": "Public ranking excludes low-ranked members and promotes cliques, especially in mixed-nationality groups.",
+     "l": "I",
+     "s": []
+    }
+   ]
+  }
+ ],
+ "student_caveat": "Colour types are a working heuristic, not a psychometric claim. Independent evidence for DISC-style types is weak (S1), the similar MBTI falls short of test standards (S2), and learning-style matching has no adequate evidence base (S3). A colour label must not be treated as a fact about a person, gate access, be shown to others, or be used for selection or grading. Legitimate uses: design hypotheses tested with behaviour data, behaviour-based \"modes\", self-selected preferences that can change, all options offered to all users.",
+ "sources": [
+  {
+   "id": "S1",
+   "label": "Wikipedia, DISC assessment",
+   "url": "https://en.wikipedia.org/wiki/DISC_assessment",
+   "type": "encyclopedia summary of critics",
+   "strength": "low-med"
+  },
+  {
+   "id": "S2",
+   "label": "Pittenger (1993), Measuring the MBTI and coming up short, Review of Educational Research 63(4)",
+   "url": "https://www.indiana.edu/~jobtalk/Articles/develop/mbti.pdf",
+   "type": "critical review (different typology, same logic)",
+   "strength": "med"
+  },
+  {
+   "id": "S3",
+   "label": "Pashler et al. (2008), Learning Styles: Concepts and Evidence, PSPI 9(3)",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/26162104/",
+   "type": "review",
+   "strength": "high"
+  },
+  {
+   "id": "S4",
+   "label": "Sailer & Homner (2020), The Gamification of Learning: a Meta-analysis, Educational Psychology Review",
+   "url": "https://link.springer.com/article/10.1007/s10648-019-09498-w",
+   "type": "meta-analysis (abstract via search summary only)",
+   "strength": "high"
+  },
+  {
+   "id": "S5",
+   "label": "Hanus & Fox (2015), Computers & Education 80, 152-161 (secondary summaries; N about 71)",
+   "url": "https://doi.org/10.1016/j.compedu.2014.08.019",
+   "type": "quasi-experiment",
+   "strength": "med"
+  },
+  {
+   "id": "S6",
+   "label": "Ryan & Deci (2000), Self-determination theory, American Psychologist 55(1)",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/11392867/",
+   "type": "theory paper",
+   "strength": "high"
+  },
+  {
+   "id": "S7",
+   "label": "Eby et al. (2008), Does mentoring matter? Journal of Vocational Behavior 72(2)",
+   "url": "https://digitalcommons.usf.edu/psy_facpub/23/",
+   "type": "meta-analysis (116 samples, N=45,705)",
+   "strength": "high"
+  },
+  {
+   "id": "S8",
+   "label": "Ghosh & Reio (2013), Career benefits for mentors, Journal of Vocational Behavior 83(1)",
+   "url": "https://dx.doi.org/10.1016/j.jvb.2013.03.011",
+   "type": "meta-analysis",
+   "strength": "high"
+  },
+  {
+   "id": "S9",
+   "label": "Janssen, van Vuuren & de Jong (2014), Motives to mentor, Journal of Vocational Behavior 85 (20 interviews); Allen (2003)",
+   "url": "https://research.vu.nl/en/publications/motives-to-mentor-self-focused-prot%C3%A9g%C3%A9-focused-relationship-focus/",
+   "type": "study; qualitative",
+   "strength": "med"
+  },
+  {
+   "id": "S10",
+   "label": "Anthology (2022), alumni survey, N=2,365 US graduates",
+   "url": "https://anthology.com/news/anthology-research-finds-growing-interest-among-alumni-to-engage-in-recruitment-mentoring-opportunities",
+   "type": "vendor survey, US",
+   "strength": "low-med"
+  },
+  {
+   "id": "S11",
+   "label": "CASE, Insights on Alumni Engagement (2025)",
+   "url": "https://www.case.org/research/surveys/case-insights-alumni-engagement",
+   "type": "benchmark (framework only; key-findings PDF unreadable)",
+   "strength": "med"
+  },
+  {
+   "id": "S12",
+   "label": "Maastricht University: students from abroad; SBE tutorial groups; SBE size",
+   "url": "https://maastrichtuniversity.nl/node/45905",
+   "type": "official pages",
+   "strength": "high for UM; SBE count conflicting"
+  },
+  {
+   "id": "S13",
+   "label": "UM alumni survey 2024 (Dutch summary, search snippet)",
+   "url": "https://www.maastrichtuniversity.nl/nl/node/64376",
+   "type": "official survey",
+   "strength": "med"
+  },
+  {
+   "id": "S14",
+   "label": "NOvA, five core values (Advocatenwet art. 10a)",
+   "url": "https://www.advocatenorde.nl/de-advocaat/kernwaarden-1",
+   "type": "regulator",
+   "strength": "high"
+  },
+  {
+   "id": "S15",
+   "label": "AFM: banker's oath; unlawful disclosure of inside information (MAR art. 14)",
+   "url": "https://www.afm.nl/en/sector/themas/verplichtingen-voor-ondernemingen/eed-of-belofte",
+   "type": "regulator",
+   "strength": "high"
+  },
+  {
+   "id": "S16",
+   "label": "Belkins (2026), LinkedIn outreach study",
+   "url": "https://belkins.io/blog/linkedin-outreach-study",
+   "type": "vendor benchmark",
+   "strength": "low-med"
+  },
+  {
+   "id": "S17",
+   "label": "Fong et al. (2023), academic help-seeking meta-analysis (journal UNVERIFIED)",
+   "url": "https://bvbvf1.bib-bvb.de/vufind/PrimoRecord/cdi_proquest_miscellaneous_2821960798",
+   "type": "meta-analysis",
+   "strength": "med-high"
+  },
+  {
+   "id": "S18",
+   "label": "Dutch law-firm pro bono: De Brauw; Latham & Watkins survey NL",
+   "url": "https://debrauw.com/topic/pro-bono",
+   "type": "firm site; survey",
+   "strength": "med"
+  },
+  {
+   "id": "S19",
+   "label": "Consulting career-timeline blogs",
+   "url": "https://www.roadtooffer.com/blog/consulting-career-path",
+   "type": "career blogs",
+   "strength": "low"
+  },
+  {
+   "id": "S20",
+   "label": "Gallup (2019), recent graduates and mentors",
+   "url": "https://news.gallup.com/poll/244019/recent-college-grads-say-professors-frequent-mentors.aspx",
+   "type": "survey, US",
+   "strength": "med"
+  }
+ ],
+ "claims": [
+  {
+   "id": "FA001",
+   "lane": "A",
+   "entity": "Nyenrode",
+   "text": "30,000 alumni",
+   "url": "https://www.nyenrode.nl/en/about-us/alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA002",
+   "lane": "A",
+   "entity": "Nyenrode",
+   "text": "Alumni association VCV founded 1957; members use \"VCV-Platform\" at nyenrodealumni.nl (vendor unknown)",
+   "url": "https://www.nyenrode.nl/en/about-us/alumni/alumni-connection/alumni-association-vcv",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA003",
+   "lane": "A",
+   "entity": "Nyenrode",
+   "text": "33 country-specific alumni LinkedIn groups, new on request",
+   "url": "https://www.nyenrode.nl/en/about-us/alumni/international-alumni-network",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA004",
+   "lane": "A",
+   "entity": "Nyenrode",
+   "text": "Alumni return as peer group coaches, scholarship mentors, guest lecturers",
+   "url": "https://www.nyenrode.nl/en/about-us/alumni/international-alumni-network",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA005",
+   "lane": "A",
+   "entity": "Nyenrode",
+   "text": "Nyenrode Fund finances scholarships, facilities, 27 monuments",
+   "url": "https://www.nyenrode.nl/en/about-us/alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA006",
+   "lane": "A",
+   "entity": "Nyenrode",
+   "text": "Alumni-office team size not public",
+   "url": "https://www.nyenrode.nl/en/about-us/alumni",
+   "date": "2026-11",
+   "status": "inference"
+  },
+  {
+   "id": "FA007",
+   "lane": "A",
+   "entity": "Universiteit Utrecht",
+   "text": "More than 233,000 registered alumni in 2025",
+   "url": "https://www.uu.nl/organisatie/alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA008",
+   "lane": "A",
+   "entity": "Universiteit Utrecht",
+   "text": "University Fund: 12,500+ Friends, about EUR 2.8m raised in 2025",
+   "url": "https://www.uu.nl/organisatie/alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA009",
+   "lane": "A",
+   "entity": "Universiteit Utrecht",
+   "text": "11 international alumni networks plus NL international network; 9 faculty networks",
+   "url": "https://www.uu.nl/organisatie/alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA010",
+   "lane": "A",
+   "entity": "Universiteit Utrecht",
+   "text": "Lustrum 2026 includes alumni activities",
+   "url": "https://www.uu.nl/organisatie/lustrum-2026-maak-kennis-maak-verschil/programma/alumniactiviteiten",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA011",
+   "lane": "A",
+   "entity": "University College Utrecht",
+   "text": "Pathways one-to-one student-alumni mentoring, funded to continue; LinkedIn group",
+   "url": "https://www.uu.nl/en/organisation/university-college-utrecht/alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA012",
+   "lane": "A",
+   "entity": "Universiteit Utrecht",
+   "text": "No alumni platform on 2026 procurement calendar",
+   "url": "https://www.uu.nl/organisatie/praktische-zaken/informatie-voor-leveranciers/aanbestedingskalender",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA013",
+   "lane": "A",
+   "entity": "RSM",
+   "text": "More than 55,000 alumni",
+   "url": "https://www.rsm.nl/alumni/",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA014",
+   "lane": "A",
+   "entity": "RSM",
+   "text": "63 chapter entries, about 40 countries, leaders volunteers; tools LinkedIn, WhatsApp, WeChat, Line",
+   "url": "https://www.rsm.nl/localchapters",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA015",
+   "lane": "A",
+   "entity": "RSM",
+   "text": "\"55 for 55\" giving campaign, EUR 55 gifts, goal EUR 55,000, 55th anniversary",
+   "url": "https://www.rsm.nl/alumni/",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA016",
+   "lane": "A",
+   "entity": "RSM",
+   "text": "100+ chapter events by end Sept 2025; 35 events Q1 2026",
+   "url": "https://www.rsm.nl/localchapters",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA017",
+   "lane": "A",
+   "entity": "RSM",
+   "text": "No alumni platform named on alumni page",
+   "url": "https://www.rsm.nl/alumni/",
+   "date": "2026-11",
+   "status": "inference"
+  },
+  {
+   "id": "FA018",
+   "lane": "A",
+   "entity": "Erasmus University Rotterdam",
+   "text": "Over 175,000 alumni; automatic membership; community \"EUR Connect\"",
+   "url": "https://www.eur.nl/en/education/alumni",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA019",
+   "lane": "A",
+   "entity": "VU Amsterdam",
+   "text": "154,769 alumni",
+   "url": "https://vu.nl/en/alumni",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA020",
+   "lane": "A",
+   "entity": "VU SBE",
+   "text": "Career Services and Alumni Relations team; VUurwerk magazine twice a year, latest linked edition July 2023; CareerSet tool",
+   "url": "https://vu.nl/en/about-vu/faculties/school-of-business-and-economics/more-about/sbe-alumni-netwerk",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA021",
+   "lane": "A",
+   "entity": "VU SBE",
+   "text": "Positions itself as \"knowledge partner for life\" (lifelong learning)",
+   "url": "https://vu.nl/en/about-vu/faculties/school-of-business-and-economics/more-about/sbe-alumni-netwerk",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA022",
+   "lane": "A",
+   "entity": "VU Amsterdam",
+   "text": "CRM Microsoft Dynamics 365 plus Selligent",
+   "url": "https://vu.nl/nl/medewerker/database-en-crm/relatiebeheer-vu",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA023",
+   "lane": "A",
+   "entity": "VU Amsterdam",
+   "text": "Alumni page points to LinkedIn groups",
+   "url": "https://vu.nl/en/about-vu/divisions/durf/more-about/make-use-of-the-alumni-network",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA024",
+   "lane": "A",
+   "entity": "Leiden",
+   "text": "About 109,000 alumni, 5,000 abroad",
+   "url": "https://www.universiteitleiden.nl/over-ons/onze-alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA025",
+   "lane": "A",
+   "entity": "Leiden",
+   "text": "Leidraad magazine 3x a year, monthly newsletter, Jonge Alumni Netwerk (to age 35), Leids Universiteits Fonds",
+   "url": "https://www.universiteitleiden.nl/over-ons/onze-alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA026",
+   "lane": "A",
+   "entity": "Leiden",
+   "text": "Mentor Network online platform; 2,200 mentors online in 2021",
+   "url": "https://www.universiteitleiden.nl/nieuws/2021/01/juist-in-deze-tijd-kun-je-alle-hulp-en-elke-ingang-gebruiken",
+   "date": "2021-01",
+   "status": "sourced"
+  },
+  {
+   "id": "FA027",
+   "lane": "A",
+   "entity": "Maastricht University",
+   "text": "100,000th alumna welcomed 2024; 131 countries",
+   "url": "https://www.maastrichtuniversity.nl/news/globally-connected-power-active-alumni-community",
+   "date": "2024",
+   "status": "sourced"
+  },
+  {
+   "id": "FA028",
+   "lane": "A",
+   "entity": "Maastricht SBE",
+   "text": "Over 35,000 SBE alumni",
+   "url": "https://www.maastrichtuniversity.nl/about-um/faculties/school-business-and-economics/welcome-sbe-alumni-community",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA029",
+   "lane": "A",
+   "entity": "Maastricht University",
+   "text": "Alumni policy 2021-2026 (81,537 alumni cited)",
+   "url": "https://www.maastrichtuniversity.nl/node/49161",
+   "date": "2021",
+   "status": "sourced"
+  },
+  {
+   "id": "FA030",
+   "lane": "A",
+   "entity": "Maastricht University",
+   "text": "CRM tender won 2025 by GAC Business Solutions and BusinessBase, student-journey focus",
+   "url": "https://www.dutchitchannel.nl/news/591318/gac-business-solutions-en-businessbase-leveren-nieuw-crm-aan-universiteit-maastricht",
+   "date": "2025-01-30",
+   "status": "sourced"
+  },
+  {
+   "id": "FA031",
+   "lane": "A",
+   "entity": "Maastricht University",
+   "text": "Alumni Circles run by volunteer committees; Amsterdam circle 4,233 members",
+   "url": "https://www.maastrichtuniversity.nl/alumni-circle-communities",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA032",
+   "lane": "A",
+   "entity": "Maastricht University",
+   "text": "Problem-Based Learning is part of the UM education model",
+   "url": "https://www.maastrichtuniversity.nl/about-um/alumni/networking",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA033",
+   "lane": "A",
+   "entity": "Maastricht University",
+   "text": "Successor to the alumni policy due after 2026 (inferred from the policy period)",
+   "url": "https://www.maastrichtuniversity.nl/node/49161",
+   "date": "2026-11",
+   "status": "inference"
+  },
+  {
+   "id": "FA034",
+   "lane": "A",
+   "entity": "Groningen",
+   "text": "RUGconnect platform live 2 May 2025 for students, alumni, staff, partners; vendor not named",
+   "url": "https://www.rug.nl/about-ug/latest-news/news/archief2025/nieuwsberichten/rugconnect-new-platform-bringing-together-students-alumni-and-organizations",
+   "date": "2025-05",
+   "status": "verified"
+  },
+  {
+   "id": "FA035",
+   "lane": "A",
+   "entity": "Groningen FEB",
+   "text": "Online alumni network, 5,000+ alumni and students, SSO login",
+   "url": "https://www.rug.nl/feb/alumni-network/",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA036",
+   "lane": "A",
+   "entity": "Radboud",
+   "text": "Faculty alumni offices plus Alumni Office Management",
+   "url": "https://www.ru.nl/over-ons/contact/alumni-afdelingen",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA037",
+   "lane": "A",
+   "entity": "Radboud",
+   "text": "Radboud Fund; mentoring a student/alumnus listed as contribution; no portal named",
+   "url": "https://www.ru.nl/en/alumni",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA038",
+   "lane": "A",
+   "entity": "Radboud",
+   "text": "National Alumni Survey 2025",
+   "url": "https://www.ru.nl/en/about-us/news/national-alumni-survey-2025-kicks-off-your-opinion-matters",
+   "date": "2025",
+   "status": "sourced"
+  },
+  {
+   "id": "FA039",
+   "lane": "A",
+   "entity": "Tilburg",
+   "text": "Over 87,000 alumni (University Fund report 2022); EUR 358,778 donated 2022",
+   "url": "https://annualreports.tilburguniversity.edu/university-fund-annual-report-2022/the-year-2022-in-figures",
+   "date": "2022",
+   "status": "sourced"
+  },
+  {
+   "id": "FA040",
+   "lane": "A",
+   "entity": "Tilburg",
+   "text": "Alumni Mentor Program exists",
+   "url": "https://Tilburguniversity.edu/students/career/your-career-path/alumni-mentor-program",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA041",
+   "lane": "A",
+   "entity": "Tilburg",
+   "text": "Alumni pages returned HTTP 403; platform UNVERIFIED",
+   "url": "https://www.tilburguniversity.edu/alumni",
+   "date": "2026-11",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "FA042",
+   "lane": "A",
+   "entity": "University of Twente",
+   "text": "Over 66,000 alumni; alumni portal, LinkedIn group, chapters, University Fund",
+   "url": "https://www.utwente.nl/en/alumni",
+   "date": "2026-08-31",
+   "status": "verified"
+  },
+  {
+   "id": "FA043",
+   "lane": "A",
+   "entity": "4TU",
+   "text": "International-alumni-in-NL network launched May 2025 as LinkedIn group; about 20,000 international graduates in NL",
+   "url": "https://www.utwente.nl/en/alumni/news/2025/5/327289/new-network-for-international-alumni-in-the-netherlands-launched-by-the-ut-tud-tue-wur",
+   "date": "2025-05-27",
+   "status": "verified"
+  },
+  {
+   "id": "FA044",
+   "lane": "A",
+   "entity": "TU Delft",
+   "text": "Platform \"TU Delft for Life\", 8,000+ members (undated); 110,000 alumni",
+   "url": "https://tudelft.nl/en/about-tu-delft/alumni/community",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA045",
+   "lane": "A",
+   "entity": "TU/e",
+   "text": "Alumni portal operated by Aluminati Network Group",
+   "url": "https://www.tue.nl/universiteit/over-de-universiteit/tue-alumni-community/the-alumni-portal-of-the-tue-1",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA046",
+   "lane": "A",
+   "entity": "WUR",
+   "text": "WUR Connect platform (22,000 Dutch + 8,000 international alumni); chapters incl. China about 2,000",
+   "url": "https://www.wur.nl/en/newsarticle/new-wur-connect-online-platform-now-available-to-all-wageningen-alumni.htm",
+   "date": "undated",
+   "status": "sourced"
+  },
+  {
+   "id": "FA047",
+   "lane": "A",
+   "entity": "UvA ABS",
+   "text": "Points to UvA E&B alumni network, no platform or number",
+   "url": "https://abs.uva.nl/about/alumni/alumni.html",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA048",
+   "lane": "A",
+   "entity": "UvA",
+   "text": "Alumni Hubs abroad; Amsterdam University Fund; Alumni Week 3-9 Oct 2026",
+   "url": "https://www.uva.nl/en/about-the-uva/alumni/alumni.html",
+   "date": "2026-11",
+   "status": "verified"
+  },
+  {
+   "id": "FA049",
+   "lane": "A",
+   "entity": "TIAS",
+   "text": "About 25,000 alumni; TIAS Connect platform; 2,400+ in Mentor Program",
+   "url": "https://www.tias.edu/en/experience-tias/after-your-program/powerful-network",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA050",
+   "lane": "A",
+   "entity": "UCR",
+   "text": "Friends of UCR foundation includes alumni on board; alumni page returned 403",
+   "url": "https://www.ucr.nl/about-ucr/friends-of-ucr",
+   "date": "2026-11",
+   "status": "sourced"
+  },
+  {
+   "id": "FA051",
+   "lane": "A",
+   "entity": "Open Universiteit",
+   "text": "Alumni association existed by 2006; nothing current",
+   "url": "https://ou.nl/documents/40554/55499/Jaarverslag_2006.pdf",
+   "date": "2006",
+   "status": "sourced"
+  },
+  {
+   "id": "FA052",
+   "lane": "A",
+   "entity": "Cross-institution",
+   "text": "Alumni-office team size is public for none of the institutions screened",
+   "url": null,
+   "date": "2026-11",
+   "status": "inference"
+  },
+  {
+   "id": "FA053",
+   "lane": "A",
+   "entity": "Cross-institution",
+   "text": "No alumni-platform tender found for any screened university (search only)",
+   "url": "https://www.tenderned.nl",
+   "date": "2026-11",
+   "status": "inference"
+  },
+  {
+   "id": "FB001",
+   "lane": "B",
+   "entity": "Typologies",
+   "text": "DISC assessments lack demonstrated predictive validity; reliability reports come mainly from vendors; critics cite the Barnum effect (confidence low-med)",
+   "url": "https://en.wikipedia.org/wiki/DISC_assessment",
+   "source_id": "S1",
+   "date": "2025",
+   "status": "sourced"
+  },
+  {
+   "id": "FB002",
+   "lane": "B",
+   "entity": "Typologies",
+   "text": "MBTI review: does not meet many basic standards for psychological tests (confidence med)",
+   "url": "https://www.indiana.edu/~jobtalk/Articles/develop/mbti.pdf",
+   "source_id": "S2",
+   "date": "1993",
+   "status": "sourced"
+  },
+  {
+   "id": "FB003",
+   "lane": "B",
+   "entity": "Typologies",
+   "text": "No adequate evidence base for using learning-style assessments in education (confidence high)",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/26162104/",
+   "source_id": "S3",
+   "date": "2008",
+   "status": "sourced"
+  },
+  {
+   "id": "FB004",
+   "lane": "B",
+   "entity": "Typologies",
+   "text": "Legitimate use of colour types = hypotheses and behaviour-based segments, not individual labels or gating",
+   "url": null,
+   "source_id": null,
+   "date": "2026",
+   "status": "inference"
+  },
+  {
+   "id": "FB005",
+   "lane": "B",
+   "entity": "Gamification",
+   "text": "Gamification meta-analysis: small effects, stable for cognitive outcomes, less stable for motivational and behavioural; competition plus collaboration effective for behaviour (abstract via summary)",
+   "url": "https://link.springer.com/article/10.1007/s10648-019-09498-w",
+   "source_id": "S4",
+   "date": "2020",
+   "status": "sourced"
+  },
+  {
+   "id": "FB006",
+   "lane": "B",
+   "entity": "Gamification",
+   "text": "One 16-week course study: leaderboard plus badges group showed lower intrinsic motivation, satisfaction and exam scores (N about 71)",
+   "url": "https://doi.org/10.1016/j.compedu.2014.08.019",
+   "source_id": "S5",
+   "date": "2015",
+   "status": "sourced"
+  },
+  {
+   "id": "FB007",
+   "lane": "B",
+   "entity": "Motivation",
+   "text": "Self-determination theory: competence, autonomy, relatedness are basic needs; thwarting lowers motivation",
+   "url": "https://pubmed.ncbi.nlm.nih.gov/11392867/",
+   "source_id": "S6",
+   "date": "2000",
+   "status": "sourced"
+  },
+  {
+   "id": "FB008",
+   "lane": "B",
+   "entity": "Help-seeking",
+   "text": "Students' avoidant and executive help-seeking relate negatively to achievement; instrumental positively (small); students prefer friends over formal tutors",
+   "url": "https://bvbvf1.bib-bvb.de/vufind/PrimoRecord/cdi_proquest_miscellaneous_2821960798",
+   "source_id": "S17",
+   "date": "2023",
+   "status": "sourced"
+  },
+  {
+   "id": "FB009",
+   "lane": "B",
+   "entity": "Mentoring",
+   "text": "Mentoring effects are small: attitudes .16-.19, career .05-.11 (116 samples, N=45,705)",
+   "url": "https://digitalcommons.usf.edu/psy_facpub/23/",
+   "source_id": "S7",
+   "date": "2008",
+   "status": "sourced"
+  },
+  {
+   "id": "FB010",
+   "lane": "B",
+   "entity": "Mentoring",
+   "text": "Mentors report higher job satisfaction and commitment than non-mentors",
+   "url": "https://dx.doi.org/10.1016/j.jvb.2013.03.011",
+   "source_id": "S8",
+   "date": "2013",
+   "status": "sourced"
+  },
+  {
+   "id": "FB011",
+   "lane": "B",
+   "entity": "Mentoring",
+   "text": "Mentor motives group into self-, protege-, relationship-, organisation-focused (20 interviews)",
+   "url": "https://research.vu.nl/en/publications/motives-to-mentor-self-focused-prot%C3%A9g%C3%A9-focused-relationship-focus/",
+   "source_id": "S9",
+   "date": "2014",
+   "status": "sourced"
+  },
+  {
+   "id": "FB012",
+   "lane": "B",
+   "entity": "Alumni engagement",
+   "text": "57% of US alumni want to support students; 44% of those would mentor; 3 in 4 among recent graduates (N=2,365; vendor, US, confidence low-med)",
+   "url": "https://anthology.com/news/anthology-research-finds-growing-interest-among-alumni-to-engage-in-recruitment-mentoring-opportunities",
+   "source_id": "S10",
+   "date": "2022",
+   "status": "sourced"
+  },
+  {
+   "id": "FB013",
+   "lane": "B",
+   "entity": "Alumni engagement",
+   "text": "CASE alumni engagement framework: philanthropic, volunteer, experiential, communications; about 400 institutions, 18 countries",
+   "url": "https://www.case.org/research/surveys/case-insights-alumni-engagement",
+   "source_id": "S11",
+   "date": "2025",
+   "status": "sourced"
+  },
+  {
+   "id": "FB014",
+   "lane": "B",
+   "entity": "Mentoring",
+   "text": "Only about 22% of recent US graduates strongly agree a mentor encouraged their goals",
+   "url": "https://news.gallup.com/poll/244019/recent-college-grads-say-professors-frequent-mentors.aspx",
+   "source_id": "S20",
+   "date": "2019",
+   "status": "sourced"
+  },
+  {
+   "id": "FB015",
+   "lane": "B",
+   "entity": "Outreach",
+   "text": "Cold outreach reply rates: C-level 7.0%, HR/Talent 10.9%, open InMail 7.5% (vendor, confidence low-med)",
+   "url": "https://belkins.io/blog/linkedin-outreach-study",
+   "source_id": "S16",
+   "date": "2026",
+   "status": "sourced"
+  },
+  {
+   "id": "FB016",
+   "lane": "B",
+   "entity": "Compliance B1",
+   "text": "All bank staff must take the banker's oath or affirmation (Wft)",
+   "url": "https://www.afm.nl/en/sector/themas/verplichtingen-voor-ondernemingen/eed-of-belofte",
+   "source_id": "S15",
+   "date": "2025",
+   "status": "sourced"
+  },
+  {
+   "id": "FB017",
+   "lane": "B",
+   "entity": "Compliance B1",
+   "text": "Unlawful disclosure of inside information is prohibited (MAR art. 14)",
+   "url": "https://www.afm.nl/en/sector/themas/verplichtingen-voor-ondernemingen/eed-of-belofte",
+   "source_id": "S15",
+   "date": "2025",
+   "status": "sourced"
+  },
+  {
+   "id": "FB018",
+   "lane": "B",
+   "entity": "Compliance B3",
+   "text": "Lawyers' five core values: independence, impartiality, expertise, integrity, confidentiality (Advocatenwet art. 10a)",
+   "url": "https://www.advocatenorde.nl/de-advocaat/kernwaarden-1",
+   "source_id": "S14",
+   "date": "2025",
+   "status": "sourced"
+  },
+  {
+   "id": "FB019",
+   "lane": "B",
+   "entity": "Compliance B3",
+   "text": "Netherlands: no mandatory pro bono hours; pro bono earns no CPD credit; some firms count it toward billable targets (older survey)",
+   "url": "https://debrauw.com/topic/pro-bono",
+   "source_id": "S18",
+   "date": "n.d.",
+   "status": "sourced"
+  },
+  {
+   "id": "FB020",
+   "lane": "B",
+   "entity": "Compliance B3",
+   "text": "One large Dutch firm reported 8,500+ pro bono hours, 75 matters, 211 lawyers in 2023 (firm self-report)",
+   "url": "https://debrauw.com/topic/pro-bono",
+   "source_id": "S18",
+   "date": "2023",
+   "status": "sourced"
+  },
+  {
+   "id": "FB021",
+   "lane": "B",
+   "entity": "Maastricht context",
+   "text": "More than 50% of UM students come from abroad",
+   "url": "https://maastrichtuniversity.nl/node/45905",
+   "source_id": "S12",
+   "date": "n.d.",
+   "status": "sourced"
+  },
+  {
+   "id": "FB022",
+   "lane": "B",
+   "entity": "Maastricht context",
+   "text": "SBE tutorial group: 8 to 15 students plus a tutor",
+   "url": "https://maastrichtuniversity.nl/node/45905",
+   "source_id": "S12",
+   "date": "2026",
+   "status": "sourced"
+  },
+  {
+   "id": "FB023",
+   "lane": "B",
+   "entity": "Maastricht context",
+   "text": "SBE size conflict: 6,500+ students and 60%+ international (SBE page) vs 4,200+ (Times Higher Education)",
+   "url": "https://maastrichtuniversity.nl/node/45905",
+   "source_id": "S12",
+   "date": "n.d.",
+   "status": "UNVERIFIED"
+  },
+  {
+   "id": "FB024",
+   "lane": "B",
+   "entity": "Maastricht context",
+   "text": "About 3/4 of UM alumni work at master level or higher; about 4/5 in a sector fitting their studies (search snippet)",
+   "url": "https://www.maastrichtuniversity.nl/nl/node/64376",
+   "source_id": "S13",
+   "date": "2024",
+   "status": "sourced"
+  },
+  {
+   "id": "FB025",
+   "lane": "B",
+   "entity": "Consultancy B4",
+   "text": "Career-blog timelines: analyst to partner about 7-12 years at top strategy firms; high attrition before partner (confidence low)",
+   "url": "https://www.roadtooffer.com/blog/consulting-career-path",
+   "source_id": "S19",
+   "date": "2026",
+   "status": "sourced"
+  },
+  {
+   "id": "FB026",
+   "lane": "B",
+   "entity": "Inference",
+   "text": "Contact rules fit B1 and B3 best because of MAR and confidentiality duties (from FB016-FB018)",
+   "url": null,
+   "source_id": null,
+   "date": "2026",
+   "status": "inference"
+  },
+  {
+   "id": "FB027",
+   "lane": "B",
+   "entity": "Inference",
+   "text": "Group chat for B1 and B3 needs a no-client/no-deal-information rule and moderation",
+   "url": null,
+   "source_id": null,
+   "date": "2026",
+   "status": "inference"
+  },
+  {
+   "id": "FB028",
+   "lane": "B",
+   "entity": "Inference",
+   "text": "Colour types: red = outcome intros and team points; blue = templates and private progress; social = group channels and group mentoring. No source links a DISC type to platform behaviour",
+   "url": null,
+   "source_id": null,
+   "date": "2026",
+   "status": "UNVERIFIED"
+  }
+ ],
+ "gaps": [
+  {
+   "rank": 1,
+   "id": "G-A1",
+   "text": "Alumni-office team size is not public for any institution; MA1 is inference everywhere.",
+   "moves": "Ranks the whole list; decides whether an institution fits the \"< 6 FTE\" rule.",
+   "closer": "Ask in the first call or read job adverts"
+  },
+  {
+   "rank": 2,
+   "id": "G-A2",
+   "text": "Platform vendor and contract status UNVERIFIED for VCV-Platform (Nyenrode), EUR Connect, Twente portal, TIAS Connect, and the UM and VU CRMs.",
+   "moves": "Decides \"pitch\" versus \"displace later\" for the top accounts.",
+   "closer": "Perplexity check; Gemini round on tenders (TenderNed/TED showed no alumni-platform tender)"
+  },
+  {
+   "rank": 3,
+   "id": "G-B1",
+   "text": "No Dutch cohort data by profession and years since graduation (roles, cities).",
+   "moves": "Map and segmenting for B1-B4.",
+   "closer": "UM/SBE alumni survey tables (2025 factsheet and CASE 2025 PDFs unreadable); ask the alumni office"
+  },
+  {
+   "rank": 4,
+   "id": "G-A3",
+   "text": "Unreadable pages (403/404): Tilburg alumni and associations pages, UvA ABS /alumni, AMSIB, UCR for-alumni, EUR team page, WUR Connect news.",
+   "moves": "Tilburg, EUR and UvA scores could change.",
+   "closer": "Redo in a browser lane"
+  },
+  {
+   "rank": 5,
+   "id": "G-B2",
+   "text": "No survey of alumni preferences by profession (finance/law/consulting) for time boxes and formats; only a US vendor sample of all alumni.",
+   "moves": "Contact-rule defaults and event formats.",
+   "closer": "Perplexity check for Dutch alumni surveys; UniCircle pilot questionnaire"
+  },
+  {
+   "rank": 6,
+   "id": "G-A4",
+   "text": "Maastricht body pages (alumni policy PDF content, networking page) not read; policy goals missing.",
+   "moves": "Only relevant if the existing relationship changes; Maastricht SBE is off the outreach list.",
+   "closer": "Read the PDF"
+  },
+  {
+   "rank": 7,
+   "id": "G-A5",
+   "text": "No public alumni strategy or lifelong-learning document with page reference was read for any institution (UM alumni policy 2021-2026 and SBE Strategy 2026-2028 titles only).",
+   "moves": "Strength of MA5 and the opening line per institution.",
+   "closer": "Read the documents"
+  },
+  {
+   "rank": 8,
+   "id": "G-B3",
+   "text": "No evidence linking DISC/colour types to platform behaviour.",
+   "moves": "Whether the C-red/blue/social split stays in the product.",
+   "closer": "Behavioural segmentation on UniCircle's own click data"
+  },
+  {
+   "rank": 9,
+   "id": "G-A6",
+   "text": "Dated triggers are thin; no new-director or tender event found. Role-holders deliberately not recorded.",
+   "moves": "Timing of first contact.",
+   "closer": "Job adverts, news alerts"
+  },
+  {
+   "rank": 10,
+   "id": "G-B4",
+   "text": "Employer CSR-hour rules (Dutch Big Four, banks) not found.",
+   "moves": "Incentive framing for B1 and B4.",
+   "closer": "Firm CSR reports"
+  },
+  {
+   "rank": 11,
+   "id": "G-B5",
+   "text": "CASE benchmark figures (volunteer/mentoring rates) not retrieved; Sailer & Homner effect sizes and the 2026 gamification meta-analysis seen only as search summaries.",
+   "moves": "Strength of the points mechanic argument.",
+   "closer": "Gemini lane or manual download"
+  },
+  {
+   "rank": 12,
+   "id": "G-B6",
+   "text": "SBE enrolment conflict (6,500+ vs 4,200+); whether SBE alumni supply a B3 law segment at all is UNVERIFIED; Dutch GDPR view on inferred personality types not researched.",
+   "moves": "Sizing and legal design of the colour feature.",
+   "closer": "Alumni office; legal check"
+  },
+  {
+   "rank": 13,
+   "id": "G-A7",
+   "text": "Not screened: universities of applied sciences, Amsterdam University College.",
+   "moves": "Possible additional candidates.",
+   "closer": "Another research round"
+  }
+ ],
+ "edges": [
+  {
+   "from": "B",
+   "to": "C",
+   "label": "mentoring"
+  },
+  {
+   "from": "B",
+   "to": "C",
+   "label": "tutoring"
+  },
+  {
+   "from": "B",
+   "to": "C",
+   "label": "status points"
+  },
+  {
+   "from": "A",
+   "to": "B",
+   "label": "events on the map"
+  },
+  {
+   "from": "A",
+   "to": "C",
+   "label": "group chat"
+  }
+ ]
+}

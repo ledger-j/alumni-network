@@ -1,0 +1,36 @@
+{
+  "item": "t",
+  "files_written": [
+    "docs/icp-dossier/data.json",
+    "docs/icp-dossier/index.html",
+    "docs/icp-dossier/20-distilled/gaps.md",
+    "docs/icp-dossier/20-distilled/noise-log.md",
+    "docs/icp-dossier/40-dossiers/A-segment-universities-nl.md",
+    "docs/icp-dossier/40-dossiers/B-alumni-types.md",
+    "docs/icp-dossier/40-dossiers/C-student-types.md",
+    "docs/redesign/findings-t.json"
+  ],
+  "outreach_ten": [
+    "Nyenrode Business Universiteit",
+    "Universiteit Utrecht",
+    "RSM (Erasmus)",
+    "VU Amsterdam SBE",
+    "Universiteit Leiden",
+    "University College Utrecht",
+    "Radboud Universiteit",
+    "Tilburg University / TiSEM",
+    "Erasmus University Rotterdam (central)",
+    "University of Twente (first reserve, replaces Maastricht SBE)"
+  ],
+  "counts": { "verified": 25, "sourced": 45, "inference": 8, "unverified": 3 },
+  "open_points": [
+    "Page not opened in a browser (instructed): layout at 390 and 1440 px, contrast and tap targets are by construction (CSS) and a fake-DOM render smoke test, not a real-browser check",
+    "Alumni-office team size is public nowhere: MA1 is inference for every ranked institution (10 of 26 points on inference for the top five)",
+    "Platform vendor and contract status UNVERIFIED for Nyenrode VCV-Platform, EUR Connect, Twente portal, TIAS Connect",
+    "Gemini cross-examination lane is still pending; nothing is cross-examined yet",
+    "EUR '100+ chapter events 2025' figure is stated on the RSM chapters page; attribution to central EUR left UNVERIFIED",
+    "Maastricht SBE removed from the outreach list (existing relationship); no further detail recorded",
+    "Counts cover the 81 claims from fact cards A and B; B claims are all 'sourced' or lower because no lane-B page was opened in full"
+  ],
+  "selfcheck": "node tools/check-icp-privacy.mjs: 15 files, 0 personal-data hits. data.json parses; inline JSON copy in index.html parses and has no raw '<'. No duplicate static ids; 69 URLs in data.json all valid http/https; outreach_ten has 10 entries and excludes um-sbe. Scores re-summed from MA signals match the research (26/26/23/23/23/22/19/18/15/15/15). Fake-DOM smoke test: 17 map nodes, 11 table rows, cards open for university/B/C nodes, filters work, no non-http hrefs. No browser, no git, no deploy."
+}
