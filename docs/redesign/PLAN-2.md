@@ -43,3 +43,15 @@ Points come only from server-verified events, never from client claims: tutoring
 
 ## Objection round (before any build)
 Lenses: (1) privacy and GDPR (location, profiles, Gemini data, points records), (2) abuse and gaming (points farming, contact-rule bypass, group-chat spam, upload abuse), (3) feasibility and cost (does it fit PocketBase rules, 150k per agent, mobile). Output: `docs/redesign/objections.md`, each as `{id, lens, severity, claim, proposed fix}`; resolution column filled by the conductor: accepted / rejected + reason / escalated to the user.
+
+## Status (2026-11-24, end of build + verify)
+| Lane | State | Evidence |
+|---|---|---|
+| L logo | done | codemod over 18 files; rail, favicon, PWA icons, offline page; crawler 0 broken |
+| C0a schema + hooks + 11 gates | done | 700+ executed checks pass on a throwaway PocketBase 0.39.4 with hooks mounted (contact 91, points 83, groups 55, docs 64, delete 88, location 41, events 52, profiles 75, chat 19, mentorships 32, ai 5) |
+| C0b media/theme/stubs | done | accent hue sweep 0-330 clean on feed + profile |
+| P1 P2 K M1 M2 G D PV | done | verify.js green on 8 routes at 1432 and 390 px, groups panel, privacy page; scripted flows against the mock (colour save, avatar/cover upload, contact settings, deep profile, collab inbox/dialog, my location, event creation, group chat realtime, mentoring document upload) |
+| T target-group HTML map | waiting for the research lanes | briefs in docs/icp-dossier/10-harvest |
+| Research A/B | Claude web lane running; Gemini lane needs the apps open + a go | |
+
+Open (needs the user): Gemini scope, relay go, live-site drift check before any deploy, production schema + hook deploy, optional GEMINI_API_KEY and UC_RATE_LIMITS=1, product numbers for points.
