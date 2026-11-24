@@ -34,12 +34,13 @@ for (const [w, h] of sizes) {
     page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
     page.on('console', (m) => { if (m.type() === 'error' && !/favicon|ERR_FAILED|net::/.test(m.text())) errors.push('console: ' + m.text().slice(0, 160)); });
     await page.goto(`${APP}/index.html#${r}`, { waitUntil: 'load' });
-    await page.waitForSelector('#page-root > *, main > *', { timeout: 15000 }).catch(() => {});
-    await page.waitForLoadState('networkidle').catch(() => {});
+    await page.waitForSelector('#page-root > *, main > *', { timeout: 8000 }).catch(() => {});
+    // no networkidle wait: the realtime SSE connection never lets the network go idle (cost 20 s per route)
     await page.waitForTimeout(900); // route view-transition + first render settle (known flake otherwise)
     const res = await Promise.race([page.evaluate(`(${probe.trim().replace(/;$/, '')})()`), new Promise((_, rej) => setTimeout(() => rej(new Error('probe timed out after 60 s')), 60000))]).catch((e) => ({ defects: [{ kind: 'probe-error', where: r, detail: e.message }] }));
-    const hard = res.defects.filter((d) => BLOCK.has(d.kind));
-    const soft = res.defects.filter((d) => !BLOCK.has(d.kind));
+    // an <img> with no src at all (hidden placeholder slot) is not a broken image
+    const hard = res.defects.filter((d) => BLOCK.has(d.kind) && !(d.kind === 'broken-img' && !d.detail));
+    const soft = res.defects.filter((d) => !BLOCK.has(d.kind) || (d.kind === 'broken-img' && !d.detail));
     const tag = `${r}@${w}`;
     if (hard.length || errors.length) {
       blockers += hard.length + errors.length;
