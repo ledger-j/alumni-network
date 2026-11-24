@@ -1,0 +1,42 @@
+# @claude in issues and pull requests. Runs only for people with write access to this repo, with a read-only
+# repository token (it can comment and open claude/* PRs; it cannot merge, and .github/ is owned by Jean).
+# Needs the repository secret ANTHROPIC_API_KEY (added by Jean; set a monthly spend limit in the Anthropic console).
+name: claude
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  issues:
+    types: [assigned]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: claude-${{ github.event.issue.number || github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  claude:
+    if: >
+      (github.event_name != 'issues' && contains(github.event.comment.body, '@claude') &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+      (github.event_name == 'issues' && github.event.assignee.login == 'claude')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write        # push to claude/* branches only; the ruleset blocks uc-next
+      pull-requests: write
+      issues: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { fetch-depth: 1 }
+      - uses: anthropics/claude-code-action@eb56b6666facdbd501035f4a0269d8caee2e7a8b # v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_args: |
+            --max-turns 20
+            --append-system-prompt "Follow CLAUDE.md. Work only on a branch named claude/<lane>-<topic>. Never push to uc-next. Never edit .github/ or backend/ without saying so in the PR. End every PR with the template sections (Verified / Not verified / Needs a human)."

@@ -28,3 +28,14 @@ jobs:
           tag="backup/${safe_branch}/${stamp}-${BEFORE:0:7}"
           gh api "repos/${GITHUB_REPOSITORY}/git/refs" -f ref="refs/tags/${tag}" -f sha="${BEFORE}" --silent
           echo "Restore point ${tag} (state before ${PUSHER}'s push)" >> "$GITHUB_STEP_SUMMARY"
+      - name: Prune restore points older than 90 days
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cutoff=$(date -u -d '90 days ago' +%Y%m%d)
+          gh api --paginate "repos/${GITHUB_REPOSITORY}/git/matching-refs/tags/backup/" --jq '.[].ref' | while read -r ref; do
+            d=$(printf '%s' "$ref" | grep -oE '/[0-9]{8}-[0-9]{6}-' | head -1 | tr -d '/-' | cut -c1-8)
+            if [ -n "$d" ] && [ "$d" -lt "$cutoff" ]; then
+              gh api -X DELETE "repos/${GITHUB_REPOSITORY}/git/${ref}" --silent && echo "pruned ${ref}" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done

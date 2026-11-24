@@ -1,0 +1,131 @@
+# Checks every pull request into uc-next. Check names (watched by branch rules + the Auto-fix monitor):
+#   ci / static    ~30 s   syntax, JSON, references, secrets, XSS heuristic, ICP privacy
+#   ci / app-gate  ~2 min  crawler + headless Chromium verify.js on every route at 1440 and 390 px (mock backend)
+#   ci / backend-gates     only when backend/ changed: real PocketBase 0.39.4 + hooks + every verify_*.py
+# No production secret is used here. Backend gates run on a throwaway PocketBase inside the job.
+name: ci
+
+on:
+  pull_request:
+    branches: [uc-next, 'claude/**']  # stacked claude/* PRs are checked too
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: changes
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    outputs:
+      backend: ${{ steps.f.outputs.backend }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { fetch-depth: 0 }
+      - id: f
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          if [ -z "$base" ] || git diff --name-only "$base"...HEAD | grep -q '^backend/'; then echo backend=true >> "$GITHUB_OUTPUT"; else echo backend=false >> "$GITHUB_OUTPUT"; fi
+
+  static:
+    name: static
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 22 }
+      - name: Static gate
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: node tools/ci-static.mjs
+      - name: ICP dossier privacy (no personal contact data)
+        run: node tools/check-icp-privacy.mjs
+      - name: Handoff line when backend changed
+        if: github.event_name == 'pull_request'
+        run: node tools/ci-handoff.mjs "${{ github.event.pull_request.base.sha }}"
+
+  app-gate:
+    name: app-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with: { node-version: 22 }
+      - name: Install Playwright (Chromium only)
+        run: |
+          mkdir -p "$RUNNER_TEMP/pw" && cd "$RUNNER_TEMP/pw" && npm init -y >/dev/null && npm i playwright@1.49.1 --no-audit --no-fund
+          npx --prefix "$RUNNER_TEMP/pw" playwright install --with-deps chromium
+      - name: Serve app and mock backend
+        run: |
+          python3 -m http.server 5173 >/tmp/http.log 2>&1 &
+          node tools/mock-pb.mjs 8099 >/tmp/mock.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:5173/index.html >/dev/null && curl -sf http://127.0.0.1:8099/api/health >/dev/null && break; sleep 1; done
+      - name: Link crawler (0 broken same-origin links)
+        run: node tools/qa-crawler.mjs http://127.0.0.1:5173
+      - name: verify.js on every route at 1440 and 390 px
+        env:
+          NODE_PATH: ${{ runner.temp }}/pw/node_modules
+        run: node tools/ci-app-gate.mjs
+
+  backend-gates:
+    name: backend-gates
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PB_VERSION: 0.39.4
+      PB_BASE: http://127.0.0.1:8090
+      PB_IDENTITY: ci@example.test
+      PB_PASSWORD: ci-throwaway-${{ github.run_id }}-pw
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with: { python-version: '3.12' }
+      - name: Download PocketBase
+        run: |
+          curl -fsSL "https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_amd64.zip" -o pb.zip
+          unzip -q pb.zip -d pb
+      - name: Create throwaway superuser and start with hooks
+        run: |
+          mkdir -p pb/pb_data
+          ./pb/pocketbase superuser upsert "$PB_IDENTITY" "$PB_PASSWORD" --dir=pb/pb_data
+          nohup ./pb/pocketbase serve --http=127.0.0.1:8090 --dir=pb/pb_data --hooksDir="$GITHUB_WORKSPACE/backend/pb_hooks" >pb.log 2>&1 &
+          for i in $(seq 1 30); do curl -sf "$PB_BASE/api/health" >/dev/null && break; sleep 1; done
+      - name: Apply schema twice (must be idempotent)
+        working-directory: backend
+        run: |
+          python3 init_schema.py
+          python3 init_schema.py
+      - name: Run every gate
+        working-directory: backend
+        run: |
+          fail=0
+          for g in verify_*.py; do
+            echo "::group::$g"
+            python3 "$g" || { echo "::error::$g failed"; fail=1; }
+            echo "::endgroup::"
+          done
+          exit $fail
+      - name: PocketBase log on failure
+        if: failure()
+        run: tail -n 80 pb.log || true
+
+  # Single required check for rulesets: green when static + app-gate passed and backend-gates passed or was skipped.
+  ci:
+    name: ci
+    if: always()
+    needs: [static, app-gate, backend-gates]
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "static=${{ needs.static.result }} app-gate=${{ needs.app-gate.result }} backend-gates=${{ needs.backend-gates.result }}"
+          [ "${{ needs.static.result }}" = success ] && [ "${{ needs.app-gate.result }}" = success ] && { [ "${{ needs.backend-gates.result }}" = success ] || [ "${{ needs.backend-gates.result }}" = skipped ]; }
