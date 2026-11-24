@@ -8,7 +8,7 @@
               linkAlpha, linkDist, linkEvery, pull {x,y} | null, pointer (bool),
               pointerRadius, anchorRange, anchorAlpha, thread (bool), speed
      api      setAnchors([{id,x,y,hue}]), setActive(id), hover(id|null),
-              pulse(fromId,toId,ms), refresh(), destroy()
+              pulse(fromId,toId,ms), setPalette(list), refresh(), destroy()
 
    Rules: own RAF handle per mount (several can run at once); every listener is
    removed in destroy(); pauses when hidden or off-screen; prefers-reduced-motion
@@ -238,6 +238,12 @@
       pulse(from, to, ms) {
         if (mqReduce.matches) return;
         pulses.push({ from, to, ms: ms || 280, t0: performance.now() }); kick();
+      },
+      setPalette(list) {
+        if (!Array.isArray(list) || !list.length) return;
+        o.palette = list.slice();                       // later spawns use it
+        for (const p of particles) p.c = o.palette[Math.floor(Math.random() * o.palette.length)];
+        if (!running()) draw(performance.now(), false);
       },
       refresh() { resize(); },
       destroy,

@@ -83,9 +83,9 @@
     const UCP = window.UCP;
     const UC = window.UC;
     const px = size || 54;
-    if (!m.sample && m.avatar && m.collectionId && UC && UC.API) {
-      const src = UC.API + '/api/files/' + encodeURIComponent(m.collectionId) + '/' + encodeURIComponent(m.id) + '/' + encodeURIComponent(m.avatar);
-      return '<img class="uc-mc-avatar" src="' + UCP.esc(src) + '" alt="" width="' + px + '" height="' + px + '">';
+    if (!m.sample && m.avatar && m.collectionId && UC && UC.avatarUrl) {
+      const src = UC.safeUrl(UC.avatarUrl(m, px <= 64 ? 64 : 100)) || UC.avatarUrl(m, px <= 64 ? 64 : 100);
+      return '<img class="uc-mc-avatar" src="' + UCP.esc(src) + '" alt="" width="' + px + '" height="' + px + '" loading="lazy">';
     }
     return '<div class="uc-avatar-initials uc-mc-avatar" aria-hidden="true" style="width:' + px + 'px;height:' + px + 'px;font-size:' + Math.round(px * 0.39)
       + 'px;background:oklch(0.9 0.06 ' + hueFor(m.name) + ');">' + UCP.esc(initials(m.name)) + '</div>';
@@ -153,6 +153,40 @@
       return true;
     }
 
+    // Server-enforced contact doors; the UI only explains them.
+    const warn = (msg) => UCP.toast(esc(msg), 'warn');
+    function errText(err, fallback) { return (err && err.message) ? String(err.message) : fallback; }
+    function myPoints() { const u = UCP.user(); return Math.max(0, Number(u && u.points) || 0); }
+    function contactInfo(m) {
+      if (m.sample) return { mode: 'open', ok: true, note: '' };
+      const mode = ['points', 'request', 'closed'].indexOf(m.contact_mode) >= 0 ? m.contact_mode : 'open';
+      const need = Math.max(0, Math.min(10000, Math.floor(Number(m.min_points) || 0)));
+      const have = myPoints();
+      if (mode === 'points') {
+        const ok = have >= need;
+        return { mode, ok, need, have, note: 'Asks for ' + need + ' points (you have ' + have + ')'
+          + (ok ? '.' : '. You can request once you have ' + need + ' points.') };
+      }
+      if (mode === 'request') return { mode, ok: false, note: 'Prefers a collaboration request before a mentoring request.' };
+      if (mode === 'closed') return { mode, ok: false, note: 'Not accepting requests right now.' };
+      return { mode, ok: true, note: '' };
+    }
+    function requestButton(m, tutor, isMe) {
+      if (isMe) return '<button type="button" class="uc-pill-ghost" data-mc-become>Edit my ' + (tutor ? 'tutor' : 'mentor') + ' profile</button>';
+      const ci = contactInfo(m);
+      const k = esc(m.key);
+      if (ci.mode === 'request') {
+        return '<button type="button" class="uc-pill-ink" data-mc-act="collab" data-mc-key="' + k + '">Send collaboration request</button>';
+      }
+      if (ci.mode === 'closed') {
+        return '<button type="button" class="uc-pill-ink" disabled aria-disabled="true">Not accepting requests</button>';
+      }
+      if (ci.mode === 'points' && !ci.ok) {
+        return '<button type="button" class="uc-pill-ink" disabled aria-disabled="true">Request ' + (tutor ? 'tutoring' : 'mentoring') + '</button>';
+      }
+      return '<button type="button" class="uc-pill-ink" data-mc-act="request" data-mc-key="' + k + '">Request ' + (tutor ? 'tutoring' : 'mentoring') + ' <span class="uc-nudge" aria-hidden="true">→</span></button>';
+    }
+
     // ----------------------------------------------------------------- cards
     function personCard(m) {
       const tutor = m.kind === 'tutoring';
@@ -174,9 +208,9 @@
         + (m.headline ? '<div class="uc-mc-sub">' + esc(m.headline) + '</div>' : '') + '</div></div>'
         + (meta.length ? '<div class="uc-mc-meta">' + meta.join('<span aria-hidden="true">·</span>') + '</div>' : '')
         + '<p class="uc-mc-offer"><span class="uc-mc-offer-l">' + (tutor ? 'Tutors' : 'Offers') + '</span> ' + esc(offer) + '</p>'
+        + (isMe ? '' : (function () { const ci = contactInfo(m); return ci.note ? '<p class="uc-mc-door' + (ci.ok ? '' : ' is-blocked') + '">' + esc(ci.note) + '</p>' : ''; })())
         + '<div class="uc-mc-actions">'
-        + (isMe ? '<button type="button" class="uc-pill-ghost" data-mc-become>Edit my ' + (tutor ? 'tutor' : 'mentor') + ' profile</button>'
-          : '<button type="button" class="uc-pill-ink" data-mc-act="request" data-mc-key="' + esc(m.key) + '">Request ' + (tutor ? 'tutoring' : 'mentoring') + ' <span class="uc-nudge" aria-hidden="true">→</span></button>')
+        + requestButton(m, tutor, isMe)
         + '<button type="button" class="uc-pill-ghost" data-mc-act="profile" data-mc-key="' + esc(m.key) + '">View profile</button>'
         + '</div></article>';
     }
@@ -254,37 +288,117 @@
       }).join('');
     }
 
-    // ------------------------------------------------------------ my requests
+    // --------------------------------------------------------- my mentorships
+    const STAGES = [['goal', 'Goal'], ['plan', 'Plan'], ['sessions', 'Sessions'], ['done', 'Done']];
+    const DOC_EXT = ['pdf', 'png', 'jpg', 'jpeg', 'txt', 'docx'];
+    const DOC_MAX = 10 * 1024 * 1024;
+    const POINTS_FOR = { tutoring: 10, mentoring: 15 };
+    const docsCache = {};   // mentorship id -> array of mentorship_docs | 'error'
+    const openDocs = {};    // mentorship id -> true while its documents panel is open
+    const busy = {};        // ids with a request in flight
+
+    function pbDate(v) {
+      if (!v) return null;
+      const d = new Date(String(v).replace(' ', 'T'));
+      return isNaN(d.getTime()) ? null : d;
+    }
+    const fmtDate = (d) => d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    const fmtDateTime = (d) => d.toLocaleString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    function dateInputValue(v) { const m = /^(\d{4}-\d{2}-\d{2})/.exec(String(v || '')); return m ? m[1] : ''; }
+    function cleanName(n) { return String(n || 'file').replace(/_[a-z0-9]{10}(\.[^.]+)$/i, '$1'); }
+
     function emptyOrbit() {
       return '<div class="uc-empty-orbit" style="--uc-node-h:45"><div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div>'
-        + '<p>Your requests will appear here</p></div>';
+        + '<p>Your mentorships will appear here</p></div>';
     }
+
+    function stepperHtml(r, locked) {
+      const cur = Math.max(0, STAGES.findIndex((s) => s[0] === r.stage));
+      return '<ol class="uc-mc-stepper" aria-label="Mentorship stage">' + STAGES.map((s, i) => {
+        const cls = 'uc-mc-step' + (i < cur ? ' is-past' : '') + (i === cur ? ' is-current' : '');
+        const inner = '<span class="uc-mc-step-n" aria-hidden="true">' + (i + 1) + '</span><span class="uc-mc-step-l">' + esc(s[1]) + '</span>';
+        return '<li class="' + cls + '">' + (locked
+          ? '<span class="uc-mc-step-b"' + (i === cur ? ' aria-current="step"' : '') + '>' + inner + '</span>'
+          : '<button type="button" class="uc-mc-step-b" data-mc-act="stage" data-mc-id="' + esc(r.id) + '" data-mc-stage="' + esc(s[0]) + '"'
+            + (i === cur ? ' aria-current="step"' : '') + '>' + inner + '</button>') + '</li>';
+      }).join('') + '</ol>';
+    }
+
+    function pointsHintHtml(r, iAmMentor, kind) {
+      if (!iAmMentor || r.status !== 'active') return '';
+      const at = pbDate(r.active_at);
+      if (!at) return '';
+      const ready = new Date(at.getTime() + 24 * 3600 * 1000);
+      if (ready.getTime() > Date.now()) {
+        return '<p class="uc-mc-hint">Points are awarded if you close after ' + esc(fmtDateTime(ready)) + '.</p>';
+      }
+      return '<p class="uc-mc-hint">Closing now can earn you ' + POINTS_FOR[kind] + ' status points.</p>';
+    }
+
+    function mentorshipCard(r, u) {
+      const iAmMentor = r.mentor === u.id;
+      const ex = r.expand || {};
+      const other = iAmMentor ? ex.mentee : ex.mentor;
+      const otherId = iAmMentor ? r.mentee : r.mentor;
+      const kind = r.kind === 'tutoring' ? 'tutoring' : 'mentoring';
+      const st = STATUS_LABEL[r.status] ? r.status : 'requested';
+      const closed = st === 'closed';
+      const who = (other && other.name) || 'a member';
+      const id = ID_RE.test(String(r.id || '')) ? r.id : '';
+      const active = pbDate(r.active_at);
+      const goals = String(r.goals || '');
+      let acts = '';
+      if (id && !closed) {
+        if (iAmMentor && st === 'requested') acts += '<button type="button" class="uc-pill-ink uc-pill-sm" data-mc-act="setstatus" data-mc-id="' + esc(id) + '" data-mc-status="active">Accept</button>';
+        acts += '<button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-act="setstatus" data-mc-id="' + esc(id) + '" data-mc-status="closed">'
+          + (iAmMentor && st === 'active' ? 'Close and finish' : 'Close') + '</button>';
+      }
+      if (ID_RE.test(String(otherId || ''))) acts += '<button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-act="chat" data-mc-id="' + esc(otherId) + '">Message</button>';
+
+      const plan = closed
+        ? '<div class="uc-mc-plan is-ro"><div class="uc-mc-plan-row"><span class="uc-mc-label">Goals</span><p class="uc-mc-ro">' + (goals ? esc(goals) : 'No goals were written down.') + '</p></div>'
+          + '<div class="uc-mc-plan-row"><span class="uc-mc-label">Next session</span><p class="uc-mc-ro">' + (dateInputValue(r.next_session) ? esc(fmtDate(pbDate(dateInputValue(r.next_session)) || new Date())) : 'None planned') + '</p></div></div>'
+        : '<form class="uc-mc-plan" data-mc-planform="' + esc(id) + '" novalidate>'
+          + '<label class="uc-mc-plan-row"><span class="uc-mc-label">Goals</span>'
+          + '<textarea name="goals" rows="3" maxlength="500" placeholder="What do you want to get out of this? Keep it concrete.">' + esc(goals) + '</textarea>'
+          + '<span class="uc-mc-count" data-mc-gcount aria-live="off">' + goals.length + ' / 500</span></label>'
+          + '<label class="uc-mc-plan-row"><span class="uc-mc-label">Next session</span>'
+          + '<input type="date" name="next_session" value="' + esc(dateInputValue(r.next_session)) + '"></label>'
+          + '<div class="uc-mc-plan-acts"><button type="submit" class="uc-pill-ink uc-pill-sm">Save plan</button></div></form>';
+
+      let docs = '';
+      if (st !== 'requested' && id) {
+        const open = !!openDocs[id];
+        docs = '<div class="uc-mc-docs-wrap"><button type="button" class="uc-mc-docs-toggle" data-mc-act="docs" data-mc-id="' + esc(id) + '" aria-expanded="' + open + '" aria-controls="uc-mc-docs-' + esc(id) + '">'
+          + 'Documents <span class="uc-mc-docs-chev" aria-hidden="true">›</span></button>'
+          + '<div class="uc-mc-docs" id="uc-mc-docs-' + esc(id) + '" data-mc-docs="' + esc(id) + '"' + (open ? '' : ' hidden') + '></div></div>';
+      }
+
+      return '<article class="uc-card uc-mc-ms' + (closed ? ' is-closed' : '') + '" data-mc-ms="' + esc(id) + '" aria-label="' + esc(KIND_LABEL[kind]) + ' with ' + esc(who) + '">'
+        + '<div class="uc-mc-ms-head"><div class="uc-mc-ms-id">'
+        + '<div class="uc-mc-req-top"><span class="uc-mc-chip uc-mc-chip--kind">' + esc(KIND_LABEL[kind]) + '</span>'
+        + '<span class="uc-mc-chip uc-mc-chip--' + esc(st) + '">' + esc(closed ? 'Closed' : STATUS_LABEL[st]) + '</span></div>'
+        + '<div class="uc-mc-name">' + esc(r.topic || 'No topic given') + '</div>'
+        + '<div class="uc-mc-sub">' + (iAmMentor ? 'With ' : 'With ') + esc(who) + (iAmMentor ? ' (you mentor)' : ' (your ' + (kind === 'tutoring' ? 'tutor' : 'mentor') + ')')
+        + (active ? ' · Active since ' + esc(fmtDate(active)) : '') + '</div></div>'
+        + '<div class="uc-mc-req-acts">' + acts + '</div></div>'
+        + stepperHtml(r, closed || !id)
+        + (closed ? '<p class="uc-mc-hint">Closed. This mentorship is read-only.</p>' : '')
+        + plan
+        + (iAmMentor && st === 'active' ? pointsHintHtml(r, iAmMentor, kind) : '')
+        + (iAmMentor && !closed && st !== 'requested'
+          ? '<p class="uc-mc-fine">The mentor or tutor earns status points when a mentorship that was active for at least 24 hours is closed by them (10 tutoring / 15 mentoring). The person helped earns none.</p>' : '')
+        + docs
+        + '</article>';
+    }
+
     function renderMyRequests() {
       const box = page.querySelector('[data-mc-myreq]');
       if (!box) return;
       const u = UCP.user();
       if (!reqItems || !reqItems.length || !u) { box.innerHTML = emptyOrbit(); return; }
-      box.innerHTML = '<div class="uc-mc-reqlist">' + reqItems.map((r) => {
-        const iAmMentor = r.mentor === u.id;
-        const ex = r.expand || {};
-        const other = iAmMentor ? ex.mentee : ex.mentor;
-        const otherId = iAmMentor ? r.mentee : r.mentor;
-        const kind = r.kind === 'tutoring' ? 'tutoring' : 'mentoring';
-        const st = STATUS_LABEL[r.status] ? r.status : 'requested';
-        const who = (other && other.name) || 'a member';
-        let acts = '';
-        if (iAmMentor && ID_RE.test(String(r.id || ''))) {
-          if (st === 'requested') acts += '<button type="button" class="uc-pill-ink uc-pill-sm" data-mc-act="setstatus" data-mc-id="' + esc(r.id) + '" data-mc-status="active">Accept</button>';
-          if (st !== 'closed') acts += '<button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-act="setstatus" data-mc-id="' + esc(r.id) + '" data-mc-status="closed">Close</button>';
-        }
-        if (ID_RE.test(String(otherId || ''))) acts += '<button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-act="chat" data-mc-id="' + esc(otherId) + '">Message</button>';
-        return '<article class="uc-row uc-mc-req">'
-          + '<div class="uc-mc-req-body"><div class="uc-mc-req-top"><span class="uc-mc-chip uc-mc-chip--kind">' + esc(KIND_LABEL[kind]) + '</span>'
-          + '<span class="uc-mc-chip uc-mc-chip--' + esc(st) + '">' + esc(STATUS_LABEL[st]) + '</span></div>'
-          + '<div class="uc-mc-name">' + esc(r.topic || 'No topic given') + '</div>'
-          + '<div class="uc-mc-sub">' + (iAmMentor ? 'From ' : 'To ') + esc(who) + '</div></div>'
-          + '<div class="uc-mc-req-acts">' + acts + '</div></article>';
-      }).join('') + '</div>';
+      box.innerHTML = '<div class="uc-mc-reqlist">' + reqItems.map((r) => mentorshipCard(r, u)).join('') + '</div>';
+      Object.keys(openDocs).forEach((id) => { if (openDocs[id]) { renderDocs(id); if (docsCache[id] === undefined) loadDocs(id); } });
     }
     function loadMyRequests() {
       const u = UCP.user();
@@ -295,12 +409,167 @@
         .catch(() => { reqItems = null; })
         .then(() => { if (page.isConnected) renderMyRequests(); });
     }
-    function setStatus(id, st) {
-      if (!ID_RE.test(String(id || '')) || (st !== 'active' && st !== 'closed')) return;
-      UCP.api('PATCH', '/api/collections/mentorships/records/' + id, { status: st })
-        .then(() => { UCP.toast(st === 'active' ? 'Request accepted.' : 'Request closed.'); return loadMyRequests(); })
-        .catch(() => UCP.toast('Could not update the request — please try again.', 'warn'));
+    const findMs = (id) => (reqItems || []).find((r) => r.id === id);
+
+    function patchMs(id, body, okMsg) {
+      if (!ID_RE.test(String(id || '')) || busy[id]) return Promise.resolve(false);
+      busy[id] = true;
+      return UCP.api('PATCH', '/api/collections/mentorships/records/' + id, body)
+        .then(() => { busy[id] = false; if (okMsg) UCP.toast(esc(okMsg)); return loadMyRequests().then(() => true); })
+        .catch((err) => { busy[id] = false; warn(errText(err, 'Could not update the mentorship — please try again.')); return false; });
     }
+    function setStatus(id, st) {
+      if (st !== 'active' && st !== 'closed') return;
+      if (st === 'active') { patchMs(id, { status: 'active' }, 'Request accepted.'); return; }
+      const r = findMs(id);
+      const u = UCP.user();
+      const mentorSide = !!(r && u && r.mentor === u.id);
+      UCP.dialog({
+        title: mentorSide ? 'Close and finish this mentorship?' : 'Close this mentorship?',
+        body: '<p>A closed mentorship is frozen: nobody can edit the plan or add documents any more. Its documents are deleted 90 days after closing.</p>'
+          + (mentorSide ? '<p class="uc-mc-fine">The mentor or tutor earns status points when a mentorship that was active for at least 24 hours is closed by them (10 tutoring / 15 mentoring). The person helped earns none.</p>' : ''),
+        actions: [
+          { label: 'Keep it open' },
+          { label: mentorSide ? 'Close and finish' : 'Close', primary: true, onClick: (close) => { close(); patchMs(id, { status: 'closed' }, 'Mentorship closed.'); } }
+        ]
+      });
+    }
+    function savePlan(form) {
+      const id = form.getAttribute('data-mc-planform');
+      const goals = form.elements.goals.value.trim().slice(0, 500);
+      const ns = form.elements.next_session.value;
+      if (ns && !/^\d{4}-\d{2}-\d{2}$/.test(ns)) { warn('Please pick a valid date.'); return; }
+      patchMs(id, { goals: goals, next_session: ns || '' }, 'Plan saved.');
+    }
+    function setStage(id, stage) {
+      if (!STAGES.some((s) => s[0] === stage)) return;
+      const r = findMs(id);
+      if (r && r.stage === stage) return;
+      patchMs(id, { stage: stage });
+    }
+
+    // ------------------------------------------------------------- documents
+    function renderDocs(id) {
+      const box = page.querySelector('[data-mc-docs="' + id + '"]');
+      if (!box) return;
+      const r = findMs(id);
+      const u = UCP.user();
+      const active = !!(r && r.status === 'active');
+      const items = docsCache[id];
+      let html = '<p class="uc-mc-notice">Only you two can see these documents. They are deleted 90 days after the mentorship closes. Do not upload ID documents, health data or other people\'s grades.</p>';
+      if (items === undefined) html += '<p class="uc-mc-fine">Loading documents…</p>';
+      else if (items === 'error') html += '<p class="uc-mc-fine">Could not load the documents right now.</p>';
+      else if (!items.length) html += '<p class="uc-mc-fine">No documents yet.</p>';
+      else {
+        html += '<ul class="uc-mc-doclist">' + items.map((d) => {
+          const up = d.expand && d.expand.uploader;
+          const mine = !!(u && d.uploader === u.id);
+          const created = pbDate(d.created);
+          const did = ID_RE.test(String(d.id || '')) ? d.id : '';
+          return '<li class="uc-mc-doc"><div class="uc-mc-doc-body"><div class="uc-mc-doc-name">' + esc(cleanName(d.file)) + '</div>'
+            + (d.note ? '<div class="uc-mc-doc-note">' + esc(d.note) + '</div>' : '')
+            + '<div class="uc-mc-sub">' + esc(mine ? 'You' : ((up && up.name) || 'A member')) + (created ? ' · ' + esc(fmtDate(created)) : '') + '</div></div>'
+            + '<div class="uc-mc-doc-acts">'
+            + (did ? '<button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-act="opendoc" data-mc-id="' + esc(id) + '" data-mc-doc="' + esc(did) + '">Open</button>' : '')
+            + (did && mine && active ? '<button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-act="deldoc" data-mc-id="' + esc(id) + '" data-mc-doc="' + esc(did) + '">Delete</button>' : '')
+            + '</div></li>';
+        }).join('') + '</ul>';
+      }
+      if (active) {
+        const full = Array.isArray(items) && items.length >= 30;
+        html += full ? '<p class="uc-mc-fine">The limit of 30 documents is reached. Delete one to add another.</p>'
+          : '<form class="uc-mc-upform" data-mc-docform="' + esc(id) + '" novalidate>'
+            + '<label class="uc-mc-plan-row"><span class="uc-mc-label">File (PDF, PNG, JPG, TXT or DOCX, up to 10 MB)</span>'
+            + '<input type="file" name="file" accept=".pdf,.png,.jpg,.jpeg,.txt,.docx"></label>'
+            + '<label class="uc-mc-plan-row"><span class="uc-mc-label">Note (optional)</span>'
+            + '<input type="text" name="note" maxlength="300" autocomplete="off" placeholder="What is this file?"></label>'
+            + '<div class="uc-mc-plan-acts"><button type="submit" class="uc-pill-ink uc-pill-sm">Upload</button>'
+            + '<span class="uc-mc-fine" data-mc-upstate role="status" aria-live="polite"></span></div></form>';
+      } else {
+        html += '<p class="uc-mc-fine">' + (r && r.status === 'closed' ? 'This mentorship is closed, so the list is read-only.' : 'Documents can be shared once the mentorship is active.') + '</p>';
+      }
+      box.innerHTML = html;
+    }
+    function loadDocs(id) {
+      if (!ID_RE.test(String(id || ''))) return Promise.resolve();
+      const filter = encodeURIComponent('(mentorship="' + id + '")');
+      return UCP.api('GET', '/api/collections/mentorship_docs/records?filter=' + filter + '&sort=-created&perPage=50&expand=uploader')
+        .then((r) => { docsCache[id] = (r && r.items) || []; })
+        .catch(() => { docsCache[id] = 'error'; })
+        .then(() => { if (page.isConnected) renderDocs(id); });
+    }
+    function toggleDocs(btn) {
+      const id = btn.getAttribute('data-mc-id');
+      if (!ID_RE.test(String(id || ''))) return;
+      const box = page.querySelector('[data-mc-docs="' + id + '"]');
+      if (!box) return;
+      const open = box.hidden;
+      box.hidden = !open;
+      openDocs[id] = open;
+      btn.setAttribute('aria-expanded', String(open));
+      if (open) { renderDocs(id); loadDocs(id); }
+    }
+    function uploadDoc(form) {
+      const id = form.getAttribute('data-mc-docform');
+      const u = UCP.user();
+      const file = form.elements.file.files && form.elements.file.files[0];
+      const state = form.querySelector('[data-mc-upstate]');
+      const btn = form.querySelector('button[type="submit"]');
+      if (!u || !ID_RE.test(String(id || ''))) return;
+      if (!file) { warn('Choose a file first.'); return; }
+      const ext = (String(file.name).split('.').pop() || '').toLowerCase();
+      if (DOC_EXT.indexOf(ext) < 0) { warn('This file type is not allowed. Use PDF, PNG, JPG, TXT or DOCX.'); return; }
+      if (file.size > DOC_MAX) { warn('The file is larger than 10 MB.'); return; }
+      if (file.size === 0) { warn('The file is empty.'); return; }
+      const cached = docsCache[id];
+      if (Array.isArray(cached) && cached.length >= 30) { warn('The limit of 30 documents is reached.'); return; }
+      const note = form.elements.note.value.trim().slice(0, 300);
+      btn.disabled = true;
+      state.textContent = 'Uploading ' + file.name + '…';
+      UC.uploadMedia('/api/collections/mentorship_docs/records', 'POST', { mentorship: id, uploader: u.id, note: note }, 'file', file, file.name)
+        .then(() => { UCP.toast('Document uploaded.'); return loadDocs(id); })
+        .catch((err) => {
+          btn.disabled = false;
+          state.textContent = '';
+          warn(errText(err, 'Upload failed — please try again.'));
+        });
+    }
+    async function openDoc(id, docId) {
+      const items = docsCache[id];
+      const rec = Array.isArray(items) ? items.find((d) => d.id === docId) : null;
+      if (!rec) return;
+      // open the window synchronously (popup blockers), point it at the short-lived URL afterwards
+      const w = window.open('about:blank', '_blank');
+      try {
+        const url = await UC.protectedFileUrl(rec, 'file');
+        if (!url) throw new Error('No file');
+        if (w) { w.opener = null; w.location.href = url; }
+        else {
+          const a = document.createElement('a');
+          a.href = url; a.target = '_blank'; a.rel = 'noopener';
+          document.body.appendChild(a); a.click(); a.remove();
+        }
+      } catch (err) {
+        if (w) w.close();
+        warn(errText(err, 'Could not open the document.'));
+      }
+    }
+    function deleteDoc(id, docId) {
+      UCP.dialog({
+        title: 'Delete this document?',
+        body: '<p>The file is removed for both of you. This cannot be undone.</p>',
+        actions: [
+          { label: 'Cancel' },
+          { label: 'Delete', primary: true, onClick: (close) => {
+            close();
+            UCP.api('DELETE', '/api/collections/mentorship_docs/records/' + docId)
+              .then(() => { UCP.toast('Document deleted.'); return loadDocs(id); })
+              .catch((err) => warn(errText(err, 'Could not delete the document.')));
+          } }
+        ]
+      });
+    }
+
 
     // --------------------------------------------------------------- actions
     function becomeMentor() {
@@ -331,6 +600,10 @@
       }
       if (!UCP.user()) { if (UC) UC.openAuth('signin'); return; }
       if (!UCP.online()) { UCP.toast('The network is offline right now — try again in a moment.', 'warn'); return; }
+      const ci = contactInfo(m);
+      if (ci.mode === 'request') { openCollab(m); return; }
+      if (ci.mode === 'closed') { warn(ci.note); return; }
+      if (ci.mode === 'points' && !ci.ok) { warn(ci.note); return; }
       const u = UCP.user();
       const fmt = FORMATS.map((f) => '<option>' + esc(f) + '</option>').join('');
       UCP.dialog({
@@ -359,7 +632,14 @@
               try {
                 await UCP.api('POST', '/api/collections/mentorships/records', { mentor: m.id, mentee: u.id, kind: kind, topic: topic, status: 'requested' });
                 recorded = true;
-              } catch (e) { /* message-only fallback */ }
+              } catch (e) {
+                // only a missing collection (404) falls back to message-only; every other server message is shown
+                if (!e || e.status !== 404) {
+                  if (btn) { btn.disabled = false; btn.textContent = 'Send request'; }
+                  warn(errText(e, 'Could not send the request — please try again.'));
+                  return;
+                }
+              }
             }
             // 2) the structured first message, adapted for kind
             const text = (tutor ? 'Tutoring request' : 'Mentoring request') + '\n\nTopic: ' + topic
@@ -377,11 +657,18 @@
               if (UC) UC.openChat(m.id);
             } catch (err) {
               if (btn) { btn.disabled = false; btn.textContent = 'Send request'; }
-              UCP.toast('Could not send the request — please try again.', 'warn');
+              warn(errText(err, 'Could not send the request — please try again.'));
             }
           } }
         ]
       });
+    }
+
+    function openCollab(m) {
+      if (!UCP.user()) { if (UC) UC.openAuth('signin'); return; }
+      if (m.sample) { warn('This is a sample profile — collaboration requests go to live members only.'); return; }
+      if (window.UCCollab && typeof window.UCCollab.requestDialog === 'function') window.UCCollab.requestDialog(m.id, m.name);
+      else warn('Collaboration requests are not available right now.');
     }
 
     function viewProfile(m) {
@@ -462,6 +749,10 @@
       }
       const act = t.getAttribute('data-mc-act');
       if (!act) return;
+      if (act === 'stage') { setStage(t.getAttribute('data-mc-id'), t.getAttribute('data-mc-stage')); return; }
+      if (act === 'docs') { toggleDocs(t); return; }
+      if (act === 'opendoc') { openDoc(t.getAttribute('data-mc-id'), t.getAttribute('data-mc-doc')); return; }
+      if (act === 'deldoc') { deleteDoc(t.getAttribute('data-mc-id'), t.getAttribute('data-mc-doc')); return; }
       if (act === 'setstatus') { setStatus(t.getAttribute('data-mc-id'), t.getAttribute('data-mc-status')); return; }
       if (act === 'chat') {
         const pid = t.getAttribute('data-mc-id');
@@ -473,6 +764,7 @@
       const m = byKey[key];
       if (!m) return;
       if (act === 'request') requestMentoring(m);
+      else if (act === 'collab') openCollab(m);
       else if (act === 'profile') viewProfile(m);
       else if (act === 'map') UCP.go('map', { city: cityOf(m) });
       else if (act === 'programme') UCP.go('network', { q: m.degree });
@@ -490,6 +782,19 @@
       else if (e.key === 'Home') j = 0;
       else if (e.key === 'End') j = tabBtns.length - 1;
       if (j >= 0) { e.preventDefault(); selectTab(tabBtns[j].getAttribute('data-mc-tab'), true); }
+    });
+
+    page.addEventListener('submit', (e) => {
+      const pf = e.target.closest('[data-mc-planform]');
+      if (pf) { e.preventDefault(); savePlan(pf); return; }
+      const df = e.target.closest('[data-mc-docform]');
+      if (df) { e.preventDefault(); uploadDoc(df); }
+    });
+    page.addEventListener('input', (e) => {
+      const g = e.target.closest && e.target.closest('textarea[name="goals"]');
+      if (!g) return;
+      const c = g.parentNode.querySelector('[data-mc-gcount]');
+      if (c) c.textContent = g.value.length + ' / 500';
     });
 
     form.addEventListener('input', renderLists);

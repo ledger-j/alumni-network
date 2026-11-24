@@ -1,0 +1,56 @@
+/* UniCircle: profile identity (cover, avatar, colour, contact door, account). Lane P1. */
+.uc-pf-fine { font-size: 12px; line-height: 1.5; color: var(--uc-muted); }
+
+/* cover */
+.uc-pf-cover { position: relative; height: 160px; background: linear-gradient(120deg, oklch(0.93 0.04 var(--uc-accent-h, 260)), oklch(0.97 0.02 var(--uc-accent-h, 260))); overflow: hidden; }
+.uc-pf-cover canvas, .uc-pf-cover > img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.uc-pf-cover > img { object-fit: cover; }
+.uc-pf-cover-fade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(250,249,246,0.9), transparent 55%); pointer-events: none; }
+.uc-pf-cover-btns { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.uc-pf-chip { min-height: 32px; padding: 6px 14px; border-radius: var(--uc-r-pill, 999px); border: 1px solid var(--uc-border-2); background: var(--uc-card-solid); color: var(--uc-ink); font: 600 12px var(--uc-font-body); cursor: pointer; transition: background-color var(--uc-d-fast, 120ms) var(--uc-ease-out, ease); }
+.uc-pf-chip:hover { background: #fff; }
+.uc-pf-chip:focus-visible, .uc-pf-dangerbtn:focus-visible, .uc-pf-set :focus-visible, .uc-pf-swatch:focus-visible, .uc-pf-hue input:focus-visible { outline: 2px solid var(--uc-focus); outline-offset: 2px; }
+.uc-pf-avwrap { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.uc-pf-chip-solid { margin-left: 2px; }
+.uc-pf-cover-hint { font-size: 12px; color: var(--uc-muted); }
+
+/* upload preview dialog */
+.uc-pf-prev { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.uc-pf-prev img { max-width: 100%; border-radius: 16px; border: 1px solid var(--uc-border-2); }
+.uc-pf-prev img.uc-pf-prev-av { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; }
+
+/* settings forms */
+.uc-pf-set { display: flex; flex-direction: column; gap: 16px; }
+.uc-pf-fs { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.uc-pf-fs legend { padding: 0; margin-bottom: 4px; }
+.uc-pf-opt, .uc-pf-mt-check2 { display: flex; align-items: flex-start; gap: 10px; min-height: 32px; padding: 10px 14px; border-radius: var(--uc-r-sm, 16px); border: 1px solid var(--uc-border-2); background: var(--uc-card-solid); font-size: 13px; line-height: 1.5; color: var(--uc-ink); cursor: pointer; }
+.uc-pf-opt input, .uc-pf-mt-check2 input { width: 22px; height: 22px; flex: none; margin: 0; accent-color: var(--uc-ink); }
+.uc-pf-opt strong { display: block; }
+.uc-pf-mt-check2 { align-items: center; font-weight: 600; }
+.uc-pf-pts { display: flex; flex-direction: column; gap: 6px; max-width: 320px; }
+.uc-pf-pts input[type="number"] { min-height: 40px; padding: 8px 16px; border-radius: var(--uc-r-pill, 999px); border: 1px solid rgba(43,42,38,0.12); background: var(--uc-card-solid); font: 13px var(--uc-font-body); color: var(--uc-ink); box-sizing: border-box; width: 100%; }
+
+/* colour */
+.uc-pf-swatches { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.uc-pf-swatch { min-height: 32px; display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px 4px 6px; border-radius: 999px; border: 1px solid var(--uc-border-2); background: var(--uc-card-solid); font: 600 12px var(--uc-font-body); color: var(--uc-ink); cursor: pointer; }
+.uc-pf-swatch i { width: 22px; height: 22px; border-radius: 50%; display: block; border: 1px solid rgba(43,42,38,0.15); }
+.uc-pf-swatch[aria-pressed="true"] { border-color: var(--uc-ink); box-shadow: inset 0 0 0 1px var(--uc-ink); }
+.uc-pf-hue { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.uc-pf-hue input[type="range"] { flex: 1 1 200px; min-height: 32px; accent-color: var(--uc-ink); }
+.uc-pf-hue-n { min-width: 56px; font: 700 13px var(--uc-font-body); color: var(--uc-ink); }
+
+/* danger area */
+.uc-pf-danger { padding: 22px clamp(20px,3vw,28px); border-radius: 24px; border: 1px solid oklch(0.62 0.16 25); background: oklch(0.97 0.02 25); }
+.uc-pf-dangerbtn { min-height: 36px; padding: 8px 20px; border-radius: 999px; border: 1px solid oklch(0.45 0.17 25); background: transparent; color: oklch(0.4 0.17 25); font: 700 13px var(--uc-font-body); cursor: pointer; }
+.uc-pf-dangerbtn:hover { background: oklch(0.45 0.17 25); color: #fff; }
+.uc-pf-del-in { width: 100%; min-height: 40px; box-sizing: border-box; margin-top: 10px; padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(43,42,38,0.2); font: 14px var(--uc-font-body); }
+
+/* network card extras (lane P1) */
+.uc-net-actions { flex-wrap: wrap; }
+.uc-net-actions > * { min-height: 32px; }
+
+@media (max-width: 600px) {
+  .uc-pf-cover { height: 132px; }
+  .uc-pf-mt-actions .uc-pill-ink, .uc-pf-mt-actions .uc-pill-ghost { min-height: 36px; }
+}
+@media (prefers-reduced-motion: reduce) { .uc-pf-chip { transition: none; } }

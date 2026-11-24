@@ -7,7 +7,8 @@ Run on the box:  PB_TOKEN=$(cat /opt/unicircle/.admin_token) python3 verify.py
 import json, os, time, urllib.request, urllib.error
 
 BASE = os.environ.get("PB_BASE", "http://127.0.0.1:8090")
-ADMIN = os.environ["PB_TOKEN"]
+from vt_common import admin_token          # PB_TOKEN, or PB_IDENTITY + PB_PASSWORD (superuser login)
+ADMIN = admin_token()
 
 
 def call(method, path, body=None, token=None):

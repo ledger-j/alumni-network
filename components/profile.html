@@ -14,19 +14,28 @@
 
     <!-- Identity card -->
     <div style="border-radius:28px;background:var(--uc-card);border:1px solid var(--uc-border);box-shadow:var(--uc-shadow);overflow:hidden;">
-      <div style="position:relative;height:160px;">
-        <img src="assets/img/servaasbrug.jpg" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(250,249,246,0.9),transparent 55%);"></div>
+      <div class="uc-pf-cover" data-pf-cover-box>
+        <canvas data-pf-cover-canvas aria-hidden="true"></canvas>
+        <img data-pf-cover-img alt="Your cover image" hidden>
+        <div class="uc-pf-cover-fade"></div>
+        <div class="uc-pf-cover-btns">
+          <button type="button" class="uc-pf-chip" data-pf-cover-change>Change cover</button>
+          <button type="button" class="uc-pf-chip" data-pf-cover-remove hidden>Remove cover</button>
+        </div>
       </div>
       <div style="padding:0 clamp(20px,3vw,32px) 30px;margin-top:-52px;position:relative;">
         <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px;">
-          <div id="uc-profile-initials" data-pf="avatar" class="uc-avatar-initials uc-pf-avatar" style="width:104px;height:104px;font-size:38px;border:4px solid var(--uc-bg);box-shadow:0 8px 24px rgba(43,42,38,0.15);background:oklch(0.9 0.06 235);">?</div>
+          <div class="uc-pf-avwrap">
+            <div id="uc-profile-initials" data-pf="avatar" class="uc-avatar-initials uc-pf-avatar" style="width:104px;height:104px;font-size:38px;border:4px solid var(--uc-bg);box-shadow:0 8px 24px rgba(43,42,38,0.15);background:oklch(0.9 0.06 235);">?</div>
+            <button type="button" class="uc-pf-chip uc-pf-chip-solid" data-pf-photo-change>Change photo</button>
+          </div>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
             <button type="button" data-pf-edit class="uc-pill-ink">Edit profile</button>
             <button type="button" data-pf-edit="mentor" class="uc-pill-ghost">Open to mentoring</button>
             <button type="button" data-pf-enhance class="uc-pill-ghost">Import from LinkedIn</button>
           </div>
         </div>
+        <p class="uc-pf-fine" style="margin:0 0 10px;">Your photo and cover are visible to all UniCircle members.</p>
         <h2 id="uc-profile-name" data-pf="name" style="margin:0 0 6px;font-family:var(--uc-font-display);font-weight:400;font-size:34px;letter-spacing:-0.01em;">Your name</h2>
         <p id="uc-profile-headline" data-pf="headline" style="margin:0 0 8px;font-size:14px;line-height:1.6;color:var(--uc-ink-2);max-width:620px;">Add a headline so classmates can find you.</p>
         <p data-pf="degree" style="margin:0 0 10px;font-size:13px;color:var(--uc-ink-2);" hidden></p>
@@ -39,18 +48,7 @@
       </div>
     </div>
 
-    <!-- Your activity in numbers (real counts only) -->
-    <div class="uc-card">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
-        <h2 class="uc-h2">Your activity</h2>
-        <span data-pf-stats-note style="font-size:12px;color:var(--uc-muted);">Private to you · counted from your account</span>
-      </div>
-      <div class="uc-stats-3">
-        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="posts">—</div><div class="uc-stat-l">Posts published</div></div>
-        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="peers">—</div><div class="uc-stat-l">People you’ve messaged</div></div>
-        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="connects">—</div><div class="uc-stat-l">Saved to connect (this device)</div></div>
-      </div>
-    </div>
+    <section data-uc-slot="points"></section>
 
     <!-- About (built from your profile fields) -->
     <div class="uc-card">
@@ -62,6 +60,8 @@
         <p style="margin:0;">Tell your circle what you do and what you can help with — add a headline, programme and mentoring offer.</p>
       </div>
     </div>
+
+    <section data-uc-slot="deep"></section>
 
     <!-- Mentoring & tutoring settings -->
     <div class="uc-card" id="uc-pf-mentoring" aria-labelledby="uc-pf-mt-title">
@@ -96,6 +96,69 @@
       </form>
     </div>
 
+    <section data-uc-slot="collab"></section>
+
+    <!-- Contact settings -->
+    <div class="uc-card" id="uc-pf-contact" aria-labelledby="uc-pf-ct-title">
+      <h2 class="uc-h2" id="uc-pf-ct-title" style="margin:0 0 6px;">Who can approach me</h2>
+      <p class="uc-pf-fine" style="margin:0 0 14px;">You decide who can message you, ask you to mentor or invite you to a group.</p>
+      <form class="uc-pf-set" data-pf-ct-form novalidate>
+        <fieldset class="uc-pf-fs">
+          <legend class="uc-mc-label">Contact door</legend>
+          <label class="uc-pf-opt"><input type="radio" name="contact_mode" value="open"><span><strong>Open</strong> Anyone in UniCircle can write to you.</span></label>
+          <label class="uc-pf-opt"><input type="radio" name="contact_mode" value="points"><span><strong>Points</strong> Only members with enough status points can write to you.</span></label>
+          <label class="uc-pf-opt"><input type="radio" name="contact_mode" value="request"><span><strong>Request first</strong> People send a collaboration request and write once you accept.</span></label>
+          <label class="uc-pf-opt"><input type="radio" name="contact_mode" value="closed"><span><strong>Closed</strong> Nobody can start a conversation with you.</span></label>
+        </fieldset>
+        <div class="uc-pf-pts" data-pf-ct-points hidden>
+          <label for="uc-pf-minpts"><span class="uc-mc-label">Minimum status points to contact you</span></label>
+          <input id="uc-pf-minpts" type="number" name="min_points" min="0" max="10000" step="1" inputmode="numeric">
+          <span class="uc-pf-fine" data-pf-ct-have>You have 0 status points.</span>
+        </div>
+        <fieldset class="uc-pf-fs">
+          <legend class="uc-mc-label">What I say yes to</legend>
+          <label class="uc-pf-mt-check2"><input type="checkbox" name="accepts_internship"> Internship questions</label>
+          <label class="uc-pf-mt-check2"><input type="checkbox" name="accepts_mentoring"> Mentoring requests</label>
+          <label class="uc-pf-mt-check2"><input type="checkbox" name="accepts_collab"> Collaboration ideas</label>
+        </fieldset>
+        <div class="uc-pf-mt-actions">
+          <button type="submit" class="uc-pill-ink" data-pf-ct-save>Save</button>
+          <span class="uc-pf-fine" role="status" aria-live="polite" data-pf-ct-note>Replies to people who wrote to you first are always allowed.</span>
+        </div>
+      </form>
+    </div>
+
+    <!-- My colour -->
+    <div class="uc-card" id="uc-pf-colour" aria-labelledby="uc-pf-col-title">
+      <h2 class="uc-h2" id="uc-pf-col-title" style="margin:0 0 6px;">My colour</h2>
+      <p class="uc-pf-fine" style="margin:0 0 14px;">This colour tints your own view of UniCircle. Other members do not see it.</p>
+      <div class="uc-pf-swatches" role="group" aria-label="Colour presets" data-pf-swatches></div>
+      <div class="uc-pf-hue">
+        <label for="uc-pf-hue"><span class="uc-mc-label">Hue</span></label>
+        <input id="uc-pf-hue" type="range" min="0" max="360" step="1" value="0" aria-label="Accent hue, 0 to 360" data-pf-hue>
+        <output class="uc-pf-hue-n" for="uc-pf-hue" data-pf-hue-n>default</output>
+      </div>
+      <div class="uc-pf-mt-actions">
+        <button type="button" class="uc-pill-ink" data-pf-col-save>Save colour</button>
+        <button type="button" class="uc-pill-ghost" data-pf-col-cancel>Cancel</button>
+        <button type="button" class="uc-pill-ghost" data-pf-col-reset>Reset to default</button>
+        <span class="uc-pf-fine" role="status" aria-live="polite" data-pf-col-note></span>
+      </div>
+    </div>
+
+    <!-- Your activity in numbers (real counts only) -->
+    <div class="uc-card">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+        <h2 class="uc-h2">Your activity</h2>
+        <span data-pf-stats-note style="font-size:12px;color:var(--uc-muted);">Private to you · counted from your account</span>
+      </div>
+      <div class="uc-stats-3">
+        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="posts">—</div><div class="uc-stat-l">Posts published</div></div>
+        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="peers">—</div><div class="uc-stat-l">People you’ve messaged</div></div>
+        <div class="uc-stat"><div class="uc-stat-n" data-pf-count="connects">—</div><div class="uc-stat-l">Saved to connect (this device)</div></div>
+      </div>
+    </div>
+
     <!-- Activity -->
     <div class="uc-card">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;">
@@ -121,6 +184,13 @@
       <div role="tabpanel" id="uc-pf-panel-documents" aria-labelledby="uc-pf-tab-documents" data-pf-panel="documents" hidden>
         <p class="uc-pf-empty">Document sharing isn’t available yet. Share a link in a post for now.</p>
       </div>
+    </div>
+
+    <!-- Account (danger area) -->
+    <div class="uc-pf-danger" id="uc-pf-account" aria-labelledby="uc-pf-acc-title">
+      <h2 class="uc-h2" id="uc-pf-acc-title" style="margin:0 0 6px;">Account</h2>
+      <p class="uc-pf-fine" style="margin:0 0 12px;color:var(--uc-ink-2);">Deleting your account removes your profile, messages, mentorships, uploads, points and the events you host. This cannot be undone.</p>
+      <button type="button" class="uc-pf-dangerbtn" data-pf-delete>Delete my account</button>
     </div>
   </div>
 </div>

@@ -3,8 +3,8 @@ You are a B2B market researcher. Find REAL Dutch higher-education institutions (
 ## Seller (context only, do not research the seller)
 UniCircle: a lifelong alumni network where alumni, students and the alumni office meet. Core features: member directory, a map (city level), mentoring and student tutoring, live chat, status points that protect high-value alumni from spam.
 
-## What has worked (do not repeat as a finding)
-A business school's alumni office told us: ~50,000 alumni, ~4,200 students, alumni budget flat for 5-7 years, 0.5 FTE for the database, the "database" is the manager's LinkedIn network, they want a portal where alumni find each other by sector and by tutorial group, and a basic vs premium membership.
+## The profile we already know is a fit (do not research it, use it as the pattern)
+A Dutch business school whose alumni office has a very large alumni base, a very small team, no integrated alumni platform, and a wish for a member portal where alumni find each other by sector and by study group, with a basic and a premium membership tier.
 
 ## Matching criteria (an institution should show these signals)
 MA1 (weight 5) large alumni base relative to a small alumni-office team · MA2 (5) no integrated alumni platform (newsletter, LinkedIn group, spreadsheets, or a legacy portal) · MA3 (4) cohort-based or problem-based teaching · MA4 (3) faculty or business school with its own alumni activity · MA5 (4) public alumni or lifelong-learning ambition · MA6 (3) international alumni / diaspora cities · MA7 (3) membership, premium or alumni-fund interest · MA8 (3) a student programme mentoring or tutoring could plug into.

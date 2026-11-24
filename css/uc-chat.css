@@ -1,0 +1,101 @@
+/* UniCircle: group chat styles (tabs, group list, thread, sheets). Loads after uc-orbit.css. */
+
+/* tab bar */
+#uc-chat .uc-chat-tabs { display: flex; gap: 4px; padding: 6px 10px 0; border-bottom: 1px solid var(--uc-border, #e3e0d6); background: var(--uc-card-solid, #fff); }
+#uc-chat .uc-chat-tabs [role=tab] {
+  position: relative; min-height: 32px; padding: 6px 14px; border: none; background: none; cursor: pointer;
+  font: 600 13px/1.2 var(--uc-font-body, inherit); color: var(--uc-muted, #5c5a52); border-radius: 10px 10px 0 0;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: color var(--uc-d-fast, 120ms) var(--uc-ease-out, ease), background var(--uc-d-fast, 120ms) var(--uc-ease-out, ease);
+}
+#uc-chat .uc-chat-tabs [role=tab]:hover { background: #f1efe9; }
+#uc-chat .uc-chat-tabs [role=tab][aria-selected=true] { color: var(--uc-ink, #1d1c18); box-shadow: inset 0 -2px 0 var(--uc-ink, #1d1c18); }
+#uc-chat .uc-chat-tabs [role=tab]:focus-visible, #uc-chat .uc-gbtn:focus-visible, #uc-chat .uc-chip:focus-visible,
+#uc-chat .uc-pick-item:focus-visible, #uc-chat .uc-gx:focus-visible, #uc-chat .uc-gitem:focus-visible { outline: 2px solid var(--uc-focus, #3b5bdb); outline-offset: 2px; }
+
+/* mode switch: groups hide the 1:1 thread */
+#uc-chat.uc-mode-groups #uc-msgs, #uc-chat.uc-mode-groups #uc-msg-form { display: none; }
+#uc-chat [hidden] { display: none !important; }
+#uc-chat { position: fixed; }
+
+/* group list */
+#uc-chat .uc-glist .uc-peer { min-height: 44px; }
+#uc-chat .uc-gnew { min-height: 40px; font-weight: 700; color: var(--uc-ink, #1d1c18); border-bottom: 1px solid var(--uc-border, #e3e0d6); }
+#uc-chat .uc-gstack { display: inline-flex; flex-shrink: 0; }
+#uc-chat .uc-gstack img { width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--uc-card-solid, #fff); margin-left: -8px; object-fit: cover; background: #f1efe9; }
+#uc-chat .uc-gstack img:first-child { margin-left: 0; }
+#uc-chat .uc-gtxt { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+#uc-chat .uc-gtxt b { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#uc-chat .uc-gtxt small { font-size: 11px; font-weight: 400; color: var(--uc-muted, #5c5a52); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uc-gglyph { vertical-align: -1px; opacity: .8; }
+
+/* group thread */
+#uc-chat .uc-gthread { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+#uc-chat .uc-gempty { padding: 16px; }
+#uc-chat .uc-gbody { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+#uc-chat .uc-ghead { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--uc-border, #e3e0d6); }
+#uc-chat .uc-ghead b { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--uc-ink, #1d1c18); }
+#uc-chat .uc-gnote { font-size: 11px; color: var(--uc-muted, #5c5a52); text-align: center; margin: 0 0 4px; }
+#uc-chat .uc-grow { display: flex; gap: 8px; align-items: flex-end; max-width: 92%; }
+#uc-chat .uc-grow.mine { align-self: flex-end; }
+#uc-chat .uc-grow > img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: #f1efe9; }
+#uc-chat .uc-grow .uc-msg { align-self: auto; max-width: 100%; overflow-wrap: anywhere; }
+#uc-chat .uc-gname { display: block; font-size: 11px; font-weight: 600; color: var(--uc-muted, #5c5a52); margin: 0 0 2px 4px; }
+
+/* buttons, inputs */
+#uc-chat .uc-gbtn {
+  min-height: 32px; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--uc-border, #cfcbbd); background: var(--uc-card-solid, #fff);
+  color: var(--uc-ink, #1d1c18); font: 600 12px/1.2 var(--uc-font-body, inherit); cursor: pointer;
+  transition: transform var(--uc-d-fast, 120ms) var(--uc-ease-out, ease), background var(--uc-d-fast, 120ms) var(--uc-ease-out, ease);
+}
+#uc-chat .uc-gbtn:hover:not(:disabled) { background: #f1efe9; }
+#uc-chat .uc-gbtn:active:not(:disabled) { transform: scale(.97); }
+#uc-chat .uc-gbtn:disabled { opacity: .5; cursor: not-allowed; }
+#uc-chat .uc-gbtn-primary { background: var(--uc-ink, #1d1c18); color: var(--uc-bg, #faf9f6); border-color: transparent; }
+#uc-chat .uc-gbtn-primary:hover:not(:disabled) { background: #36342d; }
+#uc-chat .uc-gbtn-danger { color: #8a1c1c; border-color: #8a1c1c; }
+#uc-chat .uc-ginput { width: 100%; box-sizing: border-box; min-height: 36px; padding: 8px 12px; border: 1px solid var(--uc-border, #cfcbbd); border-radius: 12px; font: 14px var(--uc-font-body, inherit); color: var(--uc-ink, #1d1c18); background: #fff; }
+#uc-chat .uc-ginput:focus { outline: none; border-color: var(--uc-ink, #1d1c18); }
+#uc-chat .uc-glabel { display: block; font-size: 12px; font-weight: 700; margin: 10px 0 4px; color: var(--uc-ink, #1d1c18); }
+
+/* sheets */
+#uc-chat .uc-gsheet { position: absolute; inset: 0; z-index: 3; background: rgba(29, 28, 24, .45); display: flex; align-items: flex-end; justify-content: center; animation: uc-gsheet-fade var(--uc-d-base, 200ms) var(--uc-ease-out, ease) both; }
+#uc-chat .uc-gsheet-in { width: 100%; max-height: 88%; display: flex; flex-direction: column; background: var(--uc-card-solid, #fff); border-radius: 20px 20px 0 0; overflow: hidden; animation: uc-gsheet-up var(--uc-d-slow, 280ms) var(--uc-ease-out, ease) both; }
+#uc-chat .uc-gsheet-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--uc-border, #e3e0d6); color: var(--uc-ink, #1d1c18); }
+#uc-chat .uc-gsheet-body { padding: 4px 16px 16px; overflow-y: auto; }
+#uc-chat .uc-gx { min-width: 32px; min-height: 32px; border: none; background: none; cursor: pointer; font-size: 16px; color: var(--uc-ink, #1d1c18); border-radius: 50%; opacity: 1; }
+#uc-chat .uc-gx:hover { background: #f1efe9; }
+#uc-chat .uc-gactions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; flex-wrap: wrap; }
+@keyframes uc-gsheet-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes uc-gsheet-up { from { transform: translateY(16px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* picker */
+#uc-chat .uc-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; }
+#uc-chat .uc-chip { min-height: 32px; padding: 4px 10px; border-radius: 999px; border: none; background: var(--uc-accent-soft, #ece9f8); color: var(--uc-accent-ink, #2a2160); font: 600 12px var(--uc-font-body, inherit); cursor: pointer; }
+#uc-chat .uc-pick-res { display: flex; flex-direction: column; max-height: 200px; overflow-y: auto; border: 1px solid var(--uc-border, #e3e0d6); border-radius: 12px; }
+#uc-chat .uc-pick-item { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 6px 10px; border: none; background: none; text-align: left; cursor: pointer; color: var(--uc-ink, #1d1c18); font-family: var(--uc-font-body, inherit); }
+#uc-chat .uc-pick-item:hover:not(:disabled) { background: #f1efe9; }
+#uc-chat .uc-pick-item.on { background: var(--uc-accent-soft, #ece9f8); }
+#uc-chat .uc-pick-item:disabled { opacity: .6; cursor: not-allowed; }
+#uc-chat .uc-pick-item img, #uc-chat .uc-gmem img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; background: #f1efe9; flex-shrink: 0; }
+#uc-chat .uc-pick-item span { display: flex; flex-direction: column; font-size: 13px; }
+#uc-chat .uc-pick-item small { font-size: 11px; color: var(--uc-muted, #5c5a52); }
+
+/* member list, confirm */
+#uc-chat .uc-gmem { list-style: none; margin: 8px 0; padding: 0; }
+#uc-chat .uc-gmem li { display: flex; align-items: center; gap: 10px; min-height: 40px; font-size: 13px; color: var(--uc-ink, #1d1c18); }
+#uc-chat .uc-gmem li span { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+#uc-chat .uc-gmem em { font-style: normal; font-size: 11px; color: var(--uc-muted, #5c5a52); margin-left: 4px; }
+#uc-chat .uc-gconfirm { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 12px; padding: 10px 12px; border-radius: 12px; background: #fbeaea; color: #5c1111; font-size: 13px; }
+#uc-chat .uc-gconfirm span { flex: 1 1 100%; }
+
+/* mobile: the panel is already full width at <= 860 px (uc-orbit.css) */
+@media (max-width: 860px) {
+  #uc-chat .uc-chat-cols { grid-template-columns: 120px 1fr; }
+  #uc-chat .uc-gsheet-in { max-height: 94%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #uc-chat .uc-gsheet, #uc-chat .uc-gsheet-in { animation: none; }
+  #uc-chat .uc-gbtn, #uc-chat .uc-chat-tabs [role=tab] { transition: none; }
+}

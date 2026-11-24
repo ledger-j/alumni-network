@@ -49,7 +49,7 @@
   const initials = (n) => String(n || '?').trim().split(/\s+/).map((s) => s[0]).slice(0, 2).join('').toUpperCase();
   const hueOf = (s) => { let h = 0; for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) >>> 0; return HUES[h % HUES.length]; };
   const tokens = (s) => norm(s).split(/[^a-z0-9&]+/).filter(Boolean);
-  const safeUrl = (u) => (/^https:\/\/[^\s"'<>]+$/i.test(String(u || '')) ? String(u) : '');
+  const safeUrl = (u) => (window.UC && window.UC.safeUrl ? window.UC.safeUrl(u) : (/^https:\/\/[^\s"'<>]+$/i.test(String(u || '')) ? String(u) : ''));
   
   function sectorsOf(text) {
     const out = new Set();
@@ -60,16 +60,24 @@
     return Array.from(out);
   }
 
+  // Door hint from the member's contact_mode (text only; the card is never hidden).
+  function contactOf(u) {
+    const m = String(u.contact_mode || '');
+    if (m === 'points') return 'Asks for ' + Math.max(0, Math.min(10000, Math.round(Number(u.min_points) || 0))) + ' points';
+    if (m === 'request') return 'Request first';
+    if (m === 'closed') return 'Not accepting';
+    return '';
+  }
+
   function personFromUser(u) {
-    const api = (window.UC && window.UC.API) || '';
-    const avatar = u.avatar && u.collectionId
-      ? api + '/api/files/' + encodeURIComponent(u.collectionId) + '/' + encodeURIComponent(u.id) + '/' + encodeURIComponent(u.avatar) : '';
+    const avatar = u.avatar && u.collectionId && window.UC && window.UC.avatarUrl ? window.UC.avatarUrl(u, 100) : '';
     const name = (u.name || '').trim() || 'UniCircle member';
     return {
       id: u.id, sample: false, name,
       headline: u.headline || '', degree: u.degree || '', location: u.location || '',
       city: cityOf(u.location), programme: programmeOf(u.degree),
       mentor: !!u.mentor, offer: u.mentor_offer || '', linkedin: safeUrl(u.linkedin_url),
+      contact: contactOf(u),
       avatar, hue: hueOf(name), sectors: sectorsOf((u.headline || '') + ' ' + (u.degree || ''))
     };
   }
@@ -147,7 +155,10 @@
       + '<div class="uc-net-actions">'
       + '<button type="button" class="' + (pending ? 'uc-pill-ghost' : 'uc-pill-ink') + '" data-act="connect" aria-pressed="' + (pending ? 'true' : 'false') + '">'
       + (pending ? 'Pending' : 'Connect') + '</button>'
-      + '<button type="button" class="uc-pill-ghost" data-act="message" aria-label="Message ' + esc(p.name) + '">Message</button></div>'
+      + '<button type="button" class="uc-pill-ghost" data-act="message" aria-label="Message ' + esc(p.name) + '">Message</button>'
+      + (p.sample ? '' : '<button type="button" class="uc-pill-ghost" data-uc-collab data-uc-peer="' + esc(p.id) + '" data-name="' + esc(p.name) + '">Collaborate</button>')
+      + '</div>'
+      + (p.contact ? '<p class="uc-net-door" style="margin:8px 0 0;font-size:12px;color:var(--uc-muted);"><span class="iconify" data-icon="ph:lock-simple-bold" aria-hidden="true"></span> ' + esc(p.contact) + '</p>' : '')
       + '<div class="uc-net-more">'
       + '<button type="button" class="uc-net-link" data-act="view">View profile</button>'
       + '<button type="button" class="uc-net-link" data-act="invite">Invite to a case</button></div>'
@@ -507,7 +518,7 @@
     }
     notice('Loading members…');
     UCP.api('GET', '/api/collections/users/records?perPage=60&sort=-created'
-      + '&fields=' + encodeURIComponent('id,collectionId,name,headline,location,degree,mentor,mentor_offer,avatar,linkedin_url'))
+      + '&fields=' + encodeURIComponent('id,collectionId,name,headline,location,degree,mentor,mentor_offer,avatar,linkedin_url,contact_mode,min_points'))
       .then((r) => {
         if (!grid.isConnected) return;
         real = (r.items || []).filter((u) => u.id !== me.id).map(personFromUser);
