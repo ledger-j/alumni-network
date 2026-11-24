@@ -13,7 +13,7 @@ const APP = process.env.APP || 'http://127.0.0.1:5173';
 const API = process.env.API || 'http://127.0.0.1:8099';
 const routes = ['feed', 'network', 'events', 'jobs', 'mentoring', 'profile', 'pbl-hub', 'map'];
 const sizes = [[1440, 900], [390, 844]];
-const BLOCK = new Set(['h-scroll', 'overflow-x', 'contrast', 'tap-target', 'broken-img', 'img-no-alt']);
+const BLOCK = new Set(['probe-error', 'h-scroll', 'overflow-x', 'contrast', 'tap-target', 'broken-img', 'img-no-alt']);
 const probe = readFileSync(new URL('./verify.js', import.meta.url), 'utf8');
 
 const login = await (await fetch(`${API}/mock/login?user=u1`, { method: 'POST' })).json();
@@ -28,6 +28,8 @@ for (const [w, h] of sizes) {
   }, { api: API, auth: { token: login.token, user: login.record } });
   for (const r of routes) {
     const page = await ctx.newPage();
+    page.setDefaultTimeout(20000);
+    console.log(`... ${r}@${w}`);
     const errors = [];
     page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
     page.on('console', (m) => { if (m.type() === 'error' && !/favicon|ERR_FAILED|net::/.test(m.text())) errors.push('console: ' + m.text().slice(0, 160)); });
@@ -35,7 +37,7 @@ for (const [w, h] of sizes) {
     await page.waitForSelector('#page-root > *, main > *', { timeout: 15000 }).catch(() => {});
     await page.waitForLoadState('networkidle').catch(() => {});
     await page.waitForTimeout(900); // route view-transition + first render settle (known flake otherwise)
-    const res = await page.evaluate(`(${probe.trim().replace(/;$/, '')})()`);
+    const res = await Promise.race([page.evaluate(`(${probe.trim().replace(/;$/, '')})()`), new Promise((_, rej) => setTimeout(() => rej(new Error('probe timed out after 60 s')), 60000))]).catch((e) => ({ defects: [{ kind: 'probe-error', where: r, detail: e.message }] }));
     const hard = res.defects.filter((d) => BLOCK.has(d.kind));
     const soft = res.defects.filter((d) => !BLOCK.has(d.kind));
     const tag = `${r}@${w}`;
