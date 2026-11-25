@@ -54,7 +54,7 @@ mkdir -p "$WORK/src" && git archive "$REF" | tar -x -C "$WORK/src"
 
 # Web files only: no backend, tooling, docs or source images.
 git ls-tree -r --name-only "$REF" \
-  | grep -E '\.(html|css|js|png|jpe?g|webp|svg|ico|woff2?)$' \
+  | grep -E '\.(html|css|js|json|webmanifest|png|jpe?g|webp|svg|ico|woff2?)$' \
   | grep -v -E '^(backend|tools|deploy|docs|um-crm|HTML_front_end_MVP_new|\.github|\.claude)/' \
   > "$WORK/all"
 if [ -f deploy/.deployignore ]; then
