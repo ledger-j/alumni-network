@@ -7,7 +7,7 @@
    UC.avatarUrl(user, size=100)        sync. File thumb URL
                                        <API>/api/files/<collId>/<id>/<avatar>?thumb=SxS,
                                        else a local initials SVG data URI.
-   UC.coverUrl(user, w=800, h=267)     sync. users.cover thumb URL, else null.
+   UC.coverUrl(user, w=792, h=198)     sync. users.cover thumb URL, else null.
    UC.safeUrl(u)                       returns u only if it starts with http(s)://, else ''.
                                        Use before putting a member-supplied URL in href/src.
    UC.fileToken()                      async. POST /api/files/token (auth), cached 90 s.
@@ -47,7 +47,7 @@
 
   UC.coverUrl = function (user, w, h) {
     const b = fileBase(user, 'cover');
-    return b ? `${b}?thumb=${w || 800}x${h || 267}` : null;
+    return b ? `${b}?thumb=${w || 792}x${h || 198}` : null;
   };
 
   UC.safeUrl = function (u) {

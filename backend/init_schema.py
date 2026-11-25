@@ -103,7 +103,7 @@ extra = [text("headline", maxlen=255), text("location", maxlen=120), text("degre
          # round 2: status points (server-written only), inbox protection, cover picture
          number("points", 0, 100000, True), text("contact_mode", maxlen=12), number("min_points", 0, 10000, True),
          boolf("accepts_internship"), boolf("accepts_mentoring"), boolf("accepts_collab"),
-         filef("cover", 5242880, IMG, ["400x133", "1200x400"])]
+         filef("cover", 5242880, IMG, ["400x133", "1200x400", "792x198", "1584x396"])]
 # Existing `avatar` (PocketBase default file field): images only, 2 MB, thumbnails.
 fields = []
 have_users = {f["name"] for f in users["fields"]}
