@@ -34,7 +34,7 @@
       + '<div class="uc-s-links" id="uc-s-links">'
       + PAGES.map((p) => '<a href="' + p[2] + '"' + (p[0] === page ? ' aria-current="page"' : '') + '>' + p[1] + '</a>').join('')
       + '</div>'
-      + '<div class="uc-s-actions"><a class="uc-s-signin" href="index.html">Sign in</a>'
+      + '<div class="uc-s-actions">'
       + '<a class="uc-btn-dark" href="waitlist.html?ref=' + encodeURIComponent(page + '-nav') + '">Join the waitlist</a></div>'
       + '</nav></header>';
     const burger = document.querySelector('.uc-s-burger');
@@ -97,7 +97,7 @@
       + '<a href="waitlist.html">Waitlist</a></nav></div>'
       + '<div class="uc-s-rule"></div>'
       + '<div class="uc-s-footer-bottom"><span>© 2026 UniCircle · unicircle.eu · a Beyond Borders Marketing Consultancy project</span>'
-      + '<span><a href="privacy.html">Privacy</a> · <a href="mailto:hello@unicircle.eu">Contact</a> · <a href="index.html">Sign in</a></span></div>'
+      + '<span><a href="privacy.html">Privacy</a> · <a href="mailto:hello@unicircle.eu">Contact</a></span></div>'
       + '</div></footer>';
   }
 

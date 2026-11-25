@@ -78,7 +78,8 @@
       city: cityOf(u.location), programme: programmeOf(u.degree),
       mentor: !!u.mentor, offer: u.mentor_offer || '', linkedin: safeUrl(u.linkedin_url),
       contact: contactOf(u),
-      avatar, hue: hueOf(name), sectors: sectorsOf((u.headline || '') + ' ' + (u.degree || ''))
+      avatar, cover: u.cover && u.collectionId && window.UC && window.UC.coverUrl ? window.UC.coverUrl(u, 400, 100) : '',
+      hue: hueOf(name), sectors: sectorsOf((u.headline || '') + ' ' + (u.degree || ''))
     };
   }
 
@@ -146,6 +147,8 @@
       + ' data-degree="' + esc(p.degree) + '" data-city="' + esc(p.city) + '" data-mentor="' + (p.mentor ? '1' : '0') + '"'
       + ' data-sector="' + esc(p.sectors.join(' ')) + '"' + (p.sample ? ' data-sample="1"' : '') + '>'
       + (p.sample ? '<span class="uc-net-badge" title="Fictional sample profile, not a member">Sample</span>' : '')
+      + '<div class="uc-net-cover' + (p.cover ? '' : ' is-empty') + '" style="--h:' + p.hue + ';" aria-hidden="true">'
+      + (p.cover ? '<img src="' + esc(p.cover) + '" alt="" loading="lazy">' : '') + '</div>'
       + '<div class="uc-net-top">' + av + '<div style="min-width:0;">'
       + '<button type="button" class="uc-net-name" data-act="view">' + esc(p.name) + '</button>'
       + programme + '</div></div>'
@@ -518,7 +521,7 @@
     }
     notice('Loading members…');
     UCP.api('GET', '/api/collections/users/records?perPage=60&sort=-created'
-      + '&fields=' + encodeURIComponent('id,collectionId,name,headline,location,degree,mentor,mentor_offer,avatar,linkedin_url,contact_mode,min_points'))
+      + '&fields=' + encodeURIComponent('id,collectionId,name,headline,location,degree,mentor,mentor_offer,avatar,cover,linkedin_url,contact_mode,min_points'))
       .then((r) => {
         if (!grid.isConnected) return;
         real = (r.items || []).filter((u) => u.id !== me.id).map(personFromUser);

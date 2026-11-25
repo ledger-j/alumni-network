@@ -1,6 +1,6 @@
 /* UniCircle service worker: app-shell precache + offline fallback.
    Bump VERSION on every deploy that changes a precached file. */
-const VERSION = 'uc-v7';
+const VERSION = 'uc-v8';
 const CACHE = 'unicircle-' + VERSION;
 
 // App shell: plain paths; cache-busting ?v= query strings are ignored on lookup.
@@ -13,7 +13,9 @@ const SHELL = [
   '/js/pages/_shared.js', '/js/uc-waitlist-form.js', '/js/uc-map.js',
   '/js/pages/feed.js', '/js/pages/network.js', '/js/pages/map.js',
   '/js/pages/mentoring.js', '/js/pages/events.js', '/js/pages/pbl-hub.js',
-  '/js/pages/jobs.js', '/js/pages/profile.js', '/js/pages/profile-deep.js', '/js/pages/profile-points.js'
+  '/js/pages/jobs.js', '/js/pages/profile.js', '/js/pages/profile-deep.js', '/js/pages/profile-points.js',
+  '/js/pages/benefits.js', '/js/uc-enter.js', '/js/uc-voice.js', '/css/uc-voice.css',
+  '/voice/intents.json', '/voice/responses.json'
 ];
 
 self.addEventListener('install', (event) => {

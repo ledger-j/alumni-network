@@ -45,19 +45,20 @@
   <!-- 2026 redesign brand layer (Manrope + Instrument Serif · paper + dark nuance) -->
   <link rel="stylesheet" href="css/redesign.css?v=2.4.1">
   <!-- Orbit shell (right rail) + motion contract -->
-  <link rel="stylesheet" href="css/uc-orbit.css?v=1.0.8">
+  <link rel="stylesheet" href="css/uc-orbit.css?v=20261125">
   <!-- Page-module layer (dialogs, live cards, map) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
   <link rel="stylesheet" href="css/pages.css?v=1.3.0">
   <link rel="stylesheet" href="css/p-feed.css?v=1.1.0">
-  <link rel="stylesheet" href="css/p-network.css?v=1.3.0">
+  <link rel="stylesheet" href="css/p-network.css?v=20261125">
   <link rel="stylesheet" href="css/p-events-jobs.css?v=1.3.0">
   <link rel="stylesheet" href="css/p-mentoring-cases.css?v=1.3.1">
   <link rel="stylesheet" href="css/p-map.css?v=1.3.1">
-  <link rel="stylesheet" href="css/p-profile.css?v=1.0.0">
+  <link rel="stylesheet" href="css/p-profile.css?v=20261125">
   <link rel="stylesheet" href="css/p-profile2.css?v=1.0.0">
   <link rel="stylesheet" href="css/uc-collab.css?v=1.0.0">
   <link rel="stylesheet" href="css/uc-chat.css?v=1.0.0">
+  <link rel="stylesheet" href="css/uc-voice.css?v=20261125">
 </head>
 <body>
 
@@ -80,27 +81,30 @@
   <script src="js/uc-constellation.js?v=1.0.2" defer></script>
   <!-- Member accent colour: must run before app.js so the rail is tinted on first paint -->
   <script src="js/uc-theme.js?v=1.0.0"></script>
-  <script src="js/app.js?v=1.9.2" defer></script>
+  <script src="js/uc-enter.js?v=20261125b" defer></script>
+  <script src="js/app.js?v=20261125" defer></script>
   <!-- Living-network layer: accounts · posting · chat · LinkedIn import -->
-  <script src="js/unicircle.js?v=1.7.0" defer></script>
+  <script src="js/unicircle.js?v=20261125" defer></script>
   <!-- Media helpers: avatars, covers, protected files, safe image crop/upload -->
-  <script src="js/uc-media.js?v=1.0.1" defer></script>
+  <script src="js/uc-media.js?v=20261125" defer></script>
   <!-- Live chat: realtime 1:1 messages, unread nodes, rail dock -->
   <script src="js/uc-chat.js?v=1.0.2" defer></script>
   <script src="js/uc-collab.js?v=1.0.0" defer></script>
+  <script src="js/uc-voice.js?v=20261125" defer></script>
   <!-- Page modules: one init per route (contract in js/pages/_shared.js) -->
   <script src="js/pages/_shared.js?v=1.1.0" defer></script>
   <script src="js/uc-waitlist-form.js?v=1.1.0" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
   <script src="js/uc-map.js?v=1.0.1" defer></script>
   <script src="js/pages/feed.js?v=1.1.0" defer></script>
-  <script src="js/pages/network.js?v=1.1.0" defer></script>
+  <script src="js/pages/network.js?v=20261125" defer></script>
   <script src="js/pages/map.js?v=1.1.0" defer></script>
   <script src="js/pages/mentoring.js?v=1.1.0" defer></script>
   <script src="js/pages/events.js?v=1.1.0" defer></script>
   <script src="js/pages/pbl-hub.js?v=1.1.0" defer></script>
   <script src="js/pages/jobs.js?v=1.1.0" defer></script>
-  <script src="js/pages/profile.js?v=1.2.0" defer></script>
+  <script src="js/pages/benefits.js?v=20261125" defer></script>
+  <script src="js/pages/profile.js?v=20261125" defer></script>
   <script src="js/pages/profile-deep.js?v=1.0.0" defer></script>
   <script src="js/pages/profile-points.js?v=1.0.0" defer></script>
   <!-- PWA: installable app shell (Android TWA wraps this). See sw.js; bump its VERSION on deploys. -->

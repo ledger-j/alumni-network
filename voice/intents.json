@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "languages": ["en", "nl", "de"],
+  "_doc": "Local voice/text commands for Jev (js/uc-voice.js). Patterns are matched against the whole utterance after lower-casing, accent stripping and punctuation removal. (x )? = optional words, (a|b) = alternatives, {q} = a slot (captures the rest). Optional polite lead-ins (please, can you, jev, ...) are stripped before matching. Only the actions listed in allowedActions may ever run, also when Jev (the server) suggests one.",
+  "allowedActions": ["go:feed", "go:network", "go:map", "go:mentoring", "go:events", "go:pbl-hub", "go:jobs", "go:profile", "go:benefits", "open:messages", "open:jev", "search:network", "profile:change-cover", "profile:change-photo", "help"],
+  "intents": [
+    {
+      "id": "search_network",
+      "action": "search:network",
+      "patterns": {
+        "en": ["(find|search|look for|show( me)?) (alumni|members|people|someone) (in|at|from|working in|working at|who work in|who work at|studying) {q}", "(search|find) (the )?(network|directory) for {q}", "who (works|lives) in {q}"],
+        "nl": ["(zoek|vind|toon) (alumni|leden|mensen|iemand) (in|bij|uit|die werken in|die werken bij) {q}", "zoek in (het )?netwerk (naar )?{q}", "wie (werkt|woont) in {q}"],
+        "de": ["(finde|suche|zeige( mir)?) (alumni|mitglieder|leute|jemanden) (in|bei|aus|die in|die bei) {q}", "suche im netzwerk nach {q}", "wer (arbeitet|wohnt) in {q}"]
+      }
+    },
+    {
+      "id": "go_feed",
+      "action": "go:feed",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (the )?(feed|home|home page|start page|dashboard)", "(feed|home)"],
+        "nl": ["(ga naar|open|toon|naar) (de |het )?(feed|start|startpagina|home|tijdlijn)", "(feed|home|startpagina)"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (dem |den |die |das )?(feed|start|startseite|home|neuigkeiten)", "(feed|startseite)"]
+      }
+    },
+    {
+      "id": "go_network",
+      "action": "go:network",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (the |my )?(network|directory|alumni directory|members)", "(network|directory)"],
+        "nl": ["(ga naar|open|toon|naar) (het |mijn )?(netwerk|ledenlijst|adresboek|alumni)", "netwerk"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (dem |das |mein |meinem )?(netzwerk|verzeichnis|mitglieder)", "netzwerk"]
+      }
+    },
+    {
+      "id": "go_map",
+      "action": "go:map",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (the )?(map|alumni map|world map)", "map"],
+        "nl": ["(ga naar|open|toon|naar) (de )?(kaart|wereldkaart|alumnikaart)", "kaart"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (der |die )?(karte|weltkarte|landkarte)", "karte"]
+      }
+    },
+    {
+      "id": "go_mentoring",
+      "action": "go:mentoring",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (the )?(mentoring|mentor page|mentors|tutoring|tutors|mentor and tutor)", "(i want|i need|find( me)?) (a )?(mentor|tutor)", "(mentoring|tutoring)"],
+        "nl": ["(ga naar|open|toon|naar) (de |het )?(mentoring|mentoraat|mentoren|bijles|tutors)", "(ik wil|ik zoek|vind) (een )?(mentor|tutor|bijlesgever)", "(mentoring|mentoraat)"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (dem |den |die )?(mentoring|mentoren|nachhilfe|tutoren)", "(ich will|ich suche|finde) (einen |eine )?(mentor|mentorin|tutor|nachhilfe)", "mentoring"]
+      }
+    },
+    {
+      "id": "go_events",
+      "action": "go:events",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (the )?(events|event page|upcoming events|calendar)", "what events are (there|coming up)", "events"],
+        "nl": ["(ga naar|open|toon|naar) (de )?(evenementen|events|agenda|activiteiten)", "welke evenementen (zijn er|komen er)", "(evenementen|events)"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (den |die )?(veranstaltungen|events|termine|kalender)", "welche veranstaltungen gibt es", "(veranstaltungen|events)"]
+      }
+    },
+    {
+      "id": "go_pbl_hub",
+      "action": "go:pbl-hub",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (the )?(case hub|cases|pbl hub|pbl|business cases)", "(case hub|pbl hub)"],
+        "nl": ["(ga naar|open|toon|naar) (de |het )?(case hub|cases|casussen|pbl hub|pbl)", "(case hub|casussen)"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (dem |den |die )?(case hub|cases|fallstudien|pbl hub|pbl)", "(case hub|fallstudien)"]
+      }
+    },
+    {
+      "id": "go_jobs",
+      "action": "go:jobs",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (the )?(jobs|job board|vacancies|job offers|careers)", "(i am|im) looking for a job", "(jobs|job board)"],
+        "nl": ["(ga naar|open|toon|naar) (de )?(vacatures|banen|jobs|vacaturebank)", "ik zoek (een )?(baan|job)", "(vacatures|banen)"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (den |die )?(jobs|stellen|stellenangebote|jobborse|karriere)", "ich suche (einen )?(job|stelle)", "(jobs|stellenangebote)"]
+      }
+    },
+    {
+      "id": "go_profile",
+      "action": "go:profile",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (my )?(profile|account|settings)", "my profile"],
+        "nl": ["(ga naar|open|toon|naar) (mijn )?(profiel|account|instellingen)", "mijn profiel"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (meinem |mein |meine )?(profil|konto|einstellungen)", "mein profil"]
+      }
+    },
+    {
+      "id": "go_benefits",
+      "action": "go:benefits",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|take me to) (the |my )?(benefits|member benefits|perks)", "what are (the|my) (benefits|perks)"],
+        "nl": ["(ga naar|open|toon|naar) (de |mijn )?(voordelen|ledenvoordelen)", "wat zijn (de|mijn) voordelen"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|zu(m|r)?) (den |die |meine |meinen )?(vorteile|mitgliedervorteile|vorteilen)", "was sind (die|meine) vorteile"]
+      }
+    },
+    {
+      "id": "open_messages",
+      "action": "open:messages",
+      "patterns": {
+        "en": ["(go to|open|show( me)?|check|read) (my )?(messages|inbox|chat|chats|conversations)", "(messages|inbox)", "(any|do i have( any)?) new messages"],
+        "nl": ["(ga naar|open|toon|lees) (mijn )?(berichten|inbox|chat|gesprekken)", "(berichten|inbox)", "heb ik nieuwe berichten"],
+        "de": ["(geh(e)? zu(m|r)?|offne|zeige( mir)?|lies|lese) (meine |meinen )?(nachrichten|posteingang|chat|chats)", "nachrichten", "habe ich neue nachrichten"]
+      }
+    },
+    {
+      "id": "open_jev",
+      "action": "open:jev",
+      "patterns": {
+        "en": ["(hey |hi |hello )?jev", "open (the )?(assistant|jev)"],
+        "nl": ["(hoi |hallo |hey )?jev", "open (de )?(assistent|jev)"],
+        "de": ["(hallo |hey )?jev", "offne (den )?(assistenten|jev)"]
+      }
+    },
+    {
+      "id": "change_cover",
+      "action": "profile:change-cover",
+      "patterns": {
+        "en": ["(change|update|replace|edit|upload) (my )?(cover|cover photo|cover image|banner|header image)"],
+        "nl": ["(verander|wijzig|vervang|upload) (mijn )?(omslag|omslagfoto|banner|coverfoto)", "(mijn )?(omslagfoto|coverfoto) (veranderen|wijzigen|vervangen)"],
+        "de": ["(andere|aktualisiere|ersetze|lade) (mein |meinen )?(titelbild|banner|cover|coverbild)( hoch)?", "(mein )?titelbild (andern|ersetzen)"]
+      }
+    },
+    {
+      "id": "change_photo",
+      "action": "profile:change-photo",
+      "patterns": {
+        "en": ["(change|update|replace|edit|upload) (my )?(photo|profile photo|profile picture|picture|avatar)"],
+        "nl": ["(verander|wijzig|vervang|upload) (mijn )?(foto|profielfoto|avatar)", "(mijn )?profielfoto (veranderen|wijzigen|vervangen)"],
+        "de": ["(andere|aktualisiere|ersetze|lade) (mein |meinen )?(foto|profilbild|profilfoto|avatar)( hoch)?", "(mein )?profilbild (andern|ersetzen)"]
+      }
+    },
+    {
+      "id": "help",
+      "action": "help",
+      "patterns": {
+        "en": ["help", "what can (you|i) (do|say)", "how does this work"],
+        "nl": ["help", "wat kan (je|jij|ik) (doen|zeggen)", "hoe werkt dit"],
+        "de": ["hilfe", "was kannst du", "was kann ich sagen", "wie funktioniert das"]
+      }
+    }
+  ],
+  "fillers": {
+    "en": ["please", "can you", "could you", "would you", "jev", "hey jev", "ok", "okay", "i want to", "i would like to", "id like to", "let me", "let s", "lets"],
+    "nl": ["alsjeblieft", "alstublieft", "graag", "kun je", "kan je", "kunt u", "jev", "hoi jev", "ok", "oke", "ik wil", "ik wil graag"],
+    "de": ["bitte", "kannst du", "konntest du", "jev", "hallo jev", "ok", "okay", "ich mochte", "ich will"]
+  }
+}

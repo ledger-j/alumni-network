@@ -48,11 +48,19 @@
 .uc-rail-spacer { flex: 1 1 auto; min-height: 12px; }
 
 .uc-rail-brand {
-  display: flex; align-items: center; gap: 12px; padding: 0 8px 22px;
+  display: flex; align-items: center; gap: 14px; padding: 4px 8px 26px;
   color: var(--uc-bg); text-decoration: none;
 }
-.uc-rail-brand img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
-.uc-rail-brand .uc-serif { font-family: var(--uc-font-display); font-size: 22px; }
+.uc-rail-brand img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex: none; box-shadow: 0 0 0 1px rgba(250,249,246,.18), 0 6px 18px rgba(0,0,0,.35); }
+.uc-rail-brand .uc-serif { font-family: var(--uc-font-display); font-size: 30px; line-height: 1; letter-spacing: -.01em; }
+.uc-rail-brand { border-radius: var(--uc-r-sm, 16px); }
+.uc-rail-brand:focus-visible { outline: 2px solid var(--uc-bg); outline-offset: 2px; }
+/* mobile/tablet app header: the rail brand is hidden there, so the main column carries the mark */
+.uc-topbrand { display: none; align-items: center; gap: 10px; padding: 12px 20px 0; color: var(--uc-ink); text-decoration: none; }
+.uc-topbrand { min-height: 44px; }
+.uc-topbrand:focus-visible { outline: 2px solid var(--uc-focus); outline-offset: 2px; border-radius: 12px; }
+.uc-topbrand img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+.uc-topbrand .uc-serif { font-family: var(--uc-font-display); font-size: 24px; line-height: 1; }
 
 .uc-rail-link {
   display: flex; align-items: center; width: 100%; text-align: left;
@@ -230,6 +238,7 @@ a:hover > .uc-nudge, button:hover > .uc-nudge { transform: translateX(3px); }
     border-top: 1px solid rgba(250,249,246,.12);
   }
   .uc-rail-canvas, .uc-rail-brand, .uc-rail-dock, .uc-rail-spacer { display: none; }
+  .uc-topbrand { display: inline-flex; }
   .uc-rail-inner {
     flex-direction: row; align-items: stretch; gap: 2px;
     padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
@@ -306,3 +315,33 @@ html[data-accent] .uc-primary:hover {
   background: oklch(0.28 0.05 var(--uc-accent-h)) !important;
   opacity: 1;
 }
+
+/* ---- Why UniCircle (#benefits) and the public "What you get" block ---------- */
+.uc-bn-hero { text-align: center; padding: clamp(28px, 5vw, 56px) 16px clamp(20px, 3vw, 36px); }
+.uc-bn-logo { width: clamp(112px, 22vw, 144px); height: auto; aspect-ratio: 1; object-fit: contain; margin: 0 auto 12px; display: block; border-radius: 50%; box-shadow: 0 0 0 10px rgba(255,255,255,.7), 0 0 0 11px var(--uc-border-2), 0 18px 40px rgba(43,42,38,.10); }
+.uc-bn-kicker { margin: 16px 0 10px; }
+.uc-bn-h1 { margin: 0 0 14px; text-wrap: balance; font-family: var(--uc-font-display); font-weight: 400; font-size: clamp(38px, 5.5vw, 64px); line-height: 1.05; letter-spacing: -.01em; color: var(--uc-ink); }
+.uc-bn-h1 em { font-style: italic; color: var(--uc-muted); }
+.uc-bn-lead { margin: 0 auto; max-width: 560px; text-wrap: pretty; font-size: 16px; line-height: 1.6; color: var(--uc-ink-2); }
+.uc-bn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; padding: 8px 0 12px; }
+.uc-bn-tile { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px 22px 20px; border-radius: var(--uc-r-sm, 16px);
+  background: var(--uc-card-solid, #fff); border: 1px solid var(--uc-border-2); color: var(--uc-ink); text-decoration: none;
+  transition: transform var(--uc-d-base, 200ms) var(--uc-ease-out, ease), border-color var(--uc-d-fast, 120ms) var(--uc-ease-out, ease); }
+.uc-bn-tile:hover { transform: translateY(-2px); border-color: var(--uc-ink); }
+.uc-bn-tile { min-height: 44px; }
+.uc-bn-tile:focus-visible { outline: 2px solid var(--uc-focus); outline-offset: 2px; border-color: var(--uc-ink); }
+.uc-bn-tile:hover .uc-bn-go { transform: translateX(3px); }
+.uc-bn-go { transition: transform var(--uc-d-base, 200ms) var(--uc-ease-out, ease); }
+.uc-bn-t { text-wrap: balance; }
+.uc-bn-ic { flex: none; align-self: flex-start; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; color: var(--uc-ink); background: oklch(0.93 0.05 var(--h, 275)); }
+.uc-bn-t { font-family: var(--uc-font-display); font-size: 24px; line-height: 1.15; }
+.uc-bn-d { font-size: 14px; line-height: 1.55; color: var(--uc-ink-2); }
+.uc-bn-go { margin-top: auto; padding-top: 6px; font-size: 18px; color: var(--uc-ink); }
+.uc-bn-new { display: inline-block; vertical-align: middle; margin-left: 6px; padding: 2px 9px; border-radius: 999px; background: var(--uc-ink); color: var(--uc-bg); font: 700 10px var(--uc-font-body); letter-spacing: .06em; text-transform: uppercase; }
+.uc-bn-fine { margin: 18px 0 0; font-size: 12px; line-height: 1.5; color: var(--uc-muted); text-align: center; }
+@media (max-width: 1100px) {
+  .uc-rail-brand img { width: 48px; height: 48px; }
+  .uc-rail-brand .uc-serif { font-size: 26px; }
+}
+@media (max-width: 480px) { .uc-bn-grid { grid-template-columns: 1fr; gap: 12px; } .uc-bn-tile { padding: 18px; } }
+@media (prefers-reduced-motion: reduce) { .uc-bn-tile, .uc-bn-go { transition: none; } .uc-bn-tile:hover, .uc-bn-tile:hover .uc-bn-go { transform: none; } }

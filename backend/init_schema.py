@@ -103,7 +103,9 @@ extra = [text("headline", maxlen=255), text("location", maxlen=120), text("degre
          # round 2: status points (server-written only), inbox protection, cover picture
          number("points", 0, 100000, True), text("contact_mode", maxlen=12), number("min_points", 0, 10000, True),
          boolf("accepts_internship"), boolf("accepts_mentoring"), boolf("accepts_collab"),
-         filef("cover", 5242880, IMG, ["400x133", "1200x400"])]
+         # hidden-link testers (uc_tester.pb.js); server-written only, see NO_SERVER
+         boolf("tester"), dict(text("tester_secret", maxlen=64), hidden=True),
+         filef("cover", 5242880, IMG, ["400x133", "1200x400", "792x198", "1584x396"])]
 # Existing `avatar` (PocketBase default file field): images only, 2 MB, thumbnails.
 fields = []
 have_users = {f["name"] for f in users["fields"]}
@@ -112,22 +114,24 @@ for f in users["fields"]:
         f = dict(f, mimeTypes=IMG, maxSize=2097152, thumbs=["64x64", "100x100", "256x256"])
     fields.append(f)
 merged = fields + [f for f in extra if f["name"] not in have_users]
-# Security: the alumni directory is authenticated-only. Anonymous visitors can sign up
-# (createRule stays open) but cannot list/scrape member profiles.
+# Security: the alumni directory is authenticated-only. Public sign-up is CLOSED
+# (createRule = null = superuser only): members are added by the team, testers enter via
+# the hidden-link hook backend/pb_hooks/uc_tester.pb.js (which saves with $app.save, so
+# rules do not apply to it). OAuth2 cannot create accounts either (hook in uc_tester.pb.js).
 AUTHED = '@request.auth.id != ""'
 # Members may edit their own profile but never the server-owned fields: `supporter`
-# (premium) and `points` (written only by the points hook). The same guard applies at
-# signup. `role` and `contact_mode` accept known values only.
-NO_SERVER = '@request.body.supporter:isset = false && @request.body.points:isset = false'
+# (premium), `points` (written only by the points hook) and `tester` (set only by the
+# tester hook). `role` and `contact_mode` accept known values only.
+NO_SERVER = ('@request.body.supporter:isset = false && @request.body.points:isset = false'
+             ' && @request.body.tester:isset = false && @request.body.tester_secret:isset = false')
 ROLE_OK = ('(@request.body.role:isset = false || @request.body.role = "" || @request.body.role = "alumnus"'
            ' || @request.body.role = "student" || @request.body.role = "staff")')
 CM_OK = ('(@request.body.contact_mode:isset = false || @request.body.contact_mode = "" || @request.body.contact_mode = "open"'
          ' || @request.body.contact_mode = "points" || @request.body.contact_mode = "request" || @request.body.contact_mode = "closed")')
 SELF_UPDATE = f'id = @request.auth.id && {NO_SERVER} && {ROLE_OK} && {CM_OK}'
-SELF_CREATE = f'{NO_SERVER} && {ROLE_OK} && {CM_OK}'
 st, r = req("PATCH", f"/api/collections/{USERS_ID}",
             {"fields": merged, "listRule": AUTHED, "viewRule": AUTHED,
-             "createRule": SELF_CREATE, "updateRule": SELF_UPDATE,
+             "createRule": None, "updateRule": SELF_UPDATE,
              "deleteRule": "id = @request.auth.id"})
 print("users extend:", st, r.get("name") or r)
 
@@ -370,6 +374,19 @@ mentorship_docs = {
                filef("file", 10485760, DOCS, None, True, True), text("note", False, 300), created()],
 }
 upsert("mentorship_docs", mentorship_docs)
+
+# --- Jev assistant memory (hook backend/pb_hooks/uc_jev.pb.js writes it; the owner reads and deletes)
+jev_memory = {
+    "name": "jev_memory", "type": "base",
+    "listRule": "user = @request.auth.id", "viewRule": "user = @request.auth.id",
+    "createRule": None, "updateRule": None, "deleteRule": "user = @request.auth.id",
+    "indexes": ["CREATE INDEX idx_jev_memory_user ON jev_memory (`user`, `created`)"],
+    "fields": [relation("user", USERS_ID, True, True),
+               {"type": "select", "name": "kind", "required": False, "maxSelect": 1,
+                "values": ["fact", "preference", "summary"], "hidden": False, "presentable": False, "system": False},
+               text("text", True, 300), created()],
+}
+upsert("jev_memory", jev_memory)
 
 # --- optional: PocketBase rate limiting (OFF unless UC_RATE_LIMITS=1: it changes production behaviour)
 if os.environ.get("UC_RATE_LIMITS") == "1":

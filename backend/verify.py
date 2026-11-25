@@ -30,11 +30,11 @@ def call(method, path, body=None, token=None):
 stamp = str(int(time.time()))
 ok = True
 
-# 1) signup (open createRule) — "generate account"
+# 1) account creation (public sign-up is closed: createRule = null, so the superuser creates it)
 u = {"email": f"smoke_{stamp}@unicircle.eu", "password": "Test123456!", "passwordConfirm": "Test123456!",
      "name": "Smoke Test", "headline": "Verifying the stack"}
-st, rec = call("POST", "/api/collections/users/records", u)
-print("signup:", st)
+st, rec = call("POST", "/api/collections/users/records", u, token=ADMIN)
+print("create account (superuser):", st)
 ok &= st == 200
 uid = rec.get("id")
 

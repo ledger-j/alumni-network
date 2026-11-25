@@ -11,7 +11,7 @@ const { chromium } = require('playwright');
 
 const APP = process.env.APP || 'http://127.0.0.1:5173';
 const API = process.env.API || 'http://127.0.0.1:8099';
-const routes = ['feed', 'network', 'events', 'jobs', 'mentoring', 'profile', 'pbl-hub', 'map'];
+const routes = ['feed', 'network', 'events', 'jobs', 'mentoring', 'profile', 'pbl-hub', 'map', 'benefits'];
 const sizes = [[1440, 900], [390, 844]];
 const BLOCK = new Set(['probe-error', 'h-scroll', 'overflow-x', 'contrast', 'tap-target', 'broken-img', 'img-no-alt']);
 const probe = readFileSync(new URL('./verify.js', import.meta.url), 'utf8');

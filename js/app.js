@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     profile: 'components/profile.html',
     'pbl-hub': 'components/pbl-hub.html',
     map: 'components/map.html',
+    benefits: 'components/benefits.html',
     landing: 'components/landing.html'
   };
   // `#page?key=value` → page name + params (e.g. #network?q=finance&city=Berlin).
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageCache = {};
   async function fetchPage(name) {
     if (pageCache[name] != null) return pageCache[name];
-    const res = await fetch(routes[name] + '?v=13');
+    const res = await fetch(routes[name] + '?v=14');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const html = await res.text();
     pageCache[name] = html;
@@ -44,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ['feed', 'Feed', '235'], ['network', 'Network', '275'],
     ['map', 'Map', '25'], ['mentoring', 'Mentor & Tutor', '45'],
     ['events', 'Events', '305'], ['pbl-hub', 'Case Hub', '145'],
-    ['jobs', 'Jobs', '185'], ['profile', 'My profile', '260']
+    ['jobs', 'Jobs', '185'], ['benefits', 'Why UniCircle', '90'], ['profile', 'My profile', '260']
   ];
   function railHtml(active) {
     const links = RAIL_ITEMS.map(function (it) {
@@ -56,10 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
     return '<nav class="uc-rail" aria-label="Primary">'
       + '<canvas class="uc-rail-canvas" aria-hidden="true"></canvas>'
       + '<div class="uc-rail-inner">'
-      + '<a class="uc-rail-brand" href="#feed" aria-label="UniCircle home"><img src="assets/img/logo-u-badge-128.png" alt=""><span class="uc-serif">UniCircle</span></a>'
+      + '<a class="uc-rail-brand" href="#feed" aria-label="UniCircle home"><img src="assets/img/logo-u-badge-256.png" alt="" width="56" height="56"><span class="uc-serif">UniCircle</span></a>'
       + links
       + '<button type="button" class="uc-rail-link" id="uc-rail-msgs" data-route="messages" style="--h:25">'
       + '<span class="uc-rail-dot" aria-hidden="true"></span>Messages<span class="uc-rail-badge" id="uc-rail-badge" hidden>0</span></button>'
+      + '<button type="button" class="uc-rail-link uc-jev-btn" id="uc-rail-jev" aria-pressed="false" aria-label="Talk to Jev, the assistant (shortcut V)" aria-keyshortcuts="v" style="--h:200"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>Jev</button>'
       + '<div class="uc-rail-spacer"></div>'
       + '<div class="uc-rail-dock" id="uc-dock" aria-label="Recent conversations"></div>'
       + '<button type="button" class="uc-rail-link" id="uc-dash-signout">← Sign out</button>'
@@ -149,6 +151,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const appViewport = document.getElementById('app-viewport');
+  // "Try again" on a page that failed to load
+  appViewport.addEventListener('click', (e) => {
+    const b = e.target.closest && e.target.closest('[data-uc-retry]');
+    if (b) loadPage(b.getAttribute('data-uc-retry'));
+  });
   const navItems = document.querySelectorAll('.nav-menu .nav-item[data-page]');
 
   // True once auth-ready and user is logged in — gates nav clicks
@@ -167,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
     navItems.forEach(item => {
       item.addEventListener('click', () => {
         if (!_navReady) {
-          // Guest clicks nav → open sign-up modal
-          window.UC?.openAuth('signup');
+          // Guest clicks nav → the waitlist (public sign-up is closed)
+          location.href = 'waitlist.html?ref=app-nav';
           return;
         }
         const targetPage = item.getAttribute('data-page');
@@ -229,14 +236,24 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadPage(pageName) {
     document.body.classList.add('uc-hide-header');
 
-    let html;
+    let html, failed = false;
     try {
       html = await fetchPage(pageName);
     } catch (e) {
-      appViewport.innerHTML = '<div style="padding:80px 24px;text-align:center;color:var(--uc-ink-2);font-family:var(--uc-font-body);">'
-        + '<p style="font-family:var(--uc-font-display);font-size:24px;">This page didn’t load.</p>'
-        + '<p style="margin-top:8px;"><a href="#feed" onclick="location.reload()" style="color:var(--uc-ink);font-weight:600;">Reload</a></p></div>';
-      return;
+      // Self-heal: re-probe the connection and try the partial once more before giving up.
+      try {
+        if (window.UC && window.UC.probeNow) await window.UC.probeNow();
+        html = await fetchPage(pageName);
+      } catch (e2) {
+        failed = true;
+        if (window.UC) window.UC.toast('Reconnecting…', 'warn');
+        html = '<div style="padding:80px 24px;text-align:center;color:var(--uc-ink-2);font-family:var(--uc-font-body);">'
+          + '<p style="font-family:var(--uc-font-display);font-size:24px;">This page didn’t load.</p>'
+          + '<p style="margin:8px 0 16px;">We are trying to reconnect. It loads by itself when the connection is back.</p>'
+          + '<button type="button" class="uc-pill-ink" data-uc-retry="' + pageName + '">Try again</button></div>';
+        // Reload this page by itself once the connection is back (one listener per failure).
+        document.addEventListener('uc:reconnected', () => { if (_lastPage === null && parseHash().page === pageName) loadPage(pageName); }, { once: true });
+      }
     }
 
     const render = () => {
@@ -244,17 +261,17 @@ document.addEventListener('DOMContentLoaded', () => {
         appViewport.innerHTML = html;
       } else {
         appViewport.innerHTML = '<div class="uc-dashboard-shell">'
-          + '<div class="uc-main-col">' + html + '</div>' + railHtml(pageName) + '</div>';
+          + '<div class="uc-main-col"><a class="uc-topbrand" href="#feed" aria-label="UniCircle home"><img src="assets/img/logo-u-badge-128.png" alt="" width="32" height="32"><span class="uc-serif">UniCircle</span></a>' + html + '</div>' + railHtml(pageName) + '</div>';
       }
       document.body.classList.toggle('uc-has-rail', pageName !== 'landing');
-      initializePageInteractivity(pageName);
+      if (failed) { if (pageName !== 'landing') initShell(pageName); } else initializePageInteractivity(pageName);
     };
 
     // Animate only real page changes in a visible tab; same-page re-renders
     // (e.g. #network?q=a → #network?q=b) and hidden tabs render directly — an
     // aborted transition there could skip the render.
     const animate = document.startViewTransition && !document.hidden && pageName !== _lastPage;
-    _lastPage = pageName;
+    _lastPage = failed ? null : pageName;
     if (animate) {
       // If the browser skips the transition without running the callback,
       // render anyway — never leave the "Recalling…" placeholder on screen.
@@ -295,7 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
      0. LANDING PAGE INTERACTIVITY
      ========================================== */
   function initLandingInteractivity() {
-    const openSignup = () => window.UC?.openAuth('signup');
+    const openSignup = () => { location.href = 'waitlist.html?ref=landing'; };   // sign-up closed
     const openSignin = () => window.UC?.openAuth('signin');
 
     // Nav + footer + feature CTAs open the full modal (LinkedIn / CSV import live there).

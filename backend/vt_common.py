@@ -75,8 +75,9 @@ class Users:
     def make(self, tag, **extra):
         pw = "Test123456!"
         email = f"vt_{tag}_{self.stamp}@example.test"
+        # Public sign-up is closed (users createRule = null): the superuser creates test members.
         st, rec = call("POST", "/api/collections/users/records",
-                       {"email": email, "password": pw, "passwordConfirm": pw, "name": f"VT {tag}", **extra})
+                       {"email": email, "password": pw, "passwordConfirm": pw, "name": f"VT {tag}", **extra}, self.admin)
         if st != 200:
             sys.exit(f"cannot create test user {tag}: {st} {rec}")
         st, auth = call("POST", "/api/collections/users/auth-with-password", {"identity": email, "password": pw})

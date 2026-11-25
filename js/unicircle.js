@@ -16,17 +16,70 @@
   const state = { token: null, user: null, online: false, chatPeer: null, chatTimer: null };
 
   // ---------------------------------------------------------------- REST glue
+  // Self-healing transport. Every call has a timeout. Only idempotent reads (GET/HEAD) are retried,
+  // and only for network errors and 502/503/504, after 0.5 s, 1.5 s, 4 s. Writes are never retried.
+  // A network-level failure flips state.online off and starts a /api/health re-probe (every 20 s and
+  // on the browser's 'online' event); when it answers, `uc:reconnected` fires and a toast says so.
+  const RETRY_MS = [500, 1500, 4000];
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  let probeTimer = null, probing = false;
+
+  async function probeNow() {
+    if (probing) return state.online;
+    probing = true;
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 5000);
+    try {
+      const r = await fetch(API + '/api/health', { signal: ctl.signal, cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const was = state.online;
+      state.online = true;
+      if (probeTimer) { clearInterval(probeTimer); probeTimer = null; }
+      if (!was) {
+        document.dispatchEvent(new CustomEvent('uc:reconnected'));
+        toast('Reconnected');
+      }
+      return true;
+    } catch (e) { return false; }
+    finally { clearTimeout(t); probing = false; }
+  }
+  function markOffline() {
+    state.online = false;
+    if (!probeTimer) probeTimer = setInterval(probeNow, 20000);
+  }
+  window.addEventListener('online', () => { if (!state.online) probeNow(); });
+  // A rejection with no HTTP status is a network failure nobody handled: re-probe instead of failing silently.
+  window.addEventListener('unhandledrejection', (e) => {
+    const r = e && e.reason;
+    if (r && !r.status && (r.network || (r instanceof TypeError && /fetch|network|load failed/i.test(r.message || '')))) markOffline();
+  });
+
   async function api(method, path, body, opts = {}) {
     const isForm = typeof FormData !== 'undefined' && body instanceof FormData;
     const headers = isForm ? {} : { 'Content-Type': 'application/json' }; // FormData: browser sets the multipart boundary
     if (state.token && opts.auth !== false) headers.Authorization = state.token;
-    const res = await fetch(API + path, {
-      method, headers,
-      body: body != null ? (isForm ? body : JSON.stringify(body)) : undefined,
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw Object.assign(new Error(data.message || res.statusText), { status: res.status, data });
-    return data;
+    const safe = /^(GET|HEAD)$/i.test(method) && opts.retry !== false;
+    for (let attempt = 0; ; attempt++) {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), opts.timeout || (isForm ? 60000 : 15000));
+      const canRetry = safe && attempt < RETRY_MS.length && !probeTimer; // already known offline: fail fast
+      let res;
+      try {
+        res = await fetch(API + path, {
+          method, headers, signal: ctl.signal,
+          body: body != null ? (isForm ? body : JSON.stringify(body)) : undefined,
+        });
+      } catch (e) {
+        clearTimeout(timer);
+        if (canRetry) { await sleep(RETRY_MS[attempt]); continue; }
+        markOffline();
+        throw Object.assign(new Error(e && e.name === 'AbortError' ? 'The server took too long to answer.' : 'Could not reach the server.'), { network: true });
+      }
+      clearTimeout(timer);
+      if (canRetry && (res.status === 502 || res.status === 503 || res.status === 504)) { await sleep(RETRY_MS[attempt]); continue; }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw Object.assign(new Error(data.message || res.statusText), { status: res.status, data });
+      return data;
+    }
   }
 
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
@@ -83,7 +136,7 @@
       const raw = localStorage.getItem(LS_AUTH);
       if (raw) { const a = JSON.parse(raw); state.token = a.token; state.user = a.user; }
       // ping health to learn if backend is reachable
-      await api('GET', '/api/health', null, { auth: false });
+      await api('GET', '/api/health', null, { auth: false, retry: false });
       state.online = true;
       if (state.token) {
         try {
@@ -108,8 +161,9 @@
         `<img src="${avatarOf(state.user)}" alt="${esc(state.user.name || 'Me')}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;border:1.5px solid var(--uc-sky);"> ${esc((state.user.name || 'Me').split(' ')[0])}`;
       pill.onclick = openUserMenu;
     } else {
-      pill.innerHTML = `<span class="iconify" data-icon="ph:user-circle-plus-duotone" style="font-size:20px;"></span> Join / Sign in`;
-      pill.onclick = () => openAuth('signup');
+      // Sign-up is closed: guests are sent to the waitlist (members sign in via the hidden #signin).
+      pill.innerHTML = `<span class="iconify" data-icon="ph:user-circle-plus-duotone" style="font-size:20px;"></span> Join the waitlist`;
+      pill.onclick = () => { location.href = 'waitlist.html?ref=app-pill'; };
     }
   }
 
@@ -181,11 +235,9 @@
       const r = await api('POST', '/api/collections/users/auth-with-password', { identity, password }, { auth: false });
       completeAuth(r); return r;
     },
-    async signup(name, email, password) {
-      await api('POST', '/api/collections/users/records',
-        { email, password, passwordConfirm: password, name: name || email.split('@')[0] }, { auth: false });
-      api('POST', '/api/collections/users/request-verification', { email }, { auth: false }).catch(() => {});
-      return auth.password(email, password);
+    // Public sign-up is closed (users createRule = null on the server): join the waitlist instead.
+    async signup() {
+      throw Object.assign(new Error('UniCircle is invite-only for now. Join the waitlist.'), { status: 403 });
     },
     async otpRequest(email) {
       const r = await api('POST', '/api/collections/users/request-otp', { email }, { auth: false });
@@ -202,19 +254,16 @@
   };
 
   // Primary schema: passwordless magic link / one-time code (PocketBase OTP).
-  // Fallbacks: email+password, LinkedIn (OIDC or CSV import). Reset + verification wired.
+  // Fallback: email+password. Sign-in only: public sign-up (and LinkedIn account creation) is
+  // closed; members reach this via the hidden #signin hash, testers via #enter/<key> (js/uc-enter.js).
   function openAuth(tab, prefillEmail) {
-    const initial = tab === 'signin' || tab === 'signup' ? tab : 'magic';
+    const initial = tab === 'signin' ? 'signin' : 'magic';
     const emailVal = prefillEmail ? String(prefillEmail).replace(/"/g, '&quot;') : '';
     const body = `
       <div class="uc-tabs">
         <button class="uc-tab ${initial === 'magic' ? 'active' : ''}" data-tab="magic">Email me a link</button>
         <button class="uc-tab ${initial === 'signin' ? 'active' : ''}" data-tab="signin">Password</button>
-        <button class="uc-tab ${initial === 'signup' ? 'active' : ''}" data-tab="signup">Create account</button>
       </div>
-      <button class="uc-linkedin" data-act="linkedin">
-        <span class="uc-li-chip">in</span> Continue with LinkedIn
-      </button>
 
       <!-- MAGIC LINK / OTP (primary) -->
       <form id="uc-magic-form" class="uc-form" ${initial === 'magic' ? '' : 'hidden'}>
@@ -260,19 +309,6 @@
       pwForm.querySelector('.uc-primary').textContent = m === 'signup' ? 'Create my account' : 'Sign in';
     };
     host.querySelectorAll('.uc-tab').forEach((b) => b.onclick = () => setMode(b.dataset.tab));
-    // "Continue with LinkedIn" runs the OAuth sign-in directly from the social
-    // login area. Falls back to the LinkedIn import screen only if the OIDC
-    // provider isn't configured / reachable.
-    host.querySelector('[data-act="linkedin"]').onclick = async () => {
-      if (!requireBackend()) return;
-      try {
-        const methods = await api('GET', '/api/collections/users/auth-methods', null, { auth: false });
-        const providers = (methods.oauth2 && methods.oauth2.providers) || methods.authProviders || [];
-        const li = providers.find((p) => /linkedin|oidc/i.test(p.name));
-        if (li) { startOAuth(li, close); return; }
-      } catch (e) { /* fall through to import */ }
-      close(); openLinkedIn();
-    };
 
     // --- Magic link / OTP ---
     magicForm.onsubmit = async (e) => {
@@ -288,7 +324,7 @@
           otpId = r.otpId;
           otpStep.hidden = false;
           magicForm.querySelector('.uc-primary').textContent = 'Verify & sign in';
-          hint.textContent = 'If that email is registered, a 6-digit code is on its way — enter it above. New here? Use “Create account”.';
+          hint.textContent = 'If that email is registered, a 6-digit code is on its way — enter it above. New here? Join the waitlist on unicircle.eu.';
           magicForm.code.focus();
         } else {
           const code = magicForm.code.value.trim();
@@ -590,7 +626,7 @@
   }
 
   // expose a tiny API for debugging / mentorship buttons elsewhere
-  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth, api, toast, esc, fileUrl, avatarOf, initialsAvatar };
+  window.UC = { probeNow, state, openAuth, completeAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth, api, toast, esc, fileUrl, avatarOf, initialsAvatar };
 
   document.addEventListener('DOMContentLoaded', () => {
     handleOAuthRedirect();
