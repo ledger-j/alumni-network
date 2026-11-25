@@ -1,0 +1,22 @@
+{
+  "scripts": ["backend/verify_contact.py", "backend/verify_points.py"],
+  "checks_total": 174,
+  "checks_by_script": {"verify_contact.py": 91, "verify_points.py": 83},
+  "all_pass": false,
+  "note": "verify_contact.py passes 91/91 every run. verify_points.py passes 83/83 on most runs and fails the single 'cap race' check on some runs (backend_bugs BUG-1), seen in 2 of 6 runs.",
+  "backend_bugs": [
+    {
+      "id": "BUG-1",
+      "attack": "A mentor with several active mentorships closes them in parallel (8 threads, 8 different mentees, kind mentoring = 15 pts each)",
+      "observed": "Intermittently two ledger rows of 15 (users.points = 30) inside the same rolling day; the daily cap of 15 is exceeded",
+      "expected": "Sum of delta per user per rolling day never above 15",
+      "suspected_cause": "awardForClose reads the day's ledger sum and the pair/reciprocal checks OUTSIDE app.runInTransaction, then inserts inside it. The unique index only covers (user, reason, ref), so two parallel closes of different mentorships both see room 15 and both insert. Fix: move all checks (pair-week, reciprocal, day sum) inside the transaction, or serialize per mentor (e.g. re-check the day sum in the tx after taking the write lock)."
+    }
+  ],
+  "unsure": [
+    "Reciprocal rule (mentee earned from this pair in the last 30 days) is only reachable for days 7-30, because pair-week (any direction, pair_key sorted) fires first inside 7 days. Not executed: superuser POST and PATCH of points_ledger.created is ignored (autodate), so the 10-day and 40-day cases could not be seeded. The script tries it and prints SKIP. Needs a time hook or UC_ env override to test.",
+    "Closed mode: once the recipient has written to the sender, the mentorship and group doors are also allowed (hasReply applies to every door except collab). The brief said message door only; objections.md says 'closed only replies'. Printed as INFO, not asserted.",
+    "points+ / points- modifier, string, float, null and array forms of points are all refused on users PATCH and signup (rule :isset covers them), so no hole there.",
+    "UC_RATE_LIMITS is not set on the hub run; the 11th-collab-per-day check therefore exercises the hook (10 per day), not the PocketBase rate limit (20 per hour)."
+  ]
+}

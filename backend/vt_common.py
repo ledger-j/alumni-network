@@ -142,3 +142,60 @@ class Sse:
             self._resp.close()
         except Exception:
             pass
+
+
+# ---------------------------------------------------------------- additions (gate 2: files, raw downloads)
+def multipart(path, method, fields, files=None, token=None):
+    """multipart/form-data request (stdlib only). fields: {name: str|int|bool}; files:
+    {name: (filename, bytes, mime)}. Returns (status, json)."""
+    import uuid
+    b = "----vt" + uuid.uuid4().hex
+    parts = []
+    for k, v in (fields or {}).items():
+        v = ("true" if v else "false") if isinstance(v, bool) else str(v)
+        parts.append((f'--{b}\r\nContent-Disposition: form-data; name="{k}"\r\n\r\n').encode() + v.encode() + b"\r\n")
+    for k, (fn, data, mime) in (files or {}).items():
+        parts.append((f'--{b}\r\nContent-Disposition: form-data; name="{k}"; filename="{fn}"\r\n'
+                      f'Content-Type: {mime}\r\n\r\n').encode() + data + b"\r\n")
+    body = b"".join(parts) + f"--{b}--\r\n".encode()
+    h = {"Content-Type": f"multipart/form-data; boundary={b}"}
+    if token:
+        h["Authorization"] = token
+    r = urllib.request.Request(BASE + path, data=body, method=method, headers=h)
+    try:
+        with urllib.request.urlopen(r, timeout=60) as resp:
+            raw = resp.read()
+            return resp.status, (json.loads(raw) if raw else {})
+    except urllib.error.HTTPError as e:
+        try:
+            return e.code, json.loads(e.read() or "{}")
+        except Exception:
+            return e.code, {}
+
+
+def get_raw(path, token=None):
+    """GET returning (status, bytes, headers) for file downloads."""
+    h = {"Authorization": token} if token else {}
+    r = urllib.request.Request(BASE + path, method="GET", headers=h)
+    try:
+        with urllib.request.urlopen(r, timeout=30) as resp:
+            return resp.status, resp.read(), dict(resp.headers)
+    except urllib.error.HTTPError as e:
+        return e.code, e.read() or b"", dict(e.headers or {})
+
+
+def file_token(tok):
+    """POST /api/files/token as a member -> short-lived file token (or None)."""
+    st, r = call("POST", "/api/files/token", {}, tok)
+    return r.get("token") if st == 200 else None
+
+
+def tiny_png(pad=0):
+    """A valid 1x1 PNG; pad appends trailing bytes (ignored by decoders) to reach a size."""
+    import struct, zlib
+    def ch(t, d):
+        c = struct.pack(">I", len(d)) + t + d
+        return c + struct.pack(">I", zlib.crc32(t + d) & 0xffffffff)
+    raw = b"\x00\xff\x00\x00"
+    return (b"\x89PNG\r\n\x1a\n" + ch(b"IHDR", struct.pack(">IIBBBBB", 1, 1, 8, 2, 0, 0, 0))
+            + ch(b"IDAT", zlib.compress(raw)) + ch(b"IEND", b"") + b"\0" * pad)

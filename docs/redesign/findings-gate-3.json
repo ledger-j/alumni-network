@@ -1,0 +1,14 @@
+{"scripts":["backend/verify_location.py","backend/verify_events.py","backend/verify_profiles.py"],
+"checks_total":168,"all_pass":false,
+"backend_bugs":[
+{"id":"B1","attack":"PATCH/POST user_locations lat or lng = 'abc' / 'north'","observed":"200, value silently coerced (to 0)","expected":"400","suspected_cause":"PocketBase number field casts non-numeric strings to 0; add a hook/rule check that body lat/lng are numeric (e.g. typeof check in uc_lib.snapLocation). Pin of 0,0 possible."},
+{"id":"B2","attack":"user_settings PATCH accent_hue='red;x'","observed":"200 (coerced to 0)","expected":"400","suspected_cause":"same number coercion; stored value is 0 so no XSS, but input not rejected"},
+{"id":"B3","attack":"Host PATCH events.start = 1990 (or +any date, end too)","observed":"200","expected":"4xx","suspected_cause":"the date/range hook is onRecordCreateRequest only; no onRecordUpdateRequest for events. Host can move an event outside 12 months / bypass the 3-per-day cap spirit / make it 'ended'."},
+{"id":"B4","attack":"profiles_deep visibility='public' and source='gemini_scraped'","observed":"200 stored","expected":"400 (enum members|private; source self|linkedin_import|sample)","suspected_cause":"both are plain text fields with no rule/select validation. 'public' is not treated as private by the != 'private' rule, so only the UI enum matters."}
+],
+"unsure":[
+"Move-limit beyond the 1 h grace (24 h once) not tested: superuser PATCH of created/updated returns 200 but does not backdate (autodate fields); needs a DB-level backdate or a time-shifted PB.",
+"Escalation: HTML payload in events.title is stored verbatim (by design, front-end must esc()).",
+"verified self-edit (users PATCH verified=true) is asserted rejected; passed, but depends on the users updateRule/field being system-protected.",
+"contact_mode='admin' and role='admin' are refused with 404 (rule failure on update), not 400; scripts accept 400/403/404."],
+"run":"slot c: location 41 checks / 3 fail (B1 x3 incl. NOTE); events 52 / 1 fail (B3); profiles 75 / 3 fail (B2,B4 x2)"}

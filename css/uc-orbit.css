@@ -271,3 +271,38 @@ a:hover > .uc-nudge, button:hover > .uc-nudge { transform: translateX(3px); }
     transition-duration: 0.01ms !important; scroll-behavior: auto !important;
   }
 }
+
+/* ==========================================================================
+   Member accent colour (js/uc-theme.js sets html[data-accent] + --uc-accent-h).
+   Everything is scoped to html[data-accent]: with no accent chosen the default
+   look is unchanged. The accent is NEVER used as text colour on paper; buttons
+   use the dark tone (L 0.34) under paper text, mid tones only for rings/halos.
+   ========================================================================== */
+html[data-accent] {
+  --uc-accent: oklch(0.62 0.14 var(--uc-accent-h));
+  --uc-accent-soft: oklch(0.94 0.04 var(--uc-accent-h));
+  --uc-accent-ink: oklch(0.34 0.06 var(--uc-accent-h));
+  --uc-accent-on-dark: oklch(0.82 0.10 var(--uc-accent-h));
+  /* redesign.css pins these with !important, so override with !important too */
+  --uc-focus: oklch(0.62 0.14 var(--uc-accent-h)) !important;
+  --uc-sky: oklch(0.62 0.14 var(--uc-accent-h)) !important;
+}
+html[data-accent] .uc-rail { background: oklch(0.26 0.03 var(--uc-accent-h)); }
+html[data-accent] .uc-rail-link:focus-visible { outline-color: var(--uc-accent-on-dark); }
+html[data-accent] .uc-rail-link.active .uc-rail-dot,
+html[data-accent] .uc-rail-link[aria-current="page"] .uc-rail-dot {
+  box-shadow: 0 0 0 4px color-mix(in oklch, var(--uc-accent-on-dark) 40%, transparent);
+}
+html[data-accent] .uc-btn-dark,
+html[data-accent] .uc-pill-ink,
+html[data-accent] .uc-primary,
+html[data-accent] #uc-chat .uc-thread-form .uc-primary {
+  background: var(--uc-accent-ink) !important;
+  color: var(--uc-bg, #faf9f6) !important;
+}
+html[data-accent] .uc-btn-dark:hover,
+html[data-accent] .uc-pill-ink:hover,
+html[data-accent] .uc-primary:hover {
+  background: oklch(0.28 0.05 var(--uc-accent-h)) !important;
+  opacity: 1;
+}

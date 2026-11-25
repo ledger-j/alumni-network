@@ -186,5 +186,128 @@
     return out;
   }
 
-  window.UCMap = { create, matchCity, cities: () => Object.keys(CITY).sort(), samplePoints, COLORS };
+  // ---- Helpers for the live (signed-in) map ----------------------------------
+  const GRID = 0.05;                       // the server snaps lat/lng to this grid
+  function snap(x) { return Number((Math.round(Number(x) / GRID) * GRID).toFixed(2)); }
+  function cityCoords(name) { const c = CITY[name] ? name : matchCity(name); return c ? { city: c, lat: CITY[c][0], lng: CITY[c][1] } : null; }
+  function searchCities(q, limit) {
+    const s = String(q || '').trim().toLowerCase();
+    if (!s) return [];
+    const out = [], seen = new Set();
+    const push = (city) => { if (!seen.has(city)) { seen.add(city); out.push({ city }); } };
+    Object.keys(CITY).sort().forEach((c) => { if (c.toLowerCase().startsWith(s)) push(c); });
+    for (const a in ALIASES) if (a.startsWith(s)) push(ALIASES[a]);
+    Object.keys(CITY).sort().forEach((c) => { if (c.toLowerCase().includes(s)) push(c); });
+    return out.slice(0, limit || 8);
+  }
+  function nearestCity(lat, lng) {
+    let best = null, bd = Infinity;
+    const rad = Math.PI / 180;
+    for (const c in CITY) {
+      const dLat = (CITY[c][0] - lat) * rad, dLng = (CITY[c][1] - lng) * rad;
+      const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat * rad) * Math.cos(CITY[c][0] * rad) * Math.sin(dLng / 2) ** 2;
+      const d = 12742 * Math.asin(Math.min(1, Math.sqrt(a)));
+      if (d < bd) { bd = d; best = c; }
+    }
+    return { city: best, km: bd };
+  }
+
+  const SVG_CAL = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" d="M2.5 4.5h11v9h-11zM2.5 7.5h11M5.5 2.5v3M10.5 2.5v3"/></svg>';
+  const TILE = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+  const ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+  const TILE_FILTER = 'grayscale(0.9) sepia(0.12) brightness(1.04) contrast(0.92)';
+
+  // Live map: grid-cell cluster markers, event markers, a "you" marker, a pick marker.
+  function createLive(el, opts) {
+    opts = opts || {};
+    if (!window.L || !el) return null;
+    const map = L.map(el, { zoomControl: true, scrollWheelZoom: false, minZoom: 3, maxZoom: 11, worldCopyJump: true })
+      .setView(opts.center || [50.5, 8], opts.zoom || 4);
+    const tiles = L.tileLayer(TILE, { maxZoom: 11, attribution: ATTR }).addTo(map);
+    const tc = tiles.getContainer && tiles.getContainer();
+    if (tc) tc.style.filter = TILE_FILTER;
+    map.once('focus', () => map.scrollWheelZoom.enable());
+    const gCells = L.layerGroup().addTo(map), gEvents = L.layerGroup().addTo(map);
+    let meMarker = null, pickRect = null;
+    map.on('click', (e) => { if (opts.onMapClick) opts.onMapClick({ lat: e.latlng.lat, lng: e.latlng.lng }); });
+
+    return {
+      map,
+      setCells(cells, layer) {
+        gCells.clearLayers();
+        cells.forEach((c) => {
+          const n = c.people.length;
+          const size = Math.round(Math.min(28 + Math.sqrt(n) * 7, 58));
+          const cls = layer === 'students' ? 'uc-mk-students' : 'uc-mk-alumni';
+          const icon = L.divIcon({
+            className: 'uc-mk-wrap', iconSize: [size, size], iconAnchor: [size / 2, size / 2],
+            html: '<span class="uc-mk ' + cls + (c.selected ? ' is-sel' : '') + '" style="width:' + size + 'px;height:' + size + 'px">' + n + '</span>',
+          });
+          const m = L.marker([c.lat, c.lng], { icon, keyboard: true, title: (c.city || 'Area') + ': ' + n + ' member' + (n === 1 ? '' : 's'), riseOnHover: true });
+          m.on('click', () => opts.onSelectCell && opts.onSelectCell(c));
+          m.addTo(gCells);
+        });
+      },
+      setEvents(list) {
+        gEvents.clearLayers();
+        const used = new Map();
+        list.forEach((ev) => {
+          if (!isFinite(ev.lat) || !isFinite(ev.lng)) return;
+          const k = ev.lat.toFixed(2) + '|' + ev.lng.toFixed(2), i = used.get(k) || 0;
+          used.set(k, i + 1);
+          const lat = ev.lat + (i ? Math.sin(i * 2.4) * 0.012 * Math.ceil(i / 6) : 0);
+          const lng = ev.lng + (i ? Math.cos(i * 2.4) * 0.018 * Math.ceil(i / 6) : 0);
+          const icon = L.divIcon({ className: 'uc-mk-wrap', iconSize: [30, 30], iconAnchor: [15, 15], html: '<span class="uc-mk-ev">' + SVG_CAL + '</span>' });
+          const m = L.marker([lat, lng], { icon, keyboard: true, title: String(ev.title || 'Event'), zIndexOffset: 500 });
+          m.on('click', () => opts.onSelectEvent && opts.onSelectEvent(ev));
+          m.addTo(gEvents);
+        });
+      },
+      setMe(me) {
+        if (meMarker) { meMarker.remove(); meMarker = null; }
+        if (!me) return;
+        const icon = L.divIcon({
+          className: 'uc-mk-wrap', iconSize: [44, 44], iconAnchor: [22, 22],
+          html: '<span class="uc-mk-me' + (me.visible ? '' : ' is-hidden') + '"><i></i><b>You' + (me.visible ? '' : ' (hidden)') + '</b></span>',
+        });
+        meMarker = L.marker([me.lat, me.lng], { icon, keyboard: false, interactive: false, zIndexOffset: 1000 }).addTo(map);
+      },
+      setPick(p) {
+        if (pickRect) { pickRect.remove(); pickRect = null; }
+        if (!p) return;
+        pickRect = L.rectangle([[p.lat - GRID / 2, p.lng - GRID / 2], [p.lat + GRID / 2, p.lng + GRID / 2]],
+          { color: '#2b2a26', weight: 2, dashArray: '5 5', fillOpacity: 0.08, interactive: false }).addTo(map);
+      },
+      flyTo(lat, lng, zoom) { map.flyTo([lat, lng], zoom || 9, { duration: 0.8 }); },
+      flyToCity(name, zoom) { const c = cityCoords(name); if (c) map.flyTo([c.lat, c.lng], zoom || 10, { duration: 0.8 }); return c ? c.city : null; },
+      invalidate() { setTimeout(() => map.invalidateSize(), 50); },
+      destroy() { try { map.remove(); } catch (e) { /* already gone */ } },
+    };
+  }
+
+  // Small preview for the "show me on the map" dialog: shows the ~5 km cell others will see.
+  function createPreview(el) {
+    if (!window.L || !el) return null;
+    const map = L.map(el, { zoomControl: false, dragging: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false, touchZoom: false, minZoom: 3, maxZoom: 11 })
+      .setView([50.5, 8], 4);
+    const t = L.tileLayer(TILE, { maxZoom: 11, attribution: ATTR }).addTo(map);
+    const tc = t.getContainer && t.getContainer();
+    if (tc) tc.style.filter = TILE_FILTER;
+    let rect = null;
+    return {
+      map,
+      show(lat, lng) {
+        const la = snap(lat), ln = snap(lng);
+        if (rect) rect.remove();
+        rect = L.rectangle([[la - GRID / 2, ln - GRID / 2], [la + GRID / 2, ln + GRID / 2]], { color: '#d64541', weight: 2, fillColor: '#d64541', fillOpacity: 0.3, interactive: false }).addTo(map);
+        map.setView([la, ln], 9, { animate: false });
+        return { lat: la, lng: ln };
+      },
+      invalidate() { setTimeout(() => map.invalidateSize(), 80); },
+      destroy() { try { map.remove(); } catch (e) { /* already gone */ } },
+    };
+  }
+
+  window.UCMap = { create, matchCity, cities: () => Object.keys(CITY).sort(), samplePoints, COLORS,
+    GRID, snap, cityCoords, searchCities, nearestCity, createLive, createPreview, esc };
 })();

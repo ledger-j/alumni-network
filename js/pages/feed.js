@@ -54,9 +54,8 @@
   const cityOf = (location) => String(location || '').split(/[,\u00b7|]/)[0].trim();
 
   function avatarUrl(u) {
-    if (!u || !u.avatar || !u.collectionId || !u.id || !window.UC || !window.UC.API) return '';
-    return window.UC.API + '/api/files/' + encodeURIComponent(u.collectionId) + '/'
-      + encodeURIComponent(u.id) + '/' + encodeURIComponent(u.avatar);
+    if (!u || !u.avatar || !u.collectionId || !u.id || !window.UC || !window.UC.avatarUrl) return '';
+    return window.UC.avatarUrl(u, 100);
   }
 
   function avatarHtml(u, cls) {

@@ -1,19 +1,19 @@
 /* UniCircle service worker: app-shell precache + offline fallback.
    Bump VERSION on every deploy that changes a precached file. */
-const VERSION = 'uc-v4';
+const VERSION = 'uc-v7';
 const CACHE = 'unicircle-' + VERSION;
 
 // App shell: plain paths; cache-busting ?v= query strings are ignored on lookup.
 const SHELL = [
-  '/index.html', '/offline.html', '/unicircle-logo.png',
+  '/index.html', '/offline.html', '/assets/img/logo-u-badge-128.png', '/assets/img/logo-u-128.png', '/assets/img/favicon-32.png',
   '/css/main.css', '/css/components.css', '/css/unicircle.css', '/css/redesign.css',
   '/css/uc-orbit.css', '/css/pages.css', '/css/p-feed.css', '/css/p-network.css',
-  '/css/p-events-jobs.css', '/css/p-mentoring-cases.css', '/css/p-map.css',
-  '/js/uc-constellation.js', '/js/app.js', '/js/unicircle.js', '/js/uc-chat.js',
+  '/css/p-events-jobs.css', '/css/p-mentoring-cases.css', '/css/p-map.css', '/css/p-profile.css', '/css/p-profile2.css', '/css/uc-collab.css', '/css/uc-chat.css',
+  '/js/uc-theme.js', '/js/uc-constellation.js', '/js/app.js', '/js/unicircle.js', '/js/uc-media.js', '/js/uc-chat.js', '/js/uc-collab.js',
   '/js/pages/_shared.js', '/js/uc-waitlist-form.js', '/js/uc-map.js',
   '/js/pages/feed.js', '/js/pages/network.js', '/js/pages/map.js',
   '/js/pages/mentoring.js', '/js/pages/events.js', '/js/pages/pbl-hub.js',
-  '/js/pages/jobs.js', '/js/pages/profile.js'
+  '/js/pages/jobs.js', '/js/pages/profile.js', '/js/pages/profile-deep.js', '/js/pages/profile-points.js'
 ];
 
 self.addEventListener('install', (event) => {

@@ -7,6 +7,7 @@
            or simply POST /mock/login?user=u1 for a token ("mock.u1").
    Only demo data. Zero dependencies (Node 18+). */
 import http from 'node:http';
+import { install as installR2 } from './mock-pb-r2.mjs';
 
 const PORT = Number(process.argv[2] || process.env.PORT || 8099);
 const now = () => new Date().toISOString().replace('T', ' ');
@@ -66,6 +67,8 @@ function broadcast(topic, action, record) {
   }
 }
 
+const r2 = installR2({ users, send, now, rid, broadcast, clients, mentorships });
+
 http.createServer(async (req, res) => {
   const url = new URL(req.url, 'http://x');
   const p = url.pathname;
@@ -89,6 +92,8 @@ http.createServer(async (req, res) => {
     if (!c) return send(res, 404, { message: 'client not found' });
     c.subs = new Set(b.subscriptions || []); c.user = me; return send(res, 204, {});
   }
+
+  if (p.startsWith('/api/files/') || p.startsWith('/api/uc/') || p.startsWith('/api/collections/')) { if (await r2(req, res, url, me)) return; }
 
   let m;
   if ((m = p.match(/^\/api\/collections\/(\w+)\/records(?:\/(\w+))?$/))) {

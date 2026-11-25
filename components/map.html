@@ -12,31 +12,38 @@
 
   <div class="uc-map-bar uc-stagger">
     <div class="uc-map-toggle" role="group" aria-label="Map layers">
-      <button type="button" class="active" data-layer="alumni" aria-pressed="true"><i class="uc-map-dot red"></i>Alumni</button>
-      <button type="button" data-layer="students" aria-pressed="false"><i class="uc-map-dot blue"></i>Student exchange</button>
+      <button type="button" class="active" data-layer="alumni" aria-pressed="true"><i class="uc-map-dot red"></i>Alumni <span class="uc-map-count" data-count-alumni></span></button>
+      <button type="button" data-layer="students" aria-pressed="false"><i class="uc-map-dot blue"></i>Students <span class="uc-map-count" data-count-students></span></button>
     </div>
-    <label class="uc-map-select" data-tutorial-wrap hidden>
-      <span class="uc-sr">Tutorial group</span>
-      <select data-tutorial><option value="">All tutorial groups</option></select>
-    </label>
     <form class="uc-map-find" data-city-form>
-      <input list="uc-map-cities" data-city-input type="search" placeholder="Jump to a city…" aria-label="Jump to a city">
+      <input list="uc-map-cities" data-city-input type="search" placeholder="Jump to a city…" aria-label="Jump to a city" maxlength="60">
       <datalist id="uc-map-cities"></datalist>
     </form>
+    <button type="button" class="uc-btn-dark uc-map-me-btn" data-me-open>Show me on the map</button>
   </div>
 
+  <section class="uc-map-days" aria-label="Events by day">
+    <div class="uc-map-days-head"><span class="uc-eyebrow">Events on the map</span><span class="uc-map-note" data-days-hint>Pick a day, then click the map to plan something there.</span></div>
+    <div class="uc-map-strip" role="group" aria-label="Pick a day" data-day-strip></div>
+  </section>
+
   <div class="uc-map-grid uc-stagger">
-    <div class="uc-map-canvas" id="uc-map" role="region" aria-label="Map of members by neighbourhood"></div>
+    <div class="uc-map-canvas" id="uc-map" role="region" aria-label="Map of members by area"></div>
     <aside class="uc-card uc-map-side" aria-live="polite">
       <div data-map-panel>
         <div class="uc-eyebrow">Tap a dot</div>
-        <p>Each dot is a neighbourhood, never an address. People nearby are merged into one dot, and the map stops at district level.</p>
+        <p>Each dot is an area of about 5 km, never an address. Click an empty spot to plan an event there.</p>
       </div>
+      <div class="uc-map-events" data-map-events></div>
       <div class="uc-map-stats" data-map-stats></div>
       <div class="uc-map-privacy">
         <div class="uc-eyebrow">Your dot</div>
-        <p data-my-dot>Your dot uses the city in your profile.</p>
-        <button type="button" class="uc-btn-ghost" data-uc-profile>Edit city in my profile</button>
+        <p class="uc-map-note" data-my-dot>Loading…</p>
+        <p class="uc-map-note">Dots show a ~5 km area, never an address. Only members who switch on “Show me on the map” appear.</p>
+        <div class="uc-map-privacy-btns">
+          <button type="button" class="uc-btn-ghost" data-me-open2>Change my location</button>
+          <button type="button" class="uc-btn-ghost" data-me-hide hidden>Hide me</button>
+        </div>
       </div>
     </aside>
   </div>

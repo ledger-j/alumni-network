@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pageCache = {};
   async function fetchPage(name) {
     if (pageCache[name] != null) return pageCache[name];
-    const res = await fetch(routes[name] + '?v=10');
+    const res = await fetch(routes[name] + '?v=13');
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const html = await res.text();
     pageCache[name] = html;
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return '<nav class="uc-rail" aria-label="Primary">'
       + '<canvas class="uc-rail-canvas" aria-hidden="true"></canvas>'
       + '<div class="uc-rail-inner">'
-      + '<a class="uc-rail-brand" href="#feed" aria-label="UniCircle home"><img src="unicircle-logo.png" alt=""><span class="uc-serif">UniCircle</span></a>'
+      + '<a class="uc-rail-brand" href="#feed" aria-label="UniCircle home"><img src="assets/img/logo-u-badge-128.png" alt=""><span class="uc-serif">UniCircle</span></a>'
       + links
       + '<button type="button" class="uc-rail-link" id="uc-rail-msgs" data-route="messages" style="--h:25">'
       + '<span class="uc-rail-dot" aria-hidden="true"></span>Messages<span class="uc-rail-badge" id="uc-rail-badge" hidden>0</span></button>'
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     _railFx = window.UCConstellation.mount(canvas, {
       count: 46, wash: null, ink: '250,249,246', linkAlpha: 0.10, linkDist: 76, linkEvery: 2,
       pull: null, pointerRadius: 150, speed: 0.7, thread: true, anchorAlpha: 0.30,
-      palette: ['oklch(0.74 0.14 235)', 'oklch(0.74 0.14 275)', 'oklch(0.74 0.14 305)', 'oklch(0.74 0.14 185)'],
+      palette: (window.UCTheme && window.UCTheme.palette(0.74)) || ['oklch(0.74 0.14 235)', 'oklch(0.74 0.14 275)', 'oklch(0.74 0.14 305)', 'oklch(0.74 0.14 185)'],
       alpha: [0.35, 0.7]
     });
     if (!_railFx) return;
@@ -184,10 +184,25 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
+    // The member's own accent colour lives in their owner-only user_settings row; the device
+    // copy (UCTheme) paints first, this makes it follow them to another device.
+    function syncAccentFromServer() {
+      const u = window.UC && window.UC.state && window.UC.state.user;
+      if (!u || !window.UCTheme || !window.UC.state.online || !/^[a-z0-9]{1,32}$/i.test(u.id)) return;
+      window.UC.api('GET', '/api/collections/user_settings/records?perPage=1&filter=' + encodeURIComponent('user="' + u.id + '"'))
+        .then((r) => {
+          const row = r && r.items && r.items[0];
+          // Stored as 1..360 for a chosen hue (360 = hue 0); 0 or empty = the default brand look.
+          const v = row ? Number(row.accent_hue) : NaN;
+          if (row && !isNaN(v)) window.UCTheme.set(v === 0 ? null : v % 360);
+        }).catch(() => { /* collection not live yet: keep the device colour */ });
+    }
+
     // unicircle.js dispatches 'uc:auth-ready' once bootSession() resolves
     document.addEventListener('uc:auth-ready', (e) => {
       if (e.detail && e.detail.user) {
         _navReady = true;
+        syncAccentFromServer();
         const h = parseHash();
         let page = h.page;
         if (!routes[page] || page === 'landing') { page = 'feed'; window.location.hash = '#feed'; }
@@ -201,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // unicircle.js dispatches 'uc:login' after a successful sign-in
     document.addEventListener('uc:login', () => {
       _navReady = true;
+      syncAccentFromServer();
       window.location.hash = '#feed';
       loadPage('feed');
     });
@@ -364,10 +380,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* Paper-side constellation (landing hero, feed ribbon) = the shared engine with
      its defaults. Several can run at once; each cleans up when its canvas leaves the DOM. */
-  function mountConstellation(canvas, count) {
+  let _ribbonFx = null;
+  function mountConstellation(canvas, count, palette) {
     if (!canvas || !window.UCConstellation) return null;
-    return window.UCConstellation.mount(canvas, { count: count });
+    const opts = { count: count };
+    if (palette) opts.palette = palette;
+    return window.UCConstellation.mount(canvas, opts);
   }
+
+  // A member picked (or cleared) an accent colour: recolour the live canvases in place.
+  document.addEventListener('uc:theme', () => {
+    const T = window.UCTheme;
+    const rail = T && T.palette(0.74);
+    if (_railFx) {
+      if (rail) _railFx.setPalette(rail);
+      else _railFx.setPalette(['oklch(0.74 0.14 235)', 'oklch(0.74 0.14 275)', 'oklch(0.74 0.14 305)', 'oklch(0.74 0.14 185)']);
+    }
+    if (_ribbonFx && _ribbonFx.setPalette) {
+      const pp = T && T.palette(0.62);
+      _ribbonFx.setPalette(pp || ['oklch(0.62 0.14 235)', 'oklch(0.62 0.14 275)', 'oklch(0.62 0.14 305)', 'oklch(0.62 0.14 185)']);
+    }
+  });
 
   /* ==========================================
      1. FEED COMPONENT INTERACTIVITY
@@ -382,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const first = u && u.name ? String(u.name).trim().split(/\s+/)[0] : '';
       nameEl.textContent = (first || 'there') + '.';
     }
-    mountConstellation(document.getElementById('uc-ribbon-canvas'), 90);
+    _ribbonFx = mountConstellation(document.getElementById('uc-ribbon-canvas'), 90, window.UCTheme && window.UCTheme.palette(0.62));
     if (window.Iconify) window.Iconify.scan(appViewport);
   }
 

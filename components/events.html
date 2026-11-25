@@ -14,7 +14,7 @@
 
   <div class="uc-ev-stack uc-stagger">
     <!-- Featured -->
-    <article class="uc-ev-hero" data-uc-event
+    <article class="uc-ev-hero" data-ev-sample-only data-uc-event
       id="event-winter-reunion-in-amsterdam" data-id="winter-reunion-in-amsterdam"
       data-city="Amsterdam" data-start="2026-12-12T17:00:00+01:00" data-end="2026-12-12T22:00:00+01:00"
       data-tz="Europe/Amsterdam" data-host="Alumni Council" data-place="Amsterdam · venue to be confirmed">
@@ -41,9 +41,12 @@
       <div class="uc-ev-head">
         <h2 class="uc-h2">Coming up</h2>
         <div class="uc-ev-head-actions">
-          <span class="uc-ej-sample" title="These listings are curated examples, not live events.">Sample listings</span>
-          <button type="button" class="uc-pill-ghost uc-pill-sm" data-ev-suggest>
-            <span class="iconify" data-icon="ph:plus-bold" aria-hidden="true"></span>&nbsp;Suggest an event
+          <span class="uc-ej-sample" data-ev-sample-only title="These listings are curated examples, not live events.">Sample</span>
+          <button type="button" class="uc-pill-ink uc-pill-sm" data-ev-create>
+            <span class="iconify" data-icon="ph:plus-bold" aria-hidden="true"></span>&nbsp;Create an event
+          </button>
+          <button type="button" class="uc-pill-ghost uc-pill-sm" data-ev-suggest data-ev-sample-only>
+            Suggest an event
           </button>
         </div>
       </div>
@@ -51,7 +54,17 @@
       <div class="uc-ej-chips" role="group" aria-label="Filter events" data-ev-chips></div>
       <p class="uc-ej-status" role="status" aria-live="polite" data-ev-status></p>
 
-      <div class="uc-ev-list uc-stagger" data-ev-list>
+      <div class="uc-ej-empty uc-empty-orbit" data-ev-first hidden style="--uc-node-h:145;">
+        <div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div>
+        <p>No member events yet. The samples below show how a listing looks.</p>
+        <div class="uc-ej-empty-actions">
+          <button type="button" class="uc-pill-ink uc-pill-sm" data-ev-create>Create the first event</button>
+        </div>
+      </div>
+
+      <div class="uc-ev-list uc-stagger" data-ev-real hidden></div>
+
+      <div class="uc-ev-list uc-stagger" data-ev-list data-ev-sample-only>
         <article class="uc-row uc-ev" data-uc-event
           id="event-founders-circle-brussels-breakfast" data-id="founders-circle-brussels-breakfast"
           data-city="Brussels" data-start="2026-10-16T08:30:00+02:00" data-end="2026-10-16T10:00:00+02:00"
@@ -144,11 +157,12 @@
         <div class="uc-ej-empty-actions">
           <button type="button" class="uc-pill-ghost uc-pill-sm" data-ev-clear>Show all events</button>
           <button type="button" class="uc-pill-ghost uc-pill-sm" data-ev-empty-map hidden>See alumni there on the map</button>
-          <button type="button" class="uc-pill-ink uc-pill-sm" data-ev-suggest>Suggest an event</button>
+          <button type="button" class="uc-pill-ink uc-pill-sm" data-ev-create>Create an event</button>
         </div>
       </div>
 
-      <p class="uc-ej-footnote">RSVPs are saved on this device only until event registration goes live — hosts can't see them yet.</p>
+      <p class="uc-ej-footnote" data-ev-sample-only>Sample RSVPs are saved on this device only. Real events show how many are going, never who.</p>
+      <p class="uc-ej-footnote" data-ev-real-note hidden>Events show how many are going, never who. Times are shown in your own time zone.</p>
     </div>
   </div>
 </div>

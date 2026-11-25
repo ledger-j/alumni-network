@@ -17,11 +17,12 @@
 
   // ---------------------------------------------------------------- REST glue
   async function api(method, path, body, opts = {}) {
-    const headers = { 'Content-Type': 'application/json' };
+    const isForm = typeof FormData !== 'undefined' && body instanceof FormData;
+    const headers = isForm ? {} : { 'Content-Type': 'application/json' }; // FormData: browser sets the multipart boundary
     if (state.token && opts.auth !== false) headers.Authorization = state.token;
     const res = await fetch(API + path, {
       method, headers,
-      body: body != null ? JSON.stringify(body) : undefined,
+      body: body != null ? (isForm ? body : JSON.stringify(body)) : undefined,
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw Object.assign(new Error(data.message || res.statusText), { status: res.status, data });
@@ -32,8 +33,24 @@
     { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const fileUrl = (rec, field) => rec && rec[field]
     ? `${API}/api/files/${rec.collectionId}/${rec.id}/${rec[field]}` : null;
-  const avatarOf = (u) => fileUrl(u, 'avatar')
-    || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(u?.name || u?.email || 'UC')}&backgroundType=gradientLinear&backgroundColor=1E6FC4,1C4C8A`;
+  // Local initials avatar: inline SVG data URI, no network (member names never leave the device).
+  function initialsAvatar(u) {
+    const name = String(u?.name || u?.email || 'UC').trim();
+    const parts = name.split(/[\s@._-]+/).filter(Boolean);
+    const ini = ((parts[0] || 'U')[0] + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+    const seed = String(u?.id || name);
+    let h = 0; for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) >>> 0;
+    const tints = ['#cfe0f5', '#d9d2f0', '#ecd3ea', '#f5d5d0', '#f6e0c4', '#d3ead7', '#c9ebe8', '#e3e0d6'];
+    const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="' + tints[h % tints.length]
+      + '"/><text x="50" y="50" dy=".35em" text-anchor="middle" font-family="Manrope,Arial,sans-serif" font-size="38" font-weight="700" fill="#2b2a26">'
+      + esc(ini) + '</text></svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+  const avatarOf = (u, size) => {
+    const base = fileUrl(u, 'avatar');
+    const s = size || 100;
+    return base ? `${base}?thumb=${s}x${s}` : initialsAvatar(u);
+  };
 
   function saveAuth() {
     if (state.token) localStorage.setItem(LS_AUTH, JSON.stringify({ token: state.token, user: state.user }));
@@ -43,7 +60,18 @@
   function toast(msg, kind = 'ok') {
     const t = document.createElement('div');
     t.className = 'uc-toast uc-toast--' + kind;
-    t.innerHTML = msg;
+    // Callers pass text, pre-escaped text, or text with <b>. Parse and rebuild: only text and
+    // <b>/<strong> survive, so a server error message or a member's name can never inject markup.
+    try {
+      const doc = new DOMParser().parseFromString('<body>' + String(msg == null ? '' : msg) + '</body>', 'text/html');
+      const copy = (from, to) => from.childNodes.forEach((n) => {
+        if (n.nodeType === 3) to.appendChild(document.createTextNode(n.textContent));
+        else if (n.nodeType === 1 && /^(B|STRONG)$/.test(n.tagName)) { const b = document.createElement('b'); copy(n, b); to.appendChild(b); }
+        else if (n.nodeType === 1) copy(n, to);                 // unknown element: keep its text, drop the tag
+      });
+      copy(doc.body, t);
+    } catch (e) { t.textContent = String(msg); }
+    t.setAttribute('role', 'status');
     document.body.appendChild(t);
     requestAnimationFrame(() => t.classList.add('in'));
     setTimeout(() => { t.classList.remove('in'); setTimeout(() => t.remove(), 300); }, 3200);
@@ -217,7 +245,7 @@
         <p class="uc-row-between"><a href="#" data-act="forgot" class="uc-link-muted">Forgot password?</a></p>
         <p class="uc-err" hidden></p>
       </form>`;
-    const { host, close } = modal('<img src="unicircle-logo.png" alt="">Welcome to <em>the circle.</em>', body);
+    const { host, close } = modal('<img src="assets/img/logo-u-64.png" alt="">Welcome to <em>the circle.</em>', body);
     const magicForm = host.querySelector('#uc-magic-form');
     const pwForm = host.querySelector('#uc-auth-form');
     let mode = initial;      // 'magic' | 'signin' | 'signup'
@@ -562,7 +590,7 @@
   }
 
   // expose a tiny API for debugging / mentorship buttons elsewhere
-  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth, api, toast };
+  window.UC = { state, openAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth, api, toast, esc, fileUrl, avatarOf, initialsAvatar };
 
   document.addEventListener('DOMContentLoaded', () => {
     handleOAuthRedirect();
