@@ -124,6 +124,14 @@
   document.addEventListener('uc:auth-ready', onReady);
   document.addEventListener('uc:login', updateBanner);
   window.addEventListener('hashchange', () => {
+    // The test link opened in a tab that already shows UniCircle (same document, hash-only change).
+    const hm = /^#enter\/([^?&#\s]+)/.exec(location.hash);
+    if (hm) {
+      try { key = decodeURIComponent(hm[1]); } catch (e) { key = hm[1]; }
+      clean();
+      onReady();
+      return;
+    }
     if (location.hash === '#signin') {
       clean();
       if (window.UC && !(window.UC.state && window.UC.state.user)) window.UC.openAuth('signin');
