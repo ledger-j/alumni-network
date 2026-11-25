@@ -68,6 +68,8 @@ jobs:
           python3 -m http.server 5173 >/tmp/http.log 2>&1 &
           node tools/mock-pb.mjs 8099 >/tmp/mock.log 2>&1 &
           for i in $(seq 1 30); do curl -sf http://127.0.0.1:5173/index.html >/dev/null && curl -sf http://127.0.0.1:8099/api/health >/dev/null && break; sleep 1; done
+      - name: Voice intents (Jev) match table
+        run: node tools/voice-intents.test.mjs
       - name: Link crawler (0 broken same-origin links)
         run: node tools/qa-crawler.mjs http://127.0.0.1:5173
       - name: verify.js on every route at 1440 and 390 px
@@ -86,6 +88,8 @@ jobs:
       PB_BASE: http://127.0.0.1:8090
       PB_IDENTITY: ci@example.test
       PB_PASSWORD: ci-throwaway-${{ github.run_id }}-pw
+      # throwaway test-entrance key so verify_tester.py runs its full set (not only the 501 path)
+      UC_TESTER_KEY: ci-tester-key-${{ github.run_id }}-not-a-secret
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
