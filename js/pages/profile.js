@@ -555,5 +555,64 @@
     try {
       if (window.UCCollab && window.UCCollab.mountInbox) window.UCCollab.mountInbox(root.querySelector('[data-uc-slot="collab"]'));
     } catch (e) { console.warn('[profile] collab slot', e); }
+    try { mountJevMemory(); } catch (e) { console.warn('[profile] jev memory', e); }
+
+    // ------------------------------------------- Jev's memory (own profile only)
+    // Rows are written only by the Jev hook (backend/pb_hooks/uc_jev.pb.js); the owner can
+    // read and delete them (jev_memory rules in backend/init_schema.py).
+    function mountJevMemory() {
+      const u = UCP.user();
+      const anchor = $('#uc-pf-account');
+      if (!u || !validId(u.id) || !UCP.online() || !anchor || $('#uc-pf-jev')) return;
+      const card = document.createElement('div');
+      card.className = 'uc-card';
+      card.id = 'uc-pf-jev';
+      card.setAttribute('aria-labelledby', 'uc-pf-jev-title');
+      card.innerHTML = '<h2 class="uc-h2" id="uc-pf-jev-title" style="margin:0 0 6px;">Jev’s memory</h2>'
+        + '<p class="uc-pf-fine" style="margin:0 0 12px;">Short notes Jev, the assistant, keeps to help you later. Only you can see them. <a href="privacy.html#jev">How Jev works</a></p>'
+        + '<ul class="uc-pf-jev-list" style="list-style:none;margin:0 0 12px;padding:0;display:grid;gap:6px;"></ul>'
+        + '<button type="button" class="uc-pill-ghost uc-pill-sm" data-jev-forget hidden>Forget everything</button>';
+      anchor.parentNode.insertBefore(card, anchor);
+      const list = card.querySelector('ul');
+      const forget = card.querySelector('[data-jev-forget]');
+      const base = '/api/collections/jev_memory/records';
+      let rows = [];
+      const render = (msg) => {
+        forget.hidden = !rows.length;
+        list.innerHTML = rows.length ? rows.map((r) =>
+          '<li style="display:flex;gap:8px;align-items:center;justify-content:space-between;">'
+          + '<span>' + esc(r.text) + ' <small style="color:var(--uc-muted);">' + esc(ago(r.created)) + '</small></span>'
+          + '<button type="button" class="uc-pill-ghost uc-pill-sm" data-jev-del="' + esc(r.id) + '" aria-label="Forget: ' + esc(r.text) + '">Delete</button></li>').join('')
+          : '<li class="uc-pf-fine" style="color:var(--uc-muted);">' + esc(msg || 'Jev has not stored anything about you.') + '</li>';
+      };
+      const loadRows = () => UCx().api('GET', base + '?perPage=100&sort=-created&filter=' + encodeURIComponent('(user="' + u.id + '")'))
+        .then((r) => { rows = (r.items || []); render(); })
+        .catch((err) => { rows = []; render(err && err.status === 404 ? 'Jev’s memory is not set up on this server yet.' : 'Could not load Jev’s memory.'); });
+      card.addEventListener('click', async (e) => {
+        const del = e.target.closest('[data-jev-del]');
+        if (del) {
+          del.disabled = true;
+          try { await UCx().api('DELETE', base + '/' + encodeURIComponent(del.dataset.jevDel)); rows = rows.filter((r) => r.id !== del.dataset.jevDel); render(); UCP.toast('Forgotten.'); }
+          catch (err) { del.disabled = false; UCP.toast('Could not delete that note.', 'warn'); }
+          return;
+        }
+        if (e.target.closest('[data-jev-forget]')) {
+          UCP.dialog({
+            title: 'Forget everything',
+            body: '<p style="margin:0;">Jev will forget all ' + rows.length + ' notes about you. This cannot be undone.</p>',
+            actions: [{ label: 'Keep them' }, { label: 'Forget everything', primary: true, onClick: async (c) => {
+              const ids = rows.map((r) => r.id);
+              let failed = 0;
+              for (const id of ids) { try { await UCx().api('DELETE', base + '/' + encodeURIComponent(id)); } catch (err) { failed++; } }
+              c();
+              await loadRows();
+              UCP.toast(failed ? 'Some notes could not be deleted.' : 'Jev forgot everything.', failed ? 'warn' : 'ok');
+            } }]
+          });
+        }
+      });
+      render('Loading…');
+      loadRows();
+    }
   };
 })();

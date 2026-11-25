@@ -371,6 +371,19 @@ mentorship_docs = {
 }
 upsert("mentorship_docs", mentorship_docs)
 
+# --- Jev assistant memory (hook backend/pb_hooks/uc_jev.pb.js writes it; the owner reads and deletes)
+jev_memory = {
+    "name": "jev_memory", "type": "base",
+    "listRule": "user = @request.auth.id", "viewRule": "user = @request.auth.id",
+    "createRule": None, "updateRule": None, "deleteRule": "user = @request.auth.id",
+    "indexes": ["CREATE INDEX idx_jev_memory_user ON jev_memory (`user`, `created`)"],
+    "fields": [relation("user", USERS_ID, True, True),
+               {"type": "select", "name": "kind", "required": False, "maxSelect": 1,
+                "values": ["fact", "preference", "summary"], "hidden": False, "presentable": False, "system": False},
+               text("text", True, 300), created()],
+}
+upsert("jev_memory", jev_memory)
+
 # --- optional: PocketBase rate limiting (OFF unless UC_RATE_LIMITS=1: it changes production behaviour)
 if os.environ.get("UC_RATE_LIMITS") == "1":
     rules = [{"label": "*:auth", "maxRequests": 20, "duration": 60, "audience": ""},
