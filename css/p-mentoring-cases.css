@@ -120,3 +120,62 @@
 @media (prefers-reduced-motion: reduce) {
   .uc-ch-case.is-highlight { animation: none; box-shadow: 0 0 0 3px var(--uc-sky); }
 }
+
+/* ---- Mentor & Tutor additions (orbit redesign) ---- */
+.uc-mc-tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+.uc-mc-tab { min-height: 40px; padding: 8px 22px; border-radius: var(--uc-r-pill); border: 1px solid var(--uc-border); background: transparent;
+  font-family: var(--uc-font-body); font-size: 14px; font-weight: 600; color: var(--uc-ink-2); cursor: pointer;
+  transition: background var(--uc-d-fast, 120ms) var(--uc-ease-out, ease-out), color var(--uc-d-fast, 120ms) var(--uc-ease-out, ease-out); }
+.uc-mc-tab:hover { background: var(--uc-frost); color: var(--uc-ink); }
+.uc-mc-tab[aria-selected="true"] { background: var(--uc-ink); color: var(--uc-bg); border-color: var(--uc-ink); }
+.uc-mc-tab:focus-visible { outline: 2px solid var(--uc-focus); outline-offset: 2px; }
+.uc-mc-badge--role { border-style: solid; background: var(--uc-frost); color: var(--uc-ink); }
+.uc-mc-card { transition: transform var(--uc-d-base, 200ms) var(--uc-ease-out, ease-out), box-shadow var(--uc-d-base, 200ms) var(--uc-ease-out, ease-out); }
+.uc-mc-card:hover { transform: translateY(-2px); box-shadow: var(--uc-shadow); }
+
+/* tap targets >= 32px at 390px */
+.uc-mc .uc-pill-sm, .uc-ch .uc-pill-sm, .uc-mc-reset { min-height: 36px; }
+.uc-mc-link, .uc-ch-chip, .uc-ch-tagbtn { min-height: 32px; }
+.uc-mc-empty .uc-mc-link, .uc-mc-stack .uc-stat-l .uc-mc-link { min-height: 32px; }
+.uc-mc-actions > * { min-height: 40px; }
+
+/* my requests */
+.uc-mc-reqlist { display: flex; flex-direction: column; gap: 10px; }
+.uc-mc-req { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.uc-mc-req-body { flex: 1 1 240px; min-width: 0; }
+.uc-mc-req-top { display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+.uc-mc-req-acts { display: flex; gap: 8px; flex-wrap: wrap; }
+.uc-mc-chip { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: var(--uc-r-pill); font-size: 11px; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--uc-ink); border: 1px solid var(--uc-border); background: transparent; }
+.uc-mc-chip--kind { background: var(--uc-frost); }
+.uc-mc-chip--requested { border-style: dashed; }
+.uc-mc-chip--active { background: var(--uc-ink); color: var(--uc-bg); border-color: var(--uc-ink); }
+.uc-mc-chip--closed { color: var(--uc-ink-2); background: var(--uc-frost); }
+.uc-mc-myreq .uc-empty-orbit p { margin: 0; font-size: 14px; }
+
+/* profile: mentoring & tutoring card */
+.uc-pf-mt { display: flex; flex-direction: column; gap: 16px; }
+.uc-pf-mt-row { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px; border-radius: var(--uc-r-sm); border: 1px solid var(--uc-border-2); background: var(--uc-card-solid); }
+.uc-pf-mt label { display: flex; flex-direction: column; gap: 6px; font-size: 13px; color: var(--uc-ink); }
+.uc-pf-mt .uc-pf-mt-check { flex-direction: row; align-items: center; gap: 10px; min-height: 32px; font-weight: 600; cursor: pointer; }
+.uc-pf-mt .uc-pf-mt-check input { width: 24px; height: 24px; flex: none; accent-color: var(--uc-ink); }
+.uc-pf-mt input[type="text"], .uc-pf-mt select { width: 100%; box-sizing: border-box; min-height: 40px; padding: 9px 16px; border-radius: var(--uc-r-pill);
+  border: 1px solid rgba(43,42,38,0.12); background: var(--uc-card-solid); font-family: var(--uc-font-body); font-size: 13px; color: var(--uc-ink); }
+.uc-pf-mt :focus-visible { outline: 2px solid var(--uc-focus); outline-offset: 2px; }
+.uc-pf-mt-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.uc-pf-mt-fine { font-size: 12px; color: var(--uc-muted); }
+
+/* case hub: empty state + vote target */
+.uc-ch-vote { min-width: 46px; min-height: 54px; }
+.uc-ch-list .uc-empty-orbit p, .uc-mc-empty.uc-empty-orbit p { margin: 0; font-size: 14px; }
+
+@media (max-width: 760px) {
+  .uc-mc-tab { flex: 1 1 0; }
+  .uc-mc-req-acts { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .uc-mc-card, .uc-mc-tab { transition: none; }
+  .uc-mc-card:hover { transform: none; }
+}
+.uc-empty-orbit[hidden] { display: none; }
+.uc-ch-hero-cta .uc-pill-paper { min-height: 44px; }

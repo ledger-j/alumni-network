@@ -1,5 +1,5 @@
-<!-- MENTORING — content only; shell + rail supplied by the router.
-     Behaviour lives in js/pages/mentoring.js (live mentors, filters, request dialog). -->
+<!-- MENTOR & TUTOR — content only; shell + rail supplied by the router.
+     Behaviour lives in js/pages/mentoring.js (mentors + tutors tabs, filters, request dialog, my requests). -->
 <div class="uc-page-main uc-mc">
   <div class="uc-app-header">
     <h1 class="uc-app-title">Pass it <em>forward.</em></h1>
@@ -9,43 +9,47 @@
     </form>
   </div>
 
-  <div class="uc-mc-stack">
+  <div class="uc-mc-stack uc-stagger">
     <!-- Two-sided explainer -->
     <section class="uc-panel-dark uc-mc-hero" aria-labelledby="uc-mc-hero-title">
-      <div class="uc-eyebrow uc-mc-hero-eyebrow">Alumni mentoring students</div>
-      <h2 id="uc-mc-hero-title" class="uc-mc-hero-title">One conversation can save a student <em>a year of guessing.</em></h2>
+      <div class="uc-eyebrow uc-mc-hero-eyebrow">Mentors &amp; tutors</div>
+      <h2 id="uc-mc-hero-title" class="uc-mc-hero-title">One conversation can save a student <em>a year of guessing</em> — and a good tutor, an exam.</h2>
       <div class="uc-mc-sides">
         <div class="uc-mc-side">
           <div class="uc-mc-side-h"><span class="iconify" data-icon="ph:student-bold" aria-hidden="true"></span> For students</div>
           <ol class="uc-mc-steps">
-            <li>Find an alumna or alumnus by programme, sector or city.</li>
+            <li>Find a mentor (alumni) or a tutor (students and alumni) by programme, subject or city.</li>
             <li>Send a short, structured ask — your goal and the format you'd like.</li>
             <li>Continue the conversation in Messages.</li>
           </ol>
-          <button type="button" class="uc-pill-paper" data-mc-find>Find a mentor</button>
+          <button type="button" class="uc-pill-paper" data-mc-find>Find a mentor or tutor</button>
         </div>
         <div class="uc-mc-side">
-          <div class="uc-mc-side-h"><span class="iconify" data-icon="ph:handshake-bold" aria-hidden="true"></span> For alumni</div>
+          <div class="uc-mc-side-h"><span class="iconify" data-icon="ph:handshake-bold" aria-hidden="true"></span> For alumni &amp; tutors</div>
           <ol class="uc-mc-steps">
-            <li>Switch on “Offer mentorship” in your profile.</li>
-            <li>Say what you can offer — a call, a CV review, a coffee.</li>
+            <li>Switch on mentoring or tutoring in your profile.</li>
+            <li>Say what you offer — a call, a CV review, a subject you tutor.</li>
             <li>Students reach you directly; you decide what to accept.</li>
           </ol>
-          <button type="button" class="uc-pill-outline-paper" data-mc-become>Become a mentor</button>
+          <button type="button" class="uc-pill-outline-paper" data-mc-become>Become a mentor or tutor</button>
         </div>
       </div>
     </section>
 
-    <!-- Mentor directory -->
+    <!-- Mentor / Tutor directory -->
     <section class="uc-card" id="uc-mc-mentors" aria-labelledby="uc-mc-mentors-title">
       <div class="uc-mc-head">
-        <h2 class="uc-h2" id="uc-mc-mentors-title">Find a mentor</h2>
+        <h2 class="uc-h2" id="uc-mc-mentors-title">Find a mentor or tutor</h2>
         <span class="uc-mc-status" data-mc-status role="status" aria-live="polite"></span>
       </div>
-      <form class="uc-mc-filters" data-mc-filters role="search" aria-label="Filter mentors">
+      <div class="uc-mc-tabs" role="tablist" aria-label="Mentors or tutors" data-mc-tabs>
+        <button type="button" role="tab" id="uc-mc-tab-mentors" class="uc-mc-tab" aria-controls="uc-mc-panel-mentors" aria-selected="true" data-mc-tab="mentors">Mentors</button>
+        <button type="button" role="tab" id="uc-mc-tab-tutors" class="uc-mc-tab" aria-controls="uc-mc-panel-tutors" aria-selected="false" tabindex="-1" data-mc-tab="tutors">Tutors</button>
+      </div>
+      <form class="uc-mc-filters" data-mc-filters role="search" aria-label="Filter mentors and tutors">
         <label class="uc-mc-field uc-mc-field--grow">
-          <span class="uc-mc-label">Keyword or sector</span>
-          <input type="search" name="q" placeholder="e.g. finance, CV review, product…" autocomplete="off">
+          <span class="uc-mc-label">Keyword, subject or sector</span>
+          <input type="search" name="q" placeholder="e.g. finance, statistics, CV review…" autocomplete="off">
         </label>
         <label class="uc-mc-field">
           <span class="uc-mc-label">Programme</span>
@@ -71,8 +75,22 @@
         </label>
         <button type="reset" class="uc-pill-ghost uc-pill-sm uc-mc-reset">Clear</button>
       </form>
-      <div class="uc-cards-2 uc-mc-grid" data-mc-grid></div>
-      <p class="uc-mc-empty" data-mc-empty hidden>No mentors match these filters yet. Try a broader keyword — or <button type="button" class="uc-mc-link" data-mc-become>become the first one</button>.</p>
+      <div role="tabpanel" id="uc-mc-panel-mentors" aria-labelledby="uc-mc-tab-mentors" data-mc-panel="mentors">
+        <div class="uc-cards-2 uc-mc-grid" data-mc-grid></div>
+        <p class="uc-mc-empty" data-mc-empty hidden>No mentors match these filters yet. Try a broader keyword — or <button type="button" class="uc-mc-link" data-mc-become>become the first one</button>.</p>
+      </div>
+      <div role="tabpanel" id="uc-mc-panel-tutors" aria-labelledby="uc-mc-tab-tutors" data-mc-panel="tutors" hidden>
+        <div class="uc-cards-2 uc-mc-grid" data-mc-tgrid></div>
+        <p class="uc-mc-empty" data-mc-tempty hidden>No tutors match these filters yet. Try a broader keyword — or <button type="button" class="uc-mc-link" data-mc-become>offer tutoring yourself</button>.</p>
+      </div>
+    </section>
+
+    <!-- My requests (live, from the mentorships collection) -->
+    <section class="uc-card" id="uc-mc-myrequests" aria-labelledby="uc-mc-myreq-title">
+      <div class="uc-mc-head">
+        <h2 class="uc-h2" id="uc-mc-myreq-title">My requests</h2>
+      </div>
+      <div class="uc-mc-myreq" data-mc-myreq></div>
     </section>
 
     <!-- Mentee requests (alumni view) -->
@@ -87,8 +105,8 @@
     <!-- Your mentoring (honest, computed) -->
     <section class="uc-card" aria-labelledby="uc-mc-you-title">
       <div class="uc-mc-head">
-        <h2 class="uc-h2" id="uc-mc-you-title">Your mentoring</h2>
-        <button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-become>Mentoring settings</button>
+        <h2 class="uc-h2" id="uc-mc-you-title">Your mentoring &amp; tutoring</h2>
+        <button type="button" class="uc-pill-ghost uc-pill-sm" data-mc-become>Mentoring &amp; tutoring settings</button>
       </div>
       <div class="uc-stats-3" data-mc-stats></div>
     </section>

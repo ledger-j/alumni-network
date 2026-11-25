@@ -286,6 +286,19 @@
       if (s) s.addEventListener('click', () => toggleSave(card));
       const a = card.querySelector('[data-job-apply]');
       if (a) a.addEventListener('click', () => openApply(card));
+      const k = card.querySelector('[data-job-ask]');
+      if (k) {
+        k.setAttribute('aria-label', 'Message the poster or ask an alum about ' + j.title);
+        k.addEventListener('click', () => {
+          k.classList.remove('uc-pulse'); void k.offsetWidth; k.classList.add('uc-pulse');
+          setTimeout(() => k.classList.remove('uc-pulse'), 300);
+          const U = window.UC || {};
+          if (j.poster) { if (U.openChat) U.openChat(j.poster); return; }
+          const m = 'Sample listing: no real poster. Pick an alum to ask about <b>' + esc(j.title) + '</b>.';
+          if (U.toast) U.toast(m); else toast(m);
+          if (U.openChat) U.openChat();
+        });
+      }
       card.querySelectorAll('[data-job-company]').forEach((b) => {
         b.setAttribute('aria-label', 'Find alumni at ' + j.company + ' in the network');
         b.addEventListener('click', () => G('network', { q: j.company }));

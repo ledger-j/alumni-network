@@ -67,7 +67,7 @@ a.uc-feed-chip:hover { border-color: var(--uc-border); color: var(--uc-ink); }
 .uc-feed-state-sub { font-size: 14px; margin-bottom: 18px !important; }
 .uc-feed-more-wrap { display: flex; justify-content: center; margin-top: 18px; }
 .uc-feed-more-wrap .uc-btn-ghost[disabled] { opacity: .55; cursor: progress; }
-.uc-feed-linkbtn { background: none; border: none; cursor: pointer; font-family: var(--uc-font-body); font-size: 13px; font-weight: 600; color: var(--uc-ink-2); padding: 4px 6px; border-radius: 8px; }
+.uc-feed-linkbtn { background: none; border: none; cursor: pointer; font-family: var(--uc-font-body); font-size: 13px; font-weight: 600; color: var(--uc-ink-2); padding: 4px 6px; min-height: 32px; border-radius: 8px; }
 .uc-feed-linkbtn:hover { color: var(--uc-ink); }
 
 /* ---- side cards ---- */
@@ -111,4 +111,22 @@ a.uc-feed-chip:hover { border-color: var(--uc-border); color: var(--uc-ink); }
 @media (max-width: 600px) {
   .uc-feed-post, .uc-feed-composer { padding: 18px 16px 12px; }
   .uc-feed-act { padding: 8px 10px; }
+}
+
+/* touch targets: links and chips reach 32px height on small screens (WCAG 2.5.8 min 24px) */
+@media (max-width: 860px) {
+  a.uc-feed-chip, .uc-feed-more-link, .uc-feed-city { display: inline-flex; align-items: center; min-height: 32px; }
+  .uc-feed-side-title { display: flex; align-items: center; min-height: 32px; }
+  #uc-dash-search { min-height: 32px; }
+}
+
+/* one column below tablet (the grid is inline-styled in the component, hence !important) */
+@media (max-width: 960px) {
+  .uc-feed-grid { grid-template-columns: minmax(0, 1fr) !important; }
+}
+@media (max-width: 860px) {
+  .uc-feed-act, .uc-feed-del { min-height: 36px; }
+  .uc-feed-iconbtn { width: 36px; height: 36px; }
+  .uc-feed-explore-list a { min-height: 44px; }
+  .uc-feed-state .uc-btn-dark, .uc-feed-state .uc-btn-ghost { min-height: 40px; }
 }

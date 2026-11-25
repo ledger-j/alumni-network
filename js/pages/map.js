@@ -14,6 +14,8 @@
       el.innerHTML = '<p style="padding:24px;color:var(--uc-muted);">The map could not load — check your connection and reload.</p>';
       return;
     }
+    const bandCanvas = root.querySelector('[data-map-band]');
+    if (bandCanvas && window.UCConstellation) window.UCConstellation.mount(bandCanvas, { count: 60 });
     const params = UCP.params();
     const panel = root.querySelector('[data-map-panel]');
     const stats = root.querySelector('[data-map-stats]');
@@ -62,6 +64,7 @@
     }
 
     function select(b) {
+      const me = UCP.user();
       const where = (b.area ? b.area + ', ' : '') + b.city;
       const real = b.people.filter((p) => !p.sample);
       const samples = b.people.length - real.length;
@@ -83,7 +86,13 @@
         html += '<ul class="uc-map-people">' + real.slice(0, 8).map((p) =>
           '<li><button type="button" class="uc-map-person" data-q="' + esc(p.name) + '">' + esc(p.name || 'Member')
           + '</button>' + (p.mentor ? '<span class="uc-map-chip">mentor</span>' : '')
+          + (p.id && (!me || p.id !== me.id) ? '<button type="button" class="uc-map-msg" data-uc-peer="' + esc(p.id) + '" aria-label="Message ' + esc(p.name || 'member') + '">Message</button>' : '')
           + (p.programme ? '<small>' + esc(p.programme) + '</small>' : '') + '</li>').join('') + '</ul>';
+      }
+      if (!real.length) {
+        html += '<div class="uc-empty-orbit" style="--uc-node-h:25;padding:18px 0 4px;"><div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div>'
+          + '<p style="margin:0;font-size:13px;">Only sample dots here so far.</p>'
+          + '<button type="button" class="uc-btn-ghost" data-go="profile">Put yourself on the map</button></div>';
       }
       html += '<div class="uc-map-actions">'
         + '<button type="button" class="uc-btn-dark" data-go="network">People in ' + esc(b.city) + '</button>'
@@ -91,8 +100,12 @@
         + '<button type="button" class="uc-btn-ghost" data-go="events">Events</button></div>';
       panel.innerHTML = html;
       panel.querySelectorAll('[data-q]').forEach((x) => x.addEventListener('click', () => UCP.go('network', { q: x.dataset.q })));
+      panel.querySelectorAll('[data-uc-peer]').forEach((x) => x.addEventListener('click', () => {
+        if (window.UC && window.UC.openChat) window.UC.openChat(x.dataset.ucPeer);
+      }));
       panel.querySelectorAll('[data-go]').forEach((x) => x.addEventListener('click', () => {
         const page = x.dataset.go;
+        if (page === 'profile') return UCP.go('profile');
         UCP.go(page, page === 'mentoring' ? { q: b.city } : { city: b.city });
       }));
     }

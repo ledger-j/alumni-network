@@ -15,7 +15,7 @@
     </form>
   </div>
 
-  <div class="uc-jobs-stack">
+  <div class="uc-jobs-stack uc-stagger">
     <!-- Hiring banner -->
     <div class="uc-panel-dark uc-jobs-banner">
       <div class="uc-jobs-banner-text">
@@ -42,7 +42,7 @@
       </div>
       <p class="uc-ej-status" role="status" aria-live="polite" data-job-status></p>
 
-      <div class="uc-jobs-list" data-job-list>
+      <div class="uc-jobs-list uc-stagger" data-job-list>
         <article class="uc-row uc-job" data-uc-job
           id="job-risk-strategy-analyst-intern" data-id="risk-strategy-analyst-intern"
           data-company="Northwind Capital" data-city="Munich" data-type="Internship" data-mode="onsite" data-poster="">
@@ -53,6 +53,7 @@
             <p class="uc-job-desc" hidden>Support the credit-risk strategy team on portfolio monitoring and scenario analysis. Strong Excel/Python and an interest in banking regulation help.</p>
           </div>
           <div class="uc-job-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-job-ask" data-job-ask>Ask an alum <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
             <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
           </div>
@@ -68,6 +69,7 @@
             <p class="uc-job-desc" hidden>Run workstreams on mid-market buy- and sell-side mandates: modelling, due-diligence coordination and client materials.</p>
           </div>
           <div class="uc-job-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-job-ask" data-job-ask>Ask an alum <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
             <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
           </div>
@@ -83,6 +85,7 @@
             <p class="uc-job-desc" hidden>Build the emissions-reporting data pipeline and dashboards used by the finance and operations teams. SQL required; dbt a plus.</p>
           </div>
           <div class="uc-job-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-job-ask" data-job-ask>Ask an alum <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
             <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
           </div>
@@ -98,6 +101,7 @@
             <p class="uc-job-desc" hidden>Help the growth team measure campaigns: attribution reports, A/B-test analysis and a weekly KPI review.</p>
           </div>
           <div class="uc-job-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-job-ask" data-job-ask>Ask an alum <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
             <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
           </div>
@@ -113,13 +117,15 @@
             <p class="uc-job-desc" hidden>Lead growth-equity investments in European B2B software, from sourcing through board work. 10+ years in investing or operating roles.</p>
           </div>
           <div class="uc-job-actions">
+            <button type="button" class="uc-pill-ghost uc-pill-sm uc-job-ask" data-job-ask>Ask an alum <span class="uc-nudge" aria-hidden="true">→</span></button>
             <button type="button" class="uc-job-save" data-job-save aria-pressed="false"><span class="iconify" data-icon="ph:bookmark-simple-bold" aria-hidden="true"></span></button>
             <button type="button" class="uc-pill-ink" data-job-apply>Apply</button>
           </div>
         </article>
       </div>
 
-      <div class="uc-ej-empty" data-job-empty hidden>
+      <div class="uc-ej-empty uc-empty-orbit" data-job-empty hidden style="--uc-node-h:185;">
+        <div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div>
         <p>No roles match these filters.</p>
         <div class="uc-ej-empty-actions">
           <button type="button" class="uc-pill-ghost uc-pill-sm" data-job-clear>Clear filters</button>

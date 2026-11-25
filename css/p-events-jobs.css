@@ -126,6 +126,35 @@
   .uc-jobs-filters, .uc-ej-form-2 { grid-template-columns: 1fr; }
   .uc-ev-actions, .uc-job-actions { width: 100%; justify-content: flex-end; }
 }
+/* ---- orbit additions ---- */
+.uc-pulse { animation: uc-ej-pulse 280ms var(--uc-ease-out) 1; }
+@keyframes uc-ej-pulse { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
+.uc-ev [data-ev-rsvp], .uc-ev-hero [data-ev-rsvp], .uc-job-ask, .uc-ev-hello {
+  transition: transform var(--uc-d-base) var(--uc-ease-out), background-color var(--uc-d-base) var(--uc-ease-out); }
+.uc-ev [data-ev-rsvp]:active, .uc-job-ask:active, .uc-ev-hello:active { transform: scale(0.97); }
+.uc-ev-hello .uc-nudge, .uc-job-ask .uc-nudge { margin-left: 2px; }
+.uc-ev-hello:hover .uc-nudge, .uc-job-ask:hover .uc-nudge { transform: translateX(3px); }
+.uc-ev-actions .uc-pill-sm, .uc-job-actions .uc-pill-sm { min-height: 36px; }
+.uc-ej-empty.uc-empty-orbit { border-style: dashed; }
+
+/* contrast: sample label + chips on tinted bg */
+.uc-ej-sample { color: var(--uc-ink); }
+.uc-ev-hero-badge { background: rgba(250,249,246,0.18); color: var(--uc-bg); }
+.uc-ev [data-ev-rsvp][aria-pressed="true"] { color: #fff; }
+
+@media (max-width: 520px) {
+  .uc-ev-body, .uc-job-body { min-width: 0; flex-basis: calc(100% - 70px); }
+  .uc-ev-hero-inner { padding: 20px; }
+  .uc-ev-hero-title { overflow-wrap: anywhere; }
+  .uc-ej-link { display: inline-block; min-height: 32px; line-height: 32px; }
+  .uc-job-save { width: 44px; height: 44px; }
+  .uc-ej-chip, .uc-jobs-saved-chip, .uc-jobs-amounts .uc-pill-paper, .uc-jobs-amounts .uc-pill-outline-paper,
+  .uc-ev-actions button, .uc-job-actions .uc-pill-ink, .uc-job-actions .uc-pill-sm { min-height: 40px; }
+  .uc-jobs-filter select, .uc-jobs-amount-other { min-height: 44px; }
+  .uc-ev-actions, .uc-job-actions { flex-wrap: wrap; }
+  .uc-jobs-banner { padding: 22px 20px; }
+}
 @media (prefers-reduced-motion: reduce) {
+  .uc-pulse { animation: none; }
   .uc-ej-chip, .uc-ev.is-highlight, .uc-job.is-highlight, .uc-ev-hero.is-highlight { transition: none; }
 }

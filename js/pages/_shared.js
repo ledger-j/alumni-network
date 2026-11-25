@@ -69,6 +69,13 @@
       b.addEventListener('click', () => (a.onClick ? a.onClick(close, d) : close()));
       bar.appendChild(b);
     });
+    // Enter inside a dialog form must act like the primary button, not reload the page
+    // with the field values in the URL (the forms have no submit handler of their own).
+    d.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const primary = bar.querySelector('button.uc-btn-dark');
+      if (primary && !primary.disabled) primary.click();
+    });
     document.body.appendChild(d);
     d.showModal();
     if (window.Iconify) window.Iconify.scan(d);

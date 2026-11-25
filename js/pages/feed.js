@@ -142,11 +142,11 @@
         + '<p class="uc-feed-state-sub">We could not contact the UniCircle server. Check your connection and try again.</p>'
         + '<button type="button" class="uc-btn-ghost" data-uc-feed-retry>Try again</button></div>';
     }
-    return '<div class="uc-card uc-feed-state" data-uc-feed-state data-uc-feed-empty>'
-      + '<span class="iconify" data-icon="ph:pencil-simple-line" aria-hidden="true"></span>'
-      + '<p class="uc-serif">The feed is quiet \u2014 be the first to post.</p>'
+    return '<div class="uc-card uc-feed-state uc-empty-orbit" data-uc-feed-state data-uc-feed-empty style="--uc-node-h:235;">'
+      + '<div class="uc-empty-nodes" aria-hidden="true"><i></i><u></u><i></i></div>'
+      + '<p class="uc-serif">The feed is quiet — be the first to post.</p>'
       + '<p class="uc-feed-state-sub">Share a career update, a question for your programme, or an opportunity.</p>'
-      + '<button type="button" class="uc-btn-dark" data-uc-feed-compose-focus>Write a post</button></div>';
+      + '<button type="button" class="uc-btn-dark" data-uc-feed-compose-focus>Be the first to post</button></div>';
   }
 
   window.UCPages['feed'] = function (root) {

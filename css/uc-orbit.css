@@ -1,0 +1,273 @@
+/* ==========================================================================
+   UniCircle — orbit shell + motion contract
+   The menu lives on the RIGHT (content left, navigation + messages right).
+   A dimmed constellation runs behind the rail; every menu dot is a node of it.
+   Motion rules: <= 300 ms, custom easing, transform/opacity only,
+   honour prefers-reduced-motion (global block at the bottom).
+   Loaded after redesign.css. See DESIGN.md.
+   ========================================================================== */
+:root {
+  --uc-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --uc-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --uc-d-fast: 120ms;
+  --uc-d-base: 200ms;
+  --uc-d-slow: 280ms;
+  --uc-rail-w: 264px;
+  --uc-node-h: 275;               /* default swarm hue for ad-hoc nodes */
+}
+
+/* ---- shell: content left, rail right ------------------------------------ */
+.uc-dashboard-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--uc-rail-w);
+  min-height: 100vh;
+}
+.uc-main-col { order: 0; }
+
+.uc-rail {
+  order: 1;
+  position: sticky; top: 0;
+  height: 100vh;
+  display: flex; flex-direction: column;
+  background: var(--uc-panel);
+  color: var(--uc-bg);
+  overflow: hidden;
+  isolation: isolate;
+}
+.uc-rail-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+}
+.uc-rail-inner {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column;
+  height: 100%; padding: 20px 12px 16px;
+  overflow-y: auto; overflow-x: hidden;
+  scrollbar-width: thin; scrollbar-color: rgba(250,249,246,.2) transparent;
+}
+.uc-rail-spacer { flex: 1 1 auto; min-height: 12px; }
+
+.uc-rail-brand {
+  display: flex; align-items: center; gap: 12px; padding: 0 8px 22px;
+  color: var(--uc-bg); text-decoration: none;
+}
+.uc-rail-brand img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+.uc-rail-brand .uc-serif { font-family: var(--uc-font-display); font-size: 22px; }
+
+.uc-rail-link {
+  display: flex; align-items: center; width: 100%; text-align: left;
+  padding: 11px 14px; border: none; background: transparent; cursor: pointer;
+  border-radius: var(--uc-r-pill);
+  font-family: var(--uc-font-body); font-size: 14px; font-weight: 500;
+  color: rgba(250,249,246,.68);
+  text-decoration: none;
+  transition: transform var(--uc-d-base) var(--uc-ease-out),
+              background-color var(--uc-d-base) var(--uc-ease-out),
+              color var(--uc-d-base) var(--uc-ease-out);
+}
+.uc-rail-link:hover, .uc-rail-link:focus-visible {
+  background: rgba(250,249,246,.09); color: var(--uc-bg);
+  transform: translateX(-3px);               /* leans toward the content */
+}
+.uc-rail-link:focus-visible { outline: 2px solid oklch(0.78 0.14 var(--h, 275)); outline-offset: 2px; }
+.uc-rail-link:active { transform: translateX(-3px) scale(0.98); }
+.uc-rail-link.active, .uc-rail-link[aria-current="page"] {
+  background: rgba(250,249,246,.13); color: var(--uc-bg); font-weight: 600;
+}
+.uc-rail-dot {
+  display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  margin-right: 12px; flex-shrink: 0;
+  background: oklch(0.74 0.14 var(--h, 275));
+  box-shadow: 0 0 0 0 oklch(0.74 0.14 var(--h, 275) / 0.5);
+  transition: transform var(--uc-d-base) var(--uc-ease-out), box-shadow var(--uc-d-base) var(--uc-ease-out);
+}
+.uc-rail-link:hover .uc-rail-dot, .uc-rail-link:focus-visible .uc-rail-dot { transform: scale(1.35); box-shadow: 0 0 0 5px oklch(0.74 0.14 var(--h, 275) / 0.22); }
+.uc-rail-link.active .uc-rail-dot { transform: scale(1.25); box-shadow: 0 0 0 4px oklch(0.74 0.14 var(--h, 275) / 0.28); }
+.uc-rail-dot--me { background: rgba(250,249,246,.45); }
+.uc-rail-badge {
+  margin-left: auto; min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px;
+  background: oklch(0.72 0.15 25); color: #2b2a26; font-size: 11px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.uc-rail-badge[hidden] { display: none; }
+
+/* ---- chat dock inside the rail ------------------------------------------ */
+.uc-rail-dock {
+  margin: 8px 0 10px; padding: 12px;
+  border-radius: 20px;
+  background: rgba(250,249,246,.07);
+  border: 1px solid rgba(250,249,246,.10);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.uc-dock-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 12px; font-weight: 700; letter-spacing: .02em; color: rgba(250,249,246,.8); }
+.uc-dock-head .uc-dock-open { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--uc-bg); background: none; border: none; cursor: pointer; padding: 4px 8px; border-radius: 999px; }
+.uc-dock-head .uc-dock-open:hover { background: rgba(250,249,246,.12); }
+.uc-dock-list { display: flex; flex-direction: column; gap: 2px; }
+.uc-dock-peer {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 8px;
+  border: none; background: transparent; cursor: pointer; text-align: left;
+  border-radius: 14px; color: rgba(250,249,246,.8);
+  transition: background-color var(--uc-d-base) var(--uc-ease-out), transform var(--uc-d-base) var(--uc-ease-out);
+}
+.uc-dock-peer:hover, .uc-dock-peer:focus-visible { background: rgba(250,249,246,.1); transform: translateX(-2px); color: var(--uc-bg); }
+.uc-dock-peer img, .uc-dock-ini { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.uc-dock-ini { display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #2b2a26; background: oklch(0.85 0.08 var(--h, 275)); }
+.uc-dock-peer b { font-size: 13px; font-weight: 600; display: block; line-height: 1.2; }
+.uc-dock-peer small { display: block; font-size: 11px; color: rgba(250,249,246,.55); max-width: 138px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.uc-dock-peer .uc-node { margin-left: auto; }
+.uc-dock-hello { margin: 6px 2px 2px; font-size: 12px; line-height: 1.4; color: rgba(250,249,246,.62); }
+.uc-dock-cta {
+  margin-top: 8px; width: 100%; padding: 9px 14px; border-radius: 999px; border: none; cursor: pointer;
+  background: var(--uc-bg); color: var(--uc-ink); font-family: var(--uc-font-body); font-size: 13px; font-weight: 700;
+  transition: transform var(--uc-d-base) var(--uc-ease-out);
+}
+.uc-dock-cta:hover { transform: translateY(-1px); }
+.uc-dock-cta:active { transform: scale(0.98); }
+
+/* keyboard focus on the dark rail: paper ring (the global ink outline is invisible on #3a3934) */
+.uc-rail-dock :is(button):focus-visible, .uc-rail-inner > button:focus-visible { outline: 2px solid var(--uc-bg); outline-offset: 2px; }
+
+/* unread node: a dot that rings once */
+.uc-node {
+  position: relative; display: inline-block; width: 9px; height: 9px; border-radius: 50%;
+  background: oklch(0.74 0.15 25); flex-shrink: 0;
+}
+.uc-node[hidden] { display: none; }
+.uc-node::after {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1.5px solid oklch(0.74 0.15 25);
+  animation: uc-node-ring 900ms var(--uc-ease-out) 1 both;
+}
+@keyframes uc-node-ring { from { transform: scale(.4); opacity: .9; } to { transform: scale(1.5); opacity: 0; } }
+
+/* ---- the chat panel docks to the left edge of the rail ------------------- */
+body.uc-has-rail #uc-fab { display: none; }
+body.uc-has-rail #uc-chat {
+  right: calc(var(--uc-rail-w) + 16px); bottom: 16px;
+  background: var(--uc-card-solid); border: 1px solid var(--uc-border); border-radius: 24px;
+  box-shadow: var(--uc-shadow-lg);
+  transform-origin: bottom right;
+}
+body.uc-has-rail #uc-chat.open { animation: uc-panel-in var(--uc-d-slow) var(--uc-ease-out) both; }
+@keyframes uc-panel-in { from { opacity: 0; transform: translateX(12px) scale(.98); } to { opacity: 1; transform: none; } }
+#uc-chat .uc-chat-head { background: var(--uc-panel); color: var(--uc-bg); font-family: var(--uc-font-body); }
+#uc-chat .uc-msg.mine { background: var(--uc-ink); color: var(--uc-bg); }
+#uc-chat .uc-msg { background: #f1efe9; font-family: var(--uc-font-body); }
+#uc-chat .uc-peer.active { background: #f1efe9; color: var(--uc-ink); }
+#uc-chat .uc-thread-form .uc-primary { background: var(--uc-ink); color: var(--uc-bg); border: none; }
+#uc-chat .uc-thread-form input:focus { border-color: var(--uc-ink); }
+#uc-chat .uc-peer .uc-node { margin-left: auto; }
+#uc-chat .uc-msg-meta { font-size: 10px; color: var(--uc-muted); align-self: flex-end; margin: -4px 4px 0; }
+
+/* guests (no rail): the chat button is an invitation, in brand colours */
+#uc-fab { background: var(--uc-ink); color: var(--uc-bg); transition: transform var(--uc-d-base) var(--uc-ease-out); }
+#uc-fab:hover { filter: none; transform: translateY(-2px); }
+
+/* ---- reusable "connection" motion for pages (opt-in classes) -------------- */
+/* a short line reaches out of a card/link toward its action */
+.uc-connect { position: relative; }
+.uc-connect::after {
+  content: ""; position: absolute; left: calc(100% + 4px); top: 50%;
+  width: 28px; height: 1.5px; border-radius: 1px;
+  background: linear-gradient(90deg, oklch(0.62 0.14 var(--uc-node-h)), transparent);
+  transform: scaleX(0); transform-origin: left; opacity: 0;
+  transition: transform var(--uc-d-base) var(--uc-ease-out), opacity var(--uc-d-fast) linear;
+  pointer-events: none;
+}
+.uc-connect:hover::after, .uc-connect:focus-visible::after { transform: scaleX(1); opacity: 1; }
+
+/* arrow/glyph that nudges toward the click */
+.uc-nudge { display: inline-block; transition: transform var(--uc-d-base) var(--uc-ease-out); }
+a:hover > .uc-nudge, button:hover > .uc-nudge { transform: translateX(3px); }
+
+/* people cards: node ignites on hover */
+.uc-person, .uc-row, .uc-joblink { transition: transform var(--uc-d-base) var(--uc-ease-out), box-shadow var(--uc-d-base) var(--uc-ease-out); }
+.uc-person:hover, .uc-joblink:hover { transform: translateY(-2px); box-shadow: var(--uc-shadow); }
+
+/* empty state: one unlinked node, one line reaching toward the action */
+.uc-empty-orbit { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 36px 16px; text-align: center; color: var(--uc-ink-2); }
+.uc-empty-orbit .uc-empty-nodes { display: flex; align-items: center; gap: 0; }
+.uc-empty-orbit .uc-empty-nodes i { width: 12px; height: 12px; border-radius: 50%; background: oklch(0.72 0.14 var(--uc-node-h)); }
+.uc-empty-orbit .uc-empty-nodes i + i { background: transparent; border: 1.5px dashed oklch(0.72 0.14 var(--uc-node-h)); }
+.uc-empty-orbit .uc-empty-nodes u { display: block; width: 34px; height: 1.5px; background: linear-gradient(90deg, oklch(0.72 0.14 var(--uc-node-h)), transparent); transform-origin: left; animation: uc-line-draw var(--uc-d-slow) var(--uc-ease-out) both; }
+@keyframes uc-line-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* section band: the constellation as a slim header strip for inner pages
+   (the feed keeps its taller .uc-ribbon from redesign.css) */
+.uc-band { position: relative; height: 96px; border-radius: 24px; overflow: hidden; background: var(--uc-bg); border: 1px solid var(--uc-border-2); }
+.uc-band canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* page entrance: stagger children in, one short beat each */
+.uc-stagger > * { animation: uc-rise var(--uc-d-slow) var(--uc-ease-out) both; }
+.uc-stagger > *:nth-child(2) { animation-delay: 40ms; }
+.uc-stagger > *:nth-child(3) { animation-delay: 80ms; }
+.uc-stagger > *:nth-child(4) { animation-delay: 120ms; }
+.uc-stagger > *:nth-child(n+5) { animation-delay: 160ms; }
+@keyframes uc-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ---- dark surfaces: secondary text must be light, headings must not inherit paper-side ink ----
+   (headings on the dark panel were ink-on-dark, 1.2:1; muted/ink-2 are lighter here).
+   --uc-ink is deliberately NOT flipped: paper buttons inside dark panels use it for their label. */
+.uc-panel-dark, .uc-ev-hero {
+  --uc-ink-2: #dedbd1;
+  --uc-muted: #c2bfb4;
+}
+.uc-panel-dark :is(h1, h2, h3, h4), .uc-ev-hero :is(h1, h2, h3, h4) { color: var(--uc-bg); }
+.uc-panel-dark em, .uc-ev-hero em { color: inherit; }
+
+/* ---- narrower desktop: keep two columns, slimmer rail --------------------- */
+@media (max-width: 1100px) {
+  :root { --uc-rail-w: 224px; }
+  .uc-dashboard-shell { grid-template-columns: minmax(0, 1fr) var(--uc-rail-w); }
+}
+
+/* ---- phones / TWA: the rail becomes a bottom tab bar ----------------------- */
+@media (max-width: 860px) {
+  .uc-dashboard-shell { grid-template-columns: minmax(0, 1fr); padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
+  .uc-rail {
+    position: fixed; left: 0; right: 0; bottom: 0; top: auto; z-index: 60;
+    height: calc(64px + env(safe-area-inset-bottom, 0px)); order: 0;
+    border-top: 1px solid rgba(250,249,246,.12);
+  }
+  .uc-rail-canvas, .uc-rail-brand, .uc-rail-dock, .uc-rail-spacer { display: none; }
+  .uc-rail-inner {
+    flex-direction: row; align-items: stretch; gap: 2px;
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px));
+    overflow-x: auto; overflow-y: hidden; scrollbar-width: none;
+  }
+  .uc-rail-inner::-webkit-scrollbar { display: none; }
+  .uc-rail-link {
+    flex-direction: column; justify-content: center; gap: 4px; width: auto; min-width: 66px; flex-shrink: 0;
+    padding: 6px 8px; font-size: 11px; border-radius: 14px; white-space: nowrap; position: relative;
+  }
+  .uc-rail-link:hover, .uc-rail-link:focus-visible { transform: none; }
+  .uc-rail-dot { margin: 0; }
+  .uc-rail-badge { position: absolute; top: 2px; right: 8px; margin: 0; }
+  body.uc-has-rail #uc-chat { right: 8px; left: 8px; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); width: auto; height: min(70vh, 520px); }
+}
+
+/* ---- touch targets on small screens: inputs and text links reach 32px (WCAG 2.5.8 asks 24px) ---- */
+@media (max-width: 860px) {
+  .uc-page-main :is(input:not([type=checkbox]):not([type=radio]), select, textarea), .uc-app-search input { min-height: 32px; }
+  .uc-pf-inline, .uc-pf-linkbtn { display: inline-flex; align-items: center; min-height: 32px; }
+  .leaflet-control-attribution a { display: inline-block; padding: 6px 2px; }
+  .uc-page-main input[type=checkbox], .uc-page-main input[type=radio] { width: 24px; height: 24px; }
+  /* every page (landing, topic pages, waitlist, app): consent checkboxes and inline text links */
+  input[type=checkbox], input[type=radio] { width: 24px; height: 24px; flex: none; }
+  p a:not([class*="btn"]), li a:not([class*="btn"]), label a, span > a:not([class*="btn"]), .uc-form a { display: inline-block; padding: 5px 0; }
+  footer a:not([class*="btn"]), .uc-lp-wl-foot a, a.uc-v2-link, a.uc-tap { display: inline-block; padding: 6px 0; }
+  label input[type=checkbox], label input[type=radio] { width: 24px; height: 24px; }
+}
+
+/* initials on the pastel avatar: ink, not the (now darker but still mid-grey) muted token: 4.15:1 -> AA */
+.uc-avatar-initials, .uc-wl-offer span.uc-avatar-initials { color: var(--uc-ink); }
+/* Leaflet's disabled zoom control (#bbb on #f4f4f4 = 1.75:1) */
+.leaflet-bar a.leaflet-disabled { color: #6b6b6b; }
+
+/* ---- reduced motion: one rule for the whole app ---------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important; scroll-behavior: auto !important;
+  }
+}

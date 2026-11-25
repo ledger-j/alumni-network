@@ -124,3 +124,7 @@ a.uc-btn-dark, a.uc-btn-ghost { display: inline-flex; align-items: center; justi
 .uc-wl-explore .dot { vertical-align: 1px; }
 @media (max-width: 1020px) { .uc-wl-navlinks { display: none; } }
 .uc-wl-more { display: inline-block; margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--uc-ink); text-decoration: underline; text-underline-offset: 3px; }
+
+/* orbit pass: "Tutoring" nav/footer links keep a 32px tap target; ghost nav CTA does not wrap */
+.uc-wl-navlinks a, .uc-wl-more { display: inline-flex; align-items: center; min-height: 32px; }
+.uc-wl-navwrap a.uc-btn-ghost { white-space: nowrap; }
