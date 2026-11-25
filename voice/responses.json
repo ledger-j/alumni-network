@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "_doc": "Short spoken confirmations for js/uc-voice.js, per intent id and language. {q} is replaced with the search words.",
+  "intents": {
+    "search_network": { "en": "Searching the network for {q}", "nl": "Ik zoek in het netwerk naar {q}", "de": "Ich suche im Netzwerk nach {q}" },
+    "go_feed": { "en": "Opening your feed", "nl": "Ik open je feed", "de": "Ich öffne deinen Feed" },
+    "go_network": { "en": "Opening the network", "nl": "Ik open het netwerk", "de": "Ich öffne das Netzwerk" },
+    "go_map": { "en": "Opening the map", "nl": "Ik open de kaart", "de": "Ich öffne die Karte" },
+    "go_mentoring": { "en": "Opening mentoring and tutoring", "nl": "Ik open mentoring en bijles", "de": "Ich öffne Mentoring und Nachhilfe" },
+    "go_events": { "en": "Opening events", "nl": "Ik open de evenementen", "de": "Ich öffne die Veranstaltungen" },
+    "go_pbl_hub": { "en": "Opening the Case Hub", "nl": "Ik open de Case Hub", "de": "Ich öffne den Case Hub" },
+    "go_jobs": { "en": "Opening the job board", "nl": "Ik open de vacatures", "de": "Ich öffne die Jobbörse" },
+    "go_profile": { "en": "Opening your profile", "nl": "Ik open je profiel", "de": "Ich öffne dein Profil" },
+    "go_benefits": { "en": "Opening member benefits", "nl": "Ik open de ledenvoordelen", "de": "Ich öffne die Mitgliedervorteile" },
+    "open_messages": { "en": "Opening your messages", "nl": "Ik open je berichten", "de": "Ich öffne deine Nachrichten" },
+    "open_jev": { "en": "Hi, I'm Jev. How can I help?", "nl": "Hoi, ik ben Jev. Waarmee kan ik helpen?", "de": "Hallo, ich bin Jev. Wie kann ich helfen?" },
+    "change_cover": { "en": "Pick a new cover photo", "nl": "Kies een nieuwe omslagfoto", "de": "Wähle ein neues Titelbild" },
+    "change_photo": { "en": "Pick a new profile photo", "nl": "Kies een nieuwe profielfoto", "de": "Wähle ein neues Profilbild" },
+    "help": {
+      "en": "Try: go to the map, open my messages, find alumni in Berlin, or change my cover photo.",
+      "nl": "Probeer: ga naar de kaart, open mijn berichten, zoek alumni in Berlijn, of verander mijn omslagfoto.",
+      "de": "Versuche: zeige die Karte, öffne meine Nachrichten, finde Alumni in Berlin, oder ändere mein Titelbild."
+    }
+  },
+  "system": {
+    "fallback": { "en": "Sorry, I didn't catch that. Say help to hear what I can do.", "nl": "Sorry, dat heb ik niet begrepen. Zeg help om te horen wat ik kan.", "de": "Entschuldigung, das habe ich nicht verstanden. Sag Hilfe, um zu hören, was ich kann." },
+    "error": { "en": "Something went wrong. Please try again.", "nl": "Er ging iets mis. Probeer het opnieuw.", "de": "Etwas ist schiefgelaufen. Bitte versuche es noch einmal." },
+    "not-supported": { "en": "Voice input isn't available in this browser. You can type to me instead.", "nl": "Spraakinvoer werkt niet in deze browser. Je kunt ook typen.", "de": "Spracheingabe ist in diesem Browser nicht verfügbar. Du kannst auch tippen." },
+    "jev-off": { "en": "I can only do simple commands for now. Say help to hear them.", "nl": "Ik kan nu alleen eenvoudige opdrachten. Zeg help om ze te horen.", "de": "Ich kann im Moment nur einfache Befehle. Sag Hilfe, um sie zu hören." },
+    "not-here": { "en": "That page isn't available yet.", "nl": "Die pagina is er nog niet.", "de": "Diese Seite gibt es noch nicht." },
+    "signed-out": { "en": "Sign in to talk to Jev.", "nl": "Log in om met Jev te praten.", "de": "Melde dich an, um mit Jev zu sprechen." },
+    "busy": { "en": "Jev needs a short break. Try again in a few minutes.", "nl": "Jev heeft even pauze nodig. Probeer het over een paar minuten.", "de": "Jev braucht eine kurze Pause. Versuche es in ein paar Minuten." },
+    "listening": { "en": "Listening…", "nl": "Ik luister…", "de": "Ich höre zu…" }
+  }
+}

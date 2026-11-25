@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       + links
       + '<button type="button" class="uc-rail-link" id="uc-rail-msgs" data-route="messages" style="--h:25">'
       + '<span class="uc-rail-dot" aria-hidden="true"></span>Messages<span class="uc-rail-badge" id="uc-rail-badge" hidden>0</span></button>'
+      + '<button type="button" class="uc-rail-link uc-jev-btn" id="uc-rail-jev" aria-pressed="false" aria-label="Talk to Jev, the assistant (shortcut V)" aria-keyshortcuts="v" style="--h:200"><svg viewBox="0 0 24 24" width="12" height="12" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 14a3 3 0 0 0 3-3V5a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>Jev</button>'
       + '<div class="uc-rail-spacer"></div>'
       + '<div class="uc-rail-dock" id="uc-dock" aria-label="Recent conversations"></div>'
       + '<button type="button" class="uc-rail-link" id="uc-dash-signout">← Sign out</button>'
