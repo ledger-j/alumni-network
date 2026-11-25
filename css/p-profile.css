@@ -11,6 +11,7 @@
 .uc-pf-cover canvas, .uc-pf-cover > img { position: absolute; inset: 0; width: 100%; height: 100%; }
 .uc-pf-cover > img { object-fit: cover; }
 .uc-pf-cover-fade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(250,249,246,0.9), transparent 55%); pointer-events: none; }
+.uc-pf-cover-btns .uc-pf-chip { min-height: 44px; }
 .uc-pf-cover-btns { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 .uc-pf-chip { min-height: 32px; padding: 6px 14px; border-radius: var(--uc-r-pill, 999px); border: 1px solid var(--uc-border-2); background: var(--uc-card-solid); color: var(--uc-ink); font: 600 12px var(--uc-font-body); cursor: pointer; transition: background-color var(--uc-d-fast, 120ms) var(--uc-ease-out, ease); }
 .uc-pf-chip:hover { background: #fff; }
@@ -20,6 +21,7 @@
 .uc-pf-chip-icon svg { flex: none; }
 .uc-pf-avbox { position: relative; width: 104px; height: 104px; }
 .uc-pf-cam { position: absolute; right: -2px; bottom: -2px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid var(--uc-bg); background: var(--uc-ink); color: var(--uc-bg); cursor: pointer; box-shadow: 0 4px 12px rgba(43,42,38,0.25); transition: transform var(--uc-d-fast, 120ms) var(--uc-ease-out, ease); }
+.uc-pf-cam::after { content: ''; position: absolute; inset: -4px; border-radius: 50%; } /* 44px hit area, 36px visual */
 .uc-pf-cam:hover { transform: scale(1.06); }
 .uc-pf-cam:focus-visible { outline: 2px solid var(--uc-focus); outline-offset: 2px; }
 .uc-pf-cover-hint { font-size: 12px; color: var(--uc-muted); }
@@ -60,8 +62,9 @@
 .uc-net-actions > * { min-height: 32px; }
 
 @media (max-width: 600px) {
+  .uc-pf-cover { aspect-ratio: 3 / 1; }
   .uc-pf-chip-icon span { display: none; }
-  .uc-pf-chip-icon { width: 36px; padding: 0; justify-content: center; }
+  .uc-pf-chip-icon { width: 44px; padding: 0; justify-content: center; }
   .uc-pf-mt-actions .uc-pill-ink, .uc-pf-mt-actions .uc-pill-ghost { min-height: 36px; }
 }
 @media (prefers-reduced-motion: reduce) { .uc-pf-chip, .uc-pf-cam { transition: none; } }

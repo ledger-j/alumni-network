@@ -40,8 +40,8 @@
     host.className = 'uc-modal-host';
     host.innerHTML = `
       <div class="uc-modal-backdrop"></div>
-      <div class="uc-modal" role="dialog" aria-modal="true" aria-label="Test access">
-        <div class="uc-modal-head"><h3><img src="assets/img/logo-u-64.png" alt="">Welcome, <em>tester.</em></h3><button class="uc-x" aria-label="Close">✕</button></div>
+      <div class="uc-modal" role="dialog" aria-modal="true" aria-labelledby="uc-enter-title">
+        <div class="uc-modal-head"><h3 id="uc-enter-title"><img src="assets/img/logo-u-64.png" alt="">Welcome, <em>tester.</em></h3><button class="uc-x" aria-label="Close">✕</button></div>
         <div class="uc-modal-body">
           <form class="uc-form" id="uc-enter-form">
             <p class="uc-hint">Thanks for helping us test UniCircle. No password needed.</p>
@@ -52,7 +52,10 @@
         </div>
       </div>`;
     document.body.appendChild(host);
-    const close = () => host.remove();
+    const opener = document.activeElement;
+    const close = () => { host.remove(); document.removeEventListener('keydown', onEsc); if (opener && opener.focus) try { opener.focus(); } catch (e) { /* ignore */ } };
+    const onEsc = (ev) => { if (ev.key === 'Escape') close(); };
+    document.addEventListener('keydown', onEsc);
     host.querySelector('.uc-x').onclick = close;
     host.querySelector('.uc-modal-backdrop').onclick = close;
     const form = host.querySelector('#uc-enter-form');
@@ -93,9 +96,9 @@
       const st = document.createElement('style');
       st.id = 'uc-tester-banner-css';
       st.textContent = '#uc-tester-banner{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;'
-        + 'padding:6px 16px;background:var(--uc-panel,#3a3934);color:var(--uc-bg,#faf9f6);font:500 13px/1.4 var(--uc-font-body,system-ui,sans-serif);text-align:center;}'
-        + '#uc-tester-banner a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px;}'
-        + '#uc-tester-banner a:focus-visible{outline:2px solid var(--uc-focus,#6a5acd);outline-offset:2px;}';
+        + 'padding:8px 16px;background:var(--uc-panel,#3a3934);color:var(--uc-bg,#faf9f6);font:500 13px/1.4 var(--uc-font-body,system-ui,sans-serif);text-align:center;}'
+        + '#uc-tester-banner a{color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px;display:inline-flex;align-items:center;min-height:24px;padding:0 4px;}'
+        + '#uc-tester-banner a:focus-visible{outline:2px solid var(--uc-bg,#faf9f6);outline-offset:2px;}';
       document.head.appendChild(st);
     }
     bar = document.createElement('div');
