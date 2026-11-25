@@ -169,7 +169,7 @@
       const img = $('[data-pf-cover-img]');
       const cv = $('[data-pf-cover-canvas]');
       const rm = $('[data-pf-cover-remove]');
-      const url = u && UCx() && UCx().coverUrl ? UCx().coverUrl(u, 1200, 400) : null;
+      const url = u && UCx() && UCx().coverUrl ? UCx().coverUrl(u, 1584, 396) : null;
       if (img) { img.hidden = !url; if (url) img.src = url; else img.removeAttribute('src'); }
       if (rm) rm.hidden = !url;
       if (cv) {
@@ -197,8 +197,8 @@
       let out;
       try {
         out = await U.cropImage(file, isAv
-          ? { width: 512, height: 512, mime: 'image/jpeg', maxBytes: 2 * 1024 * 1024 }
-          : { width: 1600, height: 533, mime: 'image/jpeg', maxBytes: 5 * 1024 * 1024 });
+          ? { width: 400, height: 400, mime: 'image/jpeg', maxBytes: 2 * 1024 * 1024 }
+          : { width: 1584, height: 396, mime: 'image/jpeg', maxBytes: 5 * 1024 * 1024 });
       } catch (e) { UCP.toast(e && e.message ? e.message : 'Could not read that image.', 'warn'); return; }
       const url = URL.createObjectURL(out.blob);
       const kb = Math.max(1, Math.round(out.blob.size / 1024));
@@ -206,7 +206,7 @@
       const close = UCP.dialog({
         title: isAv ? 'New profile photo' : 'New cover image',
         body: '<div class="uc-pf-prev"><img src="' + esc(url) + '" alt="Preview of your new ' + (isAv ? 'photo' : 'cover') + '"' + (isAv ? ' class="uc-pf-prev-av"' : '') + '>'
-          + '<p class="uc-pf-fine" style="margin:0;text-align:center;">Cropped to ' + (isAv ? '512 × 512' : '1600 × 533') + ', about ' + kb + ' KB. Visible to all UniCircle members.</p></div>',
+          + '<p class="uc-pf-fine" style="margin:0;text-align:center;">Cropped to ' + (isAv ? '400 × 400' : '1584 × 396') + ', about ' + kb + ' KB. Visible to all UniCircle members.</p></div>',
         actions: [
           { label: 'Cancel', onClick: (c) => { if (!saving) c(); } },
           { label: 'Save', primary: true, onClick: async (c, d) => {

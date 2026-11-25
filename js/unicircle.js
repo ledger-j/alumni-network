@@ -16,17 +16,70 @@
   const state = { token: null, user: null, online: false, chatPeer: null, chatTimer: null };
 
   // ---------------------------------------------------------------- REST glue
+  // Self-healing transport. Every call has a timeout. Only idempotent reads (GET/HEAD) are retried,
+  // and only for network errors and 502/503/504, after 0.5 s, 1.5 s, 4 s. Writes are never retried.
+  // A network-level failure flips state.online off and starts a /api/health re-probe (every 20 s and
+  // on the browser's 'online' event); when it answers, `uc:reconnected` fires and a toast says so.
+  const RETRY_MS = [500, 1500, 4000];
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  let probeTimer = null, probing = false;
+
+  async function probeNow() {
+    if (probing) return state.online;
+    probing = true;
+    const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 5000);
+    try {
+      const r = await fetch(API + '/api/health', { signal: ctl.signal, cache: 'no-store' });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const was = state.online;
+      state.online = true;
+      if (probeTimer) { clearInterval(probeTimer); probeTimer = null; }
+      if (!was) {
+        document.dispatchEvent(new CustomEvent('uc:reconnected'));
+        toast('Reconnected');
+      }
+      return true;
+    } catch (e) { return false; }
+    finally { clearTimeout(t); probing = false; }
+  }
+  function markOffline() {
+    state.online = false;
+    if (!probeTimer) probeTimer = setInterval(probeNow, 20000);
+  }
+  window.addEventListener('online', () => { if (!state.online) probeNow(); });
+  // A rejection with no HTTP status is a network failure nobody handled: re-probe instead of failing silently.
+  window.addEventListener('unhandledrejection', (e) => {
+    const r = e && e.reason;
+    if (r && !r.status && (r.network || (r instanceof TypeError && /fetch|network|load failed/i.test(r.message || '')))) markOffline();
+  });
+
   async function api(method, path, body, opts = {}) {
     const isForm = typeof FormData !== 'undefined' && body instanceof FormData;
     const headers = isForm ? {} : { 'Content-Type': 'application/json' }; // FormData: browser sets the multipart boundary
     if (state.token && opts.auth !== false) headers.Authorization = state.token;
-    const res = await fetch(API + path, {
-      method, headers,
-      body: body != null ? (isForm ? body : JSON.stringify(body)) : undefined,
-    });
-    const data = await res.json().catch(() => ({}));
-    if (!res.ok) throw Object.assign(new Error(data.message || res.statusText), { status: res.status, data });
-    return data;
+    const safe = /^(GET|HEAD)$/i.test(method) && opts.retry !== false;
+    for (let attempt = 0; ; attempt++) {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), opts.timeout || (isForm ? 60000 : 15000));
+      const canRetry = safe && attempt < RETRY_MS.length && !probeTimer; // already known offline: fail fast
+      let res;
+      try {
+        res = await fetch(API + path, {
+          method, headers, signal: ctl.signal,
+          body: body != null ? (isForm ? body : JSON.stringify(body)) : undefined,
+        });
+      } catch (e) {
+        clearTimeout(timer);
+        if (canRetry) { await sleep(RETRY_MS[attempt]); continue; }
+        markOffline();
+        throw Object.assign(new Error(e && e.name === 'AbortError' ? 'The server took too long to answer.' : 'Could not reach the server.'), { network: true });
+      }
+      clearTimeout(timer);
+      if (canRetry && (res.status === 502 || res.status === 503 || res.status === 504)) { await sleep(RETRY_MS[attempt]); continue; }
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw Object.assign(new Error(data.message || res.statusText), { status: res.status, data });
+      return data;
+    }
   }
 
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => (
@@ -83,7 +136,7 @@
       const raw = localStorage.getItem(LS_AUTH);
       if (raw) { const a = JSON.parse(raw); state.token = a.token; state.user = a.user; }
       // ping health to learn if backend is reachable
-      await api('GET', '/api/health', null, { auth: false });
+      await api('GET', '/api/health', null, { auth: false, retry: false });
       state.online = true;
       if (state.token) {
         try {
@@ -573,7 +626,7 @@
   }
 
   // expose a tiny API for debugging / mentorship buttons elsewhere
-  window.UC = { state, openAuth, completeAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth, api, toast, esc, fileUrl, avatarOf, initialsAvatar };
+  window.UC = { probeNow, state, openAuth, completeAuth, openLinkedIn, openChat, openProfile, refreshLiveFeed, API, auth, api, toast, esc, fileUrl, avatarOf, initialsAvatar };
 
   document.addEventListener('DOMContentLoaded', () => {
     handleOAuthRedirect();
