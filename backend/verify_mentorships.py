@@ -98,7 +98,7 @@ st, _ = call("PATCH", U, {"supporter+": True}, S_USER["token"])
 st2, cur = call("GET", U, token=S_USER["token"])
 g.check("'supporter+' modifier key does not grant the flag", not cur.get("supporter"), f"{st}")
 
-# --- signup is open: it must not be a way in either ---
+# --- public sign-up is closed (createRule = null): no anonymous account, privileged or not ---
 import time
 def signup(extra):
     e = f"vt_su_{int(time.time()*1000)}_{len(extra)}@example.test"
@@ -111,7 +111,7 @@ st, rec = signup({"role": "admin"})
 g.rejected("cannot sign up with role=admin", st)
 if st == 200: users.made.append(rec["id"])
 st, rec = signup({"role": "student", "tutor": True})
-g.check("a normal signup with role=student + tutor works", st == 200, st)
+g.rejected("a plain anonymous signup is refused (sign-up closed)", st)
 if st == 200: users.made.append(rec["id"])
 
 users.cleanup(made)
