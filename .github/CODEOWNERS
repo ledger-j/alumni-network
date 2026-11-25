@@ -1,3 +1,9 @@
-# Jean is auto-requested as reviewer on pull requests (informational — direct
-# pushes are allowed; every push leaves a backup/ tag, see CONTRIBUTING.md).
-* @ledger-j
+# Only sensitive paths are owned: a ruleset requires Jean's review when these change.
+# Ordinary UI/content work (js/, css/, components/, docs/ ...) needs no human approval once CI is green.
+/backend/        @ledger-j
+/deploy/         @ledger-j
+/.github/        @ledger-j
+/sw.js           @ledger-j
+/CNAME           @ledger-j
+/CLAUDE.md       @ledger-j
+/AGENTS.md       @ledger-j

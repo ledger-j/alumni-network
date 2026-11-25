@@ -1,27 +1,41 @@
 # Working on UniCircle (team guide)
 
 ## The rule
-Work on **`uc-next`** (push directly, or use a branch + pull request for bigger changes).
-Nobody edits the live server by hand — the live site only changes when Jean deploys.
+`uc-next` is the only trunk and nobody pushes to it directly. Work on a branch (`claude/<lane>-<topic>` or
+`<name>/<topic>`), open a pull request titled `UNICI-nn: what`, and turn on auto-merge. When `ci` is green it merges
+itself (squash) and the branch is deleted. Changes under `backend/`, `deploy/`, `.github/`, `sw.js`, `CNAME`,
+`CLAUDE.md` also need Jean's review. `main` is stale: ignore it.
+Claude sessions and teammates share the contract in `CLAUDE.md` and the log in `docs/team/HANDOFF.md`.
+Nobody edits the live server by hand; the live site only changes when Jean deploys.
 FTP accounts are for the deploy step only, and each is limited to one folder.
+
+## Checks (what makes a PR green)
+`ci / static` (syntax, JSON, references, secrets, XSS heuristic, privacy), `ci / app-gate` (links, headless
+Chromium on every route at 1440 and 390 px against the mock backend), `ci / backend-gates` (only when `backend/`
+changed: real PocketBase with the hooks, schema applied twice, every `verify_*.py`). Run the same locally with the
+commands in `CLAUDE.md`.
+
+## Deploying (Jean)
+Diff plain `uc-next` against the live site first (`deploy/site-deploy.sh` plan), look at every CHANGED file that is not
+part of the release, apply once per release, keep the previous backup. Never deploy an unmerged branch.
 
 ## Backups & rolling back
 Every push automatically creates a restore point: a tag `backup/<branch>/<time>-<sha>`
-pointing at the state **just before** that push (workflow: `.github/workflows/backup-before-push.yml`).
+pointing at the state **just before** that push (workflow: `.github/workflows/backup-before-push.yml`;
+tags older than 90 days are pruned).
 ```bash
 git fetch --tags
 git tag -l "backup/uc-next/*"          # list restore points (newest last)
 git revert <bad-commit>                 # preferred: undo one commit, keeps history
-git reset --hard backup/uc-next/<tag>   # or: go back to a restore point locally…
-git push --force-with-lease             # …and publish it (admin only)
 ```
+Restoring a trunk to a tag is an admin-only emergency step (Jean bypasses the branch rules).
 
 ## Where things are
 | What | Where |
 |---|---|
 | Live site | `unicircle.eu` (All-Inkl, folder `unicircle.eu/`) |
 | Backend (accounts, posts, messages, waitlist) | `api.unicircle.eu` (PocketBase on Hetzner) |
-| Source of truth | GitHub `ledger-j/alumni-network`, branch **`uc-next`** (matches live + new work) |
+| Source of truth for code | GitHub `ledger-j/alumni-network` (private), branch **`uc-next`**. The live site can differ: check drift before deploying |
 
 ## Run it locally
 No build step, it's plain HTML/CSS/JS:

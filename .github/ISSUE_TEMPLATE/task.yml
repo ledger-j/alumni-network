@@ -1,0 +1,16 @@
+name: Task
+description: A piece of work for a person or a Claude session
+labels: []
+body:
+  - type: input
+    attributes: { label: Plane issue (UNICI-nn) }
+  - type: textarea
+    attributes: { label: What and why }
+    validations: { required: true }
+  - type: textarea
+    attributes: { label: Done when (checkable) }
+    validations: { required: true }
+  - type: dropdown
+    attributes:
+      label: Lane
+      options: [lane:frontend, lane:backend, lane:content, lane:deploy, lane:research]

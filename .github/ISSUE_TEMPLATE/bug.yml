@@ -1,0 +1,8 @@
+name: Bug
+description: Something is broken
+body:
+  - type: textarea
+    attributes: { label: What happened, description: URL, route, device/size, what you expected }
+    validations: { required: true }
+  - type: textarea
+    attributes: { label: How to reproduce }
