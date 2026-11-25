@@ -53,23 +53,43 @@ routerAdd("POST", "/api/uc/tester/enter", (e) => {
   try { plain = name.normalize("NFD").replace(/[̀-ͯ]/g, ""); } catch (_) { /* keep as is */ }
   let slug = plain.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40);
   if (!slug) slug = "t" + $security.sha256(name.toLowerCase()).slice(0, 10);
-  const email = "tester-" + slug + "@testers.unicircle.eu";
 
-  // ---- find or create the tester member
-  let rec = null;
-  try { rec = $app.findAuthRecordByEmail("users", email); } catch (_) { rec = null; }
-  if (rec && !rec.getBool("tester")) throw new ForbiddenError("This test link is not valid.", {});
-  if (!rec) {
+  // ---- find or create the tester member.
+  // A name alone is not an identity (anyone with the link could type "Anton"): on create the browser
+  // gets a one-time device secret; only its SHA-256 is kept in the hidden field tester_secret. Re-entry
+  // with the same name needs that secret, otherwise a NEW account (anton-2, anton-3, ...) is made.
+  const MAX_TESTERS = 200;
+  const device = String(data.device || "");
+  const devHash = device.length >= 32 ? $security.sha256(device) : "";
+  let rec = null, issued = "";
+  for (let n = 1; n <= 50 && !rec; n++) {
+    const email = "tester-" + slug + (n > 1 ? "-" + n : "") + "@testers.unicircle.eu";
+    let found = null;
+    try { found = $app.findAuthRecordByEmail("users", email); } catch (_) { found = null; }
+    if (found) {
+      if (found.getBool("tester") && devHash && found.getString("tester_secret") === devHash) rec = found;
+      continue;
+    }
+    if ($app.countRecords("users", $dbx.hashExp({ tester: true })) >= MAX_TESTERS) {
+      throw new ApiError(409, "The test round is full. Ask the UniCircle team for a spot.", {});
+    }
+    issued = $security.randomString(48);
     rec = new Record($app.findCollectionByNameOrId("users"));
     rec.set("email", email);
     rec.set("name", name);
     rec.set("tester", true);
+    rec.set("tester_secret", $security.sha256(issued));
     rec.setVerified(true);
     rec.set("emailVisibility", false);
     rec.setPassword($security.randomString(40));
     $app.save(rec);
   }
-  return $apis.recordAuthResponse(e, rec, "tester", null);
+  if (!rec) throw new ApiError(409, "Too many testers with this name. Add an initial, e.g. Anton B.", {});
+  // Same shape as a PocketBase auth response ({token, record}) plus the one-time device secret.
+  // Hidden fields (tester_secret) never serialise into the record JSON.
+  const out = { token: rec.newAuthToken(), record: rec };
+  if (issued) out.device = issued;
+  return e.json(200, out);
 });
 
 // Superuser only: clear the wrong-key counter (used by backend/verify_tester.py and tester_admin.py).

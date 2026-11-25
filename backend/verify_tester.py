@@ -68,8 +68,24 @@ else:
         st, me = call("POST", "/api/collections/users/auth-refresh", {}, tok)
         g.check("tester token works (auth-refresh)", st == 200 and me.get("record", {}).get("id") == rec["id"], st)
 
-        st, b = call("POST", ENTER, {"key": key, "name": "  " + name.upper() + " "})
-        g.check("same name again -> same member", st == 200 and b.get("record", {}).get("id") == rec["id"], f"{st} {b.get('record', {}).get('id')}")
+        dev = a.get("device") or ""
+        g.check("new tester gets a one-time device secret", len(dev) >= 32, len(dev))
+        g.check("tester_secret is never serialised", "tester_secret" not in rec, list(rec))
+        st, b = call("POST", ENTER, {"key": key, "name": "  " + name.upper() + " ", "device": dev})
+        g.check("same name + device secret -> same member", st == 200 and b.get("record", {}).get("id") == rec["id"], f"{st} {b.get('record', {}).get('id')}")
+        g.check("re-entry issues no new device secret", "device" not in b, list(b))
+        st, c = call("POST", ENTER, {"key": key, "name": name})
+        cid = c.get("record", {}).get("id")
+        if cid and cid != rec["id"]: made.append(cid)
+        g.check("same name WITHOUT the device secret -> a different member (no takeover)", st == 200 and cid and cid != rec["id"], f"{st} {cid}")
+        st, c2 = call("POST", ENTER, {"key": key, "name": name, "device": "x" * 48})
+        c2id = c2.get("record", {}).get("id")
+        if c2id and c2id not in made: made.append(c2id)
+        g.check("same name with a WRONG device secret -> not the first member", st == 200 and c2id != rec["id"], f"{st} {c2id}")
+        st, _ = call("PATCH", f"{U}/{rec['id']}", {"tester_secret": "x"}, tok)
+        st2, cur = call("GET", f"{U}/{rec['id']}", token=admin)
+        g.check("tester cannot change tester_secret (refused or ignored)",
+                st >= 400 or (st2 == 200 and cur.get("tester_secret") not in (None, "", "x")), f"{st} {cur.get('tester_secret', '?')[:8]}")
 
         for field, val in (("tester", False), ("supporter", True), ("points", 500)):
             st, _ = call("PATCH", f"{U}/{rec['id']}", {field: val}, tok)

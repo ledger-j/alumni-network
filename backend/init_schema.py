@@ -104,7 +104,7 @@ extra = [text("headline", maxlen=255), text("location", maxlen=120), text("degre
          number("points", 0, 100000, True), text("contact_mode", maxlen=12), number("min_points", 0, 10000, True),
          boolf("accepts_internship"), boolf("accepts_mentoring"), boolf("accepts_collab"),
          # hidden-link testers (uc_tester.pb.js); server-written only, see NO_SERVER
-         boolf("tester"),
+         boolf("tester"), dict(text("tester_secret", maxlen=64), hidden=True),
          filef("cover", 5242880, IMG, ["400x133", "1200x400"])]
 # Existing `avatar` (PocketBase default file field): images only, 2 MB, thumbnails.
 fields = []
@@ -123,7 +123,7 @@ AUTHED = '@request.auth.id != ""'
 # (premium), `points` (written only by the points hook) and `tester` (set only by the
 # tester hook). `role` and `contact_mode` accept known values only.
 NO_SERVER = ('@request.body.supporter:isset = false && @request.body.points:isset = false'
-             ' && @request.body.tester:isset = false')
+             ' && @request.body.tester:isset = false && @request.body.tester_secret:isset = false')
 ROLE_OK = ('(@request.body.role:isset = false || @request.body.role = "" || @request.body.role = "alumnus"'
            ' || @request.body.role = "student" || @request.body.role = "staff")')
 CM_OK = ('(@request.body.contact_mode:isset = false || @request.body.contact_mode = "" || @request.body.contact_mode = "open"'

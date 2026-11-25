@@ -28,7 +28,7 @@
     if (st === 403) return 'This test link is not valid.';
     if (st === 501) return 'Test access is closed right now.';
     if (st === 429) return 'Too many tries, wait 10 minutes.';
-    if (st === 400) return (err && err.message) || 'Use 1 to 40 letters for your first name.';
+    if (st === 400 || st === 409) return (err && err.message) || 'Use 1 to 40 letters for your first name.';
     return 'Could not reach UniCircle. Check your connection and try again.';
   }
 
@@ -66,8 +66,14 @@
       if (!NAME_OK.test(name)) { errEl.textContent = 'Use 1 to 40 letters for your first name (spaces, - and \' are fine).'; errEl.hidden = false; return; }
       btn.disabled = true;
       try {
-        const r = await UC.api('POST', '/api/uc/tester/enter', { key, name }, { auth: false });
+        // One device secret per tester name on this browser: re-entering with the same name finds the
+        // same account here, but someone else typing that name elsewhere gets their own account.
+        const DK = 'uc_tester_dev_' + name.toLowerCase();
+        let device = '';
+        try { device = localStorage.getItem(DK) || ''; } catch (_) { /* private mode */ }
+        const r = await UC.api('POST', '/api/uc/tester/enter', { key, name, device }, { auth: false });
         key = null;
+        if (r && r.device) { try { localStorage.setItem(DK, r.device); } catch (_) { /* private mode */ } delete r.device; }
         UC.completeAuth(r, close);           // stores uc_auth, fires uc:login -> app.js routes to #feed
         if (location.hash !== '#feed') location.hash = '#feed';
       } catch (err) {
