@@ -167,8 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
     navItems.forEach(item => {
       item.addEventListener('click', () => {
         if (!_navReady) {
-          // Guest clicks nav → open sign-up modal
-          window.UC?.openAuth('signup');
+          // Guest clicks nav → the waitlist (public sign-up is closed)
+          location.href = 'waitlist.html?ref=app-nav';
           return;
         }
         const targetPage = item.getAttribute('data-page');
@@ -295,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
      0. LANDING PAGE INTERACTIVITY
      ========================================== */
   function initLandingInteractivity() {
-    const openSignup = () => window.UC?.openAuth('signup');
+    const openSignup = () => { location.href = 'waitlist.html?ref=landing'; };   // sign-up closed
     const openSignin = () => window.UC?.openAuth('signin');
 
     // Nav + footer + feature CTAs open the full modal (LinkedIn / CSV import live there).
