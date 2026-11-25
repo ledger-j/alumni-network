@@ -12,6 +12,11 @@ services:
     # Bound to loopback only until the public hostname + Caddy route are live.
     ports:
       - "127.0.0.1:8090:8090"
+    # Optional secrets, written by Jean only (never committed): UC_TESTER_KEY (hidden test login),
+    # GEMINI_API_KEY (profile AI helper + Jev). Missing file = both features stay off (501).
+    env_file:
+      - path: .env
+        required: false
     volumes:
       - pb-data:/pb/pb_data
       # JS hooks (waitlist confirmation mail + unsubscribe) — hot-reloaded by PocketBase

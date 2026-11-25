@@ -5,3 +5,6 @@ __pycache__/
 *.pyc
 
 .playwright-mcp/
+
+# PocketBase runtime secrets (written on the server by Jean only)
+backend/.env
